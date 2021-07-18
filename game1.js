@@ -59,24 +59,24 @@ class Game1 {
         //     x += 60;
         // })
 
-        for (i=0; i < rndArr.length; i++) {
-            switch(i) {
+        for (i = 0; i < rndArr.length; i++) {
+            switch (i) {
                 case 0:
-                    x = CANVAS_WIDTH/2 - 30;
-                    y = CANVAS_HEIGHT * 1/10;
+                    x = CANVAS_WIDTH / 2 - 30;
+                    y = CANVAS_HEIGHT * 1 / 10;
                     ;
                     break;
-                case 1: 
-                    x = CANVAS_WIDTH * 1/10;
-                    y = CANVAS_HEIGHT/2 - 20;
+                case 1:
+                    x = CANVAS_WIDTH * 1 / 10;
+                    y = CANVAS_HEIGHT / 2 - 20;
                     break;
-                case 2: 
-                    x = CANVAS_WIDTH*2/3;
-                    y = CANVAS_HEIGHT/2 - 20;
+                case 2:
+                    x = CANVAS_WIDTH * 2 / 3;
+                    y = CANVAS_HEIGHT / 2 - 20;
                     break;
                 case 3:
-                    x = CANVAS_WIDTH/2 - 30;
-                    y = CANVAS_HEIGHT*2/3;
+                    x = CANVAS_WIDTH / 2 - 30;
+                    y = CANVAS_HEIGHT * 2 / 3;
                     break;
             }
             let btn = new ButtonKana({ w: 60, h: 40 }, x, y, checkIfValid, "game1", Game1.STATE.Game, rndArr[i]);
@@ -99,7 +99,7 @@ class Game1 {
         // this.currentState = this.STATE.Game;
         Game1.currentState = Game1.STATE.Game;
 
-        
+
     }
     static togglePause() {
 
@@ -156,7 +156,7 @@ class Game1 {
     }
 
     static draw(ctx) {
-        
+
         // SELON LA STRUCTURE DU JEU : 
         // ScreenManager.currentScreen.spriteList.forEach(sp => {
         //     sp.getSprite().draw(ctx)
@@ -176,8 +176,8 @@ class Game1 {
         //     sp.draw(ctx);
         // });
 
-        
-        Button.currentList.forEach(b=> {
+
+        Button.currentList.forEach(b => {
             b.getSprite().draw(ctx);
             if (b instanceof ButtonKana) {
                 b.draw(ctx);
@@ -189,13 +189,13 @@ class Game1 {
 
         switch (choice) {
             case "h":
-                ctx.fillText(rndChoice.h, CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+                ctx.fillText(rndChoice.h, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
                 break;
             case "k":
-                ctx.fillText(rndChoice.k,  CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+                ctx.fillText(rndChoice.k, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
                 break;
             case "r":
-                ctx.fillText(rndChoice.r,  CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+                ctx.fillText(rndChoice.r, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
                 break;
         }
 
@@ -227,12 +227,12 @@ class Game1 {
 }
 
 // TODO function newGame / reset / firstLoad
-function gameInit() {}
-function load() {}
+function gameInit() { }
+function load() { }
 
-function togglePause() {}
+function togglePause() { }
 
-function update(dt) {}
+function update(dt) { }
 
 function draw(ctx) {
 

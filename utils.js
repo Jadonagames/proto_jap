@@ -35,14 +35,14 @@ function centerY(pHeight) {
 // ----------------------------------------------------
 function randomizer(pArr, pNumber) {
     let arr = [];
-    for (i=0; i < pNumber; i++) {
+    for (i = 0; i < pNumber; i++) {
         console.log("i: " + i);
-        let rndNumber = rnd(0, pArr.length-1);
+        let rndNumber = rnd(0, pArr.length - 1);
         if (!arr.includes(pArr[rndNumber])) {
             arr.push(pArr[rndNumber]);
         } else {
             i--;
-        }        
+        }
     }
 
     return arr;
@@ -50,31 +50,31 @@ function randomizer(pArr, pNumber) {
 
 function test(pFrom, pTo, pNumber) {
 
-    let rand = rnd(0, char.h.length-1)
+    let rand = rnd(0, char.h.length - 1)
     rndChoice = {
         h: char.h[rand],
         k: char.k[rand],
         r: char.r[rand]
-    }    
+    }
 
 
     switch (pFrom) {
         case "h":
             rndArr = randomizer(char.h, pNumber);
             if (!rndArr.includes(rndChoice.h)) {
-                rndArr[rnd(0, rndArr.length-1)] = rndChoice.h;
+                rndArr[rnd(0, rndArr.length - 1)] = rndChoice.h;
             }
             break;
         case "k":
             rndArr = randomizer(char.k, pNumber);
             if (!rndArr.includes(rndChoice.k)) {
-                rndArr[rnd(0, rndArr.length-1)] = rndChoice.k;
+                rndArr[rnd(0, rndArr.length - 1)] = rndChoice.k;
             }
             break;
         case "r":
             rndArr = randomizer(char.r, pNumber);
             if (!rndArr.includes(rndChoice.r)) {
-                rndArr[rnd(0, rndArr.length-1)] = rndChoice.r;
+                rndArr[rnd(0, rndArr.length - 1)] = rndChoice.r;
             }
             break;
         default:
@@ -83,8 +83,8 @@ function test(pFrom, pTo, pNumber) {
 }
 
 function checkIfValid(pChar) {
-    let choiced = "";    
-    switch(learn) {
+    let choiced = "";
+    switch (learn) {
         case "h":
             choiced = rndChoice.h;
             break;
@@ -102,7 +102,7 @@ function checkIfValid(pChar) {
         test(learn, choice, charNumbers);
         let count = 0;
         Button.currentList.forEach(b => {
-            if(b instanceof ButtonKana) {
+            if (b instanceof ButtonKana) {
                 b.setChar(rndArr[count]);
                 count++;
             }

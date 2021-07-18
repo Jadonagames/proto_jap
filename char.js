@@ -8,7 +8,7 @@ class Char {
         this.x;
         this.y;
         this.font = "5px UD Digi Kyokasho NK-R";
-        this.color = "rgb(255,255,255)"; 
+        this.color = "rgb(255,255,255)";
         this.char = pChar;
 
     }

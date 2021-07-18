@@ -64,15 +64,15 @@ class ButtonKana {
         } else {
             ctx.fillStyle = "rgb(255,255,255)";
         }
-        
+
         ctx.font = this.fontSize + "px UD Digi Kyokasho NK-R";
 
         if (this.char.length == 1) {
-            ctx.fillText(this.char, this.sp.x + (this.width/2) - (0.3*this.fontSize), this.sp.y + 11);
+            ctx.fillText(this.char, this.sp.x + (this.width / 2) - (0.3 * this.fontSize), this.sp.y + 11);
         } else if (this.char.length == 2) {
-            ctx.fillText(this.char, this.sp.x + (this.width/2) - (0.5*this.fontSize), this.sp.y + 11);
+            ctx.fillText(this.char, this.sp.x + (this.width / 2) - (0.5 * this.fontSize), this.sp.y + 11);
         } else if (this.char.length == 3) {
-            ctx.fillText(this.char, this.sp.x + (this.width/2) - (0.7*this.fontSize), this.sp.y + 11);
+            ctx.fillText(this.char, this.sp.x + (this.width / 2) - (0.7 * this.fontSize), this.sp.y + 11);
         }
     }
 }
