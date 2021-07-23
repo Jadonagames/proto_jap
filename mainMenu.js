@@ -202,25 +202,26 @@ class MainMenu {
          */
         if (bDebug) {
             ctx.fillStyle = "rgb(255,255,255)";
-            ctx.font = "10px UD Digi Kyokasho NK-R";
-            // ctx.fillText("Sprites : " + Sprite.list.length, 0, 100);
-            // ctx.fillText("UiSprites : " + UiSprite.list.length, 0, 105);
-            // ctx.fillText("ButtonList : " + Button.list.length, 0, 110);
-            // ctx.fillText("MainMenuList : " + MainMenu.list.length, 0, 115);
+            // ctx.font = "10px UD Digi Kyokasho NK-R";
+            ctx.font = "16px pgfont";
+            ctx.fillText("Sprites : " + Sprite.list.length, 0, 100);
+            ctx.fillText("UiSprites : " + UiSprite.list.length, 0, 110);
+            ctx.fillText("ButtonList : " + Button.list.length, 0, 120);
+            ctx.fillText("MainMenuList : " + MainMenu.list.length, 0, 130);
 
-            // ctx.fillText("dt: " + debugDt, 0, 135);
+            ctx.fillText("dt: " + debugDt, 0, 140);
 
-            switch (choice) {
-                case "h":
-                    ctx.fillText(rndChoice.h, 140, 170);
-                    break;
-                case "k":
-                    ctx.fillText(rndChoice.k, 140, 170);
-                    break;
-                case "r":
-                    ctx.fillText(rndChoice.r, 140, 170);
-                    break;
-            }
+            // switch (choice) {
+            //     case "h":
+            //         ctx.fillText(rndChoice.h, 140, 170);
+            //         break;
+            //     case "k":
+            //         ctx.fillText(rndChoice.k, 140, 170);
+            //         break;
+            //     case "r":
+            //         ctx.fillText(rndChoice.r, 140, 170);
+            //         break;
+            // }
             // ctx.fillText(rndChoice.r, 100, 150);
 
             // ctx.fillText("あいうえお", 120, 50);

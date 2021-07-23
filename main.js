@@ -12,7 +12,7 @@ let SFX_VOLUME = 0.5;
 /**
  * DEBUG
  */
-let bDebug = false;
+let bDebug = true;
 let debugDt = 0;
 // ---------------- END DEBUG
 
