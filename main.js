@@ -1,5 +1,6 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
+let checkAssetsInterval = setInterval(checkAssetsLoading, 1000 / 60);
 let interval;
 let lastUpdate = Date.now();
 const SCALE_X = 3;
@@ -17,14 +18,25 @@ let debugDt = 0;
 // ---------------- END DEBUG
 
 const MAIN_STATE = Object.freeze({
-    Splash: 0,
-    Menu: 1,
-    Game: 2,
-    Pause: 3,
-    Transition: 4,
+    Language: 0,
+    Splash: 1,
+    Menu: 2,
+    Game: 3,
+    Pause: 4,
+    Transition: 5
 })
 
-let mainState = MAIN_STATE.Splash;
+// let mainState = MAIN_STATE.Splash;
+let mainState = MAIN_STATE.Language; // COMMENT FOR : MAINMENU START
+
+function checkAssetsLoading() {
+    if (ASSETS_READY) {
+        clearInterval(checkAssetsInterval);
+        init();
+    } else {
+        console.log("Assets not loaded yet");
+    }
+}
 
 function run() {
     let now = Date.now();
@@ -34,6 +46,9 @@ function run() {
     debugDt = dt;
 
     switch (mainState) {
+        case MAIN_STATE.Language:
+            LanguageScreen.update(dt);
+            break;
         case MAIN_STATE.Splash:
             SplashScreen.update(dt);
             break;
@@ -50,8 +65,10 @@ function run() {
     ctx.save();
     ctx.scale(SCALE_X, SCALE_Y);
 
-
     switch (mainState) {
+        case MAIN_STATE.Language:
+            LanguageScreen.draw(ctx);
+            break;
         case MAIN_STATE.Splash:
             SplashScreen.draw(ctx);
             break;
@@ -76,13 +93,14 @@ function init() {
     ctx.webkitImageSmoothingEnabled = false;
     ctx.mozImageSmoothingEnabled = false;
 
-    SplashScreen.init();
+    // SplashScreen.init();  // COMMENT FOR : MAINMENU START
+    LanguageScreen.init(); // COMMENT FOR : MAINMENU START
     MainMenu.init();
+    //toMainMenu() // FOR : MAINMENU START
 
     interval = setInterval(run, 1000 / 60);
 }
 
-init();
 
 function startBtnCB() {
     mainState = MAIN_STATE.Game;
