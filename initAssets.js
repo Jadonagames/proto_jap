@@ -14,6 +14,14 @@ const char = {
     r: r.split(",")
 };
 
+let tsvFile = "";
+let translationEn = []; // 1
+let translationFr = []; // 2
+let translationJp = []; // 3
+let LANG = [];
+let ASSETS_COUNTER = 0;
+let ASSETS_READY = false;
+
 // ----------------------------------
 // TODO Find a place for that :
 let charNumbers = 4;
@@ -37,6 +45,10 @@ function LoadAssets() {
     */
     SS.onload = () => {
         console.log("image loaded !!!");
+        ASSETS_COUNTER++;
+        if (ASSETS_COUNTER == 2) {
+            ASSETS_READY = true;
+        }
     };
 
     // Music and Sounds
@@ -47,11 +59,43 @@ function LoadAssets() {
 
     Sound.list["music"] = new Sound("./sounds/music/Galastarz.mp3", "m", true);
 
-
-
-
+    readTSVFile("./translation.tsv");
     // Char.list.push("")
 
+}
+
+function readTSVFile(pFile) {
+    let rawFile = new XMLHttpRequest();
+    rawFile.open("GET", pFile, true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+                tsvFile = rawFile.responseText;
+                createTranslationArrays(tsvFile);
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+function createTranslationArrays(pFile) {
+    let row = pFile.split('\r\n');
+    for (let i = 0; i < row.length; i++) {
+        row[i] = row[i].split('\t');
+        translationEn[row[i][0]] = row[i][1];
+        translationFr[row[i][0]] = row[i][2];
+        translationJp[row[i][0]] = row[i][3];
+    }
+    // console.table(translationEn);
+    // console.table(translationFr);
+    // console.table(translationJp);
+    LANG = translationFr;
+    console.log("translation loaded !!!");
+    // console.table(LANG);
+    ASSETS_COUNTER++;
+    if (ASSETS_COUNTER == 2) {
+        ASSETS_READY = true;
+    }
 }
 
 LoadAssets();
