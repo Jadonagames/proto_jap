@@ -36,7 +36,6 @@ function centerY(pHeight) {
 function randomizer(pArr, pNumber) {
     let arr = [];
     for (i = 0; i < pNumber; i++) {
-        console.log("i: " + i);
         let rndNumber = rnd(0, pArr.length - 1);
         if (!arr.includes(pArr[rndNumber])) {
             arr.push(pArr[rndNumber]);
