@@ -60,6 +60,21 @@ class MainMenu {
         this.muteBtn.getSprite().changeAnimation("normal");
         MainMenu.mainList.push(this.muteBtn.getSprite());
 
+        // FOR TESTING
+        let startBtnLabel = new Button({ w: 32, h: 16 }, CANVAS_WIDTH * 1 / 3, 80, startBtnCB, "mainmenu", MainMenu.STATE.Main, "start");
+        startBtnLabel.getSprite().addAnimation("normal", 1, { x: 384, y: 48 }, 0.1);
+        startBtnLabel.getSprite().addAnimation("hover", 1, { x: 416, y: 48 }, 0.1);
+        startBtnLabel.getSprite().addAnimation("down", 1, { x: 448, y: 48 }, 0.1);
+        startBtnLabel.getSprite().changeAnimation("normal");
+        MainMenu.mainList.push(startBtnLabel.getSprite());
+
+        let optionsBtnLabel = new Button({ w: 32, h: 16 }, CANVAS_WIDTH * 1 / 3, 100, startBtnCB, "mainmenu", MainMenu.STATE.Main, "yes");
+        optionsBtnLabel.getSprite().addAnimation("normal", 1, { x: 384, y: 48 }, 0.1);
+        optionsBtnLabel.getSprite().addAnimation("hover", 1, { x: 416, y: 48 }, 0.1);
+        optionsBtnLabel.getSprite().addAnimation("down", 1, { x: 448, y: 48 }, 0.1);
+        optionsBtnLabel.getSprite().changeAnimation("normal");
+        MainMenu.mainList.push(optionsBtnLabel.getSprite());
+
         // OPTIONS
         let optionsTitle = new UiSprite({ w: 116, h: 40 }, centerX(116), 10, "mainmenu");
         optionsTitle.addAnimation("normal", 1, { x: 195, y: 0 }, 0.1);
@@ -132,7 +147,7 @@ class MainMenu {
     }
 
     static muteAction() {
-        this.muteBtn.callbackAction = MainMenu.unMuteAction.bind(this);
+        this.muteBtn.callback = MainMenu.unMuteAction.bind(this);
         this.muteBtn.getSprite().resetAnimations("normal", { x: 144, y: 96 });
         this.muteBtn.getSprite().resetAnimations("hover", { x: 160, y: 96 });
         this.muteBtn.getSprite().resetAnimations("down", { x: 176, y: 96 });
@@ -140,7 +155,7 @@ class MainMenu {
     }
 
     static unMuteAction() {
-        this.muteBtn.callbackAction = MainMenu.muteAction.bind(this);
+        this.muteBtn.callback = MainMenu.muteAction.bind(this);
         this.muteBtn.getSprite().resetAnimations("normal", { x: 96, y: 96 });
         this.muteBtn.getSprite().resetAnimations("hover", { x: 112, y: 96 });
         this.muteBtn.getSprite().resetAnimations("down", { x: 128, y: 96 });
@@ -176,6 +191,12 @@ class MainMenu {
 
                 // TODO DRAW KANA LIST BUTTONS
 
+                Button.currentList.forEach(b => {
+                    if (b.label != "") {
+                        b.drawLabel(ctx);
+                    }
+                });
+
                 break;
             case MainMenu.STATE.Options:
                 MainMenu.optionsList.forEach(sp => {
@@ -202,7 +223,6 @@ class MainMenu {
          */
         if (bDebug) {
             ctx.fillStyle = "rgb(255,255,255)";
-            // ctx.font = "10px UD Digi Kyokasho NK-R";
             ctx.font = "16px pgfont";
             ctx.fillText("Sprites : " + Sprite.list.length, 0, 100);
             ctx.fillText("UiSprites : " + UiSprite.list.length, 0, 110);
@@ -223,6 +243,9 @@ class MainMenu {
             //         break;
             // }
             // ctx.fillText(rndChoice.r, 100, 150);
+
+            // ctx.font = "10px UD Digi Kyokasho NK-R";
+
 
             // ctx.fillText("あいうえお", 120, 50);
             // ctx.fillText("かきくけこ", 120, 55);
