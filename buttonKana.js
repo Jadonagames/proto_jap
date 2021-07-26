@@ -21,7 +21,7 @@ class ButtonKana {
 
         this.typeState = pTypeState;
 
-        this.callbackAction = pCallback;
+        this.callback = pCallback;
         // this.callbackArg = pArg;
         this.char = pChar;
         this.fontSize = 10;
