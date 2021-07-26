@@ -2,13 +2,16 @@ class UiSprite {
 
     static list = [];
 
-    constructor(pSize, pX = 0, pY = 0, pType = "normal") {
+    constructor(pSize, pX = 0, pY = 0, pType = "normal", pScale = { x: 1, y: 1 }) {
 
         this.width = pSize.w;
         this.height = pSize.h;
 
         this.x = pX;
         this.y = pY;
+
+        this.scaleX = pScale.x;
+        this.scaleY = pScale.y;
 
         this.currentFrame = 0;
         this.currentAnimation = null;
@@ -113,7 +116,7 @@ class UiSprite {
     draw(ctx) {
         if (this.active) {
             const ox = this.currentAnimation.origin.x + (this.width * this.currentFrame); //
-            ctx.drawImage(SS, ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width, this.height);
+            ctx.drawImage(SS, ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
             //           (SS, ox, oy,                             frameWidth, frameHeight, x,      y,      scaleX,                    scaleY)
         }
     }
