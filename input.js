@@ -87,7 +87,7 @@ function keyDown(k) {
     //         btn[0].setState(Button.STATE.Normal);
     //         btn[0].getSprite().changeAnimation("normal");
 
-    //         btn[0].callbackAction();
+    //         btn[0].callback();
     //     }
     // }
 
@@ -155,6 +155,15 @@ function keyUp(k) {
         Sound.current.play();
     }
 
+    if (k.code == "KeyK") {
+        LanguageScreen.changeLanguage("fr");
+    }
+    if (k.code == "KeyL") {
+        LanguageScreen.changeLanguage("en");
+    }
+    if (k.code == "KeyM") {
+        LanguageScreen.changeLanguage("jp");
+    }
 
 
 
@@ -223,9 +232,13 @@ canvas.onclick = e => {
                 if (b.getState() == Button.STATE.Hover) {
 
                     if (b instanceof ButtonKana) {
-                        b.callbackAction(b.char);
+                        b.callback(b.char);
                     } else {
-                        b.callbackAction();
+                        if (b.callback.cb != null && b.callback.arg != null) {
+                            b.callback.cb(b.callback.arg);
+                        } else {
+                            b.callback();
+                        }
                     }
 
                     b.setState(Button.STATE.Normal);
