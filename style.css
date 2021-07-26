@@ -2,3 +2,13 @@
     font-family: 'pgfont';
     src: url('./fonts/PGFontV2.ttf');
 }
+
+@font-face {
+    font-family: 'jpfont';
+    src: url('./fonts/PixelMplus10-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'kyokasho';
+    src: url('./fonts/UDDigiKyokashoN-R.ttc');
+}
