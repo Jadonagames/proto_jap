@@ -14,99 +14,44 @@ class LanguageScreen {
     static init() {
         canvas.style.backgroundColor = "cornflowerblue";
 
-        let frBtn = new Button({ w: 32, h: 16 }, centerX(32), 80, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "french_lang");
-        frBtn.getSprite().addAnimation("normal", 1, { x: 384, y: 48 }, 0.1);
-        frBtn.getSprite().addAnimation("hover", 1, { x: 416, y: 48 }, 0.1);
-        frBtn.getSprite().addAnimation("down", 1, { x: 448, y: 48 }, 0.1);
-        frBtn.getSprite().changeAnimation("normal");
-        LanguageScreen.mainList.push(frBtn.getSprite());
+        let frBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 80, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "french_lang");
+        let enBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 110, { cb: LanguageScreen.changeLanguage, arg: "en" }, "LanguageScreen", LanguageScreen.STATE.Main, "english_lang");
+        let jpBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 140, { cb: LanguageScreen.changeLanguage, arg: "jp" }, "LanguageScreen", LanguageScreen.STATE.Main, "japanese_lang");
 
-        let enBtn = new Button({ w: 32, h: 16 }, centerX(32), 100, { cb: LanguageScreen.changeLanguage, arg: "en" }, "LanguageScreen", LanguageScreen.STATE.Main, "english_lang");
-        enBtn.getSprite().addAnimation("normal", 1, { x: 384, y: 48 }, 0.1);
-        enBtn.getSprite().addAnimation("hover", 1, { x: 416, y: 48 }, 0.1);
-        enBtn.getSprite().addAnimation("down", 1, { x: 448, y: 48 }, 0.1);
-        enBtn.getSprite().changeAnimation("normal");
-        LanguageScreen.mainList.push(enBtn.getSprite());
+        // let test1Btn = new Button2({ tl: { w: 4, h: 4 }, tr: { w: 4, h: 4 }, bl: { w: 4, h: 4 }, br: { w: 4, h: 4 }, t: { w: 1, h: 4 }, r: { w: 4, h: 1 }, b: { w: 1, h: 4 }, l: { w: 4, h: 1 }, c: { w: 1, h: 1 } }, 20, 50, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "npc_1_1");
+        // test1Btn.getSprite().tl.addAnimation("normal", 1, { x: 480, y: 48 }, 0.1);//ok
+        // test1Btn.getSprite().tl.changeAnimation("normal");
+        // test1Btn.getSprite().tr.addAnimation("normal", 1, { x: 492, y: 48 }, 0.1);//ok
+        // test1Btn.getSprite().tr.changeAnimation("normal");
+        // test1Btn.getSprite().bl.addAnimation("normal", 1, { x: 480, y: 60 }, 0.1);//ok
+        // test1Btn.getSprite().bl.changeAnimation("normal");
+        // test1Btn.getSprite().br.addAnimation("normal", 1, { x: 492, y: 60 }, 0.1);//ok
+        // test1Btn.getSprite().br.changeAnimation("normal");
+        // test1Btn.getSprite().t.addAnimation("normal", 1, { x: 486, y: 48 }, 0.1);//ok
+        // test1Btn.getSprite().t.changeAnimation("normal");
+        // test1Btn.getSprite().r.addAnimation("normal", 1, { x: 492, y: 54 }, 0.1);//ok
+        // test1Btn.getSprite().r.changeAnimation("normal");
+        // test1Btn.getSprite().b.addAnimation("normal", 1, { x: 486, y: 60 }, 0.1);//ok
+        // test1Btn.getSprite().b.changeAnimation("normal");
+        // test1Btn.getSprite().l.addAnimation("normal", 1, { x: 480, y: 54 }, 0.1);//ok
+        // test1Btn.getSprite().l.changeAnimation("normal");
+        // test1Btn.getSprite().c.addAnimation("normal", 1, { x: 486, y: 54 }, 0.1);//ok
+        // test1Btn.getSprite().c.changeAnimation("normal");
+        // LanguageScreen.mainList.push(test1Btn.getSprite());
 
-        let jpBtn = new Button({ w: 32, h: 16 }, centerX(32), 120, { cb: LanguageScreen.changeLanguage, arg: "jp" }, "LanguageScreen", LanguageScreen.STATE.Main, "japanese_lang");
-        jpBtn.getSprite().addAnimation("normal", 1, { x: 384, y: 48 }, 0.1);
-        jpBtn.getSprite().addAnimation("hover", 1, { x: 416, y: 48 }, 0.1);
-        jpBtn.getSprite().addAnimation("down", 1, { x: 448, y: 48 }, 0.1);
-        jpBtn.getSprite().changeAnimation("normal");
-        LanguageScreen.mainList.push(jpBtn.getSprite());
-
-
-        let test1Btn = new Button2({ tl: { w: 4, h: 4 }, tr: { w: 4, h: 4 }, bl: { w: 4, h: 4 }, br: { w: 4, h: 4 }, t: { w: 1, h: 4 }, r: { w: 4, h: 1 }, b: { w: 1, h: 4 }, l: { w: 4, h: 1 }, c: { w: 1, h: 1 } }, 20, 50, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "game_over");
-        test1Btn.getSprite().tl.addAnimation("normal", 1, { x: 480, y: 48 }, 0.1);//ok
-        test1Btn.getSprite().tl.changeAnimation("normal");
-        test1Btn.getSprite().tr.addAnimation("normal", 1, { x: 492, y: 48 }, 0.1);//ok
-        test1Btn.getSprite().tr.changeAnimation("normal");
-        test1Btn.getSprite().bl.addAnimation("normal", 1, { x: 480, y: 60 }, 0.1);//ok
-        test1Btn.getSprite().bl.changeAnimation("normal");
-        test1Btn.getSprite().br.addAnimation("normal", 1, { x: 492, y: 60 }, 0.1);//ok
-        test1Btn.getSprite().br.changeAnimation("normal");
-        test1Btn.getSprite().t.addAnimation("normal", 1, { x: 486, y: 48 }, 0.1);//ok
-        test1Btn.getSprite().t.changeAnimation("normal");
-        test1Btn.getSprite().r.addAnimation("normal", 1, { x: 492, y: 54 }, 0.1);//ok
-        test1Btn.getSprite().r.changeAnimation("normal");
-        test1Btn.getSprite().b.addAnimation("normal", 1, { x: 486, y: 60 }, 0.1);//ok
-        test1Btn.getSprite().b.changeAnimation("normal");
-        test1Btn.getSprite().l.addAnimation("normal", 1, { x: 480, y: 54 }, 0.1);//ok
-        test1Btn.getSprite().l.changeAnimation("normal");
-        test1Btn.getSprite().c.addAnimation("normal", 1, { x: 486, y: 54 }, 0.1);//ok
-        test1Btn.getSprite().c.changeAnimation("normal");
-        LanguageScreen.mainList.push(test1Btn.getSprite());
-
-        let test2Btn = new Button2({ tl: { w: 4, h: 4 }, tr: { w: 4, h: 4 }, bl: { w: 4, h: 4 }, br: { w: 4, h: 4 }, t: { w: 1, h: 4 }, r: { w: 4, h: 1 }, b: { w: 1, h: 4 }, l: { w: 4, h: 1 }, c: { w: 1, h: 1 } }, 20, 75, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "game_over");
-        test2Btn.getSprite().tl.addAnimation("normal", 1, { x: 480, y: 48 }, 0.1);//ok
-        test2Btn.getSprite().tl.changeAnimation("normal");
-        test2Btn.getSprite().tr.addAnimation("normal", 1, { x: 492, y: 48 }, 0.1);//ok
-        test2Btn.getSprite().tr.changeAnimation("normal");
-        test2Btn.getSprite().bl.addAnimation("normal", 1, { x: 480, y: 60 }, 0.1);//ok
-        test2Btn.getSprite().bl.changeAnimation("normal");
-        test2Btn.getSprite().br.addAnimation("normal", 1, { x: 492, y: 60 }, 0.1);//ok
-        test2Btn.getSprite().br.changeAnimation("normal");
-        test2Btn.getSprite().t.addAnimation("normal", 1, { x: 486, y: 48 }, 0.1);//ok
-        test2Btn.getSprite().t.changeAnimation("normal");
-        test2Btn.getSprite().r.addAnimation("normal", 1, { x: 492, y: 54 }, 0.1);//ok
-        test2Btn.getSprite().r.changeAnimation("normal");
-        test2Btn.getSprite().b.addAnimation("normal", 1, { x: 486, y: 60 }, 0.1);//ok
-        test2Btn.getSprite().b.changeAnimation("normal");
-        test2Btn.getSprite().l.addAnimation("normal", 1, { x: 480, y: 54 }, 0.1);//ok
-        test2Btn.getSprite().l.changeAnimation("normal");
-        test2Btn.getSprite().c.addAnimation("normal", 1, { x: 486, y: 54 }, 0.1);//ok
-        test2Btn.getSprite().c.changeAnimation("normal");
-        LanguageScreen.mainList.push(test2Btn.getSprite());
-
-        let test3Btn = new Button2({ tl: { w: 4, h: 4 }, tr: { w: 4, h: 4 }, bl: { w: 4, h: 4 }, br: { w: 4, h: 4 }, t: { w: 1, h: 4 }, r: { w: 4, h: 1 }, b: { w: 1, h: 4 }, l: { w: 4, h: 1 }, c: { w: 1, h: 1 } }, 20, 100, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "game_over");
-        test3Btn.getSprite().tl.addAnimation("normal", 1, { x: 480, y: 48 }, 0.1);//ok
-        test3Btn.getSprite().tl.changeAnimation("normal");
-        test3Btn.getSprite().tr.addAnimation("normal", 1, { x: 492, y: 48 }, 0.1);//ok
-        test3Btn.getSprite().tr.changeAnimation("normal");
-        test3Btn.getSprite().bl.addAnimation("normal", 1, { x: 480, y: 60 }, 0.1);//ok
-        test3Btn.getSprite().bl.changeAnimation("normal");
-        test3Btn.getSprite().br.addAnimation("normal", 1, { x: 492, y: 60 }, 0.1);//ok
-        test3Btn.getSprite().br.changeAnimation("normal");
-        test3Btn.getSprite().t.addAnimation("normal", 1, { x: 486, y: 48 }, 0.1);//ok
-        test3Btn.getSprite().t.changeAnimation("normal");
-        test3Btn.getSprite().r.addAnimation("normal", 1, { x: 492, y: 54 }, 0.1);//ok
-        test3Btn.getSprite().r.changeAnimation("normal");
-        test3Btn.getSprite().b.addAnimation("normal", 1, { x: 486, y: 60 }, 0.1);//ok
-        test3Btn.getSprite().b.changeAnimation("normal");
-        test3Btn.getSprite().l.addAnimation("normal", 1, { x: 480, y: 54 }, 0.1);//ok
-        test3Btn.getSprite().l.changeAnimation("normal");
-        test3Btn.getSprite().c.addAnimation("normal", 1, { x: 486, y: 54 }, 0.1);//ok
-        test3Btn.getSprite().c.changeAnimation("normal");
-        LanguageScreen.mainList.push(test3Btn.getSprite());
-
-
-
+        let test2btn = new Button({ w: 54, h: 20, v: 4 }, 20, 50, { cb: LanguageScreen.changeLanguage, arg: "en" }, "LanguageScreen", LanguageScreen.STATE.Main, "start");
+        let test3btn = new Button({ w: 54, h: 20, v: 4 }, 74, 50, { cb: LanguageScreen.changeLanguage, arg: "jp" }, "LanguageScreen", LanguageScreen.STATE.Main, "start");
+        let minusBtn = new Button({ w: 16, h: 16, v: 4 }, 10, 10, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", MainMenu.STATE.Main, "", 0, true);
+        minusBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 96 }, 0.1);
+        minusBtn.getSprite().addAnimation("hover", 1, { x: 16, y: 96 }, 0.1);
+        minusBtn.getSprite().addAnimation("down", 1, { x: 32, y: 96 }, 0.1);
+        minusBtn.getSprite().changeAnimation("normal");
 
         Button.resetTypeState("LanguageScreen", LanguageScreen.STATE.Main);
-
     }
 
     static changeLanguage(pLang) {
+        console.log("change language");
         switch (pLang) {
             case "en":
                 LANG = translationEn;
@@ -144,6 +89,7 @@ class LanguageScreen {
             sp.draw(ctx);
         });
 
+        // in UiSprite.list : only if type=="normal" UiSprite : 
         UiSprite.list.forEach(sp => {
             sp.forEach(s => {
                 s.draw(ctx);
@@ -154,25 +100,7 @@ class LanguageScreen {
         //     sp.draw(ctx);
         // });
 
-        Button.currentList.forEach(b => {
-            if (b.getSprite().tl == null) {
-                b.getSprite().draw(ctx);
-            } else {
-                b.getSprite().tl.draw(ctx);
-                b.getSprite().tr.draw(ctx);
-                b.getSprite().bl.draw(ctx);
-                b.getSprite().br.draw(ctx);
-                b.getSprite().t.draw(ctx);
-                b.getSprite().r.draw(ctx);
-                b.getSprite().b.draw(ctx);
-                b.getSprite().l.draw(ctx);
-                b.getSprite().c.draw(ctx);
-            }
-            if (b.label != "") {
-                b.drawLabel(ctx);
-            }
-
-        });
+        Button.draw();
 
         ctx.fillStyle = "rgb(255,255,255)";
         ctx.font = "20px UD Digi Kyokasho NK-R";
@@ -192,9 +120,6 @@ class LanguageScreen {
 
         // ctx.font = "10px UD Digi Kyokasho NK-R";
         ctx.font = "10px jpfont";
-
-        ctx.fillText("なんと　ピクセル・エムプラスをみつけた。", 0, 10);
-
 
         ctx.fillText("あいうえお", 200, 50);
         ctx.fillText("かきくけこ", 200, 60);

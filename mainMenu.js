@@ -23,91 +23,61 @@ class MainMenu {
 
     static init() {
 
-
-
-
         // MAIN 
         let title = new UiSprite({ w: 158, h: 40 }, centerX(158), 10, "mainmenu");
         title.addAnimation("normal", 1, { x: 37, y: 0 }, 0.1);
         title.changeAnimation("normal");
         MainMenu.mainList.push(title);
 
-        let startBtn = new Button({ w: 32, h: 16 }, centerX(32), 80, startBtnCB, "mainmenu", MainMenu.STATE.Main);
-        startBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 48 }, 0.1);
-        startBtn.getSprite().addAnimation("hover", 1, { x: 32, y: 48 }, 0.1);
-        startBtn.getSprite().addAnimation("down", 1, { x: 64, y: 48 }, 0.1);
-        startBtn.getSprite().changeAnimation("normal");
-        MainMenu.mainList.push(startBtn.getSprite());
+        let startBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(32), 80, startBtnCB, "mainmenu", MainMenu.STATE.Main, "start");
+        // MainMenu.mainList.push(startBtn.getSprite());
 
-        let optionsBtn = new Button({ w: 32, h: 16 }, centerX(32), 100, MainMenu.optionsCB.bind(this), "mainmenu", MainMenu.STATE.Main);
-        optionsBtn.getSprite().addAnimation("normal", 1, { x: 96, y: 48 }, 0.1);
-        optionsBtn.getSprite().addAnimation("hover", 1, { x: 128, y: 48 }, 0.1);
-        optionsBtn.getSprite().addAnimation("down", 1, { x: 160, y: 48 }, 0.1);
-        optionsBtn.getSprite().changeAnimation("normal");
-        MainMenu.mainList.push(optionsBtn.getSprite());
+        let optionsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(32), 110, MainMenu.optionsCB.bind(this), "mainmenu", MainMenu.STATE.Main, "settings");
+        // MainMenu.mainList.push(optionsBtn.getSprite());
 
-        let creditsBtn = new Button({ w: 32, h: 16 }, centerX(32), 120, MainMenu.creditsCB.bind(this), "mainmenu", MainMenu.STATE.Main);
-        creditsBtn.getSprite().addAnimation("normal", 1, { x: 192, y: 48 }, 0.1);
-        creditsBtn.getSprite().addAnimation("hover", 1, { x: 224, y: 48 }, 0.1);
-        creditsBtn.getSprite().addAnimation("down", 1, { x: 256, y: 48 }, 0.1);
-        creditsBtn.getSprite().changeAnimation("normal");
-        MainMenu.mainList.push(creditsBtn.getSprite());
+        let creditsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(32), 140, MainMenu.creditsCB.bind(this), "mainmenu", MainMenu.STATE.Main, "credits");
+        // MainMenu.mainList.push(creditsBtn.getSprite());
 
-        this.muteBtn = new Button({ w: 16, h: 14 }, 180, 50, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main);
+        this.muteBtn = new Button({ w: 16, h: 14 }, 180, 50, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
         this.muteBtn.getSprite().addAnimation("normal", 1, { x: 96, y: 96 }, 0.1);
         this.muteBtn.getSprite().addAnimation("hover", 1, { x: 112, y: 96 }, 0.1);
         this.muteBtn.getSprite().addAnimation("down", 1, { x: 128, y: 96 }, 0.1);
         this.muteBtn.getSprite().changeAnimation("normal");
-        MainMenu.mainList.push(this.muteBtn.getSprite());
-
-        // FOR TESTING
-        let startBtnLabel = new Button({ w: 32, h: 16 }, CANVAS_WIDTH * 1 / 3, 80, startBtnCB, "mainmenu", MainMenu.STATE.Main, "start");
-        startBtnLabel.getSprite().addAnimation("normal", 1, { x: 384, y: 48 }, 0.1);
-        startBtnLabel.getSprite().addAnimation("hover", 1, { x: 416, y: 48 }, 0.1);
-        startBtnLabel.getSprite().addAnimation("down", 1, { x: 448, y: 48 }, 0.1);
-        startBtnLabel.getSprite().changeAnimation("normal");
-        MainMenu.mainList.push(startBtnLabel.getSprite());
-
-        let optionsBtnLabel = new Button({ w: 32, h: 16 }, CANVAS_WIDTH * 1 / 3, 100, startBtnCB, "mainmenu", MainMenu.STATE.Main, "yes");
-        optionsBtnLabel.getSprite().addAnimation("normal", 1, { x: 384, y: 48 }, 0.1);
-        optionsBtnLabel.getSprite().addAnimation("hover", 1, { x: 416, y: 48 }, 0.1);
-        optionsBtnLabel.getSprite().addAnimation("down", 1, { x: 448, y: 48 }, 0.1);
-        optionsBtnLabel.getSprite().changeAnimation("normal");
-        MainMenu.mainList.push(optionsBtnLabel.getSprite());
+        // MainMenu.mainList.push(this.muteBtn.getSprite());
 
         // OPTIONS
-        let optionsTitle = new UiSprite({ w: 116, h: 40 }, centerX(116), 10, "mainmenu");
+        let optionsTitle = new UiSprite({ w: 116, h: 40 }, centerX(116), 10, "mainmenu", "", 0, true);
         optionsTitle.addAnimation("normal", 1, { x: 195, y: 0 }, 0.1);
         optionsTitle.changeAnimation("normal");
         MainMenu.optionsList.push(optionsTitle);
 
-        let musicDownBtn = new Button({ w: 16, h: 16 }, 70, 60, Sound.decreaseMusicVolume, "mainmenu", MainMenu.STATE.Options);
+        let musicDownBtn = new Button({ w: 16, h: 16 }, 70, 60, Sound.decreaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
         musicDownBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 96 }, 0.1);
         musicDownBtn.getSprite().addAnimation("hover", 1, { x: 16, y: 96 }, 0.1);
         musicDownBtn.getSprite().addAnimation("down", 1, { x: 32, y: 96 }, 0.1);
         musicDownBtn.getSprite().changeAnimation("normal");
-        MainMenu.optionsList.push(musicDownBtn.getSprite());
+        // MainMenu.optionsList.push(musicDownBtn.getSprite());
 
-        let musicUpBtn = new Button({ w: 16, h: 16 }, 120, 60, Sound.increaseMusicVolume, "mainmenu", MainMenu.STATE.Options);
+        let musicUpBtn = new Button({ w: 16, h: 16 }, 120, 60, Sound.increaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
         musicUpBtn.getSprite().addAnimation("normal", 1, { x: 48, y: 96 }, 0.1);
         musicUpBtn.getSprite().addAnimation("hover", 1, { x: 64, y: 96 }, 0.1);
         musicUpBtn.getSprite().addAnimation("down", 1, { x: 80, y: 96 }, 0.1);
         musicUpBtn.getSprite().changeAnimation("normal");
-        MainMenu.optionsList.push(musicUpBtn.getSprite());
+        // MainMenu.optionsList.push(musicUpBtn.getSprite());
 
-        let sfxDownBtn = new Button({ w: 16, h: 16 }, 70, 80, Sound.decreaseSfxVolume, "mainmenu", MainMenu.STATE.Options);
+        let sfxDownBtn = new Button({ w: 16, h: 16 }, 70, 80, Sound.decreaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
         sfxDownBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 96 }, 0.1);
         sfxDownBtn.getSprite().addAnimation("hover", 1, { x: 16, y: 96 }, 0.1);
         sfxDownBtn.getSprite().addAnimation("down", 1, { x: 32, y: 96 }, 0.1);
         sfxDownBtn.getSprite().changeAnimation("normal");
-        MainMenu.optionsList.push(sfxDownBtn.getSprite());
+        // MainMenu.optionsList.push(sfxDownBtn.getSprite());
 
-        let sfxUpBtn = new Button({ w: 16, h: 16 }, 120, 80, Sound.increaseSfxVolume, "mainmenu", MainMenu.STATE.Options);
+        let sfxUpBtn = new Button({ w: 16, h: 16 }, 120, 80, Sound.increaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
         sfxUpBtn.getSprite().addAnimation("normal", 1, { x: 48, y: 96 }, 0.1);
         sfxUpBtn.getSprite().addAnimation("hover", 1, { x: 64, y: 96 }, 0.1);
         sfxUpBtn.getSprite().addAnimation("down", 1, { x: 80, y: 96 }, 0.1);
         sfxUpBtn.getSprite().changeAnimation("normal");
-        MainMenu.optionsList.push(sfxUpBtn.getSprite());
+        // MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
         let musicTxt = new UiSprite({ w: 23, h: 7 }, 45, 63, "mainmenu", MainMenu.STATE.Options);
         musicTxt.addAnimation("normal", 1, { x: 0, y: 80 }, 0.1);
@@ -119,30 +89,22 @@ class MainMenu {
         sfxTxt.changeAnimation("normal");
         MainMenu.optionsList.push(sfxTxt);
 
-        let optionsBackBtn = new Button({ w: 32, h: 16 }, centerX(32), 120, toMainMenu, "mainmenu", MainMenu.STATE.Options);
-        optionsBackBtn.getSprite().addAnimation("normal", 1, { x: 288, y: 48 }, 0.1);
-        optionsBackBtn.getSprite().addAnimation("hover", 1, { x: 320, y: 48 }, 0.1);
-        optionsBackBtn.getSprite().addAnimation("down", 1, { x: 352, y: 48 }, 0.1);
-        optionsBackBtn.getSprite().changeAnimation("normal");
-        MainMenu.optionsList.push(optionsBackBtn.getSprite());
+        let optionsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), 120, toMainMenu, "mainmenu", MainMenu.STATE.Options, "back");
+        // MainMenu.optionsList.push(optionsBackBtn.getSprite());
 
         // CREDITS
-        let creditsTitle = new UiSprite({ w: 112, h: 28 }, centerX(112), 10, "mainmenu", MainMenu.STATE.Credits);
+        let creditsTitle = new UiSprite({ w: 112, h: 28 }, centerX(112), 10, "mainmenu", MainMenu.STATE.Credits, "", 0, true);
         creditsTitle.addAnimation("normal", 1, { x: 311, y: 0 }, 0.1);
         creditsTitle.changeAnimation("normal");
         MainMenu.creditsList.push(creditsTitle);
 
-        let jadonagamesLogo = new UiSprite({ w: 37, h: 34 }, centerX(37), centerY(34), "mainmenu", MainMenu.STATE.Credits);
+        let jadonagamesLogo = new UiSprite({ w: 37, h: 34 }, centerX(37), centerY(34), "mainmenu", MainMenu.STATE.Credits, "", 0, true);
         jadonagamesLogo.addAnimation("normal", 1, { x: 0, y: 0 }, 0.1);
         jadonagamesLogo.changeAnimation("normal");
         MainMenu.creditsList.push(jadonagamesLogo);
 
-        let creditsBackBtn = new Button({ w: 32, h: 16 }, centerX(32), 120, toMainMenu, "mainmenu", MainMenu.STATE.Credits);
-        creditsBackBtn.getSprite().addAnimation("normal", 1, { x: 288, y: 48 }, 0.1);
-        creditsBackBtn.getSprite().addAnimation("hover", 1, { x: 320, y: 48 }, 0.1);
-        creditsBackBtn.getSprite().addAnimation("down", 1, { x: 352, y: 48 }, 0.1);
-        creditsBackBtn.getSprite().changeAnimation("normal");
-        MainMenu.creditsList.push(creditsBackBtn.getSprite());
+        let creditsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), 120, toMainMenu, "mainmenu", MainMenu.STATE.Credits, "back");
+        // MainMenu.creditsList.push(creditsBackBtn.getSprite());
 
     }
 
@@ -186,22 +148,20 @@ class MainMenu {
         switch (MainMenu.state) {
             case MainMenu.STATE.Main:
                 MainMenu.mainList.forEach(sp => {
-                    sp.draw(ctx);
+                    // sp.draw(ctx);
                 })
 
                 // TODO DRAW KANA LIST BUTTONS
-
-                Button.currentList.forEach(b => {
-                    if (b.label != "") {
-                        b.drawLabel(ctx);
-                    }
-                });
+                Button.draw();
 
                 break;
             case MainMenu.STATE.Options:
                 MainMenu.optionsList.forEach(sp => {
                     sp.draw(ctx);
                 })
+
+                Button.draw();
+
                 ctx.fillStyle = "rgb(255,255,255)";
                 ctx.font = "10px serif";
                 ctx.fillText(Math.floor(MUSIC_VOLUME * 10), 100, 72);
@@ -211,6 +171,7 @@ class MainMenu {
                 MainMenu.creditsList.forEach(sp => {
                     sp.draw(ctx);
                 })
+                Button.draw();
                 break;
             case MainMenu.STATE.Transition:
 
