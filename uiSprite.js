@@ -19,6 +19,7 @@ class UiSprite {
 
         this.active = true;
 
+        this.class = "";
         this.type = pType;
         this.loopCount = 0;
         this.maxLoop = 0;
@@ -26,17 +27,13 @@ class UiSprite {
 
         this.animations = [];
 
+        this.parent = null;
+
+        this.isMoving = false;
+
         if (this.type == "normal") {
             UiSprite.list.push(this);
         }
-
-        // if (this.type == "pause") {
-        //     Pause.list.push(this);
-        // } else if (this.type == "mainmenu") {
-        //     MainMenu.list.push(this);
-        // } else if (this.type == "normal") {
-        //     UiSprite.list.push(this);
-        // }
 
     }
 
@@ -69,6 +66,30 @@ class UiSprite {
                 this.currentFrame = 0;
             }
         });
+    }
+
+    getClass() {
+        return this.class;
+    }
+
+    setClass(pClass) {
+        this.class = pClass;
+    }
+
+    getSprite() {
+        return this;
+    }
+
+    getParent() {
+        return this.parent;
+    }
+
+    setParent(pParent) {
+        this.parent = pParent;
+    }
+
+    setMoving(pBool) {
+        this.isMoving = pBool;
     }
 
     setActive(pBool) {

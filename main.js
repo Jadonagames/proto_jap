@@ -15,6 +15,7 @@ let SFX_VOLUME = 0.5;
  */
 let bDebug = true;
 let debugDt = 0;
+let debug_STOP = false;
 // ---------------- END DEBUG
 
 const MAIN_STATE = Object.freeze({
@@ -95,7 +96,7 @@ function init() {
 
     // SplashScreen.init();  // COMMENT FOR : MAINMENU START
     LanguageScreen.init(); // COMMENT FOR : MAINMENU START
-    MainMenu.init();
+    // MainMenu.init();
     //toMainMenu() // FOR : MAINMENU START
 
     interval = setInterval(run, 1000 / 60);
@@ -113,13 +114,18 @@ function startBtnCB() {
     }
     // load();
     Game1.load();
+    // Panel.resetTypeState("normal", GAME_STATE.Game);
     // Button.resetTypeState("normal", GAME_STATE.Game);
+    Panel.resetTypeState("game1", Game1.STATE.Game);
     Button.resetTypeState("game1", Game1.STATE.Game);
 
 }
 
 function toMainMenu() {
 
+    if (!MainMenu.bInit) {
+        MainMenu.init();
+    }
     // MainMenu.init();
     canvas.style.backgroundColor = "cornflowerblue";
 
@@ -132,5 +138,5 @@ function toMainMenu() {
     // Button.currentList[0].getSprite().changeAnimation("hover");
     // --------------------------
 
-    Sprite.list = [];
+    // Sprite.list = [];
 }

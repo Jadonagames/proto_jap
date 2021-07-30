@@ -32,11 +32,16 @@ class Button {
                 r: new UiSprite({ w: pSize.r.w, h: pSize.r.h }, pX + this.internWidth, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
                 b: new UiSprite({ w: pSize.b.w, h: pSize.b.h }, pX + pSize.vertices.w, pY + this.internHeight, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
                 l: new UiSprite({ w: pSize.l.w, h: pSize.l.h }, pX, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
-                c: new UiSprite({ w: pSize.c.w, h: pSize.c.h }, pX + pSize.vertices.w, pY + pSize.vertices.h, this.type, { x: this.internWidth - pSize.vertices.w, y: this.internHeight - pSize.vertices.h })
+                c: new UiSprite({ w: pSize.c.w, h: pSize.c.h }, pX + pSize.vertices.w, pY + pSize.vertices.h, this.type, { x: this.internWidth - pSize.vertices.w, y: this.internHeight - pSize.vertices.h }),
+                class: "dynamic",
+                parent: this,
+                delete: false
             }
             this.setButtonSprites(pId);
         } else {
             this.sp = new UiSprite(pSize, pX, pY, this.type);
+            this.sp.setClass("button");
+            this.sp.setParent(this);
         }
 
 
@@ -47,6 +52,7 @@ class Button {
         this.label = pLabel;
 
         this.callback = pCallback;
+        this.hoverCB = null;
         this.ALIGN_TEXT = Object.freeze({
             Left: 0,
             Center: 1,
@@ -54,55 +60,57 @@ class Button {
         });
         this.alignText = this.ALIGN_TEXT.Center;
 
+        this.tooltip = [];
+
         Button.list.push(this);
     }
 
     setButtonSprites(pId) {
         if (pId == 0) {
-            this.getSprite().tl.addAnimation("normal", 1, { x: 0, y: 48 }, 0.1);
-            this.getSprite().tl.addAnimation("hover", 1, { x: 9, y: 48 }, 0.1);
-            this.getSprite().tl.addAnimation("down", 1, { x: 18, y: 48 }, 0.1);
-            this.getSprite().tl.changeAnimation("normal");
+            this.sp.tl.addAnimation("normal", 1, { x: 0, y: 48 }, 0.1);
+            this.sp.tl.addAnimation("hover", 1, { x: 9, y: 48 }, 0.1);
+            this.sp.tl.addAnimation("down", 1, { x: 18, y: 48 }, 0.1);
+            this.sp.tl.changeAnimation("normal");
 
-            this.getSprite().tr.addAnimation("normal", 1, { x: 5, y: 48 }, 0.1);
-            this.getSprite().tr.addAnimation("hover", 1, { x: 14, y: 48 }, 0.1);
-            this.getSprite().tr.addAnimation("down", 1, { x: 23, y: 48 }, 0.1);
-            this.getSprite().tr.changeAnimation("normal");
+            this.sp.tr.addAnimation("normal", 1, { x: 5, y: 48 }, 0.1);
+            this.sp.tr.addAnimation("hover", 1, { x: 14, y: 48 }, 0.1);
+            this.sp.tr.addAnimation("down", 1, { x: 23, y: 48 }, 0.1);
+            this.sp.tr.changeAnimation("normal");
 
-            this.getSprite().bl.addAnimation("normal", 1, { x: 0, y: 53 }, 0.1);
-            this.getSprite().bl.addAnimation("hover", 1, { x: 9, y: 53 }, 0.1);
-            this.getSprite().bl.addAnimation("down", 1, { x: 18, y: 53 }, 0.1);
-            this.getSprite().bl.changeAnimation("normal");
+            this.sp.bl.addAnimation("normal", 1, { x: 0, y: 53 }, 0.1);
+            this.sp.bl.addAnimation("hover", 1, { x: 9, y: 53 }, 0.1);
+            this.sp.bl.addAnimation("down", 1, { x: 18, y: 53 }, 0.1);
+            this.sp.bl.changeAnimation("normal");
 
-            this.getSprite().br.addAnimation("normal", 1, { x: 5, y: 53 }, 0.1);
-            this.getSprite().br.addAnimation("hover", 1, { x: 14, y: 53 }, 0.1);
-            this.getSprite().br.addAnimation("down", 1, { x: 23, y: 53 }, 0.1);
-            this.getSprite().br.changeAnimation("normal");
+            this.sp.br.addAnimation("normal", 1, { x: 5, y: 53 }, 0.1);
+            this.sp.br.addAnimation("hover", 1, { x: 14, y: 53 }, 0.1);
+            this.sp.br.addAnimation("down", 1, { x: 23, y: 53 }, 0.1);
+            this.sp.br.changeAnimation("normal");
 
-            this.getSprite().t.addAnimation("normal", 1, { x: 4, y: 48 }, 0.1);
-            this.getSprite().t.addAnimation("hover", 1, { x: 13, y: 48 }, 0.1);
-            this.getSprite().t.addAnimation("down", 1, { x: 22, y: 48 }, 0.1);
-            this.getSprite().t.changeAnimation("normal");
+            this.sp.t.addAnimation("normal", 1, { x: 4, y: 48 }, 0.1);
+            this.sp.t.addAnimation("hover", 1, { x: 13, y: 48 }, 0.1);
+            this.sp.t.addAnimation("down", 1, { x: 22, y: 48 }, 0.1);
+            this.sp.t.changeAnimation("normal");
 
-            this.getSprite().r.addAnimation("normal", 1, { x: 5, y: 52 }, 0.1);
-            this.getSprite().r.addAnimation("hover", 1, { x: 14, y: 52 }, 0.1);
-            this.getSprite().r.addAnimation("down", 1, { x: 23, y: 52 }, 0.1);
-            this.getSprite().r.changeAnimation("normal");
+            this.sp.r.addAnimation("normal", 1, { x: 5, y: 52 }, 0.1);
+            this.sp.r.addAnimation("hover", 1, { x: 14, y: 52 }, 0.1);
+            this.sp.r.addAnimation("down", 1, { x: 23, y: 52 }, 0.1);
+            this.sp.r.changeAnimation("normal");
 
-            this.getSprite().b.addAnimation("normal", 1, { x: 4, y: 53 }, 0.1);
-            this.getSprite().b.addAnimation("hover", 1, { x: 13, y: 53 }, 0.1);
-            this.getSprite().b.addAnimation("down", 1, { x: 22, y: 53 }, 0.1);
-            this.getSprite().b.changeAnimation("normal");
+            this.sp.b.addAnimation("normal", 1, { x: 4, y: 53 }, 0.1);
+            this.sp.b.addAnimation("hover", 1, { x: 13, y: 53 }, 0.1);
+            this.sp.b.addAnimation("down", 1, { x: 22, y: 53 }, 0.1);
+            this.sp.b.changeAnimation("normal");
 
-            this.getSprite().l.addAnimation("normal", 1, { x: 0, y: 52 }, 0.1);
-            this.getSprite().l.addAnimation("hover", 1, { x: 9, y: 52 }, 0.1);
-            this.getSprite().l.addAnimation("down", 1, { x: 18, y: 52 }, 0.1);
-            this.getSprite().l.changeAnimation("normal");
+            this.sp.l.addAnimation("normal", 1, { x: 0, y: 52 }, 0.1);
+            this.sp.l.addAnimation("hover", 1, { x: 9, y: 52 }, 0.1);
+            this.sp.l.addAnimation("down", 1, { x: 18, y: 52 }, 0.1);
+            this.sp.l.changeAnimation("normal");
 
-            this.getSprite().c.addAnimation("normal", 1, { x: 4, y: 52 }, 0.1);
-            this.getSprite().c.addAnimation("hover", 1, { x: 13, y: 52 }, 0.1);
-            this.getSprite().c.addAnimation("down", 1, { x: 22, y: 52 }, 0.1);
-            this.getSprite().c.changeAnimation("normal");
+            this.sp.c.addAnimation("normal", 1, { x: 4, y: 52 }, 0.1);
+            this.sp.c.addAnimation("hover", 1, { x: 13, y: 52 }, 0.1);
+            this.sp.c.addAnimation("down", 1, { x: 22, y: 52 }, 0.1);
+            this.sp.c.changeAnimation("normal");
         }
     }
 
@@ -120,6 +128,14 @@ class Button {
         return { w: this.width, h: this.height };
     }
 
+    getTooltip() {
+        return this.tooltip;
+    }
+
+    setTooltip(pTooltip) {
+        this.tooltip.push(pTooltip);
+    }
+
     getState() {
         return this.state;
     }
@@ -132,8 +148,32 @@ class Button {
         this.align = pAlign;
     }
 
+    setHoverCB(pCallback, pParam) {
+        this.hoverCB = {
+            cb: pCallback,
+            arg: pParam
+        }
+    }
+
+    setTextCase(pCase) {
+        switch (pCase) {
+            case "first":
+                LANG[this.label] = firstUC(LANG[this.label]);
+                break;
+            case "all":
+                LANG[this.label] = LANG[this.label].toUpperCase();
+                break;
+            case "normal":
+                LANG[this.label] = LANG[this.label].toLowerCase();
+                break;
+        }
+    }
+
     static draw() {
         Button.currentList.forEach(b => {
+            if (b.state == Button.STATE.Hover && b.hoverCB) {
+                b.hoverCB.cb(b.hoverCB.arg);
+            }
             if (!b.staticSize) {
                 for (const sp in b.getSprite()) {
                     b.getSprite()[sp].draw(ctx);
@@ -143,6 +183,9 @@ class Button {
             }
             if (b.label != "") {
                 b.drawLabel(ctx);
+            }
+            if (b.state == Button.STATE.Hover && b.hoverCB) {
+                b.hoverCB.cb(b.hoverCB.arg);
             }
         });
     }
@@ -155,7 +198,6 @@ class Button {
         }
 
         LANG["lang_code"] == "jp" ? ctx.font = "10px jpfont" : ctx.font = "10px jpfont";
-        // ctx.font = "10px testfont";
 
         switch (this.alignText) {
             case this.ALIGN_TEXT.Left:
@@ -172,9 +214,6 @@ class Button {
                 break;
         }
 
-        // ctx.fillText(LANG[this.label], this.x + this.width - 5, this.y + 13); RIGHT
-        // ctx.fillText(LANG[this.label], this.x + this.width * 0.5, this.y + 13);
         ctx.textAlign = "left";
-
     }
 }

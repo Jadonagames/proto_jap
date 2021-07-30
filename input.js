@@ -145,9 +145,9 @@ function keyUp(k) {
     /**
      * DEBUG
      */
-    if (k.code == "KeyQ") {
-        // bDebug = !bDebug;
-        test(learn, choice, charNumbers);
+    if (k.code == "KeyQ") { // => A
+        bDebug = !bDebug;
+        // test(learn, choice, charNumbers);
     }
 
     if (k.code == "KeyE") {
@@ -155,15 +155,16 @@ function keyUp(k) {
         Sound.current.play();
     }
 
-    if (k.code == "KeyK") {
-        LanguageScreen.changeLanguage("fr");
+    if (k.code == "KeyA") {
+        console.log("to main menu() KEY pressed");
+        toMainMenu();
     }
-    if (k.code == "KeyL") {
-        LanguageScreen.changeLanguage("en");
+
+    if (k.code == "Space") {
+        // debug_STOP = !debug_STOP;
+
     }
-    if (k.code == "KeyM") {
-        LanguageScreen.changeLanguage("jp");
-    }
+
 
 
 
@@ -188,16 +189,32 @@ canvas.addEventListener("mousemove", e => {
                 if (!b.staticSize) {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
                         if (b.getSprite().tl.currentAnimation.name != "down") {
+                            if (b.hoverCB && b.getState() != Button.STATE.Hover) {
+                                b.hoverCB.cb(b.hoverCB.arg);
+                            }
                             b.setState(Button.STATE.Hover);
                             for (const sp in b.getSprite()) {
-                                b.getSprite()[sp].changeAnimation("hover");
+                                if (b.getSprite()[sp] instanceof UiSprite) {
+                                    b.getSprite()[sp].changeAnimation("hover");
+                                }
                             }
                         }
                     } else {
                         if (b.getState() == Button.STATE.Hover) {
+                            if (b.hoverCB) {
+                                b.getTooltip().forEach(sp => {
+                                    if (sp instanceof UiSprite) {
+                                        sp.delete = true;
+                                    } else {
+                                        sp.getSprite().delete = true;
+                                    }
+                                })
+                            }
                             b.setState(Button.STATE.Normal);
                             for (const sp in b.getSprite()) {
-                                b.getSprite()[sp].changeAnimation("normal");
+                                if (b.getSprite()[sp] instanceof UiSprite) {
+                                    b.getSprite()[sp].changeAnimation("normal");
+                                }
                             }
                         }
                     }
@@ -205,7 +222,7 @@ canvas.addEventListener("mousemove", e => {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, b.getSprite().x, b.getSprite().y, b.getSize().w, b.getSize().h)) {
                         if (b.getSprite().currentAnimation.name != "down") {
                             b.setState(Button.STATE.Hover);
-                            b.getSprite().changeAnimation("hover");
+                            b.getSprite().changeAnimation("hover"); // TODO ADD CB
                         }
                     } else {
                         if (b.getState() == Button.STATE.Hover) {
@@ -231,7 +248,9 @@ canvas.addEventListener("mousedown", e => {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
                         b.setState(Button.STATE.Hover);
                         for (const sp in b.getSprite()) {
-                            b.getSprite()[sp].changeAnimation("down");
+                            if (b.getSprite()[sp] instanceof UiSprite) {
+                                b.getSprite()[sp].changeAnimation("down");
+                            }
                         }
                     }
                 } else {
@@ -271,7 +290,9 @@ canvas.onclick = e => {
                     b.setState(Button.STATE.Normal);
                     if (!b.staticSize) {
                         for (const sp in b.getSprite()) {
-                            b.getSprite()[sp].changeAnimation("normal");
+                            if (b.getSprite()[sp] instanceof UiSprite) {
+                                b.getSprite()[sp].changeAnimation("normal");
+                            }
                         }
                     } else {
                         b.getSprite().changeAnimation("normal");
@@ -282,18 +303,34 @@ canvas.onclick = e => {
             return true;
         });
 
-        //TODO MODIFICATIONS HERE !
         // Check after a screen change if the mouse isn't hovering
         Button.currentList.every(b => {
             if (b.getState() != Button.STATE.Inactive) {
-                if (CollisionManager.MouseCollision(mouseX, mouseY, b.getSprite().x, b.getSprite().y, b.getSize().w, b.getSize().h)) {
-                    b.setState(Button.STATE.Hover);
-                    b.getSprite().changeAnimation("hover");
-                    return false;
+                if (!b.staticSize) {
+                    if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
+                        b.setState(Button.STATE.Hover);
+                        for (const sp in b.getSprite()) {
+                            b.getSprite()[sp].changeAnimation("hover");
+                        }
+                        return false;
+                    } else {
+                        if (b.getState() == Button.STATE.Hover) {
+                            b.setState(Button.STATE.Normal);
+                            for (const sp in b.getSprite()) {
+                                b.getSprite()[sp].changeAnimation("normal");
+                            }
+                        }
+                    }
                 } else {
-                    if (b.getState() == Button.STATE.Hover) {
-                        b.setState(Button.STATE.Normal);
-                        b.getSprite().changeAnimation("normal");
+                    if (CollisionManager.MouseCollision(mouseX, mouseY, b.getSprite().x, b.getSprite().y, b.getSize().w, b.getSize().h)) {
+                        b.setState(Button.STATE.Hover);
+                        b.getSprite().changeAnimation("hover");
+                        return false;
+                    } else {
+                        if (b.getState() == Button.STATE.Hover) {
+                            b.setState(Button.STATE.Normal);
+                            b.getSprite().changeAnimation("normal");
+                        }
                     }
                 }
             }
