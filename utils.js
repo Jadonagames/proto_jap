@@ -22,12 +22,43 @@ class Timer {
     }
 }
 
-function centerX(pWidth) {
-    return (CANVAS_WIDTH / 2) - (pWidth / 2);
+function centerX(pWidth = 0, pDistance = 0, pDirection = 0) {
+    if (pDirection == 0) { // left
+        return (CANVAS_WIDTH * 0.5) - (pWidth * 0.5) - pDistance;
+    } else { // right
+        return (CANVAS_WIDTH * 0.5) - (pWidth * 0.5) + pDistance;
+    }
 }
 
 function centerY(pHeight) {
-    return (CANVAS_HEIGHT / 2) - (pHeight / 2);
+    return (CANVAS_HEIGHT * 0.5) - (pHeight * 0.5);
+}
+
+// First letter UpperCase
+function firstUC(pString) {
+    return pString[0].toUpperCase() + pString.slice(1);
+}
+
+function displayTooltip(pArgs) {
+    pArgs.tooltip.forEach(sp => {
+        if (sp instanceof UiSprite) {
+            if (sp.delete) sp.delete = false;
+        } else {
+            if (sp.getSprite().delete) sp.getSprite().delete = false;
+        }
+    })
+
+    switch (pArgs.list) {
+        case "LanguageScreen":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof UiSprite) {
+                    LanguageScreen.list.push(sp);
+                } else {
+                    LanguageScreen.list.push(sp.getSprite());
+                }
+            })
+            break;
+    }
 }
 
 // ----------------------------------------------------
