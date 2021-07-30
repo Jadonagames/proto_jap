@@ -61,9 +61,11 @@ function togglePause() {
 
     if (currentState == GAME_STATE.Pause) {
         currentState = GAME_STATE.Game;
+        Panel.resetTypeState("normal", GAME_STATE.Game);
         Button.resetTypeState("normal", GAME_STATE.Game);
     } else {
         currentState = GAME_STATE.Pause;
+        Panel.resetTypeState("pause", GAME_STATE.Pause);
         Button.resetTypeState("pause", GAME_STATE.Pause);
         /*
         * GESTION MENU KEYBOARD

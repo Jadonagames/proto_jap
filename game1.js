@@ -113,9 +113,11 @@ class Game1 {
 
         if (Game1.currentState == Game1.STATE.Pause) {
             Game1.currentState = Game1.STATE.Game;
+            Panel.resetTypeState("normal", Game1.STATE.Game);
             Button.resetTypeState("normal", Game1.STATE.Game);
         } else {
             Game1.currentState = Game1.STATE.Pause;
+            Panel.resetTypeState("pause", Game1.STATE.Pause);
             Button.resetTypeState("pause", Game1.STATE.Pause);
         }
 
