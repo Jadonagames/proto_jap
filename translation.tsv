@@ -12,6 +12,10 @@ settings	settings	options	設定
 yes	yes	oui	はい
 no	no	non	いいえ
 back	back	retour	戻る
+sound	sound	son	サウンド
+volume	volume	volume	音量設定
+bgm	bgm	bgm	bgm
+sfx	sfx	sfx	効果音
 npc_1_1	Hello, my name is Jean.	Bonjour, je m'appelle Jean.	こんにちは、ジャンです。
 MAJ_english_lang	ENGLISH	ENGLISH	ENGLISH
 MAJ_french_lang	FRANÇAIS	FRANÇAIS	FRANÇAIS
