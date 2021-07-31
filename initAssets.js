@@ -86,10 +86,10 @@ function createTranslationArrays(pFile) {
         translationFr[row[i][0]] = row[i][2];
         translationJp[row[i][0]] = row[i][3];
     }
-    // console.table(translationEn);
-    // console.table(translationFr);
-    // console.table(translationJp);
-    LANG = translationFr;
+    console.table(translationEn);
+    console.table(translationFr);
+    console.table(translationJp);
+    LANG = translationEn;
     console.log("translation loaded !!!");
     // console.table(LANG);
     ASSETS_COUNTER++;

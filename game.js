@@ -200,7 +200,6 @@ function draw(ctx) {
         ctx.fillText("player moving: " + player.getSprite().isMoving, 0, 95);
 
         ctx.fillText("sprites : " + Sprite.list.length, 0, 100);
-        ctx.fillText("UIsprites : " + UiSprite.list.length, 0, 105);
         if (player.getSprite().isMoving) {
             ctx.fillText("position : " + player.getSprite().x + ":" + player.getSprite().y, 0, 110);
         } else {

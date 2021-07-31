@@ -2,12 +2,15 @@ class SplashScreen {
     constructor() { }
 
     static init() {
+
+        mainState = MAIN_STATE.Splash;
+
         canvas.style.backgroundColor = "black";
 
         this.timer = new Timer(3, toMainMenu);
         this.bTransition = false;
 
-        this.jadona = new UiSprite({ w: 37, h: 34 }, centerX(37), centerY(34), "jadona");
+        this.jadona = new Sprite({ w: 37, h: 34 }, centerX(37), centerY(34), "jadona");
         this.jadona.addAnimation("normal", 1, { x: 0, y: 0 }, 0.1);
         this.jadona.changeAnimation("normal");
 

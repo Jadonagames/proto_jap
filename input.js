@@ -166,6 +166,21 @@ function keyUp(k) {
     }
 
 
+    if (k.code == "KeyC") {
+        switch (LANG["lang_code"]) {
+            case "en":
+                LanguageScreen.changeLanguage("fr");
+                break;
+            case "fr":
+                LanguageScreen.changeLanguage("jp");
+                break;
+            case "jp":
+                LanguageScreen.changeLanguage("en");
+                break
+        }
+    }
+
+
 
 
 
@@ -194,7 +209,7 @@ canvas.addEventListener("mousemove", e => {
                             }
                             b.setState(Button.STATE.Hover);
                             for (const sp in b.getSprite()) {
-                                if (b.getSprite()[sp] instanceof UiSprite) {
+                                if (b.getSprite()[sp] instanceof Sprite) {
                                     b.getSprite()[sp].changeAnimation("hover");
                                 }
                             }
@@ -203,7 +218,7 @@ canvas.addEventListener("mousemove", e => {
                         if (b.getState() == Button.STATE.Hover) {
                             if (b.hoverCB) {
                                 b.getTooltip().forEach(sp => {
-                                    if (sp instanceof UiSprite) {
+                                    if (sp instanceof Sprite) {
                                         sp.delete = true;
                                     } else {
                                         sp.getSprite().delete = true;
@@ -212,7 +227,7 @@ canvas.addEventListener("mousemove", e => {
                             }
                             b.setState(Button.STATE.Normal);
                             for (const sp in b.getSprite()) {
-                                if (b.getSprite()[sp] instanceof UiSprite) {
+                                if (b.getSprite()[sp] instanceof Sprite) {
                                     b.getSprite()[sp].changeAnimation("normal");
                                 }
                             }
@@ -248,7 +263,7 @@ canvas.addEventListener("mousedown", e => {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
                         b.setState(Button.STATE.Hover);
                         for (const sp in b.getSprite()) {
-                            if (b.getSprite()[sp] instanceof UiSprite) {
+                            if (b.getSprite()[sp] instanceof Sprite) {
                                 b.getSprite()[sp].changeAnimation("down");
                             }
                         }
@@ -290,7 +305,7 @@ canvas.onclick = e => {
                     b.setState(Button.STATE.Normal);
                     if (!b.staticSize) {
                         for (const sp in b.getSprite()) {
-                            if (b.getSprite()[sp] instanceof UiSprite) {
+                            if (b.getSprite()[sp] instanceof Sprite) {
                                 b.getSprite()[sp].changeAnimation("normal");
                             }
                         }
@@ -310,7 +325,9 @@ canvas.onclick = e => {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
                         b.setState(Button.STATE.Hover);
                         for (const sp in b.getSprite()) {
-                            b.getSprite()[sp].changeAnimation("hover");
+                            if (b.getSprite()[sp] instanceof Sprite) {
+                                b.getSprite()[sp].changeAnimation("hover");
+                            }
                         }
                         return false;
                     } else {

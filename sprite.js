@@ -1,4 +1,4 @@
-class UiSprite {
+class Sprite {
 
     static list = [];
 
@@ -9,6 +9,8 @@ class UiSprite {
 
         this.x = pX;
         this.y = pY;
+
+        this.ox = 0;
 
         this.scaleX = pScale.x;
         this.scaleY = pScale.y;
@@ -32,7 +34,7 @@ class UiSprite {
         this.isMoving = false;
 
         if (this.type == "normal") {
-            UiSprite.list.push(this);
+            Sprite.list.push(this);
         }
 
     }
@@ -134,10 +136,35 @@ class UiSprite {
         }
     }
 
+    static manageBeforeDrawing(pList) {
+        pList.forEach(sp => {
+            if (sp.class == "dynamic") {
+                for (const s in sp) {
+                    if (sp[s] instanceof Sprite) {
+                        sp[s].draw(ctx);
+                    } else if (s == "parent") {
+                        if (sp[s].label != "") {
+                            sp[s].drawLabel(ctx);
+                        }
+                    }
+                }
+            } else {
+                if (sp.class == "button" || sp.class == "panel") { // ou if parent instanceof Button / Panel etc.
+                    sp.draw(ctx);
+                    if (sp.getParent() && sp.getParent().label != "") {
+                        sp.getParent().drawLabel(ctx);
+                    }
+                } else {
+                    sp.draw(ctx);
+                }
+            }
+        })
+    }
+
     draw(ctx) {
         if (this.active) {
-            const ox = this.currentAnimation.origin.x + (this.width * this.currentFrame); //
-            ctx.drawImage(SS, ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
+            this.ox = this.currentAnimation.origin.x + (this.width * this.currentFrame); //
+            ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
             //           (SS, ox, oy,                             frameWidth, frameHeight, x,      y,      scaleX,                    scaleY)
         }
     }

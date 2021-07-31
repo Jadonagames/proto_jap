@@ -41,7 +41,7 @@ function firstUC(pString) {
 
 function displayTooltip(pArgs) {
     pArgs.tooltip.forEach(sp => {
-        if (sp instanceof UiSprite) {
+        if (sp instanceof Sprite) {
             if (sp.delete) sp.delete = false;
         } else {
             if (sp.getSprite().delete) sp.getSprite().delete = false;
@@ -51,7 +51,7 @@ function displayTooltip(pArgs) {
     switch (pArgs.list) {
         case "LanguageScreen":
             pArgs.tooltip.forEach(sp => {
-                if (sp instanceof UiSprite) {
+                if (sp instanceof Sprite) {
                     LanguageScreen.list.push(sp);
                 } else {
                     LanguageScreen.list.push(sp.getSprite());

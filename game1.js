@@ -1,6 +1,67 @@
 class Game1 {
 
 
+
+
+
+
+    /**
+     * 
+     * 
+     * TOUT REFAIRE  !!! 
+     * buttons
+     * sprite management
+     * etc.
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     static STATE = Object.freeze({
         Menu: 0,
         Game: 1,

@@ -25,22 +25,22 @@ class Panel {
             this.internHeight = this.height - pSize.vertices.h;
 
             this.sp = {
-                tl: new UiSprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX, pY, this.type),
-                tr: new UiSprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX + this.internWidth, pY, this.type),
-                bl: new UiSprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX, pY + this.internHeight, this.type),
-                br: new UiSprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX + this.internWidth, pY + this.internHeight, this.type),
-                t: new UiSprite({ w: pSize.t.w, h: pSize.t.h }, pX + pSize.vertices.w, pY, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
-                r: new UiSprite({ w: pSize.r.w, h: pSize.r.h }, pX + this.internWidth, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
-                b: new UiSprite({ w: pSize.b.w, h: pSize.b.h }, pX + pSize.vertices.w, pY + this.internHeight, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
-                l: new UiSprite({ w: pSize.l.w, h: pSize.l.h }, pX, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
-                c: new UiSprite({ w: pSize.c.w, h: pSize.c.h }, pX + pSize.vertices.w, pY + pSize.vertices.h, this.type, { x: this.internWidth - pSize.vertices.w, y: this.internHeight - pSize.vertices.h }),
+                tl: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX, pY, this.type),
+                tr: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX + this.internWidth, pY, this.type),
+                bl: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX, pY + this.internHeight, this.type),
+                br: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX + this.internWidth, pY + this.internHeight, this.type),
+                t: new Sprite({ w: pSize.t.w, h: pSize.t.h }, pX + pSize.vertices.w, pY, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
+                r: new Sprite({ w: pSize.r.w, h: pSize.r.h }, pX + this.internWidth, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
+                b: new Sprite({ w: pSize.b.w, h: pSize.b.h }, pX + pSize.vertices.w, pY + this.internHeight, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
+                l: new Sprite({ w: pSize.l.w, h: pSize.l.h }, pX, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
+                c: new Sprite({ w: pSize.c.w, h: pSize.c.h }, pX + pSize.vertices.w, pY + pSize.vertices.h, this.type, { x: this.internWidth - pSize.vertices.w, y: this.internHeight - pSize.vertices.h }),
                 class: "dynamic",
                 parent: this,
                 delete: false
             }
             this.setPanelSprites(this.id);
         } else {
-            this.sp = new UiSprite(pSize, pX, pY, this.type);
+            this.sp = new Sprite(pSize, pX, pY, this.type);
             this.sp.setClass("panel");
             this.sp.setParent(this);
         }
@@ -51,6 +51,7 @@ class Panel {
         this.typeState = pTypeState;
 
         this.label = pLabel;
+        this.wordsArr = [];
 
         this.callback = pCallback;
         this.ALIGN_TEXT = Object.freeze({
@@ -121,6 +122,35 @@ class Panel {
             this.getSprite().l.changeAnimation("normal");
 
             this.getSprite().c.addAnimation("normal", 1, { x: 5, y: 62 }, 0.1);
+            this.getSprite().c.changeAnimation("normal");
+        }
+
+        if (pId == 2) {
+            this.getSprite().tl.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().tl.changeAnimation("normal");
+
+            this.getSprite().tr.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().tr.changeAnimation("normal");
+
+            this.getSprite().bl.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().bl.changeAnimation("normal");
+
+            this.getSprite().br.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().br.changeAnimation("normal");
+
+            this.getSprite().t.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().t.changeAnimation("normal");
+
+            this.getSprite().r.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().r.changeAnimation("normal");
+
+            this.getSprite().b.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().b.changeAnimation("normal");
+
+            this.getSprite().l.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().l.changeAnimation("normal");
+
+            this.getSprite().c.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
             this.getSprite().c.changeAnimation("normal");
         }
     }
@@ -203,20 +233,99 @@ class Panel {
             ctx.fillStyle = "rgb(209,209,209)";
         }
 
-        switch (this.alignText) {
-            case this.ALIGN_TEXT.Left:
-                ctx.textAlign = "left";
-                ctx.fillText(LANG[this.label], this.x + 5, this.y + 13);
-                break;
-            case this.ALIGN_TEXT.Center:
-                ctx.textAlign = "center";
-                ctx.fillText(LANG[this.label], this.x + this.width * 0.5, this.y + 13);
-                break;
-            case this.ALIGN_TEXT.Right:
-                ctx.textAlign = "right";
-                ctx.fillText(LANG[this.label], this.x + this.width - 5, this.y + 13);
-                break;
+        this.wordsArr = LANG[this.label].split(' ');
+        let line = "";
+        let lines = [];
+        let tmp = "";
+        this.wordsArr.forEach((word, index) => { // contenu test du tooltip 23 * 5 = 115
+            index == 0 ? tmp += word : tmp = line + " " + word;
+
+            if ((tmp.length * 5) > this.width - 10) {
+                lines.push(line);
+                line = word;
+                tmp = "";
+            } else {
+                index == 0 ? line += word : line += " " + word;
+            }
+
+            if (index == this.wordsArr.length - 1) {
+                lines.push(line);
+                tmp = "";
+            }
+        })
+
+        // console.table(lines)
+
+        // if (LANG['lang_code'] != "jp") {
+        //     this.width = (LANG[pLabel].length * 5) + 5; // TODO : change place of this ! maybe in draw ? (when changing language !!)
+        // } else {
+        //     this.width = (LANG[pLabel].length * 10) + 5;
+        // }
+
+        for (let i = 0; i < lines.length; i++) {
+            switch (this.alignText) {
+                case this.ALIGN_TEXT.Left:
+                    ctx.textAlign = "left";
+                    ctx.fillText(lines[i], this.x + 5, this.y + 13);
+                    break;
+                case this.ALIGN_TEXT.Center:
+                    ctx.textAlign = "center";
+                    // ctx.fillText(lines[i], this.x + (this.width * 0.5) + 0.5, this.y + (13 * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                    ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (13 * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                    break;
+                case this.ALIGN_TEXT.Right:
+                    ctx.textAlign = "right";
+                    ctx.fillText(lines[i], this.x + this.width - 5, this.y + 13);
+                    break;
+            }
         }
+
+
+
+
+
+        /*
+        
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+        input.js 313 : b.getSprite() is not a function !!!! 
+        
+        après le clic ! en release du clic
+        
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+        
+        */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // switch (this.alignText) {
+        //     case this.ALIGN_TEXT.Left:
+        //         ctx.textAlign = "left";
+        //         ctx.fillText(LANG[this.label], this.x + 5, this.y + 13);
+        //         break;
+        //     case this.ALIGN_TEXT.Center:
+        //         ctx.textAlign = "center";
+        //         console.log(this.x + this.width * 0.5);
+        //         ctx.fillText(LANG[this.label], this.x + (this.width * 0.5) + 0.5, this.y + 13); // Car en centrant le texte se retrouve entre deux pixels
+        //         break;
+        //     case this.ALIGN_TEXT.Right:
+        //         ctx.textAlign = "right";
+        //         ctx.fillText(LANG[this.label], this.x + this.width - 5, this.y + 13);
+        //         break;
+        // }
+
 
         ctx.textAlign = "left";
     }

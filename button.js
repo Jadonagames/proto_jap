@@ -24,22 +24,22 @@ class Button {
             this.internHeight = this.height - pSize.vertices.h;
 
             this.sp = {
-                tl: new UiSprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX, pY, this.type),
-                tr: new UiSprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX + this.internWidth, pY, this.type),
-                bl: new UiSprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX, pY + this.internHeight, this.type),
-                br: new UiSprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX + this.internWidth, pY + this.internHeight, this.type),
-                t: new UiSprite({ w: pSize.t.w, h: pSize.t.h }, pX + pSize.vertices.w, pY, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
-                r: new UiSprite({ w: pSize.r.w, h: pSize.r.h }, pX + this.internWidth, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
-                b: new UiSprite({ w: pSize.b.w, h: pSize.b.h }, pX + pSize.vertices.w, pY + this.internHeight, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
-                l: new UiSprite({ w: pSize.l.w, h: pSize.l.h }, pX, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
-                c: new UiSprite({ w: pSize.c.w, h: pSize.c.h }, pX + pSize.vertices.w, pY + pSize.vertices.h, this.type, { x: this.internWidth - pSize.vertices.w, y: this.internHeight - pSize.vertices.h }),
+                tl: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX, pY, this.type),
+                tr: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX + this.internWidth, pY, this.type),
+                bl: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX, pY + this.internHeight, this.type),
+                br: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, pX + this.internWidth, pY + this.internHeight, this.type),
+                t: new Sprite({ w: pSize.t.w, h: pSize.t.h }, pX + pSize.vertices.w, pY, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
+                r: new Sprite({ w: pSize.r.w, h: pSize.r.h }, pX + this.internWidth, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
+                b: new Sprite({ w: pSize.b.w, h: pSize.b.h }, pX + pSize.vertices.w, pY + this.internHeight, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),
+                l: new Sprite({ w: pSize.l.w, h: pSize.l.h }, pX, pY + pSize.vertices.h, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),
+                c: new Sprite({ w: pSize.c.w, h: pSize.c.h }, pX + pSize.vertices.w, pY + pSize.vertices.h, this.type, { x: this.internWidth - pSize.vertices.w, y: this.internHeight - pSize.vertices.h }),
                 class: "dynamic",
                 parent: this,
                 delete: false
             }
             this.setButtonSprites(pId);
         } else {
-            this.sp = new UiSprite(pSize, pX, pY, this.type);
+            this.sp = new Sprite(pSize, pX, pY, this.type);
             this.sp.setClass("button");
             this.sp.setParent(this);
         }
@@ -206,7 +206,7 @@ class Button {
                 break;
             case this.ALIGN_TEXT.Center:
                 ctx.textAlign = "center";
-                ctx.fillText(LANG[this.label], this.x + this.width * 0.5, this.y + 13);
+                ctx.fillText(LANG[this.label], this.x + (this.width * 0.5) + 0.5, this.y + 13); // +0.5 Car en centrant le texte se retrouve entre deux pixels
                 break;
             case this.ALIGN_TEXT.Right:
                 ctx.textAlign = "right";
