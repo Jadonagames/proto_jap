@@ -80,23 +80,12 @@ function readTSVFile(pFile) {
 
 function createTranslationArrays(pFile) {
 
-    let regexR = "/\r?\n/";
-    let row = [];
-
-    if (regexR) {
-        console.log("regex R found");
-        row = pFile.split('\r\n');
-    } else {
-        row = pFile.split('\n');
-    }
-
-    // console.log(row);
+    console.log("file:");
+    console.log(pFile);
+    let row = pFile.split(/\r\n|\n/);
+    console.log("row after split");
+    console.table(row);
     for (let i = 0; i < row.length; i++) {
-        // console.log(row[i]);
-        // console.log(row[i].length);
-        // console.log(row[i][3].length);
-        // row[i].replace('/\r/gm', '');
-
         row[i] = row[i].split('\t');
         translationEn[row[i][0]] = row[i][1];
         translationFr[row[i][0]] = row[i][2];
