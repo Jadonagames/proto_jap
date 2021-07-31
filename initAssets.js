@@ -79,7 +79,7 @@ function readTSVFile(pFile) {
 }
 
 function createTranslationArrays(pFile) {
-    let row = pFile.split('\r\n');
+    let row = pFile.split('\n');
     for (let i = 0; i < row.length; i++) {
         row[i] = row[i].split('\t');
         translationEn[row[i][0]] = row[i][1];
