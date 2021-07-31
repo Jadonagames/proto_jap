@@ -79,24 +79,18 @@ function readTSVFile(pFile) {
 }
 
 function createTranslationArrays(pFile) {
-
-    console.log("file:");
-    console.log(pFile);
     let row = pFile.split(/\r\n|\n/);
-    console.log("row after split");
-    console.table(row);
     for (let i = 0; i < row.length; i++) {
         row[i] = row[i].split('\t');
         translationEn[row[i][0]] = row[i][1];
         translationFr[row[i][0]] = row[i][2];
         translationJp[row[i][0]] = row[i][3];
     }
-    console.table(translationEn);
-    console.table(translationFr);
-    console.table(translationJp);
+    // console.table(translationEn);
+    // console.table(translationFr);
+    // console.table(translationJp);
     LANG = translationEn;
     console.log("translation loaded !!!");
-    // console.table(LANG);
     ASSETS_COUNTER++;
     if (ASSETS_COUNTER == 2) {
         ASSETS_READY = true;
