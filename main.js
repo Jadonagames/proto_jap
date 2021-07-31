@@ -16,6 +16,7 @@ let SFX_VOLUME = 0.5;
 let bDebug = true;
 let debugDt = 0;
 let debug_STOP = false;
+let shortcut_tomainmenu = true;
 // ---------------- END DEBUG
 
 const MAIN_STATE = Object.freeze({
@@ -27,8 +28,12 @@ const MAIN_STATE = Object.freeze({
     Transition: 5
 })
 
-// let mainState = MAIN_STATE.Splash;
-let mainState = MAIN_STATE.Language; // COMMENT FOR : MAINMENU START
+let mainState = 0;
+if (shortcut_tomainmenu) {
+    let mainState = MAIN_STATE.Menu;
+} else {
+    let mainState = MAIN_STATE.Language;
+}
 
 function checkAssetsLoading() {
     if (ASSETS_READY) {
@@ -93,11 +98,12 @@ function init() {
     ctx.msImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
     ctx.mozImageSmoothingEnabled = false;
-
-    // SplashScreen.init();  // COMMENT FOR : MAINMENU START
-    LanguageScreen.init(); // COMMENT FOR : MAINMENU START
-    // MainMenu.init();
-    //toMainMenu() // FOR : MAINMENU START
+    if (shortcut_tomainmenu) {
+        MainMenu.init();  // FOR : MAINMENU START
+        toMainMenu()      // FOR : MAINMENU START
+    } else {
+        LanguageScreen.init();   // COMMENT FOR : MAINMENU START
+    }
 
     interval = setInterval(run, 1000 / 60);
 }
@@ -126,7 +132,6 @@ function toMainMenu() {
     if (!MainMenu.bInit) {
         MainMenu.init();
     }
-    // MainMenu.init();
     canvas.style.backgroundColor = "cornflowerblue";
 
     mainState = MAIN_STATE.Menu;
@@ -137,6 +142,4 @@ function toMainMenu() {
     // Button.currentList[0].setState(Button.STATE.Hover);
     // Button.currentList[0].getSprite().changeAnimation("hover");
     // --------------------------
-
-    // Sprite.list = [];
 }
