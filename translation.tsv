@@ -32,3 +32,262 @@ text3	That's another story... maybe next time !	Là c'est une autre paire de man
 hira	あいうえお	あいうえお	あいうえお
 kata	アイウエオ	アイウエオ	アイウエオ
 kan	漢字無理	漢字無理	漢字無理
+hira_a	あ	あ	あ
+hira_i	い	い	い
+hira_u	う	う	う
+hira_e	え	え	え
+hira_o	お	お	お
+hira_ka	か	か	か
+hira_ki	き	き	き
+hira_ku	く	く	く
+hira_ke	け	け	け
+hira_ko	こ	こ	こ
+hira_sa	さ	さ	さ
+hira_shi	し	し	し
+hira_su	す	す	す
+hira_se	せ	せ	せ
+hira_so	そ	そ	そ
+hira_ta	た	た	た
+hira_chi	ち	ち	ち
+hira_tsu	つ	つ	つ
+hira_te	て	て	て
+hira_to	と	と	と
+hira_na	な	な	な
+hira_ni	に	に	に
+hira_nu	ぬ	ぬ	ぬ
+hira_ne	ね	ね	ね
+hira_no	の	の	の
+hira_ha	は	は	は
+hira_hi	ひ	ひ	ひ
+hira_fu	ふ	ふ	ふ
+hira_he	へ	へ	へ
+hira_ho	ほ	ほ	ほ
+hira_ma	ま	ま	ま
+hira_mi	み	み	み
+hira_mu	む	む	む
+hira_me	め	め	め
+hira_mo	も	も	も
+hira_ya	や	や	や
+hira_yu	ゆ	ゆ	ゆ
+hira_yo	よ	よ	よ
+hira_ra	ら	ら	ら
+hira_ri	り	り	り
+hira_ru	る	る	る
+hira_re	れ	れ	れ
+hira_ro	ろ	ろ	ろ
+hira_wa	わ	わ	わ
+hira_wo	を	を	を
+hira_n	ん	ん	ん
+			
+			
+hira_ga	が	が	が
+hira_gi	ぎ	ぎ	ぎ
+hira_gu	ぐ	ぐ	ぐ
+hira_ge	げ	げ	げ
+hira_go	ご	ご	ご
+hira_za	ざ	ざ	ざ
+hira_ji	じ	じ	じ
+hira_zu	ず	ず	ず
+hira_ze	ぜ	ぜ	ぜ
+hira_zo	ぞ	ぞ	ぞ
+hira_da	だ	だ	だ
+hira_di	ぢ	ぢ	ぢ
+hira_du	づ	づ	づ
+hira_de	で	で	で
+hira_do	ど	ど	ど
+hira_ba	ば	ば	ば
+hira_bi	び	び	び
+hira_bu	ぶ	ぶ	ぶ
+hira_be	べ	べ	べ
+hira_bo	ぼ	ぼ	ぼ
+hira_pa	ぱ	ぱ	ぱ
+hira_pi	ぴ	ぴ	ぴ
+hira_pu	ぷ	ぷ	ぷ
+hira_pe	ぺ	ぺ	ぺ
+hira_po	ぽ	ぽ	ぽ
+			
+			
+kata_a	ア	ア	ア
+kata_i	イ	イ	イ
+kata_u	ウ	ウ	ウ
+kata_e	エ	エ	エ
+kata_o	オ	オ	オ
+kata_ka	カ	カ	カ
+kata_ki	キ	キ	キ
+kata_ku	ク	ク	ク
+kata_ke	ケ	ケ	ケ
+kata_ko	コ	コ	コ
+kata_sa	サ	サ	サ
+kata_shi	シ	シ	シ
+kata_su	ス	ス	ス
+kata_se	セ	セ	セ
+kata_so	ソ	ソ	ソ
+kata_ta	タ	タ	タ
+kata_chi	千	千	千
+kata_tsu	ツ	ツ	ツ
+kata_te	テ	テ	テ
+kata_to	ト	ト	ト
+kata_na	ナ	ナ	ナ
+kata_ni	二	二	二
+kata_nu	ヌ	ヌ	ヌ
+kata_ne	ネ	ネ	ネ
+kata_no	ノ	ノ	ノ
+kata_ha	ハ	ハ	ハ
+kata_hi	ヒ	ヒ	ヒ
+kata_fu	フ	フ	フ
+kata_he	ヘ	ヘ	ヘ
+kata_ho	ホ	ホ	ホ
+kata_ma	マ	マ	マ
+kata_mi	ミ	ミ	ミ
+kata_mu	ム	ム	ム
+kata_me	メ	メ	メ
+kata_mo	モ	モ	モ
+kata_ya	ヤ	ヤ	ヤ
+kata_yu	ユ	ユ	ユ
+kata_yo	ヨ	ヨ	ヨ
+kata_ra	ラ	ラ	ラ
+kata_ri	リ	リ	リ
+kata_ru	ル	ル	ル
+kata_re	レ	レ	レ
+kata_ro	ロ	ロ	ロ
+kata_wa	ワ	ワ	ワ
+kata_wo	ヲ	ヲ	ヲ
+kata_n	ン	ン	ン
+			
+			
+kata_ga	ガ	ガ	ガ
+kata_gi	ギ	ギ	ギ
+kata_gu	グ	グ	グ
+kata_ge	ゲ	ゲ	ゲ
+kata_go	ゴ	ゴ	ゴ
+kata_za	ザ	ザ	ザ
+kata_ji	ジ	ジ	ジ
+kata_zu	ズ	ズ	ズ
+kata_ze	ゼ	ゼ	ゼ
+kata_zo	ゾ	ゾ	ゾ
+kata_da	ダ	ダ	ダ
+kata_di	ヂ	ヂ	ヂ
+kata_du	ヅ	ヅ	ヅ
+kata_de	デ	デ	デ
+kata_do	ド	ド	ド
+kata_ba	バ	バ	バ
+kata_bi	ビ	ビ	ビ
+kata_bu	ブ	ブ	ブ
+kata_be	ベ	ベ	ベ
+kata_bo	ボ	ボ	ボ
+kata_pa	パ	パ	パ
+kata_pi	ピ	ピ	ピ
+kata_pu	プ	プ	プ
+kata_pe	ペ	ペ	ペ
+kata_po	ポ	ポ	ポ
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+roma_a	a	a	a
+roma_i	i	i	i
+roma_u	u	u	u
+roma_e	e	e	e
+roma_o	o	o	o
+roma_ka	ka	ka	ka
+roma_ki	ki	ki	ki
+roma_ku	ku	ku	ku
+roma_ke	ke	ke	ke
+roma_ko	ko	ko	ko
+roma_sa	sa	sa	sa
+roma_shi	shi	shi	shi
+roma_su	su	su	su
+roma_se	se	se	se
+roma_so	so	so	so
+roma_ta	ta	ta	ta
+roma_chi	chi	chi	chi
+roma_tsu	tsu	tsu	tsu
+roma_te	te	te	te
+roma_to	to	to	to
+roma_na	na	na	na
+roma_ni	ni	ni	ni
+roma_nu	nu	nu	nu
+roma_ne	ne	ne	ne
+roma_no	no	no	no
+roma_ha	ha	ha	ha
+roma_hi	hi	hi	hi
+roma_fu	fu	fu	fu
+roma_he	he	he	he
+roma_ho	ho	ho	ho
+roma_ma	ma	ma	ma
+roma_mi	mi	mi	mi
+roma_mu	mu	mu	mu
+roma_me	me	me	me
+roma_mo	mo	mo	mo
+roma_ya	ya	ya	ya
+roma_yu	yu	yu	yu
+roma_yo	yo	yo	yo
+roma_ra	ra	ra	ra
+roma_ri	ri	ri	ri
+roma_ru	ru	ru	ru
+roma_re	re	re	re
+roma_ro	ro	ro	ro
+roma_wa	wa	wa	wa
+roma_wo	wo	wo	wo
+roma_n	n	n	n
+roma_ga	ga	ga	ga
+roma_gi	gi	gi	gi
+roma_gu	gu	gu	gu
+roma_ge	ge	ge	ge
+roma_go	go	go	go
+roma_za	za	za	za
+roma_ji	ji	ji	ji
+roma_zu	zu	zu	zu
+roma_ze	ze	ze	ze
+roma_zo	zo	zo	zo
+roma_da	da	da	da
+roma_di	di	di	di
+roma_du	du	du	du
+roma_de	de	de	de
+roma_do	do	do	do
+roma_ba	ba	ba	ba
+roma_bi	bi	bi	bi
+roma_bu	bu	bu	bu
+roma_be	be	be	be
+roma_bo	bo	bo	bo
+roma_pa	pa	pa	pa
+roma_pi	pi	pi	pi
+roma_pu	pu	pu	pu
+roma_pe	pe	pe	pe
+roma_po	po	po	po

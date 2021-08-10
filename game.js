@@ -185,7 +185,7 @@ function draw(ctx) {
         et.draw(ctx);
     })
 
-    if (bDebug) {
+    if (bStatsDebug) {
         if (player.bCollide) {
             ctx.strokeStyle = "rgb(255,0,0)";
         } else {
@@ -206,7 +206,6 @@ function draw(ctx) {
             ctx.fillText("position : " + Math.ceil(player.getSprite().x) + ":" + Math.ceil(player.getSprite().y), 0, 110);
 
         }
-        ctx.fillText("dt: " + debugDt, 0, 115);
     }
     // --------------- END DEBUG
 

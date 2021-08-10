@@ -146,7 +146,6 @@ function keyUp(k) {
      * DEBUG
      */
     if (k.code == "KeyQ") { // => A
-        bDebug = !bDebug;
         // test(learn, choice, charNumbers);
     }
 
@@ -156,13 +155,17 @@ function keyUp(k) {
     }
 
     if (k.code == "KeyA") {
-        console.log("to main menu() KEY pressed");
         toMainMenu();
     }
 
     if (k.code == "Space") {
         // debug_STOP = !debug_STOP;
+        // boolTest = !boolTest;
 
+    }
+
+    if (k.code == "KeyD") {
+        bStatsDebug = !bStatsDebug;
     }
 
 
@@ -187,6 +190,11 @@ function keyUp(k) {
     // ------------------- END DEBUG
 }
 
+function pick(x, y) {
+    let pixel = ctx.getImageData(x, y, 1, 1);
+    let data = pixel.data;
+}
+
 /**
  * 
  * GESTION MENU MOUSE 
@@ -195,6 +203,8 @@ function keyUp(k) {
 canvas.addEventListener("mousemove", e => {
     const mouseX = e.layerX / SCALE_X;
     const mouseY = e.layerY / SCALE_Y;
+
+    // pick(e.layerX, e.layerY);
 
     if (MainMenu.state != MainMenu.STATE.Transition && currentState != GAME_STATE.Transition) {
 
@@ -243,6 +253,81 @@ canvas.addEventListener("mousemove", e => {
                         if (b.getState() == Button.STATE.Hover) {
                             b.setState(Button.STATE.Normal);
                             b.getSprite().changeAnimation("normal");
+                        }
+                    }
+                }
+            }
+        });
+
+        Panel.currentList.forEach(p => {
+
+            if (p.getState() != Panel.STATE.Inactive && p.hoverable) {
+                if (!p.staticSize) {
+                    if (CollisionManager.MouseCollision(mouseX, mouseY, p.x, p.y, p.getSize().w, p.getSize().h)) {
+                        if (p.getSprite().tl.currentAnimation.name != "down") {
+                            if (p.hoverCB && p.getState() != Panel.STATE.Hover) {
+                                p.hoverCB.cb(p.hoverCB.arg);
+                            }
+                            p.setState(Panel.STATE.Hover);
+                            for (const sp in p.getSprite()) {
+                                if (p.getSprite()[sp] instanceof Sprite) {
+                                    p.getSprite()[sp].changeAnimation("hover");
+                                }
+                            }
+                        }
+                    } else {
+                        if (p.getState() == Panel.STATE.Hover) {
+                            if (p.hoverCB) {
+                                p.getTooltip().forEach(sp => {
+                                    if (sp instanceof Sprite) {
+                                        sp.delete = true;
+                                        if (sp.type == "gris") {
+                                            sp.step = 1;
+                                            sp.active = false;
+                                            sp.stepTimer.reset();
+                                            sp.resetGris();
+                                        }
+                                    } else {
+                                        sp.getSprite().delete = true;
+                                    }
+                                })
+                            }
+                            p.setState(Panel.STATE.Normal);
+                            for (const sp in p.getSprite()) {
+                                if (p.getSprite()[sp] instanceof Sprite) {
+                                    p.getSprite()[sp].changeAnimation("normal");
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (CollisionManager.MouseCollision(mouseX, mouseY, p.getSprite().x, p.getSprite().y, p.getSize().w, p.getSize().h)) {
+                        if (p.getSprite().currentAnimation.name != "down") {
+                            if (p.hoverCB && p.getState() != Panel.STATE.Hover) {
+                                p.hoverCB.cb(p.hoverCB.arg);
+                            }
+                            p.setState(Panel.STATE.Hover);
+                            p.getSprite().changeAnimation("hover"); // TODO ADD CB
+                        }
+                    } else {
+                        if (p.getState() == Panel.STATE.Hover) {
+                            if (p.hoverCB) {
+                                p.getTooltip().forEach(sp => {
+                                    if (sp instanceof Sprite) {
+                                        sp.delete = true;
+                                        if (sp.type == "gris") {
+                                            sp.step = 1;
+                                            sp.active = false;
+                                            sp.stepTimer.reset();
+                                            sp.resetGris();
+                                        }
+                                    } else {
+                                        sp.getSprite().delete = true;
+                                    }
+                                })
+                            }
+                            p.setState(Panel.STATE.Normal);
+                            p.getSprite().changeAnimation("normal");
                         }
                     }
                 }
@@ -334,7 +419,9 @@ canvas.onclick = e => {
                         if (b.getState() == Button.STATE.Hover) {
                             b.setState(Button.STATE.Normal);
                             for (const sp in b.getSprite()) {
-                                b.getSprite()[sp].changeAnimation("normal");
+                                if (b.getSprite()[sp] instanceof Sprite) {
+                                    b.getSprite()[sp].changeAnimation("normal");
+                                }
                             }
                         }
                     }

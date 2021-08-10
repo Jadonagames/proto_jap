@@ -45,8 +45,11 @@ class Panel {
             this.sp.setParent(this);
         }
 
+        this.hoverable = false;
 
         this.state = Panel.STATE.Normal;
+        this.font = "jpfont";
+        this.fontSize = 10;
 
         this.typeState = pTypeState;
 
@@ -60,8 +63,10 @@ class Panel {
             Right: 2
         });
         this.alignText = this.ALIGN_TEXT.Center;
+        this.textOffsetX = 5;
+        this.textOffsetY = 13;
 
-        this.tooltip = null;
+        this.tooltip = [];
 
         Panel.list.push(this);
     }
@@ -153,6 +158,35 @@ class Panel {
             this.getSprite().c.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
             this.getSprite().c.changeAnimation("normal");
         }
+
+        if (pId == 3) {
+            this.getSprite().tl.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().tl.changeAnimation("normal");
+
+            this.getSprite().tr.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().tr.changeAnimation("normal");
+
+            this.getSprite().bl.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().bl.changeAnimation("normal");
+
+            this.getSprite().br.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().br.changeAnimation("normal");
+
+            this.getSprite().t.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().t.changeAnimation("normal");
+
+            this.getSprite().r.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().r.changeAnimation("normal");
+
+            this.getSprite().b.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().b.changeAnimation("normal");
+
+            this.getSprite().l.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().l.changeAnimation("normal");
+
+            this.getSprite().c.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().c.changeAnimation("normal");
+        }
     }
 
     static resetTypeState(pType, pTypeState) {
@@ -174,7 +208,7 @@ class Panel {
     }
 
     setTooltip(pTooltip) {
-        this.tooltip = pTooltip;
+        this.tooltip.push(pTooltip);
     }
 
     getState() {
@@ -186,7 +220,24 @@ class Panel {
     }
 
     setAlignText(pAlign) {
-        this.align = pAlign;
+        this.alignText = pAlign;
+    }
+
+    setOffsets(pX = 5, pY = 13) {
+        this.textOffsetX = pX;
+        this.textOffsetY = pY;
+    }
+
+    setFont(pFont) {
+        this.font = pFont;
+    }
+
+    setFontSize(pSize) {
+        this.fontSize = pSize;
+    }
+
+    setHoverable(pBool) {
+        this.hoverable = pBool;
     }
 
     setHoverCB(pCallback, pParam) {
@@ -227,10 +278,16 @@ class Panel {
 
     drawLabel(ctx) {
 
-        ctx.font = "10px jpfont";
+        ctx.font = this.fontSize + "px " + this.font;
 
         if (this.id == 1) {
             ctx.fillStyle = "rgb(209,209,209)";
+        }
+
+        if (this.state == Panel.STATE.Hover) {
+            ctx.fillStyle = "rgb(255,255,255)";
+        } else {
+            ctx.fillStyle = "rgb(0,0,0)";
         }
 
         this.wordsArr = LANG[this.label].split(' ');
@@ -254,78 +311,24 @@ class Panel {
             }
         })
 
-        // console.table(lines)
-
-        // if (LANG['lang_code'] != "jp") {
-        //     this.width = (LANG[pLabel].length * 5) + 5; // TODO : change place of this ! maybe in draw ? (when changing language !!)
-        // } else {
-        //     this.width = (LANG[pLabel].length * 10) + 5;
-        // }
-
         for (let i = 0; i < lines.length; i++) {
             switch (this.alignText) {
                 case this.ALIGN_TEXT.Left:
                     ctx.textAlign = "left";
-                    ctx.fillText(lines[i], this.x + 5, this.y + 13);
+                    ctx.fillText(lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
                     break;
                 case this.ALIGN_TEXT.Center:
                     ctx.textAlign = "center";
                     // ctx.fillText(lines[i], this.x + (this.width * 0.5) + 0.5, this.y + (13 * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
-                    ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (13 * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                    ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (this.textOffsetY * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
                     break;
                 case this.ALIGN_TEXT.Right:
                     ctx.textAlign = "right";
-                    ctx.fillText(lines[i], this.x + this.width - 5, this.y + 13);
+                    ctx.fillText(lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
                     break;
             }
         }
-
-
-
-
-
-        /*
-        
-        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        
-        input.js 313 : b.getSprite() is not a function !!!! 
-        
-        après le clic ! en release du clic
-        
-        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        
-        
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // switch (this.alignText) {
-        //     case this.ALIGN_TEXT.Left:
-        //         ctx.textAlign = "left";
-        //         ctx.fillText(LANG[this.label], this.x + 5, this.y + 13);
-        //         break;
-        //     case this.ALIGN_TEXT.Center:
-        //         ctx.textAlign = "center";
-        //         console.log(this.x + this.width * 0.5);
-        //         ctx.fillText(LANG[this.label], this.x + (this.width * 0.5) + 0.5, this.y + 13); // Car en centrant le texte se retrouve entre deux pixels
-        //         break;
-        //     case this.ALIGN_TEXT.Right:
-        //         ctx.textAlign = "right";
-        //         ctx.fillText(LANG[this.label], this.x + this.width - 5, this.y + 13);
-        //         break;
-        // }
-
+        ctx.fillStyle = "rgb(0,0,0)";
 
         ctx.textAlign = "left";
     }

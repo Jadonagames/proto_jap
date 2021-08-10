@@ -266,14 +266,12 @@ class Game1 {
         /*
         * DEBUG
         */
-        if (bDebug) {
+        if (bStatsDebug) {
 
             ctx.fillStyle = "rgb(255,255,255)";
             ctx.font = "5px serif";
 
             ctx.fillText("sprites : " + Sprite.list.length, 0, 100);
-            ctx.fillText("UIsprites : " + UiSprite.list.length, 0, 105);
-            ctx.fillText("dt: " + debugDt, 0, 115);
         }
         // --------------- END DEBUG
 

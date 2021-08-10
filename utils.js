@@ -20,6 +20,10 @@ class Timer {
     setMax(pMax) {
         this.max = pMax;
     }
+
+    reset() {
+        this.value = 0;
+    }
 }
 
 function centerX(pWidth = 0, pDistance = 0, pDirection = 0) {
@@ -43,6 +47,7 @@ function displayTooltip(pArgs) {
     pArgs.tooltip.forEach(sp => {
         if (sp instanceof Sprite) {
             if (sp.delete) sp.delete = false;
+            sp.active = true;
         } else {
             if (sp.getSprite().delete) sp.getSprite().delete = false;
         }
@@ -55,6 +60,42 @@ function displayTooltip(pArgs) {
                     LanguageScreen.list.push(sp);
                 } else {
                     LanguageScreen.list.push(sp.getSprite());
+                }
+            })
+            break;
+        case "mainmenu.main":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    MainMenu.mainList.push(sp);
+                } else {
+                    MainMenu.mainList.push(sp.getSprite());
+                }
+            })
+            break;
+        case "infos.main":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    Infos.list.push(sp);
+                } else {
+                    Infos.list.push(sp.getSprite());
+                }
+            })
+            break;
+        case "infos.hiragana":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    Infos.hiraganaList.push(sp);
+                } else {
+                    Infos.hiraganaList.push(sp.getSprite());
+                }
+            })
+            break;
+        case "infos.katakana":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    Infos.katakanaList.push(sp);
+                } else {
+                    Infos.katakanaList.push(sp.getSprite());
                 }
             })
             break;

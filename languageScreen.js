@@ -87,11 +87,6 @@ class LanguageScreen {
         /*
         * DEBUG
         */
-        if (bDebug) {
-
-            ctx.fillStyle = "rgb(255,255,255)";
-            ctx.fillText("languagescreen : " + LanguageScreen.list.length, 0, 100);
-        }
 
         // ctx.font = "10px UD Digi Kyokasho NK-R";
         ctx.font = "30px jpfont";

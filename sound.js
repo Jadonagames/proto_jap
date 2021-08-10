@@ -47,6 +47,10 @@ class Sound {
         }
     }
 
+    static playCallback(pName) {
+        Sound.list[pName].play();
+    }
+
     static decreaseMusicVolume() {
         if (MUSIC_VOLUME > 0) {
             MUSIC_VOLUME *= 10;

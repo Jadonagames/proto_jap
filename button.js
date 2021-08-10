@@ -214,6 +214,8 @@ class Button {
                 break;
         }
 
+        ctx.fillStyle = "rgb(0,0,0)";
+
         ctx.textAlign = "left";
     }
 }
