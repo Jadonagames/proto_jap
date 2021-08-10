@@ -34,8 +34,12 @@ function centerX(pWidth = 0, pDistance = 0, pDirection = 0) {
     }
 }
 
-function centerY(pHeight) {
-    return (CANVAS_HEIGHT * 0.5) - (pHeight * 0.5);
+function centerY(pHeight = 0, pDistance = 0, pDirection = 0) {
+    if (pDirection == 0) { // top
+        return (CANVAS_HEIGHT * 0.5) - (pHeight * 0.5) - pDistance;
+    } else { // bottom
+        return (CANVAS_HEIGHT * 0.5) - (pHeight * 0.5) + pDistance;
+    }
 }
 
 // First letter UpperCase

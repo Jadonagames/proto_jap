@@ -160,8 +160,6 @@ function keyUp(k) {
 
     if (k.code == "Space") {
         // debug_STOP = !debug_STOP;
-        // boolTest = !boolTest;
-
     }
 
     if (k.code == "KeyD") {
@@ -281,11 +279,11 @@ canvas.addEventListener("mousemove", e => {
                                 p.getTooltip().forEach(sp => {
                                     if (sp instanceof Sprite) {
                                         sp.delete = true;
-                                        if (sp.type == "gris") {
+                                        if (sp.type == "kana") {
                                             sp.step = 1;
                                             sp.active = false;
                                             sp.stepTimer.reset();
-                                            sp.resetGris();
+                                            sp.resetKana();
                                         }
                                     } else {
                                         sp.getSprite().delete = true;
@@ -315,11 +313,11 @@ canvas.addEventListener("mousemove", e => {
                                 p.getTooltip().forEach(sp => {
                                     if (sp instanceof Sprite) {
                                         sp.delete = true;
-                                        if (sp.type == "gris") {
+                                        if (sp.type == "kana") {
                                             sp.step = 1;
                                             sp.active = false;
                                             sp.stepTimer.reset();
-                                            sp.resetGris();
+                                            sp.resetKana();
                                         }
                                     } else {
                                         sp.getSprite().delete = true;

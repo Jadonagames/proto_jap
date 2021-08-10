@@ -28,27 +28,27 @@ class MainMenu {
 
         // ---------------- MAIN ----------------
 
-        let lessonsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 50, null, "mainmenu", MainMenu.STATE.Main, "lessons");
+        let lessonsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 130, null, "mainmenu", MainMenu.STATE.Main, "lessons");
         lessonsBtn.setTextCase("first");
         MainMenu.mainList.push(lessonsBtn.getSprite());
 
-        let freeBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 80, null, "mainmenu", MainMenu.STATE.Main, "training");
+        let freeBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 160, null, "mainmenu", MainMenu.STATE.Main, "training");
         freeBtn.setTextCase("first");
         MainMenu.mainList.push(freeBtn.getSprite());
 
-        let infosBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 110, null, "mainmenu", MainMenu.STATE.Main, "infos");
+        let infosBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 190, { cb: changeMainState, arg: MAIN_STATE.Infos }, "mainmenu", MainMenu.STATE.Main, "infos");
         infosBtn.setTextCase("first");
         MainMenu.mainList.push(infosBtn.getSprite());
 
-        let optionsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 140, { cb: MainMenu.changeState, arg: MainMenu.STATE.Options }, "mainmenu", MainMenu.STATE.Main, "settings");
+        let optionsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 220, { cb: MainMenu.changeState, arg: MainMenu.STATE.Options }, "mainmenu", MainMenu.STATE.Main, "settings");
         optionsBtn.setTextCase("first");
         MainMenu.mainList.push(optionsBtn.getSprite());
 
-        let creditsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 170, { cb: MainMenu.changeState, arg: MainMenu.STATE.Credits }, "mainmenu", MainMenu.STATE.Main, "credits");
+        let creditsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 250, { cb: MainMenu.changeState, arg: MainMenu.STATE.Credits }, "mainmenu", MainMenu.STATE.Main, "credits");
         creditsBtn.setTextCase("first");
         MainMenu.mainList.push(creditsBtn.getSprite());
 
-        this.muteBtn = new Button({ w: 16, h: 14 }, 250, 50, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
+        this.muteBtn = new Button({ w: 16, h: 14 }, centerX(16, 200, 1), 50, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
         this.muteBtn.getSprite().addAnimation("normal", 1, { x: 96, y: 96 }, 0.1);
         this.muteBtn.getSprite().addAnimation("hover", 1, { x: 112, y: 96 }, 0.1);
         this.muteBtn.getSprite().addAnimation("down", 1, { x: 128, y: 96 }, 0.1);
@@ -102,7 +102,7 @@ class MainMenu {
         jadonagamesLogo.changeAnimation("normal");
         MainMenu.creditsList.push(jadonagamesLogo);
 
-        let creditsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), 150, toMainMenu, "mainmenu", MainMenu.STATE.Credits, "back");
+        let creditsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 50, 1), toMainMenu, "mainmenu", MainMenu.STATE.Credits, "back");
         creditsBackBtn.setTextCase("first");
         MainMenu.creditsList.push(creditsBackBtn.getSprite());
 
@@ -131,6 +131,17 @@ class MainMenu {
     }
 
     static update(dt) {
+
+        MainMenu.mainList.forEach(sp => {
+            if (sp instanceof Sprite) {
+                sp.update(dt);
+            }
+        })
+
+        MainMenu.mainList = MainMenu.mainList.filter(sp => {
+            return !sp.delete;
+        });
+
         if (FadeEffect.bActive) {
             FadeEffect.update(dt);
         }
@@ -187,15 +198,13 @@ class MainMenu {
         /**
          * DEBUG
          */
-        if (bDebug) {
+        if (bStatsDebug) {
             ctx.fillStyle = "rgb(255,255,255)";
             ctx.font = "16px pgfont";
             ctx.fillText("Sprites : " + Sprite.list.length, 0, 110);
             ctx.fillText("ButtonList : " + Button.list.length, 0, 120);
             ctx.fillText("ButtonCurrent : " + Button.currentList.length, 0, 130);
-            ctx.fillText("MainMenuList : " + MainMenu.list.length, 0, 140);
-
-            ctx.fillText("dt: " + debugDt, 0, 150);
+            ctx.fillText("MainMenuList : " + MainMenu.mainList.length, 0, 140);
 
             // switch (choice) {
             //     case "h":

@@ -1,6 +1,9 @@
 class Sprite {
 
     static list = [];
+    static kanaList = [];
+
+    static debug_drawcalls = 0;
 
     constructor(pSize, pX = 0, pY = 0, pType = "normal", pScale = { x: 1, y: 1 }) {
 
@@ -37,6 +40,21 @@ class Sprite {
             Sprite.list.push(this);
         }
 
+        if (this.type == "kana") {
+            Sprite.kanaList.push(this);
+            this.active = false;
+            this.imageData = [];
+            this.imageDataOrigin = [];
+
+            this.imageDataCurrent = null;
+            this.currentImageDataIndex = 0;
+            this.step = 1;
+            this.color = 0;
+
+            this.stepTimer = new Timer(0, this.updateStep.bind(this));
+
+            this.strokeNumber = 1;
+        }
     }
 
     addAnimation(pName, pFramesNb, pOrigin, pSpeed, pLoop = true) {
@@ -136,6 +154,52 @@ class Sprite {
         }
     }
 
+    setImageDataOrigin(pImageData, pMaxStep) {
+        this.imageDataOrigin.push({
+            imageData: pImageData,
+            maxStep: pMaxStep
+        })
+        if (this.imageDataCurrent == null) {
+            this.imageDataCurrent = {};
+            this.imageDataCurrent.imageData = ctx.createImageData(this.imageDataOrigin[0].imageData);
+            for (let i = 0; i < this.imageDataOrigin[0].imageData.data.length; i++) {
+                this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[0].imageData.data[i];
+            }
+            this.imageDataCurrent.maxStep = this.imageDataOrigin[0].maxStep;
+        }
+    }
+
+    updateKana(dt) {
+        this.stepTimer.setMax(0.5);
+        this.stepTimer.update(dt);
+    }
+
+    updateStep() {
+        this.step++;
+        if (this.step > this.imageDataCurrent.maxStep) {
+            this.step = 1;
+            this.strokeNumber++;
+            this.currentImageDataIndex++;
+            if (this.currentImageDataIndex < this.imageDataOrigin.length) {
+                for (let i = 0; i < this.imageDataOrigin[this.currentImageDataIndex].imageData.data.length; i++) {
+                    this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[this.currentImageDataIndex].imageData.data[i];
+                }
+                this.imageDataCurrent.maxStep = this.imageDataOrigin[this.currentImageDataIndex].maxStep;
+            } else {
+                this.resetKana();
+            }
+        }
+    }
+
+    resetKana() {
+        this.strokeNumber = 1;
+        this.currentImageDataIndex = 0;
+        for (let i = 0; i < this.imageDataOrigin[0].imageData.data.length; i++) {
+            this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[0].imageData.data[i];
+        }
+        this.imageDataCurrent.maxStep = this.imageDataOrigin[0].maxStep;
+    }
+
     static manageBeforeDrawing(pList) {
         pList.forEach(sp => {
             if (sp.class == "dynamic") {
@@ -163,9 +227,37 @@ class Sprite {
 
     draw(ctx) {
         if (this.active) {
-            this.ox = this.currentAnimation.origin.x + (this.width * this.currentFrame); //
-            ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
-            //           (SS, ox, oy,                             frameWidth, frameHeight, x,      y,      scaleX,                    scaleY)
+
+            Sprite.debug_drawcalls++;
+            if (this.type != "kana") {
+                this.ox = this.currentAnimation.origin.x + (this.width * this.currentFrame);
+                ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
+                //           (SS, ox, oy,                             frameWidth, frameHeight, x,      y,      scaleX,                    scaleY)
+            } else {
+
+                // TODO trouver un moyen pour le faire qu'une fois par frame ! MAIS AVANT le putImageData !
+                for (let i = 0; i < this.imageDataCurrent.imageData.data.length; i += 4) {
+                    if (this.step == this.imageDataCurrent.maxStep) {
+                        if (this.imageDataCurrent.imageData.data[i] == 255) {
+                            this.imageDataCurrent.imageData.data[i] = 69;
+                            this.imageDataCurrent.imageData.data[i + 1] = 40;
+                            this.imageDataCurrent.imageData.data[i + 2] = 60;
+                        }
+                    } else {
+                        if (this.imageDataCurrent.imageData.data[i] == (this.color + this.step)) {
+                            this.imageDataCurrent.imageData.data[i] = 255;
+                            this.imageDataCurrent.imageData.data[i + 1] = 0;
+                            this.imageDataCurrent.imageData.data[i + 2] = 0;
+                        }
+                    }
+                }
+
+                ctx.putImageData(this.imageDataCurrent.imageData, this.x * SCALE_X, this.y * SCALE_Y);
+                ctx.font = "10px jpfont";
+                ctx.textAlign = "center";
+                ctx.fillStyle = "rgb(255, 0, 0)";
+                ctx.fillText(this.strokeNumber, this.x + this.width + 10, this.y + 18);
+            }
         }
     }
 }
