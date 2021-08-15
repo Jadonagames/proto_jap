@@ -9,6 +9,14 @@ class CollisionManager {
     }
 
     static MouseCollision(mX, mY, spX, spY, spW, spH) {
+
+        // Pour les transitions de type déplacement d'écran TODO : à changer un jour
+        if (spX > CANVAS_WIDTH) spX -= CANVAS_WIDTH;
+        if (spY > CANVAS_HEIGHT) spY -= CANVAS_HEIGHT;
+        if (spX + spW < 0) spX += CANVAS_WIDTH;
+        if (spY + spH < 0) spY += CANVAS_HEIGHT;
+        // -------------------------------------------------
+
         return (mX >= spX) &&
             (mX <= spX + spW) &&
             (mY >= spY) &&

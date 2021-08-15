@@ -1,30 +1,99 @@
 lang_code	en	fr	jp
-english_lang	english	english	english
-french_lang	français	français	français
+english_lang	English	English	English
+french_lang	Français	Français	Français
 japanese_lang	日本語	日本語	日本語
 ph_word	placeholder	placeholder	placeholder
 ph_text	Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit.
 hello	hello	bonjour	こんにちは
 game	game	jeu	ゲーム
-start	start	commencer	始める
-play	play	jouer	プレイ
-lessons	lessons	leçons	レッソン
-training	training	entraînement	トレーニング
-infos	infos	infos	情報
-credits	credits	crédits	クレジット
-settings	settings	options	設定
-game_over	game over	fin de la partie	ゲームオーバー
+Start	Start	Commencer	始める
+Play	Play	Jouer	プレイ
+Lesson	Lesson	Leçon	レッスン
+Lesson_1	Lesson 1	Leçon 1	レッスン
+Lesson_2	Lesson 2	Leçon 2	レッスン
+Lesson_3	Lesson 3	Leçon 3	レッスン
+Lesson_4	Lesson 4	Leçon 4	レッスン
+Lesson_5	Lesson 5	Leçon 5	レッスン
+Lesson_6	Lesson 6	Leçon 6	レッスン
+Lesson_7	Lesson 7	Leçon 7	レッスン
+Lesson_8	Lesson 8	Leçon 8	レッスン
+Lesson_9	Lesson 9	Leçon 9	レッスン
+Lesson_10	Lesson 10	Leçon 10	レッスン
+Lesson_11	Lesson 11	Leçon 11	レッスン
+Lesson_12	Lesson 12	Leçon 12	レッスン
+Lesson_13	Lesson 13	Leçon 13	レッスン
+Lesson_14	Lesson 14	Leçon 14	レッスン
+Lesson_15	Lesson 15	Leçon 15	レッスン
+Content	Content	Contenu	内容
+			
+hira_aiueo	あ　い　う　え　お	あ　い　う　え　お	あ　い　う　え　お
+hira_kakikukeko	か　き　く　け　こ	か　き　く　け　こ	か　き　く　け　こ
+hira_sashisuseso	さ　し　す　せ　そ	さ　し　す　せ　そ	さ　し　す　せ　そ
+hira_tachitsuteto	た　ち　つ　て　と	た　ち　つ　て　と	た　ち　つ　て　と
+hira_naninuneno	な　に　ぬ　ね　の	な　に　ぬ　ね　の	な　に　ぬ　ね　の
+hira_hahifuheho	は　ひ　ふ　へ　ほ	は　ひ　ふ　へ　ほ	は　ひ　ふ　へ　ほ
+hira_mamimumemo	ま　み　む　め　も	ま　み　む　め　も	ま　み　む　め　も
+hira_yayuyo	や　ゆ　よ	や　ゆ　よ	や　ゆ　よ
+hira_rarirurero	ら　り　る　れ　ろ	ら　り　る　れ　ろ	ら　り　る　れ　ろ
+hira_wawon	わ　を　ん	わ　を　ん	わ　を　ん
+hira_gagigugego	が　ぎ　ぐ　げ　ご	が　ぎ　ぐ　げ　ご	が　ぎ　ぐ　げ　ご
+hira_zajizuzezo	ざ　じ　ず　ぜ　ぞ	ざ　じ　ず　ぜ　ぞ	ざ　じ　ず　ぜ　ぞ
+hira_dadidudedo	だ　ぢ　づ　で　ど	だ　ぢ　づ　で　ど	だ　ぢ　づ　で　ど
+hira_babibubebo	ば　び　ぶ　べ　ぼ	ば　び　ぶ 　べ　ぼ	ば　び　ぶ 　べ　ぼ
+hira_papipupepo	ぱ　ぴ　ぷ　ぺ　ぽ	ぱ　ぴ　ぷ　ぺ　ぽ	ぱ　ぴ　ぷ　ぺ　ぽ
+			
+kata_aiueo	ア　イ　ウ　エ　オ	ア　イ　ウ　エ　オ	ア　イ　ウ　エ　オ
+kata_kakikukeko	カ　キ　ク　ケ　コ	カ　キ　ク　ケ　コ	カ　キ　ク　ケ　コ
+kata_sashisuseso	サ　シ　ス　セ　ソ	サ　シ　ス　セ　ソ	サ　シ　ス　セ　ソ
+kata_tachitsuteto	タ　チ　ツ　テ　ト	タ　チ　ツ　テ　ト	タ　チ　ツ　テ　ト
+kata_naninuneno	ナ　ニ　ヌ　ネ　ノ	ナ　ニ　ヌ　ネ　ノ	ナ　ニ　ヌ　ネ　ノ
+kata_hahifuheho	ハ　ヒ　フ　ヘ　ホ	ハ　ヒ　フ　ヘ　ホ	ハ　ヒ　フ　ヘ　ホ
+kata_mamimumemo	マ　ミ　ム　メ　モ	マ　ミ　ム　メ　モ	マ　ミ　ム　メ　モ
+kata_yayuyo	ヤ　ユ　ヨ	ヤ　ユ　ヨ	ヤ　ユ　ヨ
+kata_rarirurero	ラ　リ　ル　レ　ロ	ラ　リ　ル　レ　ロ	ラ　リ　ル　レ　ロ
+kata_wawon	ワ　ヲ　ン	ワ　ヲ　ン	ワ　ヲ　ン
+kata_gagigugego	ガ　ギ　グ　ゲ　ゴ	ガ　ギ　グ　ゲ　ゴ	ガ　ギ　グ　ゲ　ゴ
+kata_zajizuzezo	ザ　ジ　ズ　ゼ　ゾ	ザ　ジ　ズ　ゼ　ゾ	ザ　ジ　ズ　ゼ　ゾ
+kata_dadidudedo	ダ　ヂ　ヅ　デ　ド	ダ　ヂ　ヅ　デ　ド	ダ　ヂ　ヅ　デ　ド
+kata_babibubebo	バ　ビ　ブ　ベ　ボ	バ　ビ　ブ　ベ　ボ	バ　ビ　ブ　ベ　ボ
+kata_papipupepo	パ　ピ　プ　ペ　ポ	パ　ピ　プ　ペ　ポ	パ　ピ　プ　ペ　ポ
+			
+roma_aiueo	a  i  u  e  o	a  i  u  e  o	a i u e o
+roma_kakikukeko	ka ki ku ke ko	ka ki ku ke ko	ka ki ku ke ko
+roma_sashisuseso	sa shi su se so	sa shi su se so	sa shi su se so
+roma_tachitsuteto	ta chi tsu te to	ta chi tsu te to	ta chi tsu te to
+roma_naninuneno	na ni nu ne no	na ni nu ne no	na ni nu ne no
+roma_hahifuheho	ha hi fu he ho	ha hi fu he ho	ha hi fu he ho
+roma_mamimumemo	ma mi mu me mo	ma mi mu me mo	ma mi mu me mo
+roma_yayuyo	ya yu yo	ya yu yo	ya yu yo
+roma_rarirurero	ra ri ru re ro	ra ri ru re ro	ra ri ru re ro
+roma_wawon	wa wo n	wa wo n	wa wo n
+roma_gagigugego	ga gi gu ge go	ga gi gu ge go	ga gi gu ge go
+roma_zajizuzezo	za ji zu ze zo	za ji zu ze zo	za ji zu ze zo
+roma_dadidudedo	da ji zu ze zo	da ji zu ze zo	da ji zu ze zo
+roma_babibubebo	ba bi bu be bo	ba bi bu be bo	ba bi bu be bo
+roma_papipupepo	pa pi pu pe po	pa pi pu pe po	pa pi pu pe po
+			
+			
+			
+			
+Lessons	Lessons	Leçons	レッスン
+Training	Training	Entraînement	トレーニング
+Infos	Infos	Infos	情報
+Credits	Credits	Crédits	クレジット
+Settings	Settings	Options	設定
+game_over	Game over	Fin de la partie	ゲームオーバー
 yes	yes	oui	はい
 no	no	non	いいえ
-back	back	retour	戻る
-sound	sound	son	サウンド
-volume	volume	volume	音量設定
+Back	Back	Retour	戻る
+Sound	Sound	Son	サウンド
+Volume	Volume	Volume	音量設定
 bgm	bgm	bgm	bgm
 sfx	sfx	sfx	効果音
 npc_1_1	Hello, my name is Jean.	Bonjour, je m'appelle Jean.	こんにちは、ジャンです。
 test1	tooltip test content	contenu test du tooltip bla bla, ceci est un long texte	ツールチップコンテンツテスト
-hiragana	hiragana	hiragana	ひらがな
-katakana	katakana	katakana	カタカナ
+Hiragana	Hiragana	Hiragana	ひらがな
+Katakana	Katakana	Katakana	カタカナ
 kanji	kanji	kanji	漢字
 text1	Here is where it all begins, let's go !	C'est ici que tout commence, c'est parti !	a
 text2	Here we go again, same quantity but different characters !	Allez, c'est reparti pour une fournée, même quantité mais caractères différents !	a
@@ -123,7 +192,7 @@ kata_su	ス	ス	ス
 kata_se	セ	セ	セ
 kata_so	ソ	ソ	ソ
 kata_ta	タ	タ	タ
-kata_chi	千	千	千
+kata_chi	チ	チ	チ
 kata_tsu	ツ	ツ	ツ
 kata_te	テ	テ	テ
 kata_to	ト	ト	ト
@@ -181,17 +250,17 @@ kata_pu	プ	プ	プ
 kata_pe	ペ	ペ	ペ
 kata_po	ポ	ポ	ポ
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+ha_description	The ha character ! WA !!!	Le caractère peut aussi se prononcer [wa] selon le contexte	
+hi_description	The hi character 	hi	-
+fu_description	The fu character 	fu	-
+he_description	The he character 	he	-
+ho_description	The ho character 	ho	-
+a_description	The a character 	a	-
+i_description	The i character 	i	-
+u_description	The u character 	u	-
+e_description	The e character 	e	-
+o_description	The o character 	o	-
+Description	Description	Description	-
 			
 			
 			

@@ -46,6 +46,9 @@ class Panel {
         }
 
         this.hoverable = false;
+        this.hoverCB = null;
+
+        this.bToDelete = false;
 
         this.state = Panel.STATE.Normal;
         this.font = "jpfont";
@@ -55,6 +58,7 @@ class Panel {
 
         this.label = pLabel;
         this.wordsArr = [];
+        this.bFirstUC = true;
 
         this.callback = pCallback;
         this.ALIGN_TEXT = Object.freeze({
@@ -211,6 +215,16 @@ class Panel {
         this.tooltip.push(pTooltip);
     }
 
+    setToDelete() {
+        this.bToDelete = true;
+    }
+
+    removeFromList() {
+        Panel.list = Panel.list.filter(b => {
+            return b != this;
+        });
+    }
+
     getState() {
         return this.state;
     }
@@ -226,6 +240,10 @@ class Panel {
     setOffsets(pX = 5, pY = 13) {
         this.textOffsetX = pX;
         this.textOffsetY = pY;
+    }
+
+    setLabel(pNewLabel) {
+        this.label = pNewLabel;
     }
 
     setFont(pFont) {
@@ -291,6 +309,9 @@ class Panel {
         }
 
         this.wordsArr = LANG[this.label].split(' ');
+
+        if (this.wordsArr.length == 1 && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
+
         let line = "";
         let lines = [];
         let tmp = "";

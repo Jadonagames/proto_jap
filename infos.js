@@ -4,8 +4,6 @@ class Infos {
     static hiraganaList = [];
     static katakanaList = [];
 
-    muteBtn = null;
-
     static bInit = false;
 
     static STATE = Object.freeze({
@@ -26,364 +24,152 @@ class Infos {
 
 
         // ---------------- MAIN ------------------
-        let hiraganaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50), { cb: Infos.changeState, arg: Infos.STATE.Hiragana }, "infos", Infos.STATE.Main, "hiragana");
-        hiraganaBtn.setTextCase("first");
+        let hiraganaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50), { cb: Infos.changeState, arg: Infos.STATE.Hiragana }, "infos", Infos.STATE.Main, "Hiragana");
         Infos.list.push(hiraganaBtn.getSprite());
 
-        let katakanaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50, 30, 1), { cb: Infos.changeState, arg: Infos.STATE.Katakana }, "infos", Infos.STATE.Main, "katakana");
-        katakanaBtn.setTextCase("first");
+        let katakanaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50, 30, 1), { cb: Infos.changeState, arg: Infos.STATE.Katakana }, "infos", Infos.STATE.Main, "Katakana");
         Infos.list.push(katakanaBtn.getSprite());
 
-        let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(50, 60, 1), toMainMenu, "infos", Infos.STATE.Main, "back");
-        backBtn.setTextCase("first");
+        let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(50, 60, 1), toMainMenu, "infos", Infos.STATE.Main, "Back");
         Infos.list.push(backBtn.getSprite());
         // END------------- MAIN ---------------END
-
-
-        // -------------- HIRAGANA ----------------
-        let arr = [
-            "a", "i", "u", "e", "o",
-            "ka", "ki", "ku", "ke", "ko",
-            "sa", "shi", "su", "se", "so",
-            "ta", "chi", "tsu", "te", "to",
-            "na", "ni", "nu", "ne", "no",
-            "ha", "hi", "fu", "he", "ho",
-            "ma", "mi", "mu", "me", "mo",
-            "ya", "-", "yu", "-", "yo",
-            "ra", "ri", "ru", "re", "ro",
-            "wa", "-", "-", "-", "wo",
-            "n"];
-
-        let FRAMES = [
-            [4, 4, 5], [3, 3], [3, 4], [3, 6], [3, 7, 3],
-            [4, 3, 3], [3, 3, 4, 3], [5], [4, 3, 4], [3, 3],
-            [3, 4, 3], [4], [3, 6], [4, 4, 4], [6],
-            [3, 4, 3, 3], [3, 5], [4], [5], [3, 3],
-            [3, 3, 3, 6], [4, 3, 3], [3, 9], [3, 9], [7],
-            [4, 3, 5], [6], [3, 3, 3, 3], [4], [4, 3, 3, 5],
-            [3, 3, 4], [6, 3], [3, 6, 3], [3, 6], [3, 3, 3],
-            [4, 3, 3], [], [5, 3], [], [3, 5],
-            [3, 4], [3, 3], [7], [3, 6], [6],
-            [3, 5], [], [], [], [3, 5, 4],
-            [6]];
 
         let offX = 0;
         let offY = 0;
         let columnsCount = 0;
 
-        // TODO 
-        // ==>> hira:104 / tenten:104 / kata:108 / tenten:103    (jusqu'à 419) 
-        let count = 0;
-        for (let i = 0; i < arr.length; i++) {
+        let descriptionList = "aiueohahifuheho";
 
-            if (i != 36 && i != 38 && i != 46 && i != 47 && i != 48) {
+        let kanaArray = [
+            "hira_a", "hira_i", "hira_u", "hira_e", "hira_o",
+            "hira_ka", "hira_ki", "hira_ku", "hira_ke", "hira_ko",
+            "hira_sa", "hira_shi", "hira_su", "hira_se", "hira_so",
+            "hira_ta", "hira_chi", "hira_tsu", "hira_te", "hira_to",
+            "hira_na", "hira_ni", "hira_nu", "hira_ne", "hira_no",
+            "hira_ha", "hira_hi", "hira_fu", "hira_he", "hira_ho",
+            "hira_ma", "hira_mi", "hira_mu", "hira_me", "hira_mo",
+            "hira_ya", "-", "hira_yu", "-", "hira_yo",
+            "hira_ra", "hira_ri", "hira_ru", "hira_re", "hira_ro",
+            "hira_wa", "-", "-", "-", "hira_wo",
+            "hira_n", //51
+            "hira_ga", "hira_gi", "hira_gu", "hira_ge", "hira_go",
+            "hira_za", "hira_ji", "hira_zu", "hira_ze", "hira_zo",
+            "hira_da", "hira_di", "hira_du", "hira_de", "hira_do",
+            "hira_ba", "hira_bi", "hira_bu", "hira_be", "hira_bo",
+            "hira_pa", "hira_pi", "hira_pu", "hira_pe", "hira_po", // 76
+            "kata_a", "kata_i", "kata_u", "kata_e", "kata_o",
+            "kata_ka", "kata_ki", "kata_ku", "kata_ke", "kata_ko",
+            "kata_sa", "kata_shi", "kata_su", "kata_se", "kata_so",
+            "kata_ta", "kata_chi", "kata_tsu", "kata_te", "kata_to",
+            "kata_na", "kata_ni", "kata_nu", "kata_ne", "kata_no",
+            "kata_ha", "kata_hi", "kata_fu", "kata_he", "kata_ho",
+            "kata_ma", "kata_mi", "kata_mu", "kata_me", "kata_mo", //111
+            "kata_ya", "-", "kata_yu", "-", "kata_yo",
+            "kata_ra", "kata_ri", "kata_ru", "kata_re", "kata_ro",
+            "kata_wa", "-", "-", "-", "kata_wo",
+            "kata_n", //127
+            "kata_ga", "kata_gi", "kata_gu", "kata_ge", "kata_go",
+            "kata_za", "kata_ji", "kata_zu", "kata_ze", "kata_zo",
+            "kata_da", "kata_di", "kata_du", "kata_de", "kata_do",
+            "kata_ba", "kata_bi", "kata_bu", "kata_be", "kata_bo",
+            "kata_pa", "kata_pi", "kata_pu", "kata_pe", "kata_po" //152
+        ];
 
-                let frame = new Sprite({ w: 30, h: 18 }, 30 + offX, 30 + offY, "infos");                                                            //  HERE x, y
+        let frameX = 30;
+        let kanaWidth = 34;
+        let kanaOffX = 35;
+        let state = Infos.STATE.Hiragana;
+        let kanaList = "hiragana";
+
+        for (let i = 0; i < 152; i++) {
+
+            if (i == 51 || i == 127) {
+                columnsCount = 0;
+                offX = 0;
+                offY = 0;
+                frameX = centerX(30, 64, 1);
+                kanaWidth = 38;
+                kanaOffX = 32;
+            }
+            if (i == 76) {
+                columnsCount = 0;
+                offX = 0;
+                offY = 0;
+                frameX = 30;
+                kanaWidth = 34;
+                kanaOffX = 35;
+                state = Infos.STATE.Katakana;
+                kanaList = "katakana"
+            }
+
+            if (i != 36 && i != 38 && i != 46 && i != 47 && i != 48 && i != 112 && i != 114 && i != 122 && i != 123 && i != 124) {
+
+                let frame = new Sprite({ w: 30, h: 18 }, frameX + offX, 30 + offY, "infos");
                 frame.addAnimation("normal", 1, { x: 0, y: 126 }, 0.1);
                 frame.changeAnimation("normal");
-                Infos.hiraganaList.push(frame);
+                state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(frame) : Infos.katakanaList.push(frame);
 
-                let kanaPanel = new Panel({ w: 28, h: 16 }, frame.x + 1, frame.y + 1, null, "infos", Infos.STATE.Hiragana, "hira_" + arr[i], 0, true);
+                let kanaPanel = new Panel({ w: 28, h: 16 }, frame.x + 1, frame.y + 1, null, "infos", state, kanaArray[i], 0, true);
                 kanaPanel.getSprite().addAnimation("normal", 1, { x: 1, y: 127 }, 0.1);
                 kanaPanel.getSprite().changeAnimation("normal");
                 kanaPanel.setHoverable(true);
                 kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
                 kanaPanel.setOffsets(3, 12);
                 kanaPanel.setFont("UD Digi Kyokasho NK-R");
-                Infos.hiraganaList.push(kanaPanel.getSprite());
+                state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite());
 
-                let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, { cb: Sound.playCallback, arg: "kana_" + arr[i] }, "infos", Infos.STATE.Hiragana, "", 0, true);
+                let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
                 soundBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 84 }, 0.1);
                 soundBtn.getSprite().addAnimation("hover", 1, { x: 12, y: 84 }, 0.1);
                 soundBtn.getSprite().addAnimation("down", 1, { x: 24, y: 84 }, 0.1);
                 soundBtn.getSprite().changeAnimation("normal");
-                Infos.hiraganaList.push(soundBtn.getSprite());
+                state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(soundBtn.getSprite()) : Infos.katakanaList.push(soundBtn.getSprite());
 
-                let tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 70, 1), 50, null, "infos", Infos.STATE.Hiragana, "roma_" + arr[i], 1);      //  HERE x, y
+                let tooltipPanel;
+                let romaLabel = "";
+                if (KANA[kanaArray[i]].roma == "di") {
+                    romaLabel = "ji";
+                } else if (KANA[kanaArray[i]].roma == "du") {
+                    romaLabel = "zu";
+                } else {
+                    romaLabel = KANA[kanaArray[i]].roma;
+                }
+
+                tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 98, 1), 130, null, "infos", state, "roma_" + romaLabel, 1);
                 tooltipPanel.setTextCase("all");
                 tooltipPanel.setFontSize(32);
                 tooltipPanel.setFont("pgfont");
                 tooltipPanel.setOffsets(5, 24);
 
-                let kana = new Sprite({ w: 34, h: 34 }, tooltipPanel.x + 35, tooltipPanel.y + 35, "kana");
+                let kana = new Sprite({ w: kanaWidth, h: 34 }, tooltipPanel.x + kanaOffX, tooltipPanel.y + 35, "kana");     // w: 38   x + 32
 
-                for (let j = 0; j < FRAMES[i].length; j++) {
-                    kana.setImageDataOrigin(imageDatasArr[count], FRAMES[i][j]); /// NON PAS imageDatasArr[j] !!! !!!!!!!!!
-                    count++;
+                for (let j = 0; j < KANA[kanaArray[i]].frames.length; j++) {
+                    kana.setImageDataOrigin(KANA[kanaArray[i]].imageData[j], KANA[kanaArray[i]].frames[j]);
                 }
-
+                // TODO CHANGEMENTS !! : 
+                // if (descriptionList.includes(KANA[kanaArray[i]].roma)) {
+                //     let bottomInfoPanel = new Panel({ w: 450, h: 50, v: 5 }, 0, CANVAS_HEIGHT - 50, null, "infos", state, KANA[kanaArray[i]].roma + "_description", 1);
+                //     bottomInfoPanel.setOffsets(5, 24);
+                //     kanaPanel.setTooltip(bottomInfoPanel);
+                // }
                 kanaPanel.setTooltip(tooltipPanel);
                 kanaPanel.setTooltip(kana);
-                kanaPanel.setHoverCB(displayTooltip, { list: "infos.hiragana", tooltip: kanaPanel.getTooltip() });
+                kanaPanel.setHoverCB(displayTooltip, { list: "infos." + kanaList, tooltip: kanaPanel.getTooltip() });
             }
             columnsCount++;
             if (columnsCount == 5) {
-                columnsCount = 0
-                offX = 0
+                columnsCount = 0;
+                offX = 0;
                 offY += 18 - 1; // 18 => frame.height
             } else {
                 offX += 30 - 1; // 30 => frame.width
             }
         }
-
-
-        let arr2 = [
-            "ga", "gi", "gu", "ge", "go",
-            "za", "ji", "zu", "ze", "zo",
-            "da", "di", "du", "de", "do",
-            "ba", "bi", "bu", "be", "bo",
-            "pa", "pi", "pu", "pe", "po",
-        ];
-
-        let FRAMES_2 = [
-            [4, 3, 3, 3, 3], [3, 3, 4, 3, 3, 3], [5, 3, 3], [4, 3, 4, 3, 3], [3, 3, 3, 3],
-            [3, 4, 3, 3, 3], [4, 3, 3], [3, 6, 3, 3], [4, 4, 4, 3, 3], [6, 3, 3],
-            [3, 4, 3, 3, 3, 3], [3, 5, 3, 3], [4, 3, 3], [5, 3, 3], [3, 3, 3, 3],
-            [4, 3, 5, 3, 3], [6, 3, 3], [3, 3, 3, 3, 3, 3], [4, 3, 3], [4, 3, 3, 5, 3, 3],
-            [4, 3, 5, 4], [6, 4], [3, 3, 3, 3, 4], [4, 4], [4, 3, 3, 5, 4]
-        ];
-
-        offX = 0;
-        offY = 0;
-        columnsCount = 0;
-
-        for (let i = 0; i < arr2.length; i++) {
-
-            let frame = new Sprite({ w: 30, h: 18 }, 250 + offX, 30 + offY, "infos");                                                            //  HERE x, y
-            frame.addAnimation("normal", 1, { x: 0, y: 126 }, 0.1);
-            frame.changeAnimation("normal");
-            Infos.hiraganaList.push(frame);
-
-            let kanaPanel = new Panel({ w: 28, h: 16 }, frame.x + 1, frame.y + 1, null, "infos", Infos.STATE.Hiragana, "hira_" + arr2[i], 0, true);
-            kanaPanel.getSprite().addAnimation("normal", 1, { x: 1, y: 127 }, 0.1);
-            kanaPanel.getSprite().changeAnimation("normal");
-            kanaPanel.setHoverable(true);
-            kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
-            kanaPanel.setOffsets(3, 12);
-            kanaPanel.setFont("UD Digi Kyokasho NK-R");
-            Infos.hiraganaList.push(kanaPanel.getSprite());
-
-            let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, { cb: Sound.playCallback, arg: "kana_" + arr2[i] }, "infos", Infos.STATE.Hiragana, "", 0, true);
-            soundBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 84 }, 0.1);
-            soundBtn.getSprite().addAnimation("hover", 1, { x: 12, y: 84 }, 0.1);
-            soundBtn.getSprite().addAnimation("down", 1, { x: 24, y: 84 }, 0.1);
-            soundBtn.getSprite().changeAnimation("normal");
-            Infos.hiraganaList.push(soundBtn.getSprite());
-
-            let tooltipPanel;
-
-            if (arr2[i] == "di") {
-                tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 70), 50, null, "infos", Infos.STATE.Hiragana, "roma_ji", 1);
-            } else if (arr2[i] == "du") {
-                tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 70), 50, null, "infos", Infos.STATE.Hiragana, "roma_zu", 1);
-            } else {
-                tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 70), 50, null, "infos", Infos.STATE.Hiragana, "roma_" + arr2[i], 1);
-            }
-
-            tooltipPanel.setTextCase("all");
-            tooltipPanel.setFontSize(32);
-            tooltipPanel.setFont("pgfont");
-            tooltipPanel.setOffsets(5, 24);
-
-            let kana = new Sprite({ w: 34, h: 34 }, tooltipPanel.x + 32, tooltipPanel.y + 35, "kana");
-
-            for (let j = 0; j < FRAMES_2[i].length; j++) {
-                kana.setImageDataOrigin(imageDatasArr[count], FRAMES_2[i][j]);
-                count++;
-            }
-
-            kanaPanel.setTooltip(tooltipPanel);
-            kanaPanel.setTooltip(kana);
-            kanaPanel.setHoverCB(displayTooltip, { list: "infos.hiragana", tooltip: kanaPanel.getTooltip() });
-
-            columnsCount++;
-            if (columnsCount == 5) {
-                columnsCount = 0
-                offX = 0
-                offY += 18 - 1; // 18 => frame.height
-            } else {
-                offX += 30 - 1; // 30 => frame.width
-            }
-
-        }
-
-        let hiraganaBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), CANVAS_HEIGHT - 30, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Hiragana, "back");
-        hiraganaBackBtn.setTextCase("first");
+        let hiraganaBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), CANVAS_HEIGHT - 30, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Hiragana, "Back");
         Infos.hiraganaList.push(hiraganaBackBtn.getSprite());
-        // END----------- HIRAGANA -------------END
 
-
-        // -------------- KATAKANA ----------------
-        let arr3 = [
-            "a", "i", "u", "e", "o",
-            "ka", "ki", "ku", "ke", "ko",
-            "sa", "shi", "su", "se", "so",
-            "ta", "chi", "tsu", "te", "to",
-            "na", "ni", "nu", "ne", "no",
-            "ha", "hi", "fu", "he", "ho",
-            "ma", "mi", "mu", "me", "mo",
-            "ya", "-", "yu", "-", "yo",
-            "ra", "ri", "ru", "re", "ro",
-            "wa", "-", "-", "-", "wo",
-            "n"];
-
-        let FRAMES_3 = [
-            [4, 3], [3, 3], [2, 3, 4], [3, 3, 4], [3, 4, 3],
-            [4, 3], [3, 3, 3], [3, 3], [3, 3, 3], [3, 3],
-            [3, 3, 3], [3, 3, 4], [3, 3], [4, 3], [3, 4],
-            [3, 4, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3],
-            [3, 3], [3, 3], [3, 3], [3, 3, 3, 3], [3], //na
-            [3, 3], [3, 3], [3], [4], [3, 4, 3, 3], //ha
-            [4, 3], [3, 3, 3], [3, 3], [3, 3], [3, 3, 3],//ma
-            [3, 3], [], [3, 3], [], [3, 3, 3],
-            [3, 3], [3, 3], [3, 3], [3], [3, 3, 3],
-            [3, 3], [], [], [], [3, 3, 3],
-            [3, 3]];
-
-        offX = 0;
-        offY = 0;
-        columnsCount = 0;
-
-        // TODO 
-        // ==>> kata:108 / tenten:103    (jusqu'à 419) 
-        for (let i = 0; i < arr3.length; i++) {
-
-            if (i != 36 && i != 38 && i != 46 && i != 47 && i != 48) {
-
-                let frame = new Sprite({ w: 30, h: 18 }, 30 + offX, 30 + offY, "infos");                                                            //  HERE x, y
-                frame.addAnimation("normal", 1, { x: 0, y: 126 }, 0.1);
-                frame.changeAnimation("normal");
-                Infos.katakanaList.push(frame);
-
-                let kanaPanel = new Panel({ w: 28, h: 16 }, frame.x + 1, frame.y + 1, null, "infos", Infos.STATE.Katakana, "kata_" + arr3[i], 0, true);
-                kanaPanel.getSprite().addAnimation("normal", 1, { x: 1, y: 127 }, 0.1);
-                kanaPanel.getSprite().changeAnimation("normal");
-                kanaPanel.setHoverable(true);
-                kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
-                kanaPanel.setOffsets(3, 12);
-                kanaPanel.setFont("UD Digi Kyokasho NK-R");
-                Infos.katakanaList.push(kanaPanel.getSprite());
-
-                let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, { cb: Sound.playCallback, arg: "kana_" + arr3[i] }, "infos", Infos.STATE.Katakana, "", 0, true);
-                soundBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 84 }, 0.1);
-                soundBtn.getSprite().addAnimation("hover", 1, { x: 12, y: 84 }, 0.1);
-                soundBtn.getSprite().addAnimation("down", 1, { x: 24, y: 84 }, 0.1);
-                soundBtn.getSprite().changeAnimation("normal");
-                Infos.katakanaList.push(soundBtn.getSprite());
-
-                let tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 70, 1), 50, null, "infos", Infos.STATE.Katakana, "roma_" + arr3[i], 1);      //  HERE x, y
-                tooltipPanel.setTextCase("all");
-                tooltipPanel.setFontSize(32);
-                tooltipPanel.setFont("pgfont");
-                tooltipPanel.setOffsets(5, 24);
-
-                let kana = new Sprite({ w: 34, h: 34 }, tooltipPanel.x + 35, tooltipPanel.y + 35, "kana");
-
-                for (let j = 0; j < FRAMES_3[i].length; j++) {
-                    kana.setImageDataOrigin(imageDatasArr[count], FRAMES_3[i][j]); /// NON PAS imageDatasArr[j] !!! !!!!!!!!!
-                    count++;
-                }
-
-                kanaPanel.setTooltip(tooltipPanel);
-                kanaPanel.setTooltip(kana);
-                kanaPanel.setHoverCB(displayTooltip, { list: "infos.katakana", tooltip: kanaPanel.getTooltip() });
-            }
-            columnsCount++;
-            if (columnsCount == 5) {
-                columnsCount = 0
-                offX = 0
-                offY += 18 - 1; // 18 => frame.height
-            } else {
-                offX += 30 - 1; // 30 => frame.width
-            }
-        }
-
-
-        let arr4 = [
-            "ga", "gi", "gu", "ge", "go",
-            "za", "ji", "zu", "ze", "zo",
-            "da", "di", "du", "de", "do",
-            "ba", "bi", "bu", "be", "bo",
-            "pa", "pi", "pu", "pe", "po",
-        ];
-
-        let FRAMES_4 = [
-            [4, 3, 3, 3], [3, 3, 3, 3, 3], [3, 3, 3, 3], [3, 3, 3, 3, 3], [3, 3, 3, 3],
-            [3, 3, 3, 3, 3], [3, 3, 4, 3, 3], [3, 3, 3, 3], [4, 3, 3, 3], [3, 4, 3, 3],
-            [3, 4, 3, 3, 3], [3, 3, 3, 3, 3], [3, 3, 3, 3, 3], [3, 3, 3, 3, 3], [3, 3, 3, 3],
-            [3, 3, 3, 3], [3, 3, 3, 3], [3, 3, 3], [4, 3, 3], [3, 4, 3, 3, 3, 3],
-            [3, 3, 4], [3, 3, 4], [3, 4], [4, 4], [3, 4, 3, 3, 4]
-        ];
-
-        offX = 0;
-        offY = 0;
-        columnsCount = 0;
-
-        for (let i = 0; i < arr4.length; i++) {
-
-            let frame = new Sprite({ w: 30, h: 18 }, 250 + offX, 30 + offY, "infos");                                                            //  HERE x, y
-            frame.addAnimation("normal", 1, { x: 0, y: 126 }, 0.1);
-            frame.changeAnimation("normal");
-            Infos.katakanaList.push(frame);
-
-            let kanaPanel = new Panel({ w: 28, h: 16 }, frame.x + 1, frame.y + 1, null, "infos", Infos.STATE.Katakana, "kata_" + arr4[i], 0, true);
-            kanaPanel.getSprite().addAnimation("normal", 1, { x: 1, y: 127 }, 0.1);
-            kanaPanel.getSprite().changeAnimation("normal");
-            kanaPanel.setHoverable(true);
-            kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
-            kanaPanel.setOffsets(3, 12);
-            kanaPanel.setFont("UD Digi Kyokasho NK-R");
-            Infos.katakanaList.push(kanaPanel.getSprite());
-
-            let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, { cb: Sound.playCallback, arg: "kana_" + arr4[i] }, "infos", Infos.STATE.Katakana, "", 0, true);
-            soundBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 84 }, 0.1);
-            soundBtn.getSprite().addAnimation("hover", 1, { x: 12, y: 84 }, 0.1);
-            soundBtn.getSprite().addAnimation("down", 1, { x: 24, y: 84 }, 0.1);
-            soundBtn.getSprite().changeAnimation("normal");
-            Infos.katakanaList.push(soundBtn.getSprite());
-
-            let tooltipPanel;
-
-            if (arr2[i] == "di") {
-                tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 70), 50, null, "infos", Infos.STATE.Katakana, "roma_ji", 1);
-            } else if (arr2[i] == "du") {
-                tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 70), 50, null, "infos", Infos.STATE.Katakana, "roma_zu", 1);
-            } else {
-                tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 70), 50, null, "infos", Infos.STATE.Katakana, "roma_" + arr2[i], 1);
-            }
-
-            tooltipPanel.setTextCase("all");
-            tooltipPanel.setFontSize(32);
-            tooltipPanel.setFont("pgfont");
-            tooltipPanel.setOffsets(5, 24);
-
-            let kana = new Sprite({ w: 34, h: 34 }, tooltipPanel.x + 32, tooltipPanel.y + 35, "kana");
-
-            for (let j = 0; j < FRAMES_4[i].length; j++) {
-                kana.setImageDataOrigin(imageDatasArr[count], FRAMES_4[i][j]);
-                count++;
-            }
-
-            kanaPanel.setTooltip(tooltipPanel);
-            kanaPanel.setTooltip(kana);
-            kanaPanel.setHoverCB(displayTooltip, { list: "infos.katakana", tooltip: kanaPanel.getTooltip() });
-
-            columnsCount++;
-            if (columnsCount == 5) {
-                columnsCount = 0
-                offX = 0
-                offY += 18 - 1; // 18 => frame.height
-            } else {
-                offX += 30 - 1; // 30 => frame.width
-            }
-
-        }
-
-        let katakanaBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), CANVAS_HEIGHT - 30, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Katakana, "back");
-        katakanaBackBtn.setTextCase("first");
+        let katakanaBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), CANVAS_HEIGHT - 30, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Katakana, "Back");
         Infos.katakanaList.push(katakanaBackBtn.getSprite());
-        // END----------- KATAKANA -------------END
-
     }
 
     static changeState(pNewState) {
@@ -443,7 +229,7 @@ class Infos {
                 ctx.fillStyle = "rgb(200,0,0)";
                 ctx.font = "40px jpfont";
                 ctx.textAlign = "center";
-                ctx.fillText(LANG["infos"], centerX(), 40);
+                ctx.fillText(LANG["Infos"], centerX(), 40);
                 ctx.textAlign = "left";
 
                 Sprite.manageBeforeDrawing(Infos.list);

@@ -28,17 +28,17 @@ class Timer {
 
 function centerX(pWidth = 0, pDistance = 0, pDirection = 0) {
     if (pDirection == 0) { // left
-        return (CANVAS_WIDTH * 0.5) - (pWidth * 0.5) - pDistance;
+        return Math.floor((CANVAS_WIDTH * 0.5) - (pWidth * 0.5) - pDistance);
     } else { // right
-        return (CANVAS_WIDTH * 0.5) - (pWidth * 0.5) + pDistance;
+        return Math.floor((CANVAS_WIDTH * 0.5) - (pWidth * 0.5) + pDistance);
     }
 }
 
 function centerY(pHeight = 0, pDistance = 0, pDirection = 0) {
     if (pDirection == 0) { // top
-        return (CANVAS_HEIGHT * 0.5) - (pHeight * 0.5) - pDistance;
+        return Math.floor((CANVAS_HEIGHT * 0.5) - (pHeight * 0.5) - pDistance);
     } else { // bottom
-        return (CANVAS_HEIGHT * 0.5) - (pHeight * 0.5) + pDistance;
+        return Math.floor((CANVAS_HEIGHT * 0.5) - (pHeight * 0.5) + pDistance);
     }
 }
 
@@ -103,9 +103,62 @@ function displayTooltip(pArgs) {
                 }
             })
             break;
+
+        case "lessons.main":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    Lessons.mainList.push(sp);
+                } else {
+                    Lessons.mainList.push(sp.getSprite());
+                }
+            })
+            break;
+
+        case "lessons.hiragana":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    Lessons.hiraganaList.push(sp);
+                } else {
+                    Lessons.hiraganaList.push(sp.getSprite());
+                }
+            })
+            break;
+
+        case "lessons.katakana":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    Lessons.katakanaList.push(sp);
+                } else {
+                    Lessons.katakanaList.push(sp.getSprite());
+                }
+            })
+            break;
+        case "lessons.lesson":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    Lessons.lessonList.push(sp);
+                } else {
+                    Lessons.lessonList.push(sp.getSprite());
+                }
+            })
+            break;
+
     }
 }
 
+function translate(pCoord, pReverse = false) {
+    for (const s in this.sp) {
+        if (this.sp[s] instanceof Sprite) {
+            if (pReverse) {
+                this.sp[s].x -= pCoord.x;
+                this.sp[s].y -= pCoord.y;
+            } else {
+                this.sp[s].x += pCoord.x;
+                this.sp[s].y += pCoord.y;
+            }
+        }
+    }
+}
 // ----------------------------------------------------
 // TODO Find a place for these : 
 // ----------------------------------------------------

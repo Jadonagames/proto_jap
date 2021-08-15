@@ -26,26 +26,36 @@ class MainMenu {
 
         MainMenu.bInit = true;
 
+        // ---------------- TEST ----------------
+        // let mainPanel = new Panel({ w: 74, h: 100, v: 5 }, 0, 0, null, "mainmenu", MainMenu.STATE.Main, "", 1);
+        // mainPanel.setTextCase("all");
+        // MainMenu.mainList.push(mainPanel.getSprite());
+
+        // let test1Btn = new Button({ w: 54, h: 20, v: 4 }, 10, 10, { cb: changeMainState, arg: MAIN_STATE.Lessons }, "mainmenu", MainMenu.STATE.Main, "Lessons");
+        // MainMenu.mainList.push(test1Btn.getSprite());
+
+        // let test2Btn = new Button({ w: 54, h: 20, v: 4 }, 10, 40, null, "mainmenu", MainMenu.STATE.Main, "Training");
+        // MainMenu.mainList.push(test2Btn.getSprite());
+
+        // let test3Btn = new Button({ w: 54, h: 20, v: 4 }, 10, 70, { cb: changeMainState, arg: MAIN_STATE.Infos }, "mainmenu", MainMenu.STATE.Main, "Infos");
+        // MainMenu.mainList.push(test3Btn.getSprite());
+        // --------------------------------------
+
         // ---------------- MAIN ----------------
 
-        let lessonsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 130, null, "mainmenu", MainMenu.STATE.Main, "lessons");
-        lessonsBtn.setTextCase("first");
+        let lessonsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 130, { cb: changeMainState, arg: MAIN_STATE.Lessons }, "mainmenu", MainMenu.STATE.Main, "Lessons");
         MainMenu.mainList.push(lessonsBtn.getSprite());
 
-        let freeBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 160, null, "mainmenu", MainMenu.STATE.Main, "training");
-        freeBtn.setTextCase("first");
-        MainMenu.mainList.push(freeBtn.getSprite());
+        let trainingBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 160, null, "mainmenu", MainMenu.STATE.Main, "Training");
+        MainMenu.mainList.push(trainingBtn.getSprite());
 
-        let infosBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 190, { cb: changeMainState, arg: MAIN_STATE.Infos }, "mainmenu", MainMenu.STATE.Main, "infos");
-        infosBtn.setTextCase("first");
+        let infosBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 190, { cb: changeMainState, arg: MAIN_STATE.Infos }, "mainmenu", MainMenu.STATE.Main, "Infos");
         MainMenu.mainList.push(infosBtn.getSprite());
 
-        let optionsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 220, { cb: MainMenu.changeState, arg: MainMenu.STATE.Options }, "mainmenu", MainMenu.STATE.Main, "settings");
-        optionsBtn.setTextCase("first");
+        let optionsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 220, { cb: MainMenu.changeState, arg: MainMenu.STATE.Options }, "mainmenu", MainMenu.STATE.Main, "Settings");
         MainMenu.mainList.push(optionsBtn.getSprite());
 
-        let creditsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 250, { cb: MainMenu.changeState, arg: MainMenu.STATE.Credits }, "mainmenu", MainMenu.STATE.Main, "credits");
-        creditsBtn.setTextCase("first");
+        let creditsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 250, { cb: MainMenu.changeState, arg: MainMenu.STATE.Credits }, "mainmenu", MainMenu.STATE.Main, "Credits");
         MainMenu.mainList.push(creditsBtn.getSprite());
 
         this.muteBtn = new Button({ w: 16, h: 14 }, centerX(16, 200, 1), 50, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
@@ -58,7 +68,7 @@ class MainMenu {
 
         // ---------------- OPTIONS ----------------
 
-        let volumePanel = new Panel({ w: 54, h: 20, v: 5 }, centerX(54), 50, startBtnCB, "mainmenu", MainMenu.STATE.Options, "volume", 1);
+        let volumePanel = new Panel({ w: 54, h: 20, v: 5 }, centerX(54), 50, null, "mainmenu", MainMenu.STATE.Options, "Volume", 1);
         volumePanel.setTextCase("all");
         MainMenu.optionsList.push(volumePanel.getSprite());
 
@@ -90,8 +100,7 @@ class MainMenu {
         sfxUpBtn.getSprite().changeAnimation("normal");
         MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
-        let optionsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), 150, toMainMenu, "mainmenu", MainMenu.STATE.Options, "back");
-        optionsBackBtn.setTextCase("first");
+        let optionsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), 150, toMainMenu, "mainmenu", MainMenu.STATE.Options, "Back");
         MainMenu.optionsList.push(optionsBackBtn.getSprite());
 
 
@@ -102,8 +111,7 @@ class MainMenu {
         jadonagamesLogo.changeAnimation("normal");
         MainMenu.creditsList.push(jadonagamesLogo);
 
-        let creditsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 50, 1), toMainMenu, "mainmenu", MainMenu.STATE.Credits, "back");
-        creditsBackBtn.setTextCase("first");
+        let creditsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 50, 1), toMainMenu, "mainmenu", MainMenu.STATE.Credits, "Back");
         MainMenu.creditsList.push(creditsBackBtn.getSprite());
 
     }
@@ -247,6 +255,9 @@ class MainMenu {
         }
         //------------- END DEBUG
 
+        ctx.fillStyle = "rgb(255,255,255)";
+        ctx.font = "10px jpfont";
+        ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
 
         if (FadeEffect.bActive) {
             FadeEffect.draw(ctx);

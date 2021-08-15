@@ -53,6 +53,9 @@ class Button {
 
         this.callback = pCallback;
         this.hoverCB = null;
+
+        this.bToDelete = false;
+
         this.ALIGN_TEXT = Object.freeze({
             Left: 0,
             Center: 1,
@@ -61,6 +64,7 @@ class Button {
         this.alignText = this.ALIGN_TEXT.Center;
 
         this.tooltip = [];
+        this.hoverOffset = null;
 
         Button.list.push(this);
     }
@@ -112,12 +116,163 @@ class Button {
             this.sp.c.addAnimation("down", 1, { x: 22, y: 52 }, 0.1);
             this.sp.c.changeAnimation("normal");
         }
+        if (pId == 1) {
+            this.sp.tl.addAnimation("normal", 1, { x: 0, y: 39 }, 0.1);
+            this.sp.tl.addAnimation("hover", 1, { x: 9, y: 39 }, 0.1);
+            this.sp.tl.addAnimation("down", 1, { x: 18, y: 39 }, 0.1);
+            this.sp.tl.changeAnimation("normal");
+
+            this.sp.tr.addAnimation("normal", 1, { x: 5, y: 39 }, 0.1);
+            this.sp.tr.addAnimation("hover", 1, { x: 14, y: 39 }, 0.1);
+            this.sp.tr.addAnimation("down", 1, { x: 23, y: 39 }, 0.1);
+            this.sp.tr.changeAnimation("normal");
+
+            this.sp.bl.addAnimation("normal", 1, { x: 0, y: 44 }, 0.1);
+            this.sp.bl.addAnimation("hover", 1, { x: 9, y: 44 }, 0.1);
+            this.sp.bl.addAnimation("down", 1, { x: 18, y: 44 }, 0.1);
+            this.sp.bl.changeAnimation("normal");
+
+            this.sp.br.addAnimation("normal", 1, { x: 5, y: 44 }, 0.1);
+            this.sp.br.addAnimation("hover", 1, { x: 14, y: 44 }, 0.1);
+            this.sp.br.addAnimation("down", 1, { x: 23, y: 44 }, 0.1);
+            this.sp.br.changeAnimation("normal");
+
+            this.sp.t.addAnimation("normal", 1, { x: 4, y: 39 }, 0.1);
+            this.sp.t.addAnimation("hover", 1, { x: 13, y: 39 }, 0.1);
+            this.sp.t.addAnimation("down", 1, { x: 22, y: 39 }, 0.1);
+            this.sp.t.changeAnimation("normal");
+
+            this.sp.r.addAnimation("normal", 1, { x: 5, y: 43 }, 0.1);
+            this.sp.r.addAnimation("hover", 1, { x: 14, y: 43 }, 0.1);
+            this.sp.r.addAnimation("down", 1, { x: 23, y: 43 }, 0.1);
+            this.sp.r.changeAnimation("normal");
+
+            this.sp.b.addAnimation("normal", 1, { x: 4, y: 44 }, 0.1);
+            this.sp.b.addAnimation("hover", 1, { x: 13, y: 44 }, 0.1);
+            this.sp.b.addAnimation("down", 1, { x: 22, y: 44 }, 0.1);
+            this.sp.b.changeAnimation("normal");
+
+            this.sp.l.addAnimation("normal", 1, { x: 0, y: 43 }, 0.1);
+            this.sp.l.addAnimation("hover", 1, { x: 9, y: 43 }, 0.1);
+            this.sp.l.addAnimation("down", 1, { x: 18, y: 43 }, 0.1);
+            this.sp.l.changeAnimation("normal");
+
+            this.sp.c.addAnimation("normal", 1, { x: 4, y: 43 }, 0.1);
+            this.sp.c.addAnimation("hover", 1, { x: 13, y: 43 }, 0.1);
+            this.sp.c.addAnimation("down", 1, { x: 22, y: 43 }, 0.1);
+            this.sp.c.changeAnimation("normal");
+        }
+
+        if (pId == 2) {
+            this.sp.tl.addAnimation("normal", 1, { x: 28, y: 39 }, 0.1);
+            this.sp.tl.addAnimation("hover", 1, { x: 28, y: 39 }, 0.1);
+            this.sp.tl.addAnimation("down", 1, { x: 28, y: 39 }, 0.1);
+            this.sp.tl.changeAnimation("normal");
+
+            this.sp.tr.addAnimation("normal", 1, { x: 32, y: 39 }, 0.1);
+            this.sp.tr.addAnimation("hover", 1, { x: 32, y: 39 }, 0.1);
+            this.sp.tr.addAnimation("down", 1, { x: 32, y: 39 }, 0.1);
+            this.sp.tr.changeAnimation("normal");
+
+            this.sp.bl.addAnimation("normal", 1, { x: 28, y: 43 }, 0.1);
+            this.sp.bl.addAnimation("hover", 1, { x: 28, y: 43 }, 0.1);
+            this.sp.bl.addAnimation("down", 1, { x: 28, y: 43 }, 0.1);
+            this.sp.bl.changeAnimation("normal");
+
+            this.sp.br.addAnimation("normal", 1, { x: 32, y: 43 }, 0.1);
+            this.sp.br.addAnimation("hover", 1, { x: 32, y: 43 }, 0.1);
+            this.sp.br.addAnimation("down", 1, { x: 32, y: 43 }, 0.1);
+            this.sp.br.changeAnimation("normal");
+
+            this.sp.t.addAnimation("normal", 1, { x: 31, y: 39 }, 0.1);
+            this.sp.t.addAnimation("hover", 1, { x: 31, y: 39 }, 0.1);
+            this.sp.t.addAnimation("down", 1, { x: 31, y: 39 }, 0.1);
+            this.sp.t.changeAnimation("normal");
+
+            this.sp.r.addAnimation("normal", 1, { x: 32, y: 42 }, 0.1);
+            this.sp.r.addAnimation("hover", 1, { x: 32, y: 42 }, 0.1);
+            this.sp.r.addAnimation("down", 1, { x: 32, y: 42 }, 0.1);
+            this.sp.r.changeAnimation("normal");
+
+            this.sp.b.addAnimation("normal", 1, { x: 31, y: 43 }, 0.1);
+            this.sp.b.addAnimation("hover", 1, { x: 31, y: 43 }, 0.1);
+            this.sp.b.addAnimation("down", 1, { x: 31, y: 43 }, 0.1);
+            this.sp.b.changeAnimation("normal");
+
+            this.sp.l.addAnimation("normal", 1, { x: 28, y: 42 }, 0.1);
+            this.sp.l.addAnimation("hover", 1, { x: 28, y: 42 }, 0.1);
+            this.sp.l.addAnimation("down", 1, { x: 28, y: 42 }, 0.1);
+            this.sp.l.changeAnimation("normal");
+
+            this.sp.c.addAnimation("normal", 1, { x: 31, y: 42 }, 0.1);
+            this.sp.c.addAnimation("hover", 1, { x: 31, y: 42 }, 0.1);
+            this.sp.c.addAnimation("down", 1, { x: 31, y: 42 }, 0.1);
+            this.sp.c.changeAnimation("normal");
+        }
+
+        if (pId == 3) {
+            this.sp.tl.addAnimation("normal", 1, { x: 28, y: 49 }, 0.1);
+            this.sp.tl.addAnimation("hover", 1, { x: 35, y: 49 }, 0.1);
+            this.sp.tl.addAnimation("down", 1, { x: 42, y: 49 }, 0.1);
+            this.sp.tl.changeAnimation("normal");
+
+            this.sp.tr.addAnimation("normal", 1, { x: 32, y: 49 }, 0.1);
+            this.sp.tr.addAnimation("hover", 1, { x: 39, y: 49 }, 0.1);
+            this.sp.tr.addAnimation("down", 1, { x: 46, y: 49 }, 0.1);
+            this.sp.tr.changeAnimation("normal");
+
+            this.sp.bl.addAnimation("normal", 1, { x: 28, y: 53 }, 0.1);
+            this.sp.bl.addAnimation("hover", 1, { x: 35, y: 53 }, 0.1);
+            this.sp.bl.addAnimation("down", 1, { x: 42, y: 53 }, 0.1);
+            this.sp.bl.changeAnimation("normal");
+
+            this.sp.br.addAnimation("normal", 1, { x: 32, y: 53 }, 0.1);
+            this.sp.br.addAnimation("hover", 1, { x: 39, y: 53 }, 0.1);
+            this.sp.br.addAnimation("down", 1, { x: 46, y: 53 }, 0.1);
+            this.sp.br.changeAnimation("normal");
+
+            this.sp.t.addAnimation("normal", 1, { x: 31, y: 49 }, 0.1);
+            this.sp.t.addAnimation("hover", 1, { x: 38, y: 49 }, 0.1);
+            this.sp.t.addAnimation("down", 1, { x: 45, y: 49 }, 0.1);
+            this.sp.t.changeAnimation("normal");
+
+            this.sp.r.addAnimation("normal", 1, { x: 32, y: 52 }, 0.1);
+            this.sp.r.addAnimation("hover", 1, { x: 39, y: 52 }, 0.1);
+            this.sp.r.addAnimation("down", 1, { x: 46, y: 52 }, 0.1);
+            this.sp.r.changeAnimation("normal");
+
+            this.sp.b.addAnimation("normal", 1, { x: 31, y: 53 }, 0.1);
+            this.sp.b.addAnimation("hover", 1, { x: 38, y: 53 }, 0.1);
+            this.sp.b.addAnimation("down", 1, { x: 45, y: 53 }, 0.1);
+            this.sp.b.changeAnimation("normal");
+
+            this.sp.l.addAnimation("normal", 1, { x: 28, y: 52 }, 0.1);
+            this.sp.l.addAnimation("hover", 1, { x: 35, y: 52 }, 0.1);
+            this.sp.l.addAnimation("down", 1, { x: 42, y: 52 }, 0.1);
+            this.sp.l.changeAnimation("normal");
+
+            this.sp.c.addAnimation("normal", 1, { x: 31, y: 52 }, 0.1);
+            this.sp.c.addAnimation("hover", 1, { x: 38, y: 52 }, 0.1);
+            this.sp.c.addAnimation("down", 1, { x: 45, y: 52 }, 0.1);
+            this.sp.c.changeAnimation("normal");
+        }
     }
 
-    static resetTypeState(pType, pTypeState) {
+    static resetTypeState(pType, pTypeState, pTypeState2 = -1) {
         Button.currentList = Button.list.filter(b => {
-            return b.type == pType && b.typeState == pTypeState;
+            return (b.type == pType && b.typeState == pTypeState) || b.type == pType && b.typeState == pTypeState2;
         });
+    }
+
+    resetAnimations(pId) {
+        if (!this.bStaticSize) {
+            for (const s in this.sp) {
+                if (this.sp[s] instanceof Sprite) {
+                    this.sp[s].animation = [];
+                }
+            }
+            this.setButtonSprites(pId);
+        }
     }
 
     getSprite() {
@@ -134,6 +289,23 @@ class Button {
 
     setTooltip(pTooltip) {
         this.tooltip.push(pTooltip);
+    }
+
+    getHoverOffset() {
+        return this.hoverOffset;
+    }
+    setHoverOffset(pOffset) {
+        this.hoverOffset = { ...pOffset };
+    }
+
+    setToDelete() {
+        this.bToDelete = true;
+    }
+
+    removeFromList() {
+        Button.list = Button.list.filter(b => {
+            return b != this;
+        });
     }
 
     getState() {

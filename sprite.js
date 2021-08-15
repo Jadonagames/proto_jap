@@ -13,6 +13,9 @@ class Sprite {
         this.x = pX;
         this.y = pY;
 
+        this.originalX = this.x;
+        this.originalY = this.y;
+
         this.ox = 0;
 
         this.scaleX = pScale.x;
@@ -36,6 +39,8 @@ class Sprite {
 
         this.isMoving = false;
 
+        this.bTranlate = false;
+
         if (this.type == "normal") {
             Sprite.list.push(this);
         }
@@ -54,6 +59,7 @@ class Sprite {
             this.stepTimer = new Timer(0, this.updateStep.bind(this));
 
             this.strokeNumber = 1;
+            this.kanaToDelete = false;
         }
     }
 
@@ -116,6 +122,10 @@ class Sprite {
         this.active = pBool;
     }
 
+    setKanaToDelete() {
+        this.kanaToDelete = true;
+    }
+
     setType(pType, pMaxLoop) {
         this.type = pType;
         this.maxLoop = pMaxLoop;
@@ -136,6 +146,11 @@ class Sprite {
             this.timer.setMax(this.currentAnimation.speed);
             this.timer.update(dt);
         }
+    }
+
+    updateTranslation(dt, pX, pY) {
+        this.x += pX * 60 * dt;
+        this.y += pY * 60 * dt;
     }
 
     updateFrame() {
@@ -200,6 +215,20 @@ class Sprite {
         this.imageDataCurrent.maxStep = this.imageDataOrigin[0].maxStep;
     }
 
+    static manageBeforeUpdating(pList, dt) {
+        pList.forEach(sp => {
+            if (sp.class == "dynamic") {
+                for (const s in sp) {
+                    if (sp[s] instanceof Sprite) {
+                        sp[s].update(dt);
+                    }
+                }
+            } else {
+                sp.update(dt);
+            }
+        })
+    }
+
     static manageBeforeDrawing(pList) {
         pList.forEach(sp => {
             if (sp.class == "dynamic") {
@@ -234,7 +263,6 @@ class Sprite {
                 ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
                 //           (SS, ox, oy,                             frameWidth, frameHeight, x,      y,      scaleX,                    scaleY)
             } else {
-
                 // TODO trouver un moyen pour le faire qu'une fois par frame ! MAIS AVANT le putImageData !
                 for (let i = 0; i < this.imageDataCurrent.imageData.data.length; i += 4) {
                     if (this.step == this.imageDataCurrent.maxStep) {
@@ -252,11 +280,21 @@ class Sprite {
                     }
                 }
 
+                if (this.x > CANVAS_WIDTH) this.x -= CANVAS_WIDTH;
+                if (this.y > CANVAS_HEIGHT) this.y -= CANVAS_HEIGHT;
+                if (this.x + this.width < 0) this.x += CANVAS_WIDTH;
+                if (this.y + this.height < 0) this.y += CANVAS_HEIGHT;
+
                 ctx.putImageData(this.imageDataCurrent.imageData, this.x * SCALE_X, this.y * SCALE_Y);
                 ctx.font = "10px jpfont";
                 ctx.textAlign = "center";
                 ctx.fillStyle = "rgb(255, 0, 0)";
-                ctx.fillText(this.strokeNumber, this.x + this.width + 10, this.y + 18);
+
+                if (this.kanaToDelete) {
+                    ctx.fillText(this.strokeNumber, this.x + this.width + 10, this.y + CANVAS_HEIGHT + 18);
+                } else {
+                    ctx.fillText(this.strokeNumber, this.x + this.width + 10, this.y + 18);
+                }
             }
         }
     }

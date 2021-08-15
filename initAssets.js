@@ -8,6 +8,865 @@ const h = "あ,い,う,え,お,か,き,く,け,こ,さ,し,す,せ,そ,た,ち,�
 const k = "ア,イ,ウ,エ,オ,カ,キ,ク,ケ,コ,サ,シ,ス,セ,ソ,タ,チ,ツ,テ,ト,ナ,ニ,ヌ,ネ,ノ,ハ,ヒ,フ,ヘ,ホ,マ,ミ,ム,メ,モ,ヤ,ユ,ヨ,ラ,リ,ル,レ,ロ,ワ,ヲ,ン,ガ,ギ,グ,ゲ,ゴ,ザ,ジ,ズ,ゼ,ゾ,ダ,デ,ド,バ,ビ,ブ,ベ,ボ,パ,ピ,プ,ペ,ポ";
 const r = "a,i,u,e,o,ka,ki,ku,ke,ko,sa,shi,su,se,so,ta,chi,tsu,te,to,na,ni,nu,ne,no,ha,hi,fu,he,ho,ma,mi,mu,me,mo,ya,yu,yo,ra,ri,ru,re,ro,wa,wo,n,ga,gi,gu,ge,go,za,ji,zu,ze,zo,da,de,do,ba,bi,bu,be,bo,pa,pi,pu,pe,po";
 
+let KANA = [];
+KANA["hira_a"] = {
+    kana: "あ",
+    roma: "a",
+    imageData: [], // 3
+    frames: [4, 4, 5]
+};
+KANA["hira_i"] = {
+    kana: "い",
+    roma: "i",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["hira_u"] = {
+    kana: "う",
+    roma: "u",
+    imageData: [],
+    frames: [3, 4]
+};
+KANA["hira_e"] = {
+    kana: "え",
+    roma: "e",
+    imageData: [],
+    frames: [3, 6]
+};
+KANA["hira_o"] = {
+    kana: "お",
+    roma: "o",
+    imageData: [],
+    frames: [3, 7, 3]
+};
+KANA["hira_ka"] = {
+    kana: "か",
+    roma: "ka",
+    imageData: [],
+    frames: [4, 3, 3]
+};
+KANA["hira_ki"] = {
+    kana: "き",
+    roma: "ki",
+    imageData: [],
+    frames: [3, 3, 4, 3]
+};
+KANA["hira_ku"] = {
+    kana: "く",
+    roma: "ku",
+    imageData: [],
+    frames: [5]
+};
+KANA["hira_ke"] = {
+    kana: "け",
+    roma: "ke",
+    imageData: [],
+    frames: [4, 3, 4]
+};
+KANA["hira_ko"] = {
+    kana: "こ",
+    roma: "ko",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["hira_sa"] = {
+    kana: "さ",
+    roma: "sa",
+    imageData: [],
+    frames: [3, 4, 3]
+};
+KANA["hira_shi"] = {
+    kana: "し",
+    roma: "shi",
+    imageData: [],
+    frames: [4]
+};
+KANA["hira_su"] = {
+    kana: "す",
+    roma: "su",
+    imageData: [],
+    frames: [3, 6]
+};
+KANA["hira_se"] = {
+    kana: "せ",
+    roma: "se",
+    imageData: [],
+    frames: [4, 4, 4]
+};
+KANA["hira_so"] = {
+    kana: "そ",
+    roma: "so",
+    imageData: [],
+    frames: [6]
+};
+KANA["hira_ta"] = {
+    kana: "た",
+    roma: "ta",
+    imageData: [],
+    frames: [3, 4, 3, 3]
+};
+KANA["hira_chi"] = {
+    kana: "ち",
+    roma: "chi",
+    imageData: [],
+    frames: [3, 5]
+};
+KANA["hira_tsu"] = {
+    kana: "つ",
+    roma: "tsu",
+    imageData: [],
+    frames: [4]
+};
+KANA["hira_te"] = {
+    kana: "て",
+    roma: "te",
+    imageData: [],
+    frames: [5]
+};
+KANA["hira_to"] = {
+    kana: "と",
+    roma: "to",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["hira_na"] = {
+    kana: "な",
+    roma: "na",
+    imageData: [],
+    frames: [3, 3, 3, 6]
+};
+KANA["hira_ni"] = {
+    kana: "に",
+    roma: "ni",
+    imageData: [],
+    frames: [4, 3, 3]
+};
+KANA["hira_nu"] = {
+    kana: "ぬ",
+    roma: "nu",
+    imageData: [],
+    frames: [3, 9]
+};
+KANA["hira_ne"] = {
+    kana: "ね",
+    roma: "ne",
+    imageData: [],
+    frames: [3, 9]
+};
+KANA["hira_no"] = {
+    kana: "の",
+    roma: "no",
+    imageData: [],
+    frames: [7]
+};
+KANA["hira_ha"] = {
+    kana: "は",
+    roma: "ha",
+    imageData: [],
+    frames: [4, 3, 5]
+};
+KANA["hira_hi"] = {
+    kana: "ひ",
+    roma: "hi",
+    imageData: [],
+    frames: [6]
+};
+KANA["hira_fu"] = {
+    kana: "ふ",
+    roma: "fu",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["hira_he"] = {
+    kana: "へ",
+    roma: "he",
+    imageData: [],
+    frames: [4]
+};
+KANA["hira_ho"] = {
+    kana: "ほ",
+    roma: "ho",
+    imageData: [],
+    frames: [4, 3, 3, 5]
+};
+KANA["hira_ma"] = {
+    kana: "ま",
+    roma: "ma",
+    imageData: [],
+    frames: [3, 3, 4]
+};
+KANA["hira_mi"] = {
+    kana: "み",
+    roma: "mi",
+    imageData: [],
+    frames: [6, 3]
+};
+KANA["hira_mu"] = {
+    kana: "む",
+    roma: "mu",
+    imageData: [],
+    frames: [3, 6, 3]
+};
+KANA["hira_me"] = {
+    kana: "め",
+    roma: "me",
+    imageData: [],
+    frames: [3, 6]
+};
+KANA["hira_mo"] = {
+    kana: "も",
+    roma: "mo",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["hira_ya"] = {
+    kana: "や",
+    roma: "ya",
+    imageData: [],
+    frames: [4, 3, 3]
+};
+KANA["hira_yu"] = {
+    kana: "ゆ",
+    roma: "yu",
+    imageData: [],
+    frames: [5, 3]
+};
+KANA["hira_yo"] = {
+    kana: "よ",
+    roma: "yo",
+    imageData: [],
+    frames: [3, 5]
+};
+KANA["hira_ra"] = {
+    kana: "ら",
+    roma: "ra",
+    imageData: [],
+    frames: [3, 4]
+};
+KANA["hira_ri"] = {
+    kana: "り",
+    roma: "ri",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["hira_ru"] = {
+    kana: "る",
+    roma: "ru",
+    imageData: [],
+    frames: [7]
+};
+KANA["hira_re"] = {
+    kana: "れ",
+    roma: "re",
+    imageData: [],
+    frames: [3, 6]
+};
+KANA["hira_ro"] = {
+    kana: "ろ",
+    roma: "ro",
+    imageData: [],
+    frames: [6]
+};
+KANA["hira_wa"] = {
+    kana: "わ",
+    roma: "wa",
+    imageData: [],
+    frames: [3, 5]
+};
+KANA["hira_wo"] = {
+    kana: "を",
+    roma: "wo",
+    imageData: [],
+    frames: [3, 5, 4]
+};
+KANA["hira_n"] = {
+    kana: "ん",
+    roma: "n",
+    imageData: [],
+    frames: [6]
+};
+
+
+KANA["hira_ga"] = {
+    kana: "が",
+    roma: "ga",
+    imageData: [],
+    frames: [4, 3, 3, 3, 3]
+};
+KANA["hira_gi"] = {
+    kana: "ぎ",
+    roma: "gi",
+    imageData: [],
+    frames: [3, 3, 4, 3, 3, 3]
+};
+KANA["hira_gu"] = {
+    kana: "ぐ",
+    roma: "gu",
+    imageData: [],
+    frames: [5, 3, 3]
+};
+KANA["hira_ge"] = {
+    kana: "げ",
+    roma: "ge",
+    imageData: [],
+    frames: [4, 3, 4, 3, 3]
+};
+KANA["hira_go"] = {
+    kana: "ご",
+    roma: "go",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["hira_za"] = {
+    kana: "ざ",
+    roma: "za",
+    imageData: [],
+    frames: [3, 4, 3, 3, 3]
+};
+KANA["hira_ji"] = {
+    kana: "じ",
+    roma: "ji",
+    imageData: [],
+    frames: [4, 3, 3]
+};
+KANA["hira_zu"] = {
+    kana: "ず",
+    roma: "zu",
+    imageData: [],
+    frames: [3, 6, 3, 3]
+};
+KANA["hira_ze"] = {
+    kana: "ぜ",
+    roma: "ze",
+    imageData: [],
+    frames: [4, 4, 4, 3, 3]
+};
+KANA["hira_zo"] = {
+    kana: "ぞ",
+    roma: "zo",
+    imageData: [],
+    frames: [6, 3, 3]
+};
+KANA["hira_da"] = {
+    kana: "だ",
+    roma: "da",
+    imageData: [],
+    frames: [3, 4, 3, 3, 3, 3]
+};
+KANA["hira_di"] = {
+    kana: "ぢ",
+    roma: "di",
+    imageData: [],
+    frames: [3, 5, 3, 3]
+};
+KANA["hira_du"] = {
+    kana: "づ",
+    roma: "du",
+    imageData: [],
+    frames: [4, 3, 3]
+};
+KANA["hira_de"] = {
+    kana: "で",
+    roma: "de",
+    imageData: [],
+    frames: [5, 3, 3]
+};
+KANA["hira_do"] = {
+    kana: "ど",
+    roma: "do",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["hira_ba"] = {
+    kana: "ば",
+    roma: "ba",
+    imageData: [],
+    frames: [4, 3, 5, 3, 3]
+};
+KANA["hira_bi"] = {
+    kana: "び",
+    roma: "bi",
+    imageData: [],
+    frames: [6, 3, 3]
+};
+KANA["hira_bu"] = {
+    kana: "ぶ",
+    roma: "bu",
+    imageData: [],
+    frames: [3, 3, 3, 3, 3, 3]
+};
+KANA["hira_be"] = {
+    kana: "べ",
+    roma: "be",
+    imageData: [],
+    frames: [4, 3, 3]
+};
+KANA["hira_bo"] = {
+    kana: "ぼ",
+    roma: "bo",
+    imageData: [],
+    frames: [4, 3, 3, 5, 3, 3]
+};
+KANA["hira_pa"] = {
+    kana: "ぱ",
+    roma: "pa",
+    imageData: [],
+    frames: [4, 3, 5, 4]
+};
+KANA["hira_pi"] = {
+    kana: "ぴ",
+    roma: "pi",
+    imageData: [],
+    frames: [6, 4]
+};
+KANA["hira_pu"] = {
+    kana: "ぷ",
+    roma: "pu",
+    imageData: [],
+    frames: [3, 3, 3, 3, 4]
+};
+KANA["hira_pe"] = {
+    kana: "ぺ",
+    roma: "pe",
+    imageData: [],
+    frames: [4, 4]
+};
+KANA["hira_po"] = {
+    kana: "ぽ",
+    roma: "po",
+    imageData: [],
+    frames: [4, 3, 3, 5, 4]
+};
+
+
+KANA["kata_a"] = {
+    kana: "ア",
+    roma: "a",
+    imageData: [],
+    frames: [4, 3]
+};
+KANA["kata_i"] = {
+    kana: "イ",
+    roma: "i",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_u"] = {
+    kana: "ウ",
+    roma: "u",
+    imageData: [],
+    frames: [2, 3, 4]
+};
+KANA["kata_e"] = {
+    kana: "エ",
+    roma: "e",
+    imageData: [],
+    frames: [3, 3, 4]
+};
+KANA["kata_o"] = {
+    kana: "オ",
+    roma: "o",
+    imageData: [],
+    frames: [3, 4, 3]
+};
+KANA["kata_ka"] = {
+    kana: "カ",
+    roma: "ka",
+    imageData: [],
+    frames: [4, 3]
+};
+KANA["kata_ki"] = {
+    kana: "キ",
+    roma: "ki",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_ku"] = {
+    kana: "ク",
+    roma: "ku",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_ke"] = {
+    kana: "ケ",
+    roma: "ke",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_ko"] = {
+    kana: "コ",
+    roma: "ko",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_sa"] = {
+    kana: "サ",
+    roma: "sa",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_shi"] = {
+    kana: "シ",
+    roma: "shi",
+    imageData: [],
+    frames: [3, 3, 4]
+};
+KANA["kata_su"] = {
+    kana: "ス",
+    roma: "su",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_se"] = {
+    kana: "セ",
+    roma: "se",
+    imageData: [],
+    frames: [4, 3]
+};
+KANA["kata_so"] = {
+    kana: "ソ",
+    roma: "so",
+    imageData: [],
+    frames: [3, 4]
+};
+KANA["kata_ta"] = {
+    kana: "タ",
+    roma: "ta",
+    imageData: [],
+    frames: [3, 4, 3]
+};
+KANA["kata_chi"] = {
+    kana: "チ",
+    roma: "chi",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_tsu"] = {
+    kana: "ツ",
+    roma: "tsu",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_te"] = {
+    kana: "テ",
+    roma: "te",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_to"] = {
+    kana: "ト",
+    roma: "to",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_na"] = {
+    kana: "ナ",
+    roma: "na",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_ni"] = {
+    kana: "ニ",
+    roma: "ni",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_nu"] = {
+    kana: "ヌ",
+    roma: "nu",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_ne"] = {
+    kana: "ネ",
+    roma: "ne",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["kata_no"] = {
+    kana: "ノ",
+    roma: "no",
+    imageData: [],
+    frames: [3]
+};
+KANA["kata_ha"] = {
+    kana: "ハ",
+    roma: "ha",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_hi"] = {
+    kana: "ヒ",
+    roma: "hi",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_fu"] = {
+    kana: "フ",
+    roma: "fu",
+    imageData: [],
+    frames: [3]
+};
+KANA["kata_he"] = {
+    kana: "ヘ",
+    roma: "he",
+    imageData: [],
+    frames: [4]
+};
+KANA["kata_ho"] = {
+    kana: "ホ",
+    roma: "ho",
+    imageData: [],
+    frames: [3, 4, 3, 3]
+};
+KANA["kata_ma"] = {
+    kana: "マ",
+    roma: "ma",
+    imageData: [],
+    frames: [4, 3]
+};
+KANA["kata_mi"] = {
+    kana: "ミ",
+    roma: "mi",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_mu"] = {
+    kana: "ム",
+    roma: "mu",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_me"] = {
+    kana: "メ",
+    roma: "me",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_mo"] = {
+    kana: "モ",
+    roma: "mo",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_ya"] = {
+    kana: "ヤ",
+    roma: "ya",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_yu"] = {
+    kana: "ユ",
+    roma: "yu",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_yo"] = {
+    kana: "ヨ",
+    roma: "yo",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_ra"] = {
+    kana: "ラ",
+    roma: "ra",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_ri"] = {
+    kana: "リ",
+    roma: "ri",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_ru"] = {
+    kana: "ル",
+    roma: "ru",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_re"] = {
+    kana: "レ",
+    roma: "re",
+    imageData: [],
+    frames: [3]
+};
+KANA["kata_ro"] = {
+    kana: "ロ",
+    roma: "ro",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_wa"] = {
+    kana: "ワ",
+    roma: "wa",
+    imageData: [],
+    frames: [3, 3]
+};
+KANA["kata_wo"] = {
+    kana: "ヲ",
+    roma: "wo",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_n"] = {
+    kana: "ン",
+    roma: "n",
+    imageData: [],
+    frames: [3, 3]
+};
+
+KANA["kata_ga"] = {
+    kana: "ガ",
+    roma: "ga",
+    imageData: [],
+    frames: [4, 3, 3, 3]
+};
+KANA["kata_gi"] = {
+    kana: "ギ",
+    roma: "gi",
+    imageData: [],
+    frames: [3, 3, 3, 3, 3]
+};
+KANA["kata_gu"] = {
+    kana: "グ",
+    roma: "gu",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["kata_ge"] = {
+    kana: "ゲ",
+    roma: "ge",
+    imageData: [],
+    frames: [3, 3, 3, 3, 3]
+};
+KANA["kata_go"] = {
+    kana: "ゴ",
+    roma: "go",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["kata_za"] = {
+    kana: "ザ",
+    roma: "za",
+    imageData: [],
+    frames: [3, 3, 3, 3, 3]
+};
+KANA["kata_ji"] = {
+    kana: "ジ",
+    roma: "ji",
+    imageData: [],
+    frames: [3, 3, 4, 3, 3]
+};
+KANA["kata_zu"] = {
+    kana: "ズ",
+    roma: "zu",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["kata_ze"] = {
+    kana: "ゼ",
+    roma: "ze",
+    imageData: [],
+    frames: [4, 3, 3, 3]
+};
+KANA["kata_zo"] = {
+    kana: "ゾ",
+    roma: "zo",
+    imageData: [],
+    frames: [3, 4, 3, 3]
+};
+KANA["kata_da"] = {
+    kana: "ダ",
+    roma: "da",
+    imageData: [],
+    frames: [3, 4, 3, 3, 3]
+};
+KANA["kata_di"] = {
+    kana: "ヂ",
+    roma: "di",
+    imageData: [],
+    frames: [3, 3, 3, 3, 3]
+};
+KANA["kata_du"] = {
+    kana: "ヅ",
+    roma: "du",
+    imageData: [],
+    frames: [3, 3, 3, 3, 3]
+};
+KANA["kata_de"] = {
+    kana: "デ",
+    roma: "de",
+    imageData: [],
+    frames: [3, 3, 3, 3, 3]
+};
+KANA["kata_do"] = {
+    kana: "ド",
+    roma: "do",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["kata_ba"] = {
+    kana: "バ",
+    roma: "ba",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["kata_bi"] = {
+    kana: "ビ",
+    roma: "bi",
+    imageData: [],
+    frames: [3, 3, 3, 3]
+};
+KANA["kata_bu"] = {
+    kana: "ブ",
+    roma: "bu",
+    imageData: [],
+    frames: [3, 3, 3]
+};
+KANA["kata_be"] = {
+    kana: "ベ",
+    roma: "be",
+    imageData: [],
+    frames: [4, 3, 3]
+};
+KANA["kata_bo"] = {
+    kana: "ボ",
+    roma: "bo",
+    imageData: [],
+    frames: [3, 4, 3, 3, 3, 3]
+};
+KANA["kata_pa"] = {
+    kana: "パ",
+    roma: "pa",
+    imageData: [],
+    frames: [3, 3, 4]
+};
+KANA["kata_pi"] = {
+    kana: "ピ",
+    roma: "pi",
+    imageData: [],
+    frames: [3, 3, 4]
+};
+KANA["kata_pu"] = {
+    kana: "プ",
+    roma: "pu",
+    imageData: [],
+    frames: [3, 4]
+};
+KANA["kata_pe"] = {
+    kana: "ペ",
+    roma: "pe",
+    imageData: [],
+    frames: [4, 4]
+};
+KANA["kata_po"] = {
+    kana: "ポ",
+    roma: "po",
+    imageData: [],
+    frames: [3, 4, 3, 3, 4]
+};
+
 const char = {
     h: h.split(","),
     k: k.split(","),
