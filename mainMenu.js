@@ -173,7 +173,7 @@ class MainMenu {
                 ctx.fillStyle = "rgb(200,0,0)";
                 ctx.font = "40px jpfont";
                 ctx.textAlign = "center";
-                ctx.fillText(LANG['settings'], centerX(), 40);
+                ctx.fillText(LANG['Settings'], centerX(), 40);
                 ctx.textAlign = "left";
 
                 Sprite.manageBeforeDrawing(MainMenu.optionsList);
@@ -192,7 +192,7 @@ class MainMenu {
                 ctx.fillStyle = "rgb(200,0,0)";
                 ctx.font = "40px jpfont";
                 ctx.textAlign = "center";
-                ctx.fillText(LANG['credits'], centerX(), 40);
+                ctx.fillText(LANG['Credits'], centerX(), 40);
                 ctx.textAlign = "left";
 
                 Sprite.manageBeforeDrawing(MainMenu.creditsList);
@@ -227,7 +227,7 @@ class MainMenu {
             // }
             // ctx.fillText(rndChoice.r, 100, 150);
 
-            // ctx.font = "10px UD Digi Kyokasho NK-R";
+            // ctx.font = "kyokasho";
 
             // ctx.fillText("あいうえお", 120, 50);
             // ctx.fillText("かきくけこ", 120, 55);

@@ -71,7 +71,7 @@ class Lessons {
             tooltipPanel.setOffsets(0, 18);
 
             let tooltipContentPanel = new Panel({ w: 250, h: 70, v: 1 }, centerX(250), CANVAS_HEIGHT - 50, null, "lessons", Lessons.STATE.Hiragana, "hira_" + arr[i], 2);
-            tooltipContentPanel.setFont("UD Digi Kyokasho NK-R");
+            tooltipContentPanel.setFont("kyokasho");
             tooltipPanel.setOffsets(0, 18);
 
             let tooltipContentPanel2 = new Panel({ w: 250, h: 50, v: 1 }, centerX(250), CANVAS_HEIGHT - 30, null, "lessons", Lessons.STATE.Hiragana, "roma_" + arr[i], 2);
@@ -108,7 +108,7 @@ class Lessons {
             tooltipPanel.setOffsets(0, 18);
 
             let tooltipContentPanel = new Panel({ w: 250, h: 70, v: 1 }, centerX(250), CANVAS_HEIGHT - 50, null, "lessons", Lessons.STATE.Katakana, "kata_" + arr[i], 2);
-            tooltipContentPanel.setFont("UD Digi Kyokasho NK-R");
+            tooltipContentPanel.setFont("kyokasho");
             tooltipPanel.setOffsets(0, 18);
 
             let tooltipContentPanel2 = new Panel({ w: 250, h: 50, v: 1 }, centerX(250), CANVAS_HEIGHT - 30, null, "lessons", Lessons.STATE.Katakana, "roma_" + arr[i], 2);
@@ -183,7 +183,7 @@ class Lessons {
 
 
                 let kanaPanel = new Panel({ w: 50, h: 38, v: 1 }, containerPanel.x, containerPanel.y, null, "lessons", Lessons.STATE.Lesson, kana + KANA[kanaPos].roma, 2);
-                kanaPanel.setFont("UD Digi Kyokasho NK-R");
+                kanaPanel.setFont("kyokasho");
                 kanaPanel.setFontSize(30);
                 kanaPanel.setOffsets(0, 30);
                 kanaPanel.setToDelete();
@@ -201,8 +201,7 @@ class Lessons {
                 }
 
                 romaPanel = new Panel({ w: 50, h: 38, v: 1 }, containerPanel.x + 50, containerPanel.y, null, "lessons", Lessons.STATE.Lesson, "roma_" + romaLabel, 2);
-
-                romaPanel.setFont("UD Digi Kyokasho NK-R");
+                romaPanel.setFont("kyokasho");
                 romaPanel.setFontSize(30);
                 romaPanel.setOffsets(0, 30);
                 romaPanel.setToDelete();

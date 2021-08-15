@@ -115,7 +115,8 @@ class Infos {
                 kanaPanel.setHoverable(true);
                 kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
                 kanaPanel.setOffsets(3, 12);
-                kanaPanel.setFont("UD Digi Kyokasho NK-R");
+                // kanaPanel.setFont("UD Digi Kyokasho NK-R");
+                kanaPanel.setFont("kyokasho");
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite());
 
                 let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);

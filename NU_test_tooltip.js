@@ -188,7 +188,6 @@ class LanguageScreen {
 
 
         ctx.fillStyle = "rgb(255,255,255)";
-        // ctx.font = "20px UD Digi Kyokasho NK-R";
 
         /*
         * DEBUG
@@ -201,7 +200,6 @@ class LanguageScreen {
             // ctx.fillText("dt: " + debugDt, 0, 120);
         }
 
-        // ctx.font = "10px UD Digi Kyokasho NK-R";
         ctx.font = "30px jpfont";
 
         ctx.textAlign = "center";
