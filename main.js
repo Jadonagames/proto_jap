@@ -9,9 +9,25 @@ const SCALE_X = 2;
 const SCALE_Y = 2;
 const CANVAS_WIDTH = canvas.width / SCALE_X;
 const CANVAS_HEIGHT = canvas.height / SCALE_Y;
+let canvasOriginBgColor = "cornflowerblue";
 let MUSIC_VOLUME = 0.5;
 let SFX_VOLUME = 0.5;
 let TRANSITION = false;
+let SCREEN_SHAKE = false;
+let screenShakeTimer = new Timer(0, { cb: setScreenShake, arg: false });
+screenShakeTimer.setMax(0.1);
+
+//!TEST--------
+// let canvasTest = document.getElementById("canvasTest");
+// let canvasTestCtx = canvasTest.getContext("2d");
+// canvasTest.style.top = centerY(60) * SCALE_X + "px";
+// canvasTest.style.left = centerX(90) * SCALE_Y + "px";
+
+// canvasTest.style.display = "none";
+// console.table(canvasTest);
+
+//!------------
+
 
 /**
  * DEBUG
@@ -83,6 +99,10 @@ function run() {
 
     debugDt = dt;
 
+    if (SCREEN_SHAKE) {
+        screenShakeTimer.update(dt);
+    }
+
     switch (mainState) {
         case MAIN_STATE.Language:
             LanguageScreen.update(dt);
@@ -100,7 +120,6 @@ function run() {
             Infos.update(dt);
             break;
         case MAIN_STATE.Game:
-            // update(dt);
             Game1.update(dt);
             break;
     }
@@ -109,6 +128,11 @@ function run() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
     ctx.scale(SCALE_X, SCALE_Y);
+
+
+    if (SCREEN_SHAKE) {
+        screenShake(ctx);
+    }
 
     switch (mainState) {
         case MAIN_STATE.Language:
@@ -127,9 +151,12 @@ function run() {
             Infos.draw(ctx);
             break;
         case MAIN_STATE.Game:
-            // draw(ctx);
             Game1.draw(ctx);
             break;
+    }
+
+    if (SCREEN_SHAKE) {
+        canvas.style.backgroundColor = "rgb(255,50,50)"
     }
 
     if (bStatsDebug) {
@@ -138,21 +165,42 @@ function run() {
         ctx.fillText("fps: " + Math.floor(dt * 3750), 0, 20);
     }
     ctx.restore();
+
+    // canvasTestCtx.clearRect(0, 0, canvas.width, canvas.height);
+    // canvasTestCtx.save();
+    // canvasTestCtx.scale(SCALE_X, SCALE_Y);
+
+    // canvasTestCtx.restore();
+
 }
 
-function startBtnCB() {
+function startBtnCB(pParam) {
     mainState = MAIN_STATE.Game;
 
-    if (!bGameInitialized) {
-        // gameInit();
+    // console.log(pParam);
+    let bLessonRange = false;
+    switch (pParam.testType) {
+        case "Training":
+            bLessonRange = true;
+            MAX_TURN = -1;
+            break;
+        case "Lesson_test":
+            bLessonRange = true;
+            MAX_TURN = 5;
+            break;
+        case "Full_test":
+            bLessonRange = false;
+            MAX_TURN = 2;
+            break;
+    }
+
+    Game1.load(pParam.choiceType, pParam.answerType, pParam.range, bLessonRange);
+    if (!Game1.bGameInitialized) {
         Game1.init();
         ScreenManager.init();
-        Pause.init();
+        // Pause.init();
     }
-    // load();
-    Game1.load();
-    // Panel.resetTypeState("normal", GAME_STATE.Game);
-    // Button.resetTypeState("normal", GAME_STATE.Game);
+
     Panel.resetTypeState("game1", Game1.STATE.Game);
     Button.resetTypeState("game1", Game1.STATE.Game);
 
