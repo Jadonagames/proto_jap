@@ -4,10 +4,6 @@ let bSplashSoundReady = false;
 
 let bSplashReady = false;
 
-const h = "あ,い,う,え,お,か,き,く,け,こ,さ,し,す,せ,そ,た,ち,つ,て,と,な,に,ぬ,ね,の,は,ひ,ふ,へ,ほ,ま,み,む,め,も,や,ゆ,よ,ら,り,る,れ,ろ,わ,を,ん,が,ぎ,ぐ,げ,ご,ざ,じ,ず,ぜ,ぞ,だ,で,ど,ば,び,ぶ,べ,ぼ,ぱ,ぴ,ぷ,ぺ,ぽ";
-const k = "ア,イ,ウ,エ,オ,カ,キ,ク,ケ,コ,サ,シ,ス,セ,ソ,タ,チ,ツ,テ,ト,ナ,ニ,ヌ,ネ,ノ,ハ,ヒ,フ,ヘ,ホ,マ,ミ,ム,メ,モ,ヤ,ユ,ヨ,ラ,リ,ル,レ,ロ,ワ,ヲ,ン,ガ,ギ,グ,ゲ,ゴ,ザ,ジ,ズ,ゼ,ゾ,ダ,デ,ド,バ,ビ,ブ,ベ,ボ,パ,ピ,プ,ペ,ポ";
-const r = "a,i,u,e,o,ka,ki,ku,ke,ko,sa,shi,su,se,so,ta,chi,tsu,te,to,na,ni,nu,ne,no,ha,hi,fu,he,ho,ma,mi,mu,me,mo,ya,yu,yo,ra,ri,ru,re,ro,wa,wo,n,ga,gi,gu,ge,go,za,ji,zu,ze,zo,da,de,do,ba,bi,bu,be,bo,pa,pi,pu,pe,po";
-
 let KANA = [];
 KANA["hira_a"] = {
     kana: "あ",
@@ -867,11 +863,40 @@ KANA["kata_po"] = {
     frames: [3, 4, 3, 3, 4]
 };
 
+const h = "あ,い,う,え,お,か,き,く,け,こ,さ,し,す,せ,そ,た,ち,つ,て,と,な,に,ぬ,ね,の,は,ひ,ふ,へ,ほ,ま,み,む,め,も,や,ゆ,よ,ら,り,る,れ,ろ,わ,を,ん,が,ぎ,ぐ,げ,ご,ざ,じ,ず,ぜ,ぞ,だ,ぢ,づ,で,ど,ば,び,ぶ,べ,ぼ,ぱ,ぴ,ぷ,ぺ,ぽ";
+const k = "ア,イ,ウ,エ,オ,カ,キ,ク,ケ,コ,サ,シ,ス,セ,ソ,タ,チ,ツ,テ,ト,ナ,ニ,ヌ,ネ,ノ,ハ,ヒ,フ,ヘ,ホ,マ,ミ,ム,メ,モ,ヤ,ユ,ヨ,ラ,リ,ル,レ,ロ,ワ,ヲ,ン,ガ,ギ,グ,ゲ,ゴ,ザ,ジ,ズ,ゼ,ゾ,ダ,ヂ,ヅ,デ,ド,バ,ビ,ブ,ベ,ボ,パ,ピ,プ,ペ,ポ";
+const r = "a,i,u,e,o,ka,ki,ku,ke,ko,sa,shi,su,se,so,ta,chi,tsu,te,to,na,ni,nu,ne,no,ha,hi,fu,he,ho,ma,mi,mu,me,mo,ya,yu,yo,ra,ri,ru,re,ro,wa,wo,n,ga,gi,gu,ge,go,za,ji,zu,ze,zo,da,di,du,de,do,ba,bi,bu,be,bo,pa,pi,pu,pe,po";
+
+// À garder pour faire des tests sur ぢ et づ
+// const h = "あ,ぢ,づ,え,お,か,き,く,け,こ,さ,じ,ず,せ,そ,た,ち,つ,て,と,な,に,ぬ,ね,の,は,ひ,ふ,へ,ほ,ま,み,む,め,も,や,ゆ,よ,ら,り,る,れ,ろ,わ,を,ん,が,ぎ,ぐ,げ,ご,ざ,じ,ず,ぜ,ぞ,だ,ぢ,づ,で,ど,ば,び,ぶ,べ,ぼ,ぱ,ぴ,ぷ,ぺ,ぽ";
+// const k = "ア,ヂ,ヅ,エ,オ,カ,キ,ク,ケ,コ,サ,ジ,ズ,セ,ソ,タ,チ,ツ,テ,ト,ナ,ニ,ヌ,ネ,ノ,ハ,ヒ,フ,ヘ,ホ,マ,ミ,ム,メ,モ,ヤ,ユ,ヨ,ラ,リ,ル,レ,ロ,ワ,ヲ,ン,ガ,ギ,グ,ゲ,ゴ,ザ,ジ,ズ,ゼ,ゾ,ダ,ヂ,ヅ,デ,ド,バ,ビ,ブ,ベ,ボ,パ,ピ,プ,ペ,ポ";
+// const r = "a,di,du,e,o,ka,ki,ku,ke,ko,sa,ji,zu,se,so,ta,chi,tsu,te,to,na,ni,nu,ne,no,ha,hi,fu,he,ho,ma,mi,mu,me,mo,ya,yu,yo,ra,ri,ru,re,ro,wa,wo,n,ga,gi,gu,ge,go,za,ji,zu,ze,zo,da,di,du,de,do,ba,bi,bu,be,bo,pa,pi,pu,pe,po";
+// ------------------------------------------
+
+
 const char = {
     h: h.split(","),
     k: k.split(","),
     r: r.split(",")
 };
+
+// ----------------------------------
+//! ces valeurs changent en fonction du jeu ou du choix du joueur
+let CHAR_NUMBERS = 4;
+let CHOICE_TYPE = "r";
+let ANSWER_TYPE = "h";
+let RANGE = 1;
+let LESSON_RANGE = false;
+let RND_ARR = []; // Liste des choix 
+let RND_CHOICE = {}; // Le Bon choix
+let REMAINING_CHOICES = [];
+let CHOICES_DONE = [];
+let ALREADY_RANDOM = -1;
+let KANA_NUMBER = 0;
+let TURN_NUMBER = -1;
+let MAX_TURN = 5;
+// ----------------------------------
+
 
 let tsvFile = "";
 let translationEn = []; // 1
@@ -880,17 +905,6 @@ let translationJp = []; // 3
 let LANG = [];
 let ASSETS_COUNTER = 0;
 let ASSETS_READY = false;
-
-// ----------------------------------
-// TODO Find a place for that :
-let charNumbers = 4;
-let learn = "r"
-let choice = "h";
-let rndArr = []; // Liste des choix 
-let rndChoice = {}; // Le Bon choix
-test(learn, choice, charNumbers);
-// ----------------------------------
-
 
 function LoadAssets() {
 
