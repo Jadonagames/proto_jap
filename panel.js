@@ -53,6 +53,8 @@ class Panel {
         this.state = Panel.STATE.Normal;
         this.font = "jpfont";
         this.fontSize = 10;
+        this.fontMainColor = "rgb(0,0,0)";
+        this.fontBackgroundColor = "rgb(150,150,150)";
 
         this.typeState = pTypeState;
 
@@ -69,6 +71,7 @@ class Panel {
         this.alignText = this.ALIGN_TEXT.Center;
         this.textOffsetX = 5;
         this.textOffsetY = 13;
+        this.textOffsetYOrigin = this.textOffsetY;
 
         this.tooltip = [];
 
@@ -220,8 +223,14 @@ class Panel {
     }
 
     removeFromList() {
-        Panel.list = Panel.list.filter(b => {
-            return b != this;
+        Panel.list = Panel.list.filter(p => {
+            return p != this;
+        });
+    }
+
+    removeFromCurrentList() {
+        Panel.currentList = Panel.currentList.filter(p => {
+            return p != this;
         });
     }
 
@@ -240,6 +249,7 @@ class Panel {
     setOffsets(pX = 5, pY = 13) {
         this.textOffsetX = pX;
         this.textOffsetY = pY;
+        this.textOffsetYOrigin = pY;
     }
 
     setLabel(pNewLabel) {
@@ -303,14 +313,16 @@ class Panel {
         }
 
         if (this.state == Panel.STATE.Hover) {
-            ctx.fillStyle = "rgb(255,255,255)";
+            this.fontMainColor = "rgb(255,255,255)";
+            ctx.fillStyle = this.fontMainColor;
         } else {
-            ctx.fillStyle = "rgb(0,0,0)";
+            this.fontMainColor = "rgb(0,0,0)";
+            ctx.fillStyle = this.fontMainColor;
         }
 
         this.wordsArr = LANG[this.label].split(' ');
 
-        if (this.wordsArr.length == 1 && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
+        if (this.wordsArr.length == 1 && this.wordsArr[0] != "" && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
 
         let line = "";
         let lines = [];
@@ -336,11 +348,21 @@ class Panel {
             switch (this.alignText) {
                 case this.ALIGN_TEXT.Left:
                     ctx.textAlign = "left";
+
+                    ctx.fillStyle = this.fontBackgroundColor;
+                    ctx.fillText(lines[i], this.x + this.textOffsetX + 1, this.y + this.textOffsetY + 1);
+                    ctx.fillStyle = this.fontMainColor;
+
                     ctx.fillText(lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
+
                     break;
                 case this.ALIGN_TEXT.Center:
                     ctx.textAlign = "center";
                     // ctx.fillText(lines[i], this.x + (this.width * 0.5) + 0.5, this.y + (13 * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                    ctx.fillStyle = this.fontBackgroundColor;
+                    ctx.fillText(lines[i], this.x + (this.width * 0.5) + 1, this.y + (this.textOffsetY * (i + 1)) + 1);
+                    ctx.fillStyle = this.fontMainColor;
+
                     ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (this.textOffsetY * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
                     break;
                 case this.ALIGN_TEXT.Right:
@@ -348,7 +370,9 @@ class Panel {
                     ctx.fillText(lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
                     break;
             }
+            this.textOffsetY += 13;
         }
+        this.textOffsetY = this.textOffsetYOrigin;
         ctx.fillStyle = "rgb(0,0,0)";
 
         ctx.textAlign = "left";

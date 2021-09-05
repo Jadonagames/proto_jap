@@ -46,6 +46,10 @@ class Button {
 
 
         this.state = Button.STATE.Normal;
+        this.font = "jpfont";
+        this.fontSize = 10;
+        this.fontMainColor = "rgb(0,0,0)";
+        this.fontBackgroundColor = "rgb(100,100,100)";
 
         this.typeState = pTypeState;
 
@@ -62,6 +66,9 @@ class Button {
             Right: 2
         });
         this.alignText = this.ALIGN_TEXT.Center;
+        this.textOffsetX = 5;
+        this.textOffsetY = 13;
+        this.textOffsetYOrigin = this.textOffsetY;
 
         this.tooltip = [];
         this.hoverOffset = null;
@@ -294,6 +301,7 @@ class Button {
     getHoverOffset() {
         return this.hoverOffset;
     }
+
     setHoverOffset(pOffset) {
         this.hoverOffset = { ...pOffset };
     }
@@ -308,6 +316,12 @@ class Button {
         });
     }
 
+    removeFromCurrentList() {
+        Button.currentList = Button.currentList.filter(b => {
+            return b != this;
+        });
+    }
+
     getState() {
         return this.state;
     }
@@ -317,7 +331,39 @@ class Button {
     }
 
     setAlignText(pAlign) {
-        this.align = pAlign;
+        this.alignText = pAlign;
+    }
+
+    setOffsets(pX = 5, pY = 13) {
+        this.textOffsetX = pX;
+        this.textOffsetY = pY;
+        this.textOffsetYOrigin = pY;
+    }
+
+    setLabel(pNewLabel) {
+        this.label = pNewLabel;
+    }
+
+    setTextCenterY() {
+        this.textOffsetY = Math.floor(this.height * 0.5) + 2;
+    }
+
+
+    setFont(pFont) {
+        this.font = pFont;
+    }
+
+    setFontSize(pSize) {
+        this.fontSize = pSize;
+    }
+
+    setFontColor(pBack = "rgb(100,100,100)", pMain = "rgb(0,0,0)") {
+        this.fontMainColor = pMain;
+        this.fontBackgroundColor = pBack;
+    }
+
+    setCallbackArg(pArg) {
+        this.callback.arg = pArg;
     }
 
     setHoverCB(pCallback, pParam) {
@@ -364,25 +410,33 @@ class Button {
 
     drawLabel(ctx) {
         if (this.state == Button.STATE.Hover) {
-            ctx.fillStyle = "rgb(255,0,0)";
+            this.fontMainColor = "rgb(255,0,0)";
+            ctx.fillStyle = this.fontMainColor;
         } else {
-            ctx.fillStyle = "rgb(0,0,0)";
+            this.fontMainColor = "rgb(0,0,0)";
+            ctx.fillStyle = this.fontMainColor;
         }
 
-        LANG["lang_code"] == "jp" ? ctx.font = "10px jpfont" : ctx.font = "10px jpfont";
+        ctx.font = this.fontSize + "px " + this.font;
 
         switch (this.alignText) {
             case this.ALIGN_TEXT.Left:
                 ctx.textAlign = "left";
-                ctx.fillText(LANG[this.label], this.x + 5, this.y + 13);
+                ctx.fillStyle = this.fontBackgroundColor;
+                ctx.fillText(LANG[this.label], this.x + 5, this.y + this.textOffsetY + 1);
+                ctx.fillStyle = this.fontMainColor;
+                ctx.fillText(LANG[this.label], this.x + 5, this.y + this.textOffsetY);
                 break;
             case this.ALIGN_TEXT.Center:
                 ctx.textAlign = "center";
-                ctx.fillText(LANG[this.label], this.x + (this.width * 0.5) + 0.5, this.y + 13); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                ctx.fillStyle = this.fontBackgroundColor;
+                ctx.fillText(LANG[this.label], this.x + (this.width * 0.5) + 0.5, this.y + this.textOffsetY + 1);
+                ctx.fillStyle = this.fontMainColor;
+                ctx.fillText(LANG[this.label], this.x + (this.width * 0.5) + 0.5, this.y + this.textOffsetY); // +0.5 Car en centrant le texte se retrouve entre deux pixels
                 break;
             case this.ALIGN_TEXT.Right:
                 ctx.textAlign = "right";
-                ctx.fillText(LANG[this.label], this.x + this.width - 5, this.y + 13);
+                ctx.fillText(LANG[this.label], this.x + this.width - 5, this.y + this.textOffsetY);
                 break;
         }
 
