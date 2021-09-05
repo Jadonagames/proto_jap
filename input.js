@@ -146,7 +146,7 @@ function keyUp(k) {
      * DEBUG
      */
     if (k.code == "KeyQ") { // => A
-        // test(learn, choice, charNumbers);
+
     }
 
     if (k.code == "KeyE") {
@@ -154,20 +154,29 @@ function keyUp(k) {
         Sound.current.play();
     }
 
-    if (k.code == "KeyA") {
-        toMainMenu();
+    if (k.code == "Enter") { // Q ?
+        // toMainMenu();
+        TURN_NUMBER = MAX_TURN - 1;
     }
 
     if (k.code == "Space") {
         // debug_STOP = !debug_STOP;
+
+        // setScreenShake(true);
+
+
+        console.log(" --- Button.list : --- ");
+        // console.table(Button.list);
         console.log(" --- Button.currentList : --- ");
-        // console.table(Button.currentList);
+        console.table(Button.currentList);
         console.log(" --- Panel.currentList : --- ");
-        // console.table(Panel.currentList);
+        console.table(Panel.currentList);
         console.log(" --- Sprite.kanaList : --- ");
         // console.table(Sprite.kanaList);
         console.log(" --- Lesson.lessonsList : --- ");
         // console.table(Lessons.lessonList);
+        console.log(" --- Game1.mainList : --- ");
+        console.table(Game1.mainList);
     }
 
     if (k.code == "KeyD") {
@@ -396,19 +405,11 @@ canvas.onclick = e => {
                 if (b.getState() != Button.STATE.Inactive) {
                     if (b.getState() == Button.STATE.Hover) {
 
-                        if (b instanceof ButtonKana) {
-                            b.callback(b.char);
-                        } else {
-                            if (b.getHoverOffset()) {
-                                let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
-                                func();
-                            }
-                            if (b.callback.cb != null && b.callback.arg != null) {
-                                b.callback.cb(b.callback.arg);
-                            } else {
-                                b.callback();
-                            }
+                        if (b.getHoverOffset()) {
+                            let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
+                            func();
                         }
+
                         b.setState(Button.STATE.Normal);
                         if (!b.staticSize) {
                             for (const sp in b.getSprite()) {
@@ -419,6 +420,15 @@ canvas.onclick = e => {
                         } else {
                             b.getSprite().changeAnimation("normal");
                         }
+
+
+                        if (b.callback.cb != null && b.callback.arg != null) {
+                            b.callback.cb(b.callback.arg);
+                        } else {
+                            b.callback();
+                        }
+
+
                         if (b.hoverCB) {
                             b.getTooltip().forEach(sp => {
                                 if (sp instanceof Sprite) {

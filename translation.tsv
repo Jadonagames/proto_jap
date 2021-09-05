@@ -9,21 +9,21 @@ game	game	jeu	ゲーム
 Start	Start	Commencer	始める
 Play	Play	Jouer	プレイ
 Lesson	Lesson	Leçon	レッスン
-Lesson_1	Lesson 1	Leçon 1	レッスン
-Lesson_2	Lesson 2	Leçon 2	レッスン
-Lesson_3	Lesson 3	Leçon 3	レッスン
-Lesson_4	Lesson 4	Leçon 4	レッスン
-Lesson_5	Lesson 5	Leçon 5	レッスン
-Lesson_6	Lesson 6	Leçon 6	レッスン
-Lesson_7	Lesson 7	Leçon 7	レッスン
-Lesson_8	Lesson 8	Leçon 8	レッスン
-Lesson_9	Lesson 9	Leçon 9	レッスン
-Lesson_10	Lesson 10	Leçon 10	レッスン
-Lesson_11	Lesson 11	Leçon 11	レッスン
-Lesson_12	Lesson 12	Leçon 12	レッスン
-Lesson_13	Lesson 13	Leçon 13	レッスン
-Lesson_14	Lesson 14	Leçon 14	レッスン
-Lesson_15	Lesson 15	Leçon 15	レッスン
+Lesson_1	Lesson 1	Leçon 1	レッスン 1
+Lesson_2	Lesson 2	Leçon 2	レッスン 2
+Lesson_3	Lesson 3	Leçon 3	レッスン 3
+Lesson_4	Lesson 4	Leçon 4	レッスン 4
+Lesson_5	Lesson 5	Leçon 5	レッスン 5
+Lesson_6	Lesson 6	Leçon 6	レッスン 6
+Lesson_7	Lesson 7	Leçon 7	レッスン 7
+Lesson_8	Lesson 8	Leçon 8	レッスン 8
+Lesson_9	Lesson 9	Leçon 9	レッスン 9
+Lesson_10	Lesson 10	Leçon 10	レッスン 10
+Lesson_11	Lesson 11	Leçon 11	レッスン 11
+Lesson_12	Lesson 12	Leçon 12	レッスン 12
+Lesson_13	Lesson 13	Leçon 13	レッスン 13
+Lesson_14	Lesson 14	Leçon 14	レッスン 14
+Lesson_15	Lesson 15	Leçon 15	レッスン 15
 Content	Content	Contenu	内容
 			
 hira_aiueo	あ　い　う　え　お	あ　い　う　え　お	あ　い　う　え　お
@@ -78,11 +78,29 @@ roma_papipupepo	pa pi pu pe po	pa pi pu pe po	pa pi pu pe po
 			
 			
 Lessons	Lessons	Leçons	レッスン
+Full_test	Full test	Test complet	レッスン
+Lesson_test	Lesson test	Test leçon	レッスン
 Training	Training	Entraînement	トレーニング
+hira_to_roma	Hiragana -> Romaji	Hiragana -> Romaji	-
+kata_to_roma	Katakana -> Romaji	Katakana -> Romaji	-
+hira_to_kata	Hiragana -> Katakana	Hiragana -> Katakana	-
+kata_to_hira	Katakana -> Hiragana	Katakana -> Hiragana	-
+roma_to_hira	Romaji -> Hiragana	Romaji -> Hiragana	-
+roma_to_kata	Romaji -> Katakana	Romaji -> Katakana	-
+あ_to_a	あ -> A	あ -> A	
+ア_to_a	ア -> A	ア -> A	
+あ_to_ア	あ -> ア	あ -> ア	
+ア_to_あ	ア -> あ	ア -> あ	
+a_to_あ	A -> あ	A -> あ	
+a_to_ア	A -> ア	A -> ア	
+			
+			
+			
 Infos	Infos	Infos	情報
 Credits	Credits	Crédits	クレジット
 Settings	Settings	Options	設定
 game_over	Game over	Fin de la partie	ゲームオーバー
+Restart	Restart	Rejouer	-
 yes	yes	oui	はい
 no	no	non	いいえ
 Back	Back	Retour	戻る
@@ -249,44 +267,14 @@ kata_pi	ピ	ピ	ピ
 kata_pu	プ	プ	プ
 kata_pe	ペ	ペ	ペ
 kata_po	ポ	ポ	ポ
-			
-ha_description	The ha character ! WA !!!	Le caractère peut aussi se prononcer [wa] selon le contexte	
-hi_description	The hi character 	hi	-
-fu_description	The fu character 	fu	-
-he_description	The he character 	he	-
-ho_description	The ho character 	ho	-
-a_description	The a character 	a	-
-i_description	The i character 	i	-
-u_description	The u character 	u	-
-e_description	The e character 	e	-
-o_description	The o character 	o	-
 Description	Description	Description	-
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+Description	Informations	Informations	情報
+Stroke_count_1	Stroke count: 1	Nombre de traits : 1	画数：1
+Stroke_count_2	Stroke count: 2	Nombre de traits : 2	画数：2
+Stroke_count_3	Stroke count: 3	Nombre de traits : 3	画数：3
+Stroke_count_4	Stroke count: 4	Nombre de traits : 4	画数：4
+Stroke_count_5	Stroke count: 5	Nombre de traits : 5	画数：5
+Stroke_count_6	Stroke count: 6	Nombre de traits : 6	画数：6
 			
 			
 roma_a	a	a	a
@@ -360,3 +348,153 @@ roma_pi	pi	pi	pi
 roma_pu	pu	pu	pu
 roma_pe	pe	pe	pe
 roma_po	po	po	po
+			
+			
+hira_a_description			
+hira_i_description	attention écriture	attention écriture	
+hira_u_description			
+hira_e_description			
+hira_o_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+hira_ka_description			
+hira_ki_description	attention écriture	attention écriture	
+hira_ku_description			
+hira_ke_description			
+hira_ko_description	attention écriture	attention écriture	
+hira_sa_description	attention écriture	attention écriture	
+hira_shi_description			
+hira_su_description	Depend on context the sound [u]	Selon certains contextes le son [u] peut ne pas être prononcé	
+hira_se_description			
+hira_so_description			
+hira_ta_description			
+hira_chi_description		t'chi	
+hira_tsu_description	Version Petit	Version Petit	
+hira_te_description			
+hira_to_description			
+hira_na_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+hira_ni_description			
+hira_nu_description			
+hira_ne_description			
+hira_no_description			
+hira_ha_description	wa / h aspiré	wa / h aspiré	
+hira_hi_description	h aspiré	h aspiré	
+hira_fu_description	h aspiré proche du f attention écriture	h aspiré, proche du f attention écriture	
+hira_he_description	h aspiré prononciation [e]	h aspiré prononciation [e]	
+hira_ho_description	h aspiré	h aspiré	
+hira_ma_description			
+hira_mi_description			
+hira_mu_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+hira_me_description			
+hira_mo_description	attention d'abord し puis trait - trait	attention d'abord し puis trait - trait	
+hira_ya_description	Version Petit attention écriture	Version Petit attention écriture	combi avec ki shi chi ni hi mi 
+hira_yu_description	Version Petit attention écriture	Version Petit attention écriture	
+hira_yo_description	Version Petit	Version Petit	
+hira_ra_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+hira_ri_description	Combinaison y-gyô attention écriture	Combinaison y-gyô attention écriture	
+hira_ru_description			
+hira_re_description			
+hira_ro_description			
+hira_wa_description			
+hira_wo_description	pronciation "o"	pronciation "o"	
+hira_n_description	jamais en début de mot, selon consonne qui suit n m ng	jamais en début de mot, selon consonne qui suit n m ng	
+			
+			
+hira_ga_description	explication du " 	explication du " 	
+hira_gi_description	combi y-gyô	combi y-gyô	
+hira_gu_description			
+hira_ge_description			
+hira_go_description			
+hira_za_description			
+hira_ji_description	combi y-gyô	combi y-gyô	
+hira_zu_description			
+hira_ze_description			
+hira_zo_description			
+hira_da_description			
+hira_di_description	rare	rare	
+hira_du_description	rare 続く	rare　続く	
+hira_de_description			
+hira_do_description			
+hira_ba_description			
+hira_bi_description	combi y-gyô	combi y-gyô	
+hira_bu_description			
+hira_be_description			
+hira_bo_description			
+hira_pa_description	explication maru	explication maru	
+hira_pi_description	combi y-gyô	combi y-gyô	
+hira_pu_description			
+hira_pe_description			
+hira_po_description			
+			
+			
+kata_a_description			
+kata_i_description			
+kata_u_description			
+kata_e_description			
+kata_o_description			
+kata_ka_description	The katakana カ is more angular and have one stroke less: カ <=> か	Le katakana カ est plus anguleux et a un trait en moins : カ <=> か	
+kata_ki_description	Hiragana き <=> キ Katakana 	Hiragana き <=> キ Katakana	
+kata_ku_description			
+kata_ke_description			
+kata_ko_description			
+kata_sa_description			
+kata_shi_description	shi tsu comparaison hira	shi tsu comparaison hira	
+kata_su_description			
+kata_se_description	comparaison hira	comparaison hira	
+kata_so_description	so n	so n	
+kata_ta_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+kata_chi_description	importance de la courbe -> comparaison 千	importance de la courbe -> comparaison 千	
+kata_tsu_description	shi tsu comparaison hira	shi tsu comparaison hira	
+kata_te_description			
+kata_to_description			
+kata_na_description			
+kata_ni_description			
+kata_nu_description			
+kata_ne_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+kata_no_description			
+kata_ha_description			
+kata_hi_description			
+kata_fu_description			
+kata_he_description	The へ hiragana is the same character	Le hiragana est le même caractère	
+kata_ho_description			
+kata_ma_description			
+kata_mi_description			
+kata_mu_description	attention écriture (en deux traits !!)	attention écriture (en deux traits !!)	
+kata_me_description			
+kata_mo_description			
+kata_ya_description			
+kata_yu_description			
+kata_yo_description			
+kata_ra_description			
+kata_ri_description	comparaison hira (attention trait gauche droit!)	comparaison hira (attention trait gauche droit!)	
+kata_ru_description			
+kata_re_description			
+kata_ro_description			
+kata_wa_description			
+kata_wo_description			
+kata_n_description	so n	so n	
+			
+			
+kata_ga_description			
+kata_gi_description			
+kata_gu_description			
+kata_ge_description			
+kata_go_description			
+kata_za_description			
+kata_ji_description			
+kata_zu_description			
+kata_ze_description			
+kata_zo_description			
+kata_da_description			
+kata_di_description			
+kata_du_description			
+kata_de_description	combi petit-i (diane)	combi petit-i (diane)	
+kata_do_description			
+kata_ba_description			
+kata_bi_description			
+kata_bu_description			
+kata_be_description			
+kata_bo_description			
+kata_pa_description			
+kata_pi_description			
+kata_pu_description			
+kata_pe_description			
+kata_po_description			

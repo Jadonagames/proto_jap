@@ -214,19 +214,6 @@ class MainMenu {
             ctx.fillText("ButtonCurrent : " + Button.currentList.length, 0, 130);
             ctx.fillText("MainMenuList : " + MainMenu.mainList.length, 0, 140);
 
-            // switch (choice) {
-            //     case "h":
-            //         ctx.fillText(rndChoice.h, 140, 170);
-            //         break;
-            //     case "k":
-            //         ctx.fillText(rndChoice.k, 140, 170);
-            //         break;
-            //     case "r":
-            //         ctx.fillText(rndChoice.r, 140, 170);
-            //         break;
-            // }
-            // ctx.fillText(rndChoice.r, 100, 150);
-
             // ctx.font = "kyokasho";
 
             // ctx.fillText("あいうえお", 120, 50);

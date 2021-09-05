@@ -115,7 +115,6 @@ class Infos {
                 kanaPanel.setHoverable(true);
                 kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
                 kanaPanel.setOffsets(3, 12);
-                // kanaPanel.setFont("UD Digi Kyokasho NK-R");
                 kanaPanel.setFont("kyokasho");
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite());
 
