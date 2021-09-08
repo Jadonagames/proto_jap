@@ -25,7 +25,6 @@ screenShakeTimer.setMax(0.1);
 
 // canvasTest.style.display = "none";
 // console.table(canvasTest);
-
 //!------------
 
 
@@ -40,6 +39,8 @@ let boolTest = false;
 let imageData = null;
 let imageDatasArr = [];
 // ---------------- END DEBUG
+
+
 
 const MAIN_STATE = Object.freeze({
     Language: 0,
@@ -164,6 +165,17 @@ function run() {
         ctx.fillText("Drawcalls: " + Sprite.debug_drawcalls, 0, 10);
         ctx.fillText("fps: " + Math.floor(dt * 3750), 0, 20);
     }
+
+
+    ctx.font = "10px jpfont";
+    ctx.fillStyle = "rgb(255,0,0)";
+    if (SaveManager.bSaveDataExists) {
+        ctx.fillText("Save?: SAVE DATA", 0, 10);
+    } else {
+        ctx.fillText("Save?: NO SAVE DATA", 0, 10);
+    }
+
+
     ctx.restore();
 
     // canvasTestCtx.clearRect(0, 0, canvas.width, canvas.height);
@@ -186,15 +198,17 @@ function startBtnCB(pParam) {
             break;
         case "Lesson_test":
             bLessonRange = true;
-            MAX_TURN = 5;
+            // MAX_TURN = 5;
+            MAX_TURN = 1;
             break;
         case "Full_test":
             bLessonRange = false;
-            MAX_TURN = 2;
+            // MAX_TURN = 2;
+            MAX_TURN = 1;
             break;
     }
 
-    Game1.load(pParam.choiceType, pParam.answerType, pParam.range, bLessonRange);
+    Game1.load(pParam.choiceType, pParam.answerType, pParam.range, bLessonRange, pParam.testType, pParam.lessonNumber);
     if (!Game1.bGameInitialized) {
         Game1.init();
         ScreenManager.init();

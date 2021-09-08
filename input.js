@@ -150,8 +150,14 @@ function keyUp(k) {
     }
 
     if (k.code == "KeyE") {
-        Sound.setCurrentMusic(Sound.list["music"]);
-        Sound.current.play();
+        // Sound.setCurrentMusic(Sound.list["music"]);
+        // Sound.current.play();
+
+        // Lessons.addStarTrophy("h1");
+
+        // console.log(" --- Lesson.hiraganaList : --- ");
+        // console.table(Lessons.hiraganaList);
+
     }
 
     if (k.code == "Enter") { // Q ?
@@ -164,19 +170,87 @@ function keyUp(k) {
 
         // setScreenShake(true);
 
+        let paramsToSave = [
+            {
+                type: "prologue",
+                value: 1
+            },
+            {
+                type: "lessons",
+                params: ["h1", "lessonTestGeneral"],
+                value: 48
+            },
+            {
+                type: "lessons",
+                params: ["h1", "lessonTest1"],
+                value: 48
+            },
+            {
+                type: "lessons",
+                params: ["h1", "lessonTest2"],
+                value: 48
+            },
+            {
+                type: "lessons",
+                params: ["h1", "fullTestGeneral"],
+                value: 0
+            },
+            {
+                type: "lessons",
+                params: ["h1", "fullTest1"],
+                value: 48
+            },
+            {
+                type: "lessons",
+                params: ["h1", "fullTest2"],
+                value: 0
+            },
+            {
+                type: "lessons",
+                params: ["h2", "lessonTestGeneral"],
+                value: 0
+            },
+            {
+                type: "lessons",
+                params: ["h2", "lessonTest1"],
+                value: 0
+            },
+            {
+                type: "lessons",
+                params: ["h2", "lessonTest2"],
+                value: 16
+            },
+            {
+                type: "lessons",
+                params: ["h2", "fullTestGeneral"],
+                value: 16
+            },
+            {
+                type: "lessons",
+                params: ["h2", "fullTest1"],
+                value: 16
+            },
+            {
+                type: "lessons",
+                params: ["h2", "fullTest2"],
+                value: 16
+            },
+        ];
+
+        SaveManager.save(paramsToSave);
 
         console.log(" --- Button.list : --- ");
         // console.table(Button.list);
         console.log(" --- Button.currentList : --- ");
-        console.table(Button.currentList);
+        // console.table(Button.currentList);
         console.log(" --- Panel.currentList : --- ");
-        console.table(Panel.currentList);
+        // console.table(Panel.currentList);
         console.log(" --- Sprite.kanaList : --- ");
         // console.table(Sprite.kanaList);
         console.log(" --- Lesson.lessonsList : --- ");
         // console.table(Lessons.lessonList);
         console.log(" --- Game1.mainList : --- ");
-        console.table(Game1.mainList);
+        // console.table(Game1.mainList);
     }
 
     if (k.code == "KeyD") {
