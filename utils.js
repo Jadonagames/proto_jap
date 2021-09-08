@@ -234,14 +234,9 @@ function resetChoices(pRange, pLessonRange) {
     }
 }
 
-function randomlyMix(pChoiceType, pNumber, pRange, pLessonRange) { // choiceType (label des btns), charNumbers : nombre de btns
+function randomlyMix(pChoiceType, pNumber, pRange, pLessonRange) { // choiceType (label des btns), number : nombre de btns
 
     let fromObj = {};
-
-    //TODO :  
-    //! Gérer di et du !! 
-
-
 
     if (REMAINING_CHOICES.length == 0) {
         resetChoices(pRange, pLessonRange);
@@ -395,6 +390,7 @@ function checkIfValid(pChar) {
     }
 
     if (pChar == choiced) {
+        Game1.resetTimer();
         KANA_NUMBER++;
         randomlyMix(CHOICE_TYPE, CHAR_NUMBERS, RANGE, LESSON_RANGE);
         switch (ANSWER_TYPE) {
@@ -455,14 +451,8 @@ function checkIfValid(pChar) {
             }
         });
 
-        //TODO IF OK : 0.5sec background GREEN ok !
-
-
-
-
-
-
     } else {
+        Game1.setMiss();
         setScreenShake(true);
     }
 }

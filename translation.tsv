@@ -70,7 +70,7 @@ roma_rarirurero	ra ri ru re ro	ra ri ru re ro	ra ri ru re ro
 roma_wawon	wa wo n	wa wo n	wa wo n
 roma_gagigugego	ga gi gu ge go	ga gi gu ge go	ga gi gu ge go
 roma_zajizuzezo	za ji zu ze zo	za ji zu ze zo	za ji zu ze zo
-roma_dadidudedo	da ji zu ze zo	da ji zu ze zo	da ji zu ze zo
+roma_dadidudedo	da ji zu de do	da ji zu de do	da ji zu de do
 roma_babibubebo	ba bi bu be bo	ba bi bu be bo	ba bi bu be bo
 roma_papipupepo	pa pi pu pe po	pa pi pu pe po	pa pi pu pe po
 			
@@ -106,6 +106,7 @@ no	no	non	いいえ
 Back	Back	Retour	戻る
 Sound	Sound	Son	サウンド
 Volume	Volume	Volume	音量設定
+delete_save	Delete save	Suppr. Sauvegarde	セーブデータを削除
 bgm	bgm	bgm	bgm
 sfx	sfx	sfx	効果音
 npc_1_1	Hello, my name is Jean.	Bonjour, je m'appelle Jean.	こんにちは、ジャンです。
