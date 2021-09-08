@@ -100,7 +100,12 @@ class MainMenu {
         sfxUpBtn.getSprite().changeAnimation("normal");
         MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
-        let optionsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), 150, toMainMenu, "mainmenu", MainMenu.STATE.Options, "Back");
+
+        let deleteSaveBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(60), 150, SaveManager.delete, "mainmenu", MainMenu.STATE.Options, "delete_save");
+        MainMenu.optionsList.push(deleteSaveBtn.getSprite());
+
+
+        let optionsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), 180, toMainMenu, "mainmenu", MainMenu.STATE.Options, "Back");
         MainMenu.optionsList.push(optionsBackBtn.getSprite());
 
 
