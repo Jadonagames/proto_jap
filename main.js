@@ -40,7 +40,9 @@ let imageData = null;
 let imageDatasArr = [];
 // ---------------- END DEBUG
 
-
+// SaveManager.save();
+SaveManager.init();
+SaveManager.load();
 
 const MAIN_STATE = Object.freeze({
     Language: 0,
