@@ -7,10 +7,15 @@ class Game1 {
         Transition: 3
     });
 
-    static currentState = Game1.STATE.Game;
+    static currentState = Game1.STATE.Game
     static bGameInitialized = null;
+    static lessonTestType = "";
+    static currentKanaLesson = "";
+    static currentLessonNumber = 0;
 
     static mainList = [];
+
+    static _misses = 0;
 
     constructor() {
 
@@ -27,7 +32,7 @@ class Game1 {
         let choiceLabel = "";
         let rndArr = [];
 
-        switch (CHOICE_TYPE) {
+        switch (CHOICE_TYPE) { // BTN type
             case "h":
                 choiceLabel = "hira_";
                 rndArr.push(char.r[char.h.indexOf(RND_ARR[0])]);
@@ -55,32 +60,28 @@ class Game1 {
                 break;
         }
 
-
-        //TODO CHANGE TEXT OFFSET Y WHEN KANA DISPLAYING :
-        //! ------------------------------------------------
-
         this.firstBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80), { cb: checkIfValid, arg: RND_ARR[0] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[0]);
         this.firstBtn.setFont("kyokasho");
         this.firstBtn.setFontSize(30);
-        this.firstBtn.setOffsets(5, 32);
+        this.firstBtn.setOffsets(5, 34);
         Game1.mainList.push(this.firstBtn.getSprite());
 
         this.secondBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80), { cb: checkIfValid, arg: RND_ARR[1] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[1]);
         this.secondBtn.setFont("kyokasho");
         this.secondBtn.setFontSize(30);
-        this.secondBtn.setOffsets(5, 32);
+        this.secondBtn.setOffsets(5, 34);
         Game1.mainList.push(this.secondBtn.getSprite());
 
         this.thirdBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80, 1), { cb: checkIfValid, arg: RND_ARR[2] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[2]);
         this.thirdBtn.setFont("kyokasho");
         this.thirdBtn.setFontSize(30);
-        this.thirdBtn.setOffsets(5, 32);
+        this.thirdBtn.setOffsets(5, 34);
         Game1.mainList.push(this.thirdBtn.getSprite());
 
         this.forthBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80, 1), { cb: checkIfValid, arg: RND_ARR[3] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[3]);
         this.forthBtn.setFont("kyokasho");
         this.forthBtn.setFontSize(30);
-        this.forthBtn.setOffsets(5, 32);
+        this.forthBtn.setOffsets(5, 34);
         Game1.mainList.push(this.forthBtn.getSprite());
 
         let answerLabel = "";
@@ -108,6 +109,13 @@ class Game1 {
         let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 120, 1), { cb: resetGame, arg: "back_to_lesson" }, "game1", Game1.STATE.Game, "Back");
         Game1.mainList.push(backBtn.getSprite());
 
+        this.bTimerActive = true;
+        this.timerMax = 6;
+        this.currentTimer = this.timerMax;
+
+        this.misses = 0;
+
+
         this.bEndGame = false;
         this.endGameBg = null;
         this.endGamePanel = null;
@@ -123,7 +131,7 @@ class Game1 {
         */
     }
 
-    static load(pChoiceType, pAnswerType, pRange = 1, plessonRange) {
+    static load(pChoiceType, pAnswerType, pRange = 1, plessonRange, pLessonTestType, pLessonNumber) {
         // Game1.currentState = Game1.STATE.Game;
         CHAR_NUMBERS = 4;
         CHOICE_TYPE = pChoiceType; // "r"
@@ -132,7 +140,13 @@ class Game1 {
         LESSON_RANGE = plessonRange;
         // RANGE = 1;
         REMAINING_CHOICES = [];
-
+        Game1.currentLessonNumber = pLessonNumber;
+        Game1.lessonTestType = pLessonTestType;
+        if (CHOICE_TYPE != "r") {
+            Game1.currentKanaLesson = CHOICE_TYPE;
+        } else if (ANSWER_TYPE != "r") {
+            Game1.currentKanaLesson = ANSWER_TYPE;
+        }
 
 
         randomlyMix(CHOICE_TYPE, CHAR_NUMBERS, RANGE, LESSON_RANGE);
@@ -141,6 +155,10 @@ class Game1 {
 
             KANA_NUMBER = 0;
             TURN_NUMBER = 0;
+
+            this.currentTimer = this.timerMax;
+            this.bTimerActive = true;
+            Game1.setMiss(0);
 
             let choiceLabel = "";
             let rndArr = [];
@@ -214,31 +232,66 @@ class Game1 {
                 b.setState(Button.STATE.Inactive);
             });
 
+            let paramsToSave = [];
+            let gotTrophyLevel = 0;
+            let lessonTestType = "";
+            let lessonTestGeneral = "";
+            let test1Mark = 0;
+            let test2Mark = 0;
 
+            if (this.misses == 0) {
+                gotTrophyLevel = 48;
+            } else if (this.misses >= 1 && this.misses < 5) {
+                gotTrophyLevel = 32;
+            } else {
+                gotTrophyLevel = 16;
+            }
 
-            //TODO : 
+            if (Game1.lessonTestType == "Lesson_test") {
+                lessonTestType = "lessonTest";
+                lessonTestGeneral = "lessonTestGeneral";
+            } else if (Game1.lessonTestType == "Full_test") {
+                lessonTestType = "fullTest";
+                lessonTestGeneral = "fullTestGeneral";
+            }
 
+            let generalMark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestGeneral];
 
+            if (ANSWER_TYPE != "r") { // Kana to Roma
+                test1Mark = gotTrophyLevel;
+                test2Mark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestType + "2"];
+                Lessons.updateTrophyValue("kana_to_roma", gotTrophyLevel);
+                lessonTestType += "1";
+            } else { // Roma to Kana
+                test1Mark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestType + "1"];
+                test2Mark = gotTrophyLevel;
+                Lessons.updateTrophyValue("roma_to_kana", gotTrophyLevel);
+                lessonTestType += "2";
+            }
 
+            if (generalMark < test1Mark && generalMark < test2Mark) {
+                let newMark = 0;
+                if (test1Mark <= test2Mark) {
+                    newMark = test1Mark;
+                } else if (test1Mark > test2Mark) {
+                    newMark = test2Mark;
+                }
+                paramsToSave.push({ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, lessonTestGeneral], value: newMark });
+                Lessons.updateTrophyValue(lessonTestType.slice(0, -1), newMark);
+            }
 
+            paramsToSave.push({ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, lessonTestType], value: gotTrophyLevel });
 
+            SaveManager.save(paramsToSave);
+            if (SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["lessonTestGeneral"] == 48 && SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["fullTestGeneral"] == 48) {
+                paramsToSave = [{ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, "finish"], value: 1 }];
+                SaveManager.save(paramsToSave);
+                Lessons.addStarTrophy(Game1.currentKanaLesson + Game1.currentLessonNumber);
+            }
 
-            //! COMMIT PUSH !!!!!!!!!!!!!!!!!!!!!!!!
+            // TODO 
+            //! Afficher kana à revoir ? Petite Phrase : Bravo ! Vous avez fait x fautes : trophée Bronze/Argent/Or
 
-
-
-
-            //! SYSTEME DE SAVE LOCALSTORAGE
-
-
-
-
-
-
-
-
-
-            //! STOP ! Afficher score, trophée, kana à revoir etc.. Boutons Rejouer et Back (pour revenir à Lesson)
             this.endGameBg = new Sprite({ w: 1, h: 1 }, 0, 0, "normal", { x: CANVAS_WIDTH, y: CANVAS_HEIGHT });
             this.endGameBg.getSprite().addAnimation("normal", 1, { x: 38, y: 3 }, 0.1);
             this.endGameBg.getSprite().changeAnimation("normal");
@@ -255,17 +308,14 @@ class Game1 {
             Panel.currentList.push(this.endGameTitle);
             Game1.mainList.push(this.endGameTitle.getSprite());
 
-            //TODO Ajouter un timer (5sec?), afin d'attribuer un malus si la personne a pris trop de temps, et donc ne pas accorder le meilleur score même si elle a toutes les bonnes réponses
-            //Ajouter un timer
-
             //TODO Depends on results :
             // Phrase de félicitations .. ou pas
             // Image du trophée 
+            // "Vous avez fait x fautes"
             // ...
 
-            //TODO Change the trophy image depends on the result : x position
             this.trophy = new Sprite({ w: 16, h: 19 }, centerX(16), this.endGamePanel.y + 70);
-            this.trophy.getSprite().addAnimation("normal", 1, { x: 30 + 16, y: 112 }, 0.1);
+            this.trophy.getSprite().addAnimation("normal", 1, { x: 30 + gotTrophyLevel, y: 112 }, 0.1);
             this.trophy.getSprite().changeAnimation("normal");
             Game1.mainList.push(this.trophy.getSprite());
 
@@ -316,7 +366,7 @@ class Game1 {
                 resetGame();
                 Lessons.backToLesson();
             } else {
-                Game1.load(CHOICE_TYPE, ANSWER_TYPE, RANGE, LESSON_RANGE);
+                Game1.load(CHOICE_TYPE, ANSWER_TYPE, RANGE, LESSON_RANGE, Game1.lessonTestType, Game1.currentLessonNumber);
             }
 
         }
@@ -327,6 +377,19 @@ class Game1 {
         Game1.mainList = Game1.mainList.filter(sp => {
             return !sp.delete;
         });
+    }
+
+    static setMiss(pArg = 1) {
+        if (pArg == 1) {
+            this.misses++;
+        } else {
+            this.misses = pArg;
+        }
+    }
+
+    static resetTimer() {
+        this.currentTimer = this.timerMax;
+        this.bTimerActive = true;
     }
 
 
@@ -350,6 +413,15 @@ class Game1 {
          * DEBUG
          */
         //------------ END DEBUG
+
+        if (this.bTimerActive) {
+            this.currentTimer -= dt;
+            if (this.currentTimer <= 1) {
+                this.currentTimer = 0;
+                Game1.setMiss();
+                this.bTimerActive = false;
+            }
+        }
 
         if (Game1.currentState == Game1.STATE.Transition) {
             if (FadeEffect.bActive) {
@@ -404,8 +476,18 @@ class Game1 {
 
         if (!this.bEndGame) {
 
-            ctx.fillText("Turns : " + TURN_NUMBER, centerX(), 50);
-            ctx.fillText("Kana : " + KANA_NUMBER, centerX(), 70);
+            ctx.fillText("Turns : " + TURN_NUMBER, centerX(), 30);
+            ctx.fillText("Kana : " + KANA_NUMBER, centerX(), 50);
+            ctx.fillText("Misses: " + this.misses, centerX(), 70);
+            if (this.currentTimer > 0) {
+                ctx.fillStyle = "rgb(0,255,0)";
+            } else {
+                ctx.fillStyle = "rgb(200,0,0)";
+            }
+            ctx.fillText("Timer : ", centerX(), 90);
+            ctx.textAlign = "left";
+            ctx.fillText(Math.floor(this.currentTimer), centerX(), 110);
+            ctx.fillStyle = "rgb(255,255,255)";
         }
 
         /*
@@ -437,23 +519,6 @@ function gameInit() { }
 function load() { }
 
 function togglePause() { }
-
-function update(dt) { }
-
-function draw(ctx) {
-
-    // Load screen
-    // if (!gameReady) {
-    //     let ratio = imageLoader.getLoadedRatio();
-    //     ctx.fillStyle = "rgb(255,255,255)";
-    //     ctx.fillRect(1, 1, 400, 100);
-    //     ctx.fillStyle = "rgb(0, 255, 0)";
-    //     ctx.fillRect(1, 1, 400 * ratio, 100);
-    //     return;
-    // }
-
-
-}
 
 
 /**
