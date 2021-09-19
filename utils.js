@@ -1,4 +1,4 @@
-function rnd(pMin, pMax) {
+function rnd(pMin, pMax) { // pMax NON COMPRIS
     return Math.floor(Math.random() * (pMax - pMin)) + pMin;
 }
 function fixedRandom() {
@@ -162,11 +162,21 @@ function translate(pCoord, pReverse = false) {
     for (const s in this.sp) {
         if (this.sp[s] instanceof Sprite) {
             if (pReverse) {
-                this.sp[s].x -= pCoord.x;
-                this.sp[s].y -= pCoord.y;
+                if (this.parent) {
+                    this.sp[s].offX -= pCoord.x;
+                    this.sp[s].offY -= pCoord.y;
+                } else {
+                    this.sp[s].x -= pCoord.x;
+                    this.sp[s].y -= pCoord.y;
+                }
             } else {
-                this.sp[s].x += pCoord.x;
-                this.sp[s].y += pCoord.y;
+                if (this.parent) {
+                    this.sp[s].offX += pCoord.x;
+                    this.sp[s].offY += pCoord.y;
+                } else {
+                    this.sp[s].x += pCoord.x;
+                    this.sp[s].y += pCoord.y;
+                }
             }
         }
     }
@@ -474,6 +484,7 @@ function resetGame(pArg) {
 
     if (pArg == "back_to_lesson") {
         Lessons.backToLesson();
+        MOUSE_SPRITE.y += CANVAS_HEIGHT;
     }
 }
 

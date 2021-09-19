@@ -1,5 +1,8 @@
 let canvas0 = document.getElementById("canvas0");
 let canvas = document.getElementById("canvas");
+canvas.style.fontKerning = "none";
+canvas.style.textRendering = "optimizeSpeed";
+canvas.style.letterSpacing = 0;
 let ctx0 = canvas.getContext("2d");
 let ctx = canvas.getContext("2d");
 let checkAssetsInterval = setInterval(checkAssetsLoading, 1000 / 60);
@@ -14,8 +17,14 @@ let MUSIC_VOLUME = 0.5;
 let SFX_VOLUME = 0.5;
 let TRANSITION = false;
 let SCREEN_SHAKE = false;
-let screenShakeTimer = new Timer(0, { cb: setScreenShake, arg: false });
-screenShakeTimer.setMax(0.1);
+let screenShakeTimer = new Timer(0.1, { cb: setScreenShake, arg: false });
+// screenShakeTimer.setMax(0.1);
+
+let MOUSE_SPRITE = new Sprite({ w: 8, h: 9 }, centerX(8), centerY(8));
+MOUSE_SPRITE.addAnimation("normal", 1, { x: 114, y: 34 }, 0.1);
+MOUSE_SPRITE.addAnimation("hover", 1, { x: 122, y: 34 }, 0.1);
+MOUSE_SPRITE.addAnimation("down", 1, { x: 130, y: 34 }, 0.1);
+MOUSE_SPRITE.changeAnimation("normal");
 
 //!TEST--------
 // let canvasTest = document.getElementById("canvasTest");
@@ -34,7 +43,7 @@ screenShakeTimer.setMax(0.1);
 let bStatsDebug = false;
 let debugDt = 0;
 let debug_STOP = false;
-let shortcut_tomainmenu = true;
+let shortcut_tomainmenu = 1;
 let boolTest = false;
 let imageData = null;
 let imageDatasArr = [];
@@ -126,6 +135,7 @@ function run() {
             Game1.update(dt);
             break;
     }
+    MOUSE_SPRITE.update(dt);
     Sprite.debug_drawcalls = 0;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -171,11 +181,15 @@ function run() {
 
     ctx.font = "10px jpfont";
     ctx.fillStyle = "rgb(255,0,0)";
+    ctx.textAlign = "left";
     if (SaveManager.bSaveDataExists) {
         ctx.fillText("Save?: SAVE DATA", 0, 10);
     } else {
         ctx.fillText("Save?: NO SAVE DATA", 0, 10);
     }
+
+    MOUSE_SPRITE.ox = MOUSE_SPRITE.currentAnimation.origin.x + (MOUSE_SPRITE.width * MOUSE_SPRITE.currentFrame);
+    ctx.drawImage(SS, MOUSE_SPRITE.ox, MOUSE_SPRITE.currentAnimation.origin.y, MOUSE_SPRITE.width, MOUSE_SPRITE.height, MOUSE_SPRITE.x, MOUSE_SPRITE.y, MOUSE_SPRITE.width * MOUSE_SPRITE.scaleX, MOUSE_SPRITE.height * MOUSE_SPRITE.scaleY);
 
 
     ctx.restore();
@@ -211,6 +225,7 @@ function startBtnCB(pParam) {
     }
 
     Game1.load(pParam.choiceType, pParam.answerType, pParam.range, bLessonRange, pParam.testType, pParam.lessonNumber);
+    MOUSE_SPRITE.y -= CANVAS_HEIGHT;
     if (!Game1.bGameInitialized) {
         Game1.init();
         ScreenManager.init();
@@ -223,7 +238,14 @@ function startBtnCB(pParam) {
 }
 
 function changeMainState(pNewState) {
-    mainState = pNewState;
+
+    if (typeof pNewState == "number") {
+        mainState = pNewState;
+    } else {
+        mainState = pNewState.state;
+        MainMenu.clearKanaInterval();
+    }
+
     switch (mainState) {
         case MAIN_STATE.Infos:
             if (!Infos.bInit) {
@@ -248,6 +270,8 @@ function toMainMenu() {
     canvas.style.backgroundColor = "cornflowerblue";
 
     mainState = MAIN_STATE.Menu;
+
+    MainMenu.initKanaInterval();
 
     MainMenu.changeState(MainMenu.STATE.Main);
 

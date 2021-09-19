@@ -30,14 +30,14 @@ class Lessons {
         Lessons.bInit = true;
         // ---------------- MAIN ----------------
 
-        this.hiraganaBtn = new Button({ w: 54, h: 20, v: 3 }, centerX(54, 100), 62, { cb: Lessons.changeState, arg: Lessons.STATE.Hiragana }, "lessons", Lessons.STATE.Katakana, "Hiragana", 2);
+        this.hiraganaBtn = new Button({ w: 54, h: 20, v: 3 }, centerX(54, 100), 62, null, { cb: Lessons.changeState, arg: Lessons.STATE.Hiragana }, "lessons", Lessons.STATE.Katakana, "Hiragana", 2);
         this.hiraganaBtn.setFontColor("rgb(209,209,209)");
         this.hiraganaBtn.setHoverOffset({ x: 0, y: -2 });
         this.hiraganaBtn.setHoverCB(translate.bind(this.hiraganaBtn), this.hiraganaBtn.getHoverOffset());
         Lessons.mainList.push(this.hiraganaBtn.getSprite());
 
         this.first = true;
-        this.katakanaBtn = new Button({ w: 54, h: 20, v: 3 }, centerX(54, 100, 1), 62, { cb: Lessons.changeState, arg: Lessons.STATE.Katakana }, "lessons", Lessons.STATE.Hiragana, "Katakana", 1);
+        this.katakanaBtn = new Button({ w: 54, h: 20, v: 3 }, centerX(54, 100, 1), 62, null, { cb: Lessons.changeState, arg: Lessons.STATE.Katakana }, "lessons", Lessons.STATE.Hiragana, "Katakana", 1);
         this.katakanaBtn.setFontColor("rgb(209,209,209)");
         this.katakanaBtn.setHoverOffset({ x: 0, y: -2 });
         this.katakanaBtn.setHoverCB(translate.bind(this.katakanaBtn), this.katakanaBtn.getHoverOffset());
@@ -47,10 +47,10 @@ class Lessons {
         mainPanel.setTextCase("all");
         Lessons.mainList.push(mainPanel.getSprite());
 
-        let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 100, 1), Lessons.quitLessonsMenu, "lessons", Lessons.STATE.Main, "Back");
+        let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 100, 1), null, Lessons.quitLessonsMenu, "lessons", Lessons.STATE.Main, "Back");
         Lessons.mainList.push(backBtn.getSprite());
 
-        let introBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(20, 50), null, "lessons", Lessons.STATE.Main, "Infos");
+        let introBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(20, 50), null, { cb: SaveManager.save, arg: [{ type: "prologue", value: 1 }] }, "lessons", Lessons.STATE.Main, "Infos");
         Lessons.mainList.push(introBtn.getSprite());
 
         let introTooltip = new Panel({ w: 300, h: 76, v: 5 }, centerX(300), CANVAS_HEIGHT - 76, null, "lessons", Lessons.STATE.Main, "Infos", 1);
@@ -68,15 +68,30 @@ class Lessons {
         let columnCount = 1;
 
         for (let i = 1; i <= 15; i++) {
-            let lessonBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(40, 150, 0) + offX, centerY(20, 10) + offY, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Hiragana, i] }, "lessons", Lessons.STATE.Hiragana, "Lesson_" + i);
+            let lessonBtn = new LessonBtn({ w: 60, h: 20, v: 4 }, centerX(40, 150, 0) + offX, centerY(20, 10) + offY, null, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Hiragana, i] }, "lessons", Lessons.STATE.Hiragana, "Lesson_" + i);
+
+            if (!SaveManager.SAVE_DATA["prologue"]) {
+                lessonBtn.changeSpriteAnimation("inactive");
+                lessonBtn.setFontColor("rgb(190,190,190)", "rgb(170,170,170)");
+                lessonBtn.setState(LessonBtn.STATE.Close);
+            } else {
+                if (i > 1) {
+                    if (!SaveManager.SAVE_DATA["lessons"]["h" + (i - 1)]["finish"]) {
+                        lessonBtn.changeSpriteAnimation("inactive");
+                        lessonBtn.setFontColor("rgb(190,190,190)", "rgb(170,170,170)");
+                        lessonBtn.setState(LessonBtn.STATE.Close);
+                    }
+                }
+            }
             Lessons.hiraganaList.push(lessonBtn.getSprite());
+
 
             this.starTrophyList["h" + i] = new Sprite({ w: 10, h: 8 }, lessonBtn.x + 54, lessonBtn.y);
             this.starTrophyList["h" + i].getSprite().addAnimation("normal", 1, { x: 94, y: 112 }, 0.1);
             this.starTrophyList["h" + i].getSprite().changeAnimation("normal");
             this.starTrophyList["h" + i].getSprite().setClass("star");
 
-            if (SaveManager.SAVE_DATA["lessons"]["h" + i]["finish"]) {
+            if (SaveManager.SAVE_DATA["lessons"]["h" + i]["fullcomplete"]) {
                 Lessons.addStarTrophy("h" + i);
             }
 
@@ -114,7 +129,20 @@ class Lessons {
         offY = 0;
         columnCount = 1;
         for (let i = 1; i <= 15; i++) {
-            let lessonBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(40, 150, 0) + offX, centerY(20, 10) + offY, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Katakana, i] }, "lessons", Lessons.STATE.Katakana, "Lesson_" + i);
+            let lessonBtn = new LessonBtn({ w: 60, h: 20, v: 4 }, centerX(40, 150, 0) + offX, centerY(20, 10) + offY, null, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Katakana, i] }, "lessons", Lessons.STATE.Katakana, "Lesson_" + i);
+            if (!SaveManager.SAVE_DATA["prologue"]) {
+                lessonBtn.changeSpriteAnimation("inactive");
+                lessonBtn.setFontColor("rgb(190,190,190)", "rgb(170,170,170)");
+                lessonBtn.setState(LessonBtn.STATE.Close);
+            } else {
+                if (i > 1) {
+                    if (!SaveManager.SAVE_DATA["lessons"]["k" + (i - 1)]["finish"]) {
+                        lessonBtn.changeSpriteAnimation("inactive");
+                        lessonBtn.setFontColor("rgb(190,190,190)", "rgb(170,170,170)");
+                        lessonBtn.setState(LessonBtn.STATE.Close);
+                    }
+                }
+            }
             Lessons.katakanaList.push(lessonBtn.getSprite());
 
             this.starTrophyList["k" + i] = new Sprite({ w: 10, h: 8 }, lessonBtn.x + 54, lessonBtn.y);
@@ -122,7 +150,7 @@ class Lessons {
             this.starTrophyList["k" + i].getSprite().changeAnimation("normal");
             this.starTrophyList["k" + i].getSprite().setClass("star");
 
-            if (SaveManager.SAVE_DATA["lessons"]["k" + i]["finish"]) {
+            if (SaveManager.SAVE_DATA["lessons"]["k" + i]["fullcomplete"]) {
                 Lessons.addStarTrophy("k" + i);
             }
 
@@ -271,7 +299,7 @@ class Lessons {
                 sound.getSprite().changeAnimation("normal");
                 Lessons.lessonList.push(sound.getSprite());
 
-                let soundBtn = new Button({ w: 19, h: 17 }, containerPanel.x + 130, containerPanel.y + 10, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaPos].roma }, "lessons", Lessons.STATE.Lesson, "", 0, true);
+                let soundBtn = new Button({ w: 19, h: 17 }, containerPanel.x + 130, containerPanel.y + 10, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaPos].roma }, "lessons", Lessons.STATE.Lesson, "", 0, true);
                 soundBtn.getSprite().addAnimation("normal", 1, { x: 49, y: 79 }, 0.1);
                 soundBtn.getSprite().addAnimation("hover", 1, { x: 68, y: 79 }, 0.1);
                 soundBtn.getSprite().addAnimation("down", 1, { x: 87, y: 79 }, 0.1);
@@ -279,7 +307,7 @@ class Lessons {
                 soundBtn.setToDelete();
                 Lessons.lessonList.push(soundBtn.getSprite());
 
-                let kana1 = new Sprite({ w: 34, h: 34 }, containerPanel.x + 160, containerPanel.y + 2, "kana");
+                let kana1 = new Sprite({ w: 34, h: 34 }, containerPanel.x + 160, containerPanel.y + 2, null, "kana");
                 kana1.setKanaToDelete();
                 for (let j = 0; j < KANA[kanaPos].frames.length; j++) {
                     kana1.setImageDataOrigin(KANA[kanaPos].imageData[j], KANA[kanaPos].frames[j]);
@@ -288,14 +316,14 @@ class Lessons {
                 offY += 40;
             }
 
-            this.lessonBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40, 150), CANVAS_HEIGHT + 260, { cb: Lessons.transition.bind(this), arg: ["+", Lessons.previousState] }, "lessons", Lessons.STATE.Lesson, "Back");
+            this.lessonBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40, 150), CANVAS_HEIGHT + 260, null, { cb: Lessons.transition.bind(this), arg: ["+", Lessons.previousState] }, "lessons", Lessons.STATE.Lesson, "Back");
             Lessons.lessonList.push(this.lessonBackBtn.getSprite());
 
-            this.trainingBtn = new Button({ w: 70, h: 30, v: 4 }, centerX(70, 80), CANVAS_HEIGHT + 250, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Training", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Training");
+            this.trainingBtn = new Button({ w: 70, h: 30, v: 4 }, centerX(70, 80), CANVAS_HEIGHT + 250, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Training", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Training");
             this.trainingBtn.setTextCenterY();
             Lessons.lessonList.push(this.trainingBtn.getSprite());
 
-            this.lessonTestBtn = new Button({ w: 90, h: 30, v: 4 }, centerX(90, 10, 1), CANVAS_HEIGHT + 250, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Lesson_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Lesson_test");
+            this.lessonTestBtn = new Button({ w: 90, h: 30, v: 4 }, centerX(90, 10, 1), CANVAS_HEIGHT + 250, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Lesson_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Lesson_test");
             this.lessonTestBtn.setTextCenterY();
             this.lessonTestBtn.setAlignText(0);
             Lessons.lessonList.push(this.lessonTestBtn.getSprite());
@@ -315,7 +343,7 @@ class Lessons {
             this.lessonTestTrophy.getSprite().changeAnimation("normal");
             Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
 
-            this.fullTestBtn = new Button({ w: 90, h: 30, v: 4 }, centerX(90, 120, 1), CANVAS_HEIGHT + 250, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Full_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Full_test");
+            this.fullTestBtn = new Button({ w: 90, h: 30, v: 4 }, centerX(90, 120, 1), CANVAS_HEIGHT + 250, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Full_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Full_test");
             this.fullTestBtn.setTextCenterY();
             this.fullTestBtn.setAlignText(0);
             Lessons.lessonList.push(this.fullTestBtn.getSprite());
@@ -332,6 +360,7 @@ class Lessons {
                     k.setActive(false);
                 }
             })
+
 
             if (this.lessonBackBtn) this.lessonBackBtn.removeFromList();
             if (this.playBtn) this.playBtn.removeFromList();
@@ -355,7 +384,7 @@ class Lessons {
                 p.setState(Panel.STATE.Inactive);
             });
 
-            this.chooseTypeBg = new Sprite({ w: 1, h: 1 }, 0, CANVAS_HEIGHT, "normal", { x: CANVAS_WIDTH, y: CANVAS_HEIGHT });
+            this.chooseTypeBg = new Sprite({ w: 1, h: 1 }, 0, CANVAS_HEIGHT, null, "normal", { x: CANVAS_WIDTH, y: CANVAS_HEIGHT });
             this.chooseTypeBg.getSprite().addAnimation("normal", 1, { x: 38, y: 3 }, 0.1);
             this.chooseTypeBg.getSprite().changeAnimation("normal");
             Lessons.lessonList.push(this.chooseTypeBg.getSprite());
@@ -385,12 +414,12 @@ class Lessons {
                     break;
             }
 
-            this.kanaToRomaBtn = new Button({ w: 80, h: 20, v: 4 }, centerX(80), this.chooseTypePanel.y + 70, { cb: startBtnCB, arg: { range: pParams.range, answerType: pParams.type, choiceType: "r", testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btnLabel);
+            this.kanaToRomaBtn = new Button({ w: 80, h: 20, v: 4 }, centerX(80), this.chooseTypePanel.y + 70, null, { cb: startBtnCB, arg: { range: pParams.range, answerType: pParams.type, choiceType: "r", testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btnLabel);
             Button.list.push(this.kanaToRomaBtn);
             Button.currentList.push(this.kanaToRomaBtn);
             Lessons.lessonList.push(this.kanaToRomaBtn.getSprite());
 
-            this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 4 }, centerX(80), this.chooseTypePanel.y + 110, { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btn2Label);
+            this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 4 }, centerX(80), this.chooseTypePanel.y + 110, null, { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btn2Label);
             Button.list.push(this.romaTokanaBtn);
             Button.currentList.push(this.romaTokanaBtn);
             Lessons.lessonList.push(this.romaTokanaBtn.getSprite());
@@ -419,7 +448,7 @@ class Lessons {
             }
 
 
-            this.backFromCTPBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), this.chooseTypePanel.y + 160, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: false, testType: pParams.testType } }, "lessons", Lessons.STATE.Lesson, "Back");
+            this.backFromCTPBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), this.chooseTypePanel.y + 160, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: false, testType: pParams.testType } }, "lessons", Lessons.STATE.Lesson, "Back");
             Button.list.push(this.backFromCTPBtn);
             Button.currentList.push(this.backFromCTPBtn);
             Lessons.lessonList.push(this.backFromCTPBtn.getSprite());
@@ -550,37 +579,23 @@ class Lessons {
     static update(dt) {
 
 
-        Lessons.mainList.forEach(sp => {
-            if (sp instanceof Sprite) {
-                sp.update(dt);
-            }
-        })
-
+        Sprite.manageBeforeUpdating(Lessons.mainList, dt);
         Lessons.mainList = Lessons.mainList.filter(sp => {
             return !sp.delete;
         });
 
 
-        Lessons.hiraganaList.forEach(sp => {
-            if (sp instanceof Sprite) {
-                sp.update(dt);
-            }
-        })
-
+        Sprite.manageBeforeUpdating(Lessons.hiraganaList, dt);
         Lessons.hiraganaList = Lessons.hiraganaList.filter(sp => {
             return !sp.delete;
         });
 
-        Lessons.katakanaList.forEach(sp => {
-            if (sp instanceof Sprite) {
-                sp.update(dt);
-            }
-        })
-
+        Sprite.manageBeforeUpdating(Lessons.katakanaList, dt);
         Lessons.katakanaList = Lessons.katakanaList.filter(sp => {
             return !sp.delete;
         });
 
+        Sprite.manageBeforeUpdating(Lessons.lessonList, dt);
         Lessons.lessonList = Lessons.lessonList.filter(sp => {
             return !sp.delete;
         });
@@ -606,7 +621,7 @@ class Lessons {
             if (this.canvasY <= -600 && Lessons.state != Lessons.STATE.Lesson) { // GO TO LESSON
                 this.translationY = 50;
                 Button.currentList.forEach(b => {
-                    if (b.getState() != Button.STATE.Normal) {
+                    if (b.getState() != Button.STATE.Normal && b.getState() != LessonBtn.STATE.Close) {
                         b.setState(Button.STATE.Normal);
                         b.getTooltip().forEach(sp => {
                             if (sp instanceof Sprite) {
@@ -631,11 +646,14 @@ class Lessons {
 
                 TRANSITION = false;
                 this.changeState(Lessons.STATE.Lesson);
+                MOUSE_SPRITE.y += CANVAS_HEIGHT;
+                MOUSE_SPRITE.changeAnimation("normal");
+
             } else if (this.canvasY > 0 && Lessons.state == Lessons.STATE.Lesson) { // BACK TO MENU
                 this.canvasY = 0;
                 this.translationY = -50;
                 Button.currentList.forEach(b => {
-                    if (b.getState() != Button.STATE.Normal) {
+                    if (b.getState() != Button.STATE.Normal && b.getState() != LessonBtn.STATE.Close) {
                         b.setState(Button.STATE.Normal);
                         b.getTooltip().forEach(sp => {
                             if (sp instanceof Sprite) {
@@ -655,6 +673,7 @@ class Lessons {
                 Sprite.kanaList = Sprite.kanaList.filter(sp => {
                     return !sp.kanaToDelete;
                 });
+
                 Button.currentList.forEach(b => {
                     if (b.bToDelete) {
                         b.removeFromList();
@@ -668,6 +687,8 @@ class Lessons {
                 Lessons.lessonList = [];
 
                 TRANSITION = false;
+                MOUSE_SPRITE.y -= CANVAS_HEIGHT;
+                MOUSE_SPRITE.changeAnimation("normal");
 
                 if (Lessons.previousState == Lessons.STATE.Hiragana) {
                     Lessons.changeState(Lessons.STATE.Hiragana, false);
@@ -683,7 +704,10 @@ class Lessons {
         ctx.fillStyle = "rgb(200,0,0)";
         ctx.font = "40px jpfont";
         ctx.textAlign = "center";
+        ctx.shadowColor = "rgb(0,0,0)";
+        ctx.shadowOffsetY = 8;
         ctx.fillText(LANG["Lessons"], centerX(), 40);
+        ctx.shadowOffsetY = 0;
         ctx.textAlign = "left";
 
 

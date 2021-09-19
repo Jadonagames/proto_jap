@@ -27,6 +27,54 @@ function keyDown(k) {
         }
     }
 
+
+    if (k.code == "ArrowRight") {
+        Panel.currentList.forEach(p => {
+            if (p instanceof Panel && p.getParent() == null) {
+                p.x += 10;
+                p.bMoving = true;
+            }
+        })
+    }
+    if (k.code == "ArrowLeft") {
+        Panel.currentList.forEach(p => {
+            if (p instanceof Panel && p.getParent() == null) {
+                p.x -= 10;
+                p.bMoving = true;
+            }
+        })
+    }
+
+
+    if (k.code == "ArrowUp") {
+        Panel.currentList.forEach(p => {
+            if (p instanceof Panel && p.getParent() == null) {
+                if (p.alpha < 1) {
+                    p.alpha += 0.1;
+                    if (p.alpha >= 1) {
+                        p.alpha = 1;
+                    }
+                }
+                p.bFading = true;
+            }
+        })
+    }
+    if (k.code == "ArrowDown") {
+        Panel.currentList.forEach(p => {
+            if (p instanceof Panel && p.getParent() == null) {
+                if (p.alpha > 0) {
+                    p.alpha -= 0.1;
+                    if (p.alpha <= 0) {
+                        p.alpha = 0;
+                    }
+                }
+                p.bFading = true;
+            }
+        })
+    }
+
+
+
     /**
      * 
      * GESTION MENU KEYBOARD
@@ -114,6 +162,51 @@ function keyUp(k) {
         }
     }
 
+    if (k.code == "ArrowRight") {
+        Panel.currentList.forEach(p => {
+            if (p instanceof Panel && p.getParent() == null) {
+                p.bMoving = false;
+                p.children.forEach(c => {
+                    c.updatePosition();
+                });
+            }
+        })
+    }
+    if (k.code == "ArrowLeft") {
+        Panel.currentList.forEach(p => {
+            if (p instanceof Panel && p.getParent() == null) {
+                p.bMoving = false;
+                p.children.forEach(c => {
+                    c.updatePosition();
+                });
+            }
+        })
+    }
+    if (k.code == "ArrowUp") {
+        Panel.currentList.forEach(p => {
+            if (p instanceof Panel && p.getParent() == null) {
+                p.bFading = false;
+                p.children.forEach(c => {
+                    if (c instanceof Panel || c instanceof Button) {
+                        c.alpha = p.alpha;
+                    }
+                });
+            }
+        })
+    }
+    if (k.code == "ArrowDown") {
+        Panel.currentList.forEach(p => {
+            if (p instanceof Panel && p.getParent() == null) {
+                p.bFading = false;
+                p.children.forEach(c => {
+                    if (c instanceof Panel || c instanceof Button) {
+                        c.alpha = p.alpha;
+                    }
+                });
+            }
+        })
+    }
+
     /**
      * 
      * GESTION MENU KEYBOARD
@@ -158,98 +251,123 @@ function keyUp(k) {
         // console.log(" --- Lesson.hiraganaList : --- ");
         // console.table(Lessons.hiraganaList);
 
+        console.log("SAVE_DATA : ");
+        console.log(SaveManager.SAVE_DATA);
     }
 
     if (k.code == "Enter") { // Q ?
         // toMainMenu();
         TURN_NUMBER = MAX_TURN - 1;
+
+
+
     }
 
     if (k.code == "Space") {
         // debug_STOP = !debug_STOP;
 
-        // setScreenShake(true);
+        // let paramsToSave = [
+        //     {
+        //         type: "prologue",
+        //         value: 1
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h1", "lessonTestGeneral"],
+        //         value: 48
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h1", "lessonTest1"],
+        //         value: 48
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h1", "lessonTest2"],
+        //         value: 48
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h1", "fullTestGeneral"],
+        //         value: 0
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h1", "fullTest1"],
+        //         value: 48
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h1", "fullTest2"],
+        //         value: 0
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h2", "lessonTestGeneral"],
+        //         value: 0
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h2", "lessonTest1"],
+        //         value: 0
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h2", "lessonTest2"],
+        //         value: 16
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h2", "fullTestGeneral"],
+        //         value: 16
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h2", "fullTest1"],
+        //         value: 16
+        //     },
+        //     {
+        //         type: "lessons",
+        //         params: ["h2", "fullTest2"],
+        //         value: 16
+        //     },
+        // ];
 
-        let paramsToSave = [
-            {
-                type: "prologue",
-                value: 1
-            },
-            {
-                type: "lessons",
-                params: ["h1", "lessonTestGeneral"],
-                value: 48
-            },
-            {
-                type: "lessons",
-                params: ["h1", "lessonTest1"],
-                value: 48
-            },
-            {
-                type: "lessons",
-                params: ["h1", "lessonTest2"],
-                value: 48
-            },
-            {
-                type: "lessons",
-                params: ["h1", "fullTestGeneral"],
-                value: 0
-            },
-            {
-                type: "lessons",
-                params: ["h1", "fullTest1"],
-                value: 48
-            },
-            {
-                type: "lessons",
-                params: ["h1", "fullTest2"],
-                value: 0
-            },
-            {
-                type: "lessons",
-                params: ["h2", "lessonTestGeneral"],
-                value: 0
-            },
-            {
-                type: "lessons",
-                params: ["h2", "lessonTest1"],
-                value: 0
-            },
-            {
-                type: "lessons",
-                params: ["h2", "lessonTest2"],
-                value: 16
-            },
-            {
-                type: "lessons",
-                params: ["h2", "fullTestGeneral"],
-                value: 16
-            },
-            {
-                type: "lessons",
-                params: ["h2", "fullTest1"],
-                value: 16
-            },
-            {
-                type: "lessons",
-                params: ["h2", "fullTest2"],
-                value: 16
-            },
-        ];
+        MainMenu.particles(50, 50);
+        console.log(" --- MainMenu.randomKanaSpriteList : --- ");
+        console.table(Particles.list);
 
-        SaveManager.save(paramsToSave);
 
-        console.log(" --- Button.list : --- ");
+        // console.log(" --- MainMenu.randomKanaSpriteList : --- ");
+        // console.table(MainMenu.randomKanaSpriteList);
+
+        // MainMenu.randomKanaSpriteList.forEach(sp => {
+        //     if (sp.bColliding) {
+        //         console.log("sp is colliding : ");
+        //         console.log(sp);
+        //     }
+        // });
+
+        // SaveManager.save(paramsToSave);
+        // console.log(" --- Sprite.list : --- ");
+        // console.table(Sprite.list);
+        // console.log(" --- MainMenu.mainList : --- ");
+        // console.table(MainMenu.mainList);
+        // console.log(" --- MainMenu.creditsList : --- ");
+        // console.table(MainMenu.creditsList);
+        // console.log(" --- Button.list : --- ");
         // console.table(Button.list);
-        console.log(" --- Button.currentList : --- ");
+        // console.log(" --- Button.currentList : --- ");
         // console.table(Button.currentList);
-        console.log(" --- Panel.currentList : --- ");
+        // console.log(" --- LessonBtn.currentList : --- ");
+        // console.table(LessonBtn.list);
+        // console.log(" --- Panel.currentList : --- ");
         // console.table(Panel.currentList);
-        console.log(" --- Sprite.kanaList : --- ");
+        // console.log(" --- Sprite.kanaList : --- ");
         // console.table(Sprite.kanaList);
-        console.log(" --- Lesson.lessonsList : --- ");
+        // console.log(" --- Lesson.lessonsList : --- ");
         // console.table(Lessons.lessonList);
-        console.log(" --- Game1.mainList : --- ");
+        // console.log(" --- Game1.mainList : --- ");
         // console.table(Game1.mainList);
     }
 
@@ -296,135 +414,89 @@ canvas.addEventListener("mousemove", e => {
         const mouseX = e.layerX / SCALE_X;
         const mouseY = e.layerY / SCALE_Y;
 
+        // console.log(mouseY);
+
+        MOUSE_SPRITE.x = mouseX;
+        if (mainState == MAIN_STATE.Lessons && Lessons.state == Lessons.STATE.Lesson) {
+            MOUSE_SPRITE.y = mouseY + CANVAS_HEIGHT;
+        } else {
+            MOUSE_SPRITE.y = mouseY;
+        }
+
         // pick(e.layerX, e.layerY);
 
         if (MainMenu.state != MainMenu.STATE.Transition && currentState != GAME_STATE.Transition) {
 
             Button.currentList.forEach(b => {
+                if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close) {
+                    if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
+                        if ((b.getSprite().tl != undefined && b.getSprite().tl.currentAnimation.name != "down") || // not staticSize
+                            (b.getSprite().tl == undefined && b.getSprite().currentAnimation.name != "down")) {    // staticSize
 
-                if (b.getState() != Button.STATE.Inactive) {
-                    if (!b.staticSize) {
-                        if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
-                            if (b.getSprite().tl.currentAnimation.name != "down") {
-                                if (b.hoverCB && b.getState() != Button.STATE.Hover) {
+                            if (b.getState() != Button.STATE.Hover) {
+                                if (b.hoverCB) {
                                     b.hoverCB.cb(b.hoverCB.arg);
                                 }
                                 b.setState(Button.STATE.Hover);
-                                for (const sp in b.getSprite()) {
-                                    if (b.getSprite()[sp] instanceof Sprite) {
-                                        b.getSprite()[sp].changeAnimation("hover");
-                                    }
-                                }
-                            }
-                        } else {
-                            if (b.getState() == Button.STATE.Hover) {
-                                if (b.hoverCB) {
-                                    b.getTooltip().forEach(sp => {
-                                        if (sp instanceof Sprite) {
-                                            sp.delete = true;
-                                        } else {
-                                            sp.getSprite().delete = true;
-                                        }
-                                    })
-                                    if (b.getHoverOffset()) {
-                                        let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
-                                        func();
-                                    }
-                                }
-                                b.setState(Button.STATE.Normal);
-                                for (const sp in b.getSprite()) {
-                                    if (b.getSprite()[sp] instanceof Sprite) {
-                                        b.getSprite()[sp].changeAnimation("normal");
-                                    }
-                                }
+                                b.changeSpriteAnimation("hover");
+                                MOUSE_SPRITE.changeAnimation("hover");
                             }
                         }
                     } else {
-                        if (CollisionManager.MouseCollision(mouseX, mouseY, b.getSprite().x, b.getSprite().y, b.getSize().w, b.getSize().h)) {
-                            if (b.getSprite().currentAnimation.name != "down") {
-                                b.setState(Button.STATE.Hover);
-                                b.getSprite().changeAnimation("hover");
+                        if (b.getState() == Button.STATE.Hover) {
+                            if (b.hoverCB) {
+                                b.getTooltip().forEach(sp => {
+                                    if (sp instanceof Sprite) {
+                                        sp.delete = true;
+                                    } else {
+                                        sp.getSprite().delete = true;
+                                    }
+                                })
+                                if (b.getHoverOffset()) {
+                                    let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
+                                    func();
+                                }
                             }
-                        } else {
-                            if (b.getState() == Button.STATE.Hover) {
-                                b.setState(Button.STATE.Normal);
-                                b.getSprite().changeAnimation("normal");
-                            }
+                            b.setState(Button.STATE.Normal);
+                            b.changeSpriteAnimation("normal");
+                            MOUSE_SPRITE.changeAnimation("normal");
                         }
                     }
                 }
             });
 
             Panel.currentList.forEach(p => {
-
                 if (p.getState() != Panel.STATE.Inactive && p.hoverable) {
-                    if (!p.staticSize) {
-                        if (CollisionManager.MouseCollision(mouseX, mouseY, p.x, p.y, p.getSize().w, p.getSize().h)) {
-                            if (p.getSprite().tl.currentAnimation.name != "down") {
-                                if (p.hoverCB && p.getState() != Panel.STATE.Hover) {
+                    if (CollisionManager.MouseCollision(mouseX, mouseY, p.x, p.y, p.getSize().w, p.getSize().h)) {
+                        if ((p.getSprite().tl != undefined && p.getSprite().tl.currentAnimation.name != "down") || // not staticSize
+                            (p.getSprite().tl == undefined && p.getSprite().currentAnimation.name != "down")) {    // staticSize
+                            if (p.getState() != Panel.STATE.Hover) {
+                                if (p.hoverCB) {
                                     p.hoverCB.cb(p.hoverCB.arg);
                                 }
                                 p.setState(Panel.STATE.Hover);
-                                for (const sp in p.getSprite()) {
-                                    if (p.getSprite()[sp] instanceof Sprite) {
-                                        p.getSprite()[sp].changeAnimation("hover");
-                                    }
-                                }
-                            }
-                        } else {
-                            if (p.getState() == Panel.STATE.Hover) {
-                                if (p.hoverCB) {
-                                    p.getTooltip().forEach(sp => {
-                                        if (sp instanceof Sprite) {
-                                            sp.delete = true;
-                                            if (sp.type == "kana") {
-                                                sp.step = 1;
-                                                sp.active = false;
-                                                sp.stepTimer.reset();
-                                                sp.resetKana();
-                                            }
-                                        } else {
-                                            sp.getSprite().delete = true;
-                                        }
-                                    })
-                                }
-                                p.setState(Panel.STATE.Normal);
-                                for (const sp in p.getSprite()) {
-                                    if (p.getSprite()[sp] instanceof Sprite) {
-                                        p.getSprite()[sp].changeAnimation("normal");
-                                    }
-                                }
+                                p.changeSpriteAnimation("hover");
                             }
                         }
                     } else {
-                        if (CollisionManager.MouseCollision(mouseX, mouseY, p.getSprite().x, p.getSprite().y, p.getSize().w, p.getSize().h)) {
-                            if (p.getSprite().currentAnimation.name != "down") {
-                                if (p.hoverCB && p.getState() != Panel.STATE.Hover) {
-                                    p.hoverCB.cb(p.hoverCB.arg);
-                                }
-                                p.setState(Panel.STATE.Hover);
-                                p.getSprite().changeAnimation("hover");
-                            }
-                        } else {
-                            if (p.getState() == Panel.STATE.Hover) {
-                                if (p.hoverCB) {
-                                    p.getTooltip().forEach(sp => {
-                                        if (sp instanceof Sprite) {
-                                            sp.delete = true;
-                                            if (sp.type == "kana") {
-                                                sp.step = 1;
-                                                sp.active = false;
-                                                sp.stepTimer.reset();
-                                                sp.resetKana();
-                                            }
-                                        } else {
-                                            sp.getSprite().delete = true;
+                        if (p.getState() == Panel.STATE.Hover) {
+                            if (p.hoverCB) {
+                                p.getTooltip().forEach(sp => {
+                                    if (sp instanceof Sprite) {
+                                        sp.delete = true;
+                                        if (sp.type == "kana") {
+                                            sp.step = 1;
+                                            sp.active = false;
+                                            sp.stepTimer.reset();
+                                            sp.resetKana();
                                         }
-                                    })
-                                }
-                                p.setState(Panel.STATE.Normal);
-                                p.getSprite().changeAnimation("normal");
+                                    } else {
+                                        sp.getSprite().delete = true;
+                                    }
+                                })
                             }
+                            p.setState(Panel.STATE.Normal);
+                            p.changeSpriteAnimation("normal");
                         }
                     }
                 }
@@ -442,27 +514,16 @@ canvas.addEventListener("mousedown", e => {
 
         if (MainMenu.state != MainMenu.STATE.Transition && currentState != GAME_STATE.Transition) {
             Button.currentList.forEach(b => {
-                if (b.getState() != Button.STATE.Inactive) {
-                    if (!b.staticSize) {
-                        if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
-                            b.setState(Button.STATE.Hover);
-                            for (const sp in b.getSprite()) {
-                                if (b.getSprite()[sp] instanceof Sprite) {
-                                    b.getSprite()[sp].changeAnimation("down");
-                                }
-                            }
-                        }
-                    } else {
-                        if (CollisionManager.MouseCollision(mouseX, mouseY, b.getSprite().x, b.getSprite().y, b.getSize().w, b.getSize().h)) {
-                            b.setState(Button.STATE.Hover);
-                            b.getSprite().changeAnimation("down");
-                        }
+                if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close) {
+                    if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
+                        b.setState(Button.STATE.Hover);
+                        b.changeSpriteAnimation("down");
+                        MOUSE_SPRITE.changeAnimation("down");
                     }
                 }
             });
         }
     }
-
 })
 
 canvas.onclick = e => {
@@ -476,33 +537,21 @@ canvas.onclick = e => {
         if (MainMenu.state != MainMenu.STATE.Transition && currentState != GAME_STATE.Transition) {
 
             Button.currentList.every(b => {
-                if (b.getState() != Button.STATE.Inactive) {
+                if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close) {
                     if (b.getState() == Button.STATE.Hover) {
-
                         if (b.getHoverOffset()) {
                             let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
                             func();
                         }
-
                         b.setState(Button.STATE.Normal);
-                        if (!b.staticSize) {
-                            for (const sp in b.getSprite()) {
-                                if (b.getSprite()[sp] instanceof Sprite) {
-                                    b.getSprite()[sp].changeAnimation("normal");
-                                }
-                            }
-                        } else {
-                            b.getSprite().changeAnimation("normal");
-                        }
-
+                        b.changeSpriteAnimation("normal");
+                        MOUSE_SPRITE.changeAnimation("normal");
 
                         if (b.callback.cb != null && b.callback.arg != null) {
                             b.callback.cb(b.callback.arg);
                         } else {
                             b.callback();
                         }
-
-
                         if (b.hoverCB) {
                             b.getTooltip().forEach(sp => {
                                 if (sp instanceof Sprite) {
@@ -520,42 +569,20 @@ canvas.onclick = e => {
 
             // Check after a screen change if the mouse isn't hovering
             Button.currentList.every(b => {
-                if (b.getState() != Button.STATE.Inactive) {
-                    if (!b.staticSize) {
-                        if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
-                            if (b.hoverCB && b.getState() != Button.STATE.Hover) {
-                                b.hoverCB.cb(b.hoverCB.arg);
-                            }
-                            b.setState(Button.STATE.Hover);
-                            for (const sp in b.getSprite()) {
-                                if (b.getSprite()[sp] instanceof Sprite) {
-                                    b.getSprite()[sp].changeAnimation("hover");
-                                }
-                            }
-                            return false;
-                        } else {
-                            if (b.getState() == Button.STATE.Hover) {
-                                b.setState(Button.STATE.Normal);
-                                for (const sp in b.getSprite()) {
-                                    if (b.getSprite()[sp] instanceof Sprite) {
-                                        b.getSprite()[sp].changeAnimation("normal");
-                                    }
-                                }
-                            }
+                if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close) {
+                    if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
+                        if (b.hoverCB && b.getState() != Button.STATE.Hover) {
+                            b.hoverCB.cb(b.hoverCB.arg);
                         }
+                        b.setState(Button.STATE.Hover);
+                        b.changeSpriteAnimation("hover");
+                        MOUSE_SPRITE.changeAnimation("hover");
+                        return false;
                     } else {
-                        if (CollisionManager.MouseCollision(mouseX, mouseY, b.getSprite().x, b.getSprite().y, b.getSize().w, b.getSize().h)) {
-                            if (b.hoverCB && b.getState() != Button.STATE.Hover) {
-                                b.hoverCB.cb(b.hoverCB.arg);
-                            }
-                            b.setState(Button.STATE.Hover);
-                            b.getSprite().changeAnimation("hover");
-                            return false;
-                        } else {
-                            if (b.getState() == Button.STATE.Hover) {
-                                b.setState(Button.STATE.Normal);
-                                b.getSprite().changeAnimation("normal");
-                            }
+                        if (b.getState() == Button.STATE.Hover) {
+                            b.setState(Button.STATE.Normal);
+                            b.changeSpriteAnimation("normal");
+                            MOUSE_SPRITE.changeAnimation("normal");
                         }
                     }
                 }

@@ -5,19 +5,13 @@ class Sprite {
 
     static debug_drawcalls = 0;
 
-    constructor(pSize, pX = 0, pY = 0, pParent = null, pType = "normal", pScale = { x: 1, y: 1 }) {
+    constructor(pSize, pX = 0, pY = 0, pType = "normal", pScale = { x: 1, y: 1 }) {
 
         this.width = pSize.w;
-        this.originWidth = this.width;
         this.height = pSize.h;
 
         this.x = pX;
         this.y = pY;
-
-        this.offX = pX;
-        this.offY = pY;
-
-        this.parent = pParent;
 
         this.originalX = this.x;
         this.originalY = this.y;
@@ -41,6 +35,7 @@ class Sprite {
 
         this.animations = [];
 
+        this.parent = null;
 
         this.isMoving = false;
 
@@ -235,7 +230,6 @@ class Sprite {
     }
 
     static manageBeforeDrawing(pList) {
-        // console.log("Sprite manage before drawing");
         pList.forEach(sp => {
             if (sp.class == 9) {
                 for (const s in sp) {
@@ -265,17 +259,8 @@ class Sprite {
 
             Sprite.debug_drawcalls++;
             if (this.type != "kana") {
-                this.ox = this.currentAnimation.origin.x + (this.originWidth * this.currentFrame);
-                // this.ox = this.currentAnimation.origin.x + (11 * this.currentFrame);
-
-                if (this.parent) {
-                    ctx.globalAlpha = this.parent.alpha;
-                    ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.parent.x + this.offX, this.parent.y + this.offY, this.width * this.scaleX, this.height * this.scaleY);
-                    ctx.globalAlpha = 1;
-                } else {
-                    ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
-                }
-
+                this.ox = this.currentAnimation.origin.x + (this.width * this.currentFrame);
+                ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
                 //           (SS, ox, oy,                             frameWidth, frameHeight, x,      y,      scaleX,                    scaleY)
             } else {
                 // TODO trouver un moyen pour le faire qu'une fois par frame ! MAIS AVANT le putImageData !

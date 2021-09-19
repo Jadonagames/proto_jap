@@ -14,15 +14,15 @@ class LanguageScreen {
     static init() {
         canvas.style.backgroundColor = "cornflowerblue";
 
-        let frBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 80, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "french_lang");
+        let frBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 80, null, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "french_lang");
         frBtn.setTextCase("all");
         LanguageScreen.list.push(frBtn.getSprite());
 
-        let enBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 110, { cb: LanguageScreen.changeLanguage, arg: "en" }, "LanguageScreen", LanguageScreen.STATE.Main, "english_lang");
+        let enBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 110, null, { cb: LanguageScreen.changeLanguage, arg: "en" }, "LanguageScreen", LanguageScreen.STATE.Main, "english_lang");
         enBtn.setTextCase("all");
         LanguageScreen.list.push(enBtn.getSprite());
 
-        let jpBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 140, { cb: LanguageScreen.changeLanguage, arg: "jp" }, "LanguageScreen", LanguageScreen.STATE.Main, "japanese_lang");
+        let jpBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 140, null, { cb: LanguageScreen.changeLanguage, arg: "jp" }, "LanguageScreen", LanguageScreen.STATE.Main, "japanese_lang");
         LanguageScreen.list.push(jpBtn.getSprite());
 
         // Panel.resetTypeState("LanguageScreen", LanguageScreen.STATE.Main);
@@ -60,17 +60,7 @@ class LanguageScreen {
          */
         //------------ END DEBUG
 
-        LanguageScreen.list.forEach(sp => {
-            if (sp.class == "dynamic") {
-                for (const s in sp) {
-                    if (sp[s] instanceof Sprite) {
-                        sp[s].update(dt);
-                    }
-                }
-            } else {
-                sp.update(dt);
-            }
-        })
+        Sprite.manageBeforeUpdating(LanguageScreen.list, dt);
 
         LanguageScreen.list = LanguageScreen.list.filter(sp => {
             return !sp.delete;

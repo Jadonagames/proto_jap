@@ -24,13 +24,13 @@ class Infos {
 
 
         // ---------------- MAIN ------------------
-        let hiraganaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50), { cb: Infos.changeState, arg: Infos.STATE.Hiragana }, "infos", Infos.STATE.Main, "Hiragana");
+        let hiraganaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50), null, { cb: Infos.changeState, arg: Infos.STATE.Hiragana }, "infos", Infos.STATE.Main, "Hiragana");
         Infos.list.push(hiraganaBtn.getSprite());
 
-        let katakanaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50, 30, 1), { cb: Infos.changeState, arg: Infos.STATE.Katakana }, "infos", Infos.STATE.Main, "Katakana");
+        let katakanaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50, 30, 1), null, { cb: Infos.changeState, arg: Infos.STATE.Katakana }, "infos", Infos.STATE.Main, "Katakana");
         Infos.list.push(katakanaBtn.getSprite());
 
-        let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(50, 60, 1), toMainMenu, "infos", Infos.STATE.Main, "Back");
+        let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(50, 60, 1), null, toMainMenu, "infos", Infos.STATE.Main, "Back");
         Infos.list.push(backBtn.getSprite());
         // END------------- MAIN ---------------END
 
@@ -104,7 +104,7 @@ class Infos {
 
             if (i != 36 && i != 38 && i != 46 && i != 47 && i != 48 && i != 112 && i != 114 && i != 122 && i != 123 && i != 124) {
 
-                let frame = new Sprite({ w: 30, h: 18 }, frameX + offX, 30 + offY, "infos");
+                let frame = new Sprite({ w: 30, h: 18 }, frameX + offX, 30 + offY, null, "infos");
                 frame.addAnimation("normal", 1, { x: 0, y: 126 }, 0.1);
                 frame.changeAnimation("normal");
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(frame) : Infos.katakanaList.push(frame);
@@ -118,7 +118,7 @@ class Infos {
                 kanaPanel.setFont("kyokasho");
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite());
 
-                let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
+                let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
                 soundBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 84 }, 0.1);
                 soundBtn.getSprite().addAnimation("hover", 1, { x: 12, y: 84 }, 0.1);
                 soundBtn.getSprite().addAnimation("down", 1, { x: 24, y: 84 }, 0.1);
@@ -141,7 +141,7 @@ class Infos {
                 tooltipPanel.setFont("pgfont");
                 tooltipPanel.setOffsets(5, 24);
 
-                let kana = new Sprite({ w: kanaWidth, h: 34 }, tooltipPanel.x + kanaOffX, tooltipPanel.y + 35, "kana");     // w: 38   x + 32
+                let kana = new Sprite({ w: kanaWidth, h: 34 }, tooltipPanel.x + kanaOffX, tooltipPanel.y + 35, null, "kana");     // w: 38   x + 32
 
                 for (let j = 0; j < KANA[kanaArray[i]].frames.length; j++) {
                     kana.setImageDataOrigin(KANA[kanaArray[i]].imageData[j], KANA[kanaArray[i]].frames[j]);
@@ -165,10 +165,10 @@ class Infos {
                 offX += 30 - 1; // 30 => frame.width
             }
         }
-        let hiraganaBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), CANVAS_HEIGHT - 30, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Hiragana, "Back");
+        let hiraganaBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Hiragana, "Back");
         Infos.hiraganaList.push(hiraganaBackBtn.getSprite());
 
-        let katakanaBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), CANVAS_HEIGHT - 30, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Katakana, "Back");
+        let katakanaBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Katakana, "Back");
         Infos.katakanaList.push(katakanaBackBtn.getSprite());
     }
 
@@ -180,23 +180,9 @@ class Infos {
 
     static update(dt) {
 
-        Infos.list.forEach(sp => {
-            if (sp instanceof Sprite) {
-                sp.update(dt);
-            }
-        })
-
-        Infos.hiraganaList.forEach(sp => {
-            if (sp instanceof Sprite) {
-                sp.update(dt);
-            }
-        })
-
-        Infos.katakanaList.forEach(sp => {
-            if (sp instanceof Sprite) {
-                sp.update(dt);
-            }
-        })
+        Sprite.manageBeforeUpdating(Infos.list, dt);
+        Sprite.manageBeforeUpdating(Infos.hiraganaList, dt);
+        Sprite.manageBeforeUpdating(Infos.katakanaList, dt);
 
         Sprite.kanaList.forEach(sp => {
             if (sp.active) {
@@ -229,7 +215,10 @@ class Infos {
                 ctx.fillStyle = "rgb(200,0,0)";
                 ctx.font = "40px jpfont";
                 ctx.textAlign = "center";
+                ctx.shadowColor = "rgb(0,0,0)";
+                ctx.shadowOffsetY = 8;
                 ctx.fillText(LANG["Infos"], centerX(), 40);
+                ctx.shadowOffsetY = 0;
                 ctx.textAlign = "left";
 
                 Sprite.manageBeforeDrawing(Infos.list);

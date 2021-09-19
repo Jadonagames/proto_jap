@@ -60,25 +60,25 @@ class Game1 {
                 break;
         }
 
-        this.firstBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80), { cb: checkIfValid, arg: RND_ARR[0] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[0]);
+        this.firstBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80), null, { cb: checkIfValid, arg: RND_ARR[0] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[0]);
         this.firstBtn.setFont("kyokasho");
         this.firstBtn.setFontSize(30);
         this.firstBtn.setOffsets(5, 34);
         Game1.mainList.push(this.firstBtn.getSprite());
 
-        this.secondBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80), { cb: checkIfValid, arg: RND_ARR[1] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[1]);
+        this.secondBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80), null, { cb: checkIfValid, arg: RND_ARR[1] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[1]);
         this.secondBtn.setFont("kyokasho");
         this.secondBtn.setFontSize(30);
         this.secondBtn.setOffsets(5, 34);
         Game1.mainList.push(this.secondBtn.getSprite());
 
-        this.thirdBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80, 1), { cb: checkIfValid, arg: RND_ARR[2] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[2]);
+        this.thirdBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80, 1), null, { cb: checkIfValid, arg: RND_ARR[2] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[2]);
         this.thirdBtn.setFont("kyokasho");
         this.thirdBtn.setFontSize(30);
         this.thirdBtn.setOffsets(5, 34);
         Game1.mainList.push(this.thirdBtn.getSprite());
 
-        this.forthBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80, 1), { cb: checkIfValid, arg: RND_ARR[3] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[3]);
+        this.forthBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80, 1), null, { cb: checkIfValid, arg: RND_ARR[3] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[3]);
         this.forthBtn.setFont("kyokasho");
         this.forthBtn.setFontSize(30);
         this.forthBtn.setOffsets(5, 34);
@@ -106,7 +106,7 @@ class Game1 {
         this.kanaPanel.setOffsets(3, 50);
         Game1.mainList.push(this.kanaPanel.getSprite());
 
-        let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 120, 1), { cb: resetGame, arg: "back_to_lesson" }, "game1", Game1.STATE.Game, "Back");
+        let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 120, 1), null, { cb: resetGame, arg: "back_to_lesson" }, "game1", Game1.STATE.Game, "Back");
         Game1.mainList.push(backBtn.getSprite());
 
         this.bTimerActive = true;
@@ -232,13 +232,7 @@ class Game1 {
                 b.setState(Button.STATE.Inactive);
             });
 
-            let paramsToSave = [];
             let gotTrophyLevel = 0;
-            let lessonTestType = "";
-            let lessonTestGeneral = "";
-            let test1Mark = 0;
-            let test2Mark = 0;
-
             if (this.misses == 0) {
                 gotTrophyLevel = 48;
             } else if (this.misses >= 1 && this.misses < 5) {
@@ -247,47 +241,8 @@ class Game1 {
                 gotTrophyLevel = 16;
             }
 
-            if (Game1.lessonTestType == "Lesson_test") {
-                lessonTestType = "lessonTest";
-                lessonTestGeneral = "lessonTestGeneral";
-            } else if (Game1.lessonTestType == "Full_test") {
-                lessonTestType = "fullTest";
-                lessonTestGeneral = "fullTestGeneral";
-            }
 
-            let generalMark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestGeneral];
-
-            if (ANSWER_TYPE != "r") { // Kana to Roma
-                test1Mark = gotTrophyLevel;
-                test2Mark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestType + "2"];
-                Lessons.updateTrophyValue("kana_to_roma", gotTrophyLevel);
-                lessonTestType += "1";
-            } else { // Roma to Kana
-                test1Mark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestType + "1"];
-                test2Mark = gotTrophyLevel;
-                Lessons.updateTrophyValue("roma_to_kana", gotTrophyLevel);
-                lessonTestType += "2";
-            }
-
-            if (generalMark < test1Mark && generalMark < test2Mark) {
-                let newMark = 0;
-                if (test1Mark <= test2Mark) {
-                    newMark = test1Mark;
-                } else if (test1Mark > test2Mark) {
-                    newMark = test2Mark;
-                }
-                paramsToSave.push({ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, lessonTestGeneral], value: newMark });
-                Lessons.updateTrophyValue(lessonTestType.slice(0, -1), newMark);
-            }
-
-            paramsToSave.push({ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, lessonTestType], value: gotTrophyLevel });
-
-            SaveManager.save(paramsToSave);
-            if (SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["lessonTestGeneral"] == 48 && SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["fullTestGeneral"] == 48) {
-                paramsToSave = [{ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, "finish"], value: 1 }];
-                SaveManager.save(paramsToSave);
-                Lessons.addStarTrophy(Game1.currentKanaLesson + Game1.currentLessonNumber);
-            }
+            Game1.manageEndGameSave(gotTrophyLevel);
 
             // TODO 
             //! Afficher kana à revoir ? Petite Phrase : Bravo ! Vous avez fait x fautes : trophée Bronze/Argent/Or
@@ -319,11 +274,11 @@ class Game1 {
             this.trophy.getSprite().changeAnimation("normal");
             Game1.mainList.push(this.trophy.getSprite());
 
-            this.restartBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), this.endGamePanel.y + 120, { cb: Game1.displayEndGamePanel.bind(this), arg: { bool: false, restart: true } }, "game1", Game1.STATE.Game, "Restart");
+            this.restartBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), this.endGamePanel.y + 120, null, { cb: Game1.displayEndGamePanel.bind(this), arg: { bool: false, restart: true } }, "game1", Game1.STATE.Game, "Restart");
             Button.currentList.push(this.restartBtn);
             Game1.mainList.push(this.restartBtn.getSprite());
 
-            this.backToLessonBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), this.endGamePanel.y + 150, { cb: Game1.displayEndGamePanel.bind(this), arg: { bool: false, restart: false } }, "game1", Game1.STATE.Game, "Back");
+            this.backToLessonBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), this.endGamePanel.y + 150, null, { cb: Game1.displayEndGamePanel.bind(this), arg: { bool: false, restart: false } }, "game1", Game1.STATE.Game, "Back");
             Button.currentList.push(this.backToLessonBtn);
             Game1.mainList.push(this.backToLessonBtn.getSprite());
 
@@ -364,6 +319,7 @@ class Game1 {
 
             if (!pParams.restart) {
                 resetGame();
+                MOUSE_SPRITE.y += CANVAS_HEIGHT; // Back after Finish
                 Lessons.backToLesson();
             } else {
                 Game1.load(CHOICE_TYPE, ANSWER_TYPE, RANGE, LESSON_RANGE, Game1.lessonTestType, Game1.currentLessonNumber);
@@ -371,6 +327,84 @@ class Game1 {
 
         }
 
+    }
+
+    static manageEndGameSave(pGotTrophyLevel) {
+        let paramsToSave = [];
+        let lessonTestType = "";
+        let lessonTestGeneral = "";
+        let test1Mark = 0;
+        let test2Mark = 0;
+
+        if (Game1.lessonTestType == "Lesson_test") {
+            lessonTestType = "lessonTest";
+            lessonTestGeneral = "lessonTestGeneral";
+        } else if (Game1.lessonTestType == "Full_test") {
+            lessonTestType = "fullTest";
+            lessonTestGeneral = "fullTestGeneral";
+        }
+
+        let generalMark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestGeneral];
+
+        if (ANSWER_TYPE != "r") { // Kana to Roma
+            test1Mark = pGotTrophyLevel;
+            test2Mark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestType + "2"];
+            Lessons.updateTrophyValue("kana_to_roma", pGotTrophyLevel);
+            lessonTestType += "1";
+        } else { // Roma to Kana
+            test1Mark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestType + "1"];
+            test2Mark = pGotTrophyLevel;
+            Lessons.updateTrophyValue("roma_to_kana", pGotTrophyLevel);
+            lessonTestType += "2";
+        }
+
+        if (generalMark < test1Mark && generalMark < test2Mark) {
+            let newMark = 0;
+            if (test1Mark <= test2Mark) {
+                newMark = test1Mark;
+            } else if (test1Mark > test2Mark) {
+                newMark = test2Mark;
+            }
+            paramsToSave.push({ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, lessonTestGeneral], value: newMark });
+            Lessons.updateTrophyValue(lessonTestType.slice(0, -1), newMark);
+        }
+
+        paramsToSave.push({ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, lessonTestType], value: pGotTrophyLevel });
+
+        SaveManager.save(paramsToSave);
+        if (!SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["finish"] &&
+            SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["lessonTestGeneral"] > 0 &&
+            SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["fullTestGeneral"] > 0) {
+            paramsToSave = [{ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, "finish"], value: 1 }];
+            SaveManager.save(paramsToSave);
+
+            LessonBtn.list.every(b => {
+                if (Game1.currentKanaLesson == "h") {
+                    if (b.typeState == Lessons.STATE.Hiragana && b.label.slice(-1) == Game1.currentLessonNumber + 1) {
+                        b.setState(LessonBtn.STATE.Normal);
+                        b.changeSpriteAnimation("normal");
+                        b.setFontColor("rgb(100,100,100)", "rgb(0,0,0)");
+                        return false;
+                    }
+                } else if (Game1.currentKanaLesson == "k") {
+                    if (b.typeState == Lessons.STATE.Katakana && b.label.slice(-1) == Game1.currentLessonNumber + 1) {
+                        b.setState(LessonBtn.STATE.Normal);
+                        b.changeSpriteAnimation("normal");
+                        b.setFontColor("rgb(100,100,100)", "rgb(0,0,0)");
+                        return false;
+                    }
+                }
+                return true;
+            });
+        }
+
+        if (!SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["fullcomplete"] &&
+            SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["lessonTestGeneral"] == 48 &&
+            SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["fullTestGeneral"] == 48) {
+            paramsToSave = [{ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, "fullcomplete"], value: 1 }];
+            Lessons.addStarTrophy(Game1.currentKanaLesson + Game1.currentLessonNumber);
+            SaveManager.save(paramsToSave);
+        }
     }
 
     static deleteSpritesFromList() {
@@ -441,23 +475,8 @@ class Game1 {
 
         Game1.deleteSpritesFromList();
 
-        Game1.mainList.forEach(sp => {
-            if (sp instanceof Sprite) {
-                sp.update(dt);
-            }
-        })
+        Sprite.manageBeforeUpdating(Game1.mainList, dt);
 
-
-
-        if (Game1.currentState == Game1.STATE.Game) {
-            Sprite.list.forEach(sp => {
-                sp.update(dt);
-            });
-        }
-
-        Sprite.list = Sprite.list.filter(sp => {
-            return !sp.delete;
-        });
     }
 
     static draw(ctx) {
@@ -489,18 +508,6 @@ class Game1 {
             ctx.fillText(Math.floor(this.currentTimer), centerX(), 110);
             ctx.fillStyle = "rgb(255,255,255)";
         }
-
-        /*
-        * DEBUG
-        */
-        if (bStatsDebug) {
-
-            ctx.fillStyle = "rgb(255,255,255)";
-            ctx.font = "5px serif";
-
-            ctx.fillText("sprites : " + Sprite.list.length, 0, 100);
-        }
-        // --------------- END DEBUG
 
         if (FadeEffect.bActive) {
             FadeEffect.draw(ctx);
