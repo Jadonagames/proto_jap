@@ -17,6 +17,11 @@ class Game1 {
 
     static _misses = 0;
 
+    chalkboardBrush = null;
+    maru = null;
+    batsu = null;
+    moe = null;
+
     constructor() {
 
     }
@@ -60,25 +65,25 @@ class Game1 {
                 break;
         }
 
-        this.firstBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80), null, { cb: checkIfValid, arg: RND_ARR[0] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[0]);
+        this.firstBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80), null, { cb: checkIfValid, arg: { char: RND_ARR[0], label: rndArr[0] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[0]);
         this.firstBtn.setFont("kyokasho");
         this.firstBtn.setFontSize(30);
         this.firstBtn.setOffsets(5, 34);
         Game1.mainList.push(this.firstBtn.getSprite());
 
-        this.secondBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80), null, { cb: checkIfValid, arg: RND_ARR[1] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[1]);
+        this.secondBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80), null, { cb: checkIfValid, arg: { char: RND_ARR[1], label: rndArr[1] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[1]);
         this.secondBtn.setFont("kyokasho");
         this.secondBtn.setFontSize(30);
         this.secondBtn.setOffsets(5, 34);
         Game1.mainList.push(this.secondBtn.getSprite());
 
-        this.thirdBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80, 1), null, { cb: checkIfValid, arg: RND_ARR[2] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[2]);
+        this.thirdBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80), centerY(50, 80, 1), null, { cb: checkIfValid, arg: { char: RND_ARR[2], label: rndArr[2] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[2]);
         this.thirdBtn.setFont("kyokasho");
         this.thirdBtn.setFontSize(30);
         this.thirdBtn.setOffsets(5, 34);
         Game1.mainList.push(this.thirdBtn.getSprite());
 
-        this.forthBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80, 1), null, { cb: checkIfValid, arg: RND_ARR[3] }, "game1", Game1.STATE.Game, choiceLabel + rndArr[3]);
+        this.forthBtn = new KanaBtn({ w: 50, h: 50, v: 4 }, centerX(50, 80, 1), centerY(50, 80, 1), null, { cb: checkIfValid, arg: { char: RND_ARR[3], label: rndArr[3] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[3]);
         this.forthBtn.setFont("kyokasho");
         this.forthBtn.setFontSize(30);
         this.forthBtn.setOffsets(5, 34);
@@ -100,11 +105,64 @@ class Game1 {
                 break;
         }
 
-        this.kanaPanel = new KanaPanel({ w: 70, h: 70, v: 5 }, centerX(70), centerY(70), null, "game1", Game1.STATE.Game, answerLabel, 1);
+        this.kanaPanel = new KanaPanel({ w: 104, h: 72 }, centerX(104), centerY(72), null, "game1", Game1.STATE.Game, answerLabel, 0, true);
+        this.kanaPanel.getSprite().addAnimation("normal", { x: 190, y: 0 });
+        this.kanaPanel.getSprite().changeAnimation("normal");
         this.kanaPanel.setFont("kyokasho");
         this.kanaPanel.setFontSize(40);
         this.kanaPanel.setOffsets(3, 50);
+        this.kanaPanel.setFontColor("rgba(255,255,255,0)", "rgb(255,255,255)");
         Game1.mainList.push(this.kanaPanel.getSprite());
+
+        this.moe = new Sprite({ w: 24, h: 24 }, this.kanaPanel.x + 76, this.kanaPanel.y + 48);
+        this.moe.addAnimation("idle", { x: 342, y: 272 }, 4, [0.3, 0.075, 0.3, 0.075]);
+        this.moe.addAnimation("erase", { x: 342, y: 296 }, 4, [0.2, 0.05, 0.2, 0.05]);
+        this.moe.changeAnimation("idle");
+        Game1.mainList.push(this.moe.getSprite());
+
+
+        this.maru = new Sprite({ w: 44, h: 44 }, this.firstBtn.x + 3, this.firstBtn.y + 3);
+        this.maru.addAnimation("normal", { x: 294, y: 0 });
+        this.maru.changeAnimation("normal");
+        this.maru.setBlink(1, 3);
+        this.maru.setAlpha(0);
+
+        this.batsu = new Sprite({ w: 44, h: 44 }, this.secondBtn.x + 3, this.secondBtn.y + 3);
+        this.batsu.addAnimation("normal", { x: 338, y: 0 });
+        this.batsu.changeAnimation("normal");
+        this.batsu.setBlink(1, 3);
+        this.batsu.setAlpha(0);
+
+        this.chalkboardBrush = new Sprite({ w: 96, h: 63 }, centerX(96), this.kanaPanel.y + 5); //57
+        this.chalkboardBrush.addAnimation("normal", { x: 342, y: 204 });
+        this.chalkboardBrush.addAnimation("erase", { x: 438, y: 204 }, 10, [0.2, 0.05, 0.2, 0.2, 0.05, 0.2, 0.2, 0.05, 0.2, 0.2], false);
+        this.chalkboardBrush.changeAnimation("normal");
+        this.chalkboardBrush.setAnimationCB("erase", handleCorrectAnswer);
+        this.chalkboardBrush.setAnimationFrameCB("erase", [
+            {
+                nb: 2,
+                callback: {
+                    cb: Game1.chalkParticles,
+                    arg: { x: 260, y: 115, offX: 10, offY: 5, dirX: 1, dirY: -1 }
+                }
+            },
+            {
+                nb: 5,
+                callback: {
+                    cb: Game1.chalkParticles,
+                    arg: { x: 200, y: 170, offX: 10, offY: 5, dirX: -1, dirY: 1 }
+                }
+            },
+            {
+                nb: 8,
+                callback: {
+                    cb: Game1.chalkParticles,
+                    arg: { x: 215, y: 115, offX: 10, offY: 5, dirX: 1, dirY: -1 }
+                }
+            }
+        ]);
+
+
 
         let backBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 120, 1), null, { cb: resetGame, arg: "back_to_lesson" }, "game1", Game1.STATE.Game, "Back");
         Game1.mainList.push(backBtn.getSprite());
@@ -192,16 +250,16 @@ class Game1 {
             }
 
             this.firstBtn.setLabel(choiceLabel + rndArr[0]);
-            this.firstBtn.setCallbackArg(RND_ARR[0]);
+            this.firstBtn.setCallbackArg({ char: RND_ARR[0], label: rndArr[0] });
 
             this.secondBtn.setLabel(choiceLabel + rndArr[1]);
-            this.secondBtn.setCallbackArg(RND_ARR[1]);
+            this.secondBtn.setCallbackArg({ char: RND_ARR[1], label: rndArr[1] });
 
             this.thirdBtn.setLabel(choiceLabel + rndArr[2]);
-            this.thirdBtn.setCallbackArg(RND_ARR[2]);
+            this.thirdBtn.setCallbackArg({ char: RND_ARR[2], label: rndArr[2] });
 
             this.forthBtn.setLabel(choiceLabel + rndArr[3]);
-            this.forthBtn.setCallbackArg(RND_ARR[3]);
+            this.forthBtn.setCallbackArg({ char: RND_ARR[3], label: rndArr[3] });
 
             let answerLabel = "";
             switch (ANSWER_TYPE) {
@@ -248,7 +306,7 @@ class Game1 {
             //! Afficher kana à revoir ? Petite Phrase : Bravo ! Vous avez fait x fautes : trophée Bronze/Argent/Or
 
             this.endGameBg = new Sprite({ w: 1, h: 1 }, 0, 0, "normal", { x: CANVAS_WIDTH, y: CANVAS_HEIGHT });
-            this.endGameBg.getSprite().addAnimation("normal", 1, { x: 38, y: 3 }, 0.1);
+            this.endGameBg.getSprite().addAnimation("normal", { x: 38, y: 3 });
             this.endGameBg.getSprite().changeAnimation("normal");
             Game1.mainList.push(this.endGameBg.getSprite());
 
@@ -270,7 +328,7 @@ class Game1 {
             // ...
 
             this.trophy = new Sprite({ w: 16, h: 19 }, centerX(16), this.endGamePanel.y + 70);
-            this.trophy.getSprite().addAnimation("normal", 1, { x: 30 + gotTrophyLevel, y: 112 }, 0.1);
+            this.trophy.getSprite().addAnimation("normal", { x: 30 + gotTrophyLevel, y: 112 });
             this.trophy.getSprite().changeAnimation("normal");
             Game1.mainList.push(this.trophy.getSprite());
 
@@ -378,24 +436,48 @@ class Game1 {
             paramsToSave = [{ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, "finish"], value: 1 }];
             SaveManager.save(paramsToSave);
 
+
             LessonBtn.list.every(b => {
                 if (Game1.currentKanaLesson == "h") {
                     if (b.typeState == Lessons.STATE.Hiragana && b.label.slice(-1) == Game1.currentLessonNumber + 1) {
-                        b.setState(LessonBtn.STATE.Normal);
-                        b.changeSpriteAnimation("normal");
-                        b.setFontColor("rgb(100,100,100)", "rgb(0,0,0)");
+
+                        // TO NORMAL
+                        b.getSprite().resetAnimations("normal", { x: 380, y: b.getSprite().getAnimation("normal").origin.y });
+                        b.getSprite().resetAnimations("hover", { x: 452, y: b.getSprite().getAnimation("hover").origin.y });
+                        b.getSprite().resetAnimations("down", { x: 524, y: b.getSprite().getAnimation("down").origin.y });
+                        b.setBoxCollider(65, 20, 2, 5);
+
+                        b.mode = 0
+
+                        b.callback = {
+                            cb: b.savedCB.cb,
+                            arg: b.savedCB.arg
+                        };
+
                         return false;
                     }
                 } else if (Game1.currentKanaLesson == "k") {
                     if (b.typeState == Lessons.STATE.Katakana && b.label.slice(-1) == Game1.currentLessonNumber + 1) {
-                        b.setState(LessonBtn.STATE.Normal);
-                        b.changeSpriteAnimation("normal");
-                        b.setFontColor("rgb(100,100,100)", "rgb(0,0,0)");
+
+                        // TO NORMAL
+                        b.getSprite().resetAnimations("normal", { x: 380, y: b.getSprite().getAnimation("normal").origin.y });
+                        b.getSprite().resetAnimations("hover", { x: 452, y: b.getSprite().getAnimation("hover").origin.y });
+                        b.getSprite().resetAnimations("down", { x: 524, y: b.getSprite().getAnimation("down").origin.y });
+                        b.setBoxCollider(65, 20, 2, 5);
+
+                        b.mode = 0
+
+                        b.callback = {
+                            cb: b.savedCB.cb,
+                            arg: b.savedCB.arg
+                        };
+
                         return false;
                     }
                 }
                 return true;
             });
+
         }
 
         if (!SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["fullcomplete"] &&
@@ -477,6 +559,15 @@ class Game1 {
 
         Sprite.manageBeforeUpdating(Game1.mainList, dt);
 
+        Particles.list.forEach(p => {
+            if (!p.delete) {
+                p.update(dt);
+            }
+        });
+
+        this.chalkboardBrush.update(dt);
+
+
     }
 
     static draw(ctx) {
@@ -488,6 +579,17 @@ class Game1 {
         // --------------------------------
 
         Sprite.manageBeforeDrawing(Game1.mainList);
+
+        if (!this.bEndGame) {
+            this.chalkboardBrush.draw(ctx);
+            this.maru.draw(ctx);
+            this.batsu.draw(ctx);
+        }
+
+        Particles.list.forEach(p => {
+            p.draw(ctx);
+        });
+
 
         ctx.fillStyle = "rgb(255,255,255)";
         ctx.font = "10px jpfont";
@@ -519,7 +621,19 @@ class Game1 {
 
     }
 
+    static chalkParticles(pArg) {
+        for (let i = 0; i < 10; i++) {
+            let size = rnd(1, 3);
+            let rndOffsetX = rnd(1, pArg.offX);
+            let rndOffsetY = rnd(1, pArg.offY);
+            let p = new Particles(pArg.x + rndOffsetX, pArg.y + rndOffsetY, pArg.dirX, pArg.dirY, 0, { w: size, h: size }, rnd(1, 3));
+            p.setColor("rgba(150, 150, 150, 1)");
+        }
+    }
+
 }
+
+
 
 // TODO function newGame / reset / firstLoad
 function gameInit() { }

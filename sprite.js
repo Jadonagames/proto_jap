@@ -33,6 +33,17 @@ class Sprite {
 
         this.active = true;
 
+        this.bBlinking = false;
+        this.blinkCount = 0;
+        this.blinkMaxDuration = 0;
+
+        this.startPos = { x: pX, y: pY };
+        this.destination = { x: 0, y: 0 };
+        this.direction = 1;
+        this.speedCount = 0;
+        this.speed = 2;
+
+
         this.class = "";
         this.type = pType;
         this.loopCount = 0;
@@ -68,7 +79,7 @@ class Sprite {
         }
     }
 
-    addAnimation(pName, pFramesNb, pOrigin, pSpeed, pLoop = true) {
+    addAnimation(pName, pOrigin, pFramesNb = 1, pSpeed = 0.1, pLoop = true) {
         let animation = {
             name: pName,
             frames: pFramesNb,
@@ -76,9 +87,28 @@ class Sprite {
             speed: pSpeed,
             bLoop: pLoop,
             bEnd: false,
-            maxWidth: this.width * pFramesNb
+            maxWidth: this.width * pFramesNb,
+            callback: null,
+            frameCallback: null
         }
         this.animations.push(animation);
+    }
+
+    getAnimation(pName) {
+
+        let animToReturn = {};
+        this.animations.every(anim => {
+            if (anim.name == pName) {
+                // console.log("found");
+                // console.log(anim);
+                animToReturn = anim;
+                // console.log("anim to return : ");
+                // console.log(animToReturn);
+                return false;
+            }
+            return true;
+        });
+        return animToReturn;
     }
 
     resetAnimations(pName, pOrigin) {
@@ -96,6 +126,23 @@ class Sprite {
                 this.currentAnimation.bEnd = false;
                 this.currentFrame = 0;
             }
+        });
+    }
+
+    setAnimationCB(pName, pCallback) {
+        this.animations.forEach(animation => {
+            if (animation.name == pName) {
+                animation.callback = pCallback;
+            }
+        });
+    }
+
+    setAnimationFrameCB(pName, pFrameCallback) {
+        this.animations.forEach(animation => {
+            if (animation.name == pName) {
+                animation.frameCallback = pFrameCallback;
+            }
+
         });
     }
 
@@ -146,10 +193,53 @@ class Sprite {
         this.height = pHeight;
     }
 
+    setStartPos(pStart) {
+        this.startPos = {
+            x: pStart.x,
+            y: pStart.y
+        };
+    }
+
+    setDestination(pDestination) {
+        this.destination = {
+            x: pDestination.x,
+            y: pDestination.y
+        };
+    }
+
+    setDirection(pDirection) {
+        this.direction = pDirection;
+    }
+
     update(dt) {
-        if (this.currentAnimation != null && this.currentAnimation.frames > 1) {
-            this.timer.setMax(this.currentAnimation.speed);
+        if (this.currentAnimation != null && this.currentAnimation.frames > 1 && !this.currentAnimation.bEnd) {
+
+            if (Array.isArray(this.currentAnimation.speed)) {
+                this.timer.setMax(this.currentAnimation.speed[this.currentFrame]);
+            } else {
+                this.timer.setMax(this.currentAnimation.speed);
+            }
             this.timer.update(dt);
+            if (this.bBlinking) {
+                this.blinkTimer.update(dt);
+            }
+        }
+        if (this.type == "tm") {
+            if (this.speedCount <= this.speed) {
+                if (this.direction == 1) {
+                    this.x = easyInOutSin(this.speedCount, this.startPos.x, Math.abs(this.destination.x - this.startPos.x), this.speed);
+                    this.y = easyInOutSin(this.speedCount, this.startPos.y, Math.abs(this.destination.y - this.startPos.y), this.speed);
+                } else {
+                    let x = easyInOutSin(this.speedCount, this.startPos.x, Math.abs(this.destination.x - this.startPos.x), this.speed);
+                    let y = easyInOutSin(this.speedCount, this.startPos.y, Math.abs(this.destination.y - this.startPos.y), this.speed);
+                    this.x = this.destination.x - x + this.startPos.x;
+                    this.y = this.destination.y - y + this.startPos.y;
+                }
+                this.speedCount += dt;
+            } else {
+                this.speedCount = 0;
+                this.direction = -this.direction;
+            }
         }
     }
 
@@ -160,18 +250,53 @@ class Sprite {
 
     updateFrame() {
         this.currentFrame++;
+
+        if (this.currentAnimation.frameCallback != null) {
+
+
+            this.currentAnimation.frameCallback.forEach(fc => {
+                if (fc.nb == this.currentFrame) {
+                    if (fc.callback.cb != null) {
+                        fc.callback.cb(fc.callback.arg);
+                    } else {
+                        fc.callback();
+                    }
+                }
+            });
+        }
+
         if (this.currentFrame >= this.currentAnimation.frames) {
             if (this.currentAnimation.bLoop) {
                 this.currentFrame = 0;
             } else {
-                this.currentFrame = 0;
-                // this.currentAnimation.bEnd = true;
+                this.currentFrame--;
+                this.currentAnimation.bEnd = true;
+                if (this.currentAnimation.callback.cb != null && this.currentAnimation.callback.arg != null) {
+                    this.currentAnimation.callback.cb(this.currentAnimation.callback.arg);
+                } else {
+                    this.currentAnimation.callback();
+                }
                 this.loopCount++;
                 if (this.type == "todelete" && this.loopCount >= this.maxLoop) {
                     this.delete = true;
                 }
             }
         }
+    }
+
+    setBlink(pMaxDuration, pCount) {
+        this.blinkMaxDuration = pMaxDuration;
+        this.blinkCount = pCount;
+        this.blinkTimer = new Timer(this.blinkMaxDuration, this.updateFrame.bind(this));
+        // this.blinkTimer.
+    }
+
+    blinking() {
+
+    }
+
+    setAlpha(pNewValue) {
+        this.alpha = pNewValue;
     }
 
     setImageDataOrigin(pImageData, pMaxStep) {
@@ -226,6 +351,10 @@ class Sprite {
                 for (const s in sp) {
                     if (sp[s] instanceof Sprite) {
                         sp[s].update(dt);
+                    } else if (Array.isArray(sp[s])) {
+                        sp[s].forEach(bloc => {
+                            bloc.update(dt);
+                        });
                     }
                 }
             } else {
@@ -235,12 +364,15 @@ class Sprite {
     }
 
     static manageBeforeDrawing(pList) {
-        // console.log("Sprite manage before drawing");
         pList.forEach(sp => {
             if (sp.class == 9) {
                 for (const s in sp) {
                     if (sp[s] instanceof Sprite) {
                         sp[s].draw(ctx);
+                    } else if (Array.isArray(sp[s])) {
+                        sp[s].forEach(bloc => {
+                            bloc.draw(ctx);
+                        });
                     } else if (s == "parent") {
                         if (sp[s].label != "") {
                             sp[s].drawLabel(ctx);
@@ -250,7 +382,7 @@ class Sprite {
             } else {
                 if (sp.class == "button" || sp.class == "panel") { // ou if parent instanceof Button / Panel etc.
                     sp.draw(ctx);
-                    if (sp.getParent() && sp.getParent().label != "") {
+                    if (sp.getParent() && sp.getParent().label != "" && sp.getParent().getState() != LessonBtn.STATE.Close) {
                         sp.getParent().drawLabel(ctx);
                     }
                 } else {
@@ -273,7 +405,9 @@ class Sprite {
                     ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.parent.x + this.offX, this.parent.y + this.offY, this.width * this.scaleX, this.height * this.scaleY);
                     ctx.globalAlpha = 1;
                 } else {
+                    ctx.globalAlpha = this.alpha;
                     ctx.drawImage(SS, this.ox, this.currentAnimation.origin.y, this.width, this.height, this.x, this.y, this.width * this.scaleX, this.height * this.scaleY);
+                    ctx.globalAlpha = 1;
                 }
 
                 //           (SS, ox, oy,                             frameWidth, frameHeight, x,      y,      scaleX,                    scaleY)
@@ -310,6 +444,7 @@ class Sprite {
                 } else {
                     ctx.fillText(this.strokeNumber, this.x + this.width + 10, this.y + 18);
                 }
+                ctx.fillStyle = "rgb(0, 0, 0)";
             }
         }
     }

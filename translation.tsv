@@ -113,6 +113,8 @@ npc_1_1	Hello, my name is Jean.	Bonjour, je m'appelle Jean.	こんにちは、�
 test1	tooltip test content	contenu test du tooltip bla bla, ceci est un long texte	ツールチップコンテンツテスト
 Hiragana	Hiragana	Hiragana	ひらがな
 Katakana	Katakana	Katakana	カタカナ
+a_Hiragana	あ Hiragana	あ Hiragana	あ Hiragana
+a_Katakana	ア Katakana	ア Katakana	ア Katakana
 kanji	kanji	kanji	漢字
 text1	Here is where it all begins, let's go !	C'est ici que tout commence, c'est parti !	a
 text2	Here we go again, same quantity but different characters !	Allez, c'est reparti pour une fournée, même quantité mais caractères différents !	a

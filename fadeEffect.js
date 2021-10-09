@@ -10,6 +10,7 @@ class FadeEffect {
         if (this.currentAlpha >= 1 || this.currentAlpha <= 0) {
             this.count++;
             if (this.count >= 10) {
+                this.bActive = false;
                 if (this.callback != null) {
                     if (this.callback.arg != null) {
                         this.callback.cb(this.callback.arg);
@@ -26,22 +27,22 @@ class FadeEffect {
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
-    static fade(pCallback = null, pDirection = "out", pMaxTimer = 0.04, pColor = { r: 0, g: 0, b: 0 }) {
-
+    static fade(pArgs) {
 
         // TODO gérer le count !!!!
 
-        if (pDirection == "out") {
+        if (pArgs.direction == "out") {
             this.currentAlpha = 0;
             this.fadingDirection = 1;
-        } else if (pDirection == "in") {
+        } else if (pArgs.direction == "in") {
             this.currentAlpha = 1;
             this.fadingDirection = -1;
         }
-        this.timer = new Timer(pMaxTimer, FadeEffect.changeAlpha.bind(this));
+        this.timer = new Timer(pArgs.maxTimer, FadeEffect.changeAlpha.bind(this));
+
         this.bActive = true;
-        this.callback = pCallback;
-        this.color = pColor;
+        this.callback = pArgs.callback;
+        this.color = pArgs.color ? pArgs.color : { r: 0, g: 0, b: 0 };
         this.count = 0;
     }
 

@@ -46,20 +46,16 @@ class Particles {
         Particles.list.push(this);
     }
 
+    setColor(pNewColor) {
+        this.color = pNewColor;
+    }
 
     update(dt) {
-
         if (this.life > 0 && !this.delete) {
             this.timer.update(dt);
-            this.x += this.dx * (60 * dt);
-            this.y += this.dy * (60 * dt);
+            this.x += 0.2 * this.dx * (60 * dt);
+            this.y += 0.2 * this.dy * (60 * dt);
         }
-
-        // switch (pType) {
-        //     case 0:
-        //         break;
-        // }
-
     }
 
     decreaseLife() {

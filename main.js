@@ -12,20 +12,20 @@ const SCALE_X = 2;
 const SCALE_Y = 2;
 const CANVAS_WIDTH = canvas.width / SCALE_X;
 const CANVAS_HEIGHT = canvas.height / SCALE_Y;
-let canvasOriginBgColor = "cornflowerblue";
+let canvasOriginBgColor = "rgb(213, 210, 193)";
 let MUSIC_VOLUME = 0.5;
 let SFX_VOLUME = 0.5;
 let TRANSITION = false;
 let SCREEN_SHAKE = false;
 let screenShakeTimer = new Timer(0.1, { cb: setScreenShake, arg: false });
-// screenShakeTimer.setMax(0.1);
 
 let MOUSE_SPRITE = new Sprite({ w: 8, h: 9 }, centerX(8), centerY(8));
-MOUSE_SPRITE.addAnimation("normal", 1, { x: 114, y: 34 }, 0.1);
-MOUSE_SPRITE.addAnimation("hover", 1, { x: 122, y: 34 }, 0.1);
-MOUSE_SPRITE.addAnimation("down", 1, { x: 130, y: 34 }, 0.1);
+MOUSE_SPRITE.addAnimation("normal", { x: 114, y: 34 });
+MOUSE_SPRITE.addAnimation("hover", { x: 122, y: 34 });
+MOUSE_SPRITE.addAnimation("down", { x: 130, y: 34 });
 MOUSE_SPRITE.changeAnimation("normal");
 
+Transition.init();
 //!TEST--------
 // let canvasTest = document.getElementById("canvasTest");
 // let canvasTestCtx = canvasTest.getContext("2d");
@@ -180,26 +180,18 @@ function run() {
 
 
     ctx.font = "10px jpfont";
-    ctx.fillStyle = "rgb(255,0,0)";
     ctx.textAlign = "left";
-    if (SaveManager.bSaveDataExists) {
-        ctx.fillText("Save?: SAVE DATA", 0, 10);
-    } else {
-        ctx.fillText("Save?: NO SAVE DATA", 0, 10);
-    }
+    // if (SaveManager.bSaveDataExists) {
+    //     ctx.fillText("Save?: SAVE DATA", 0, 10);
+    // } else {
+    //     ctx.fillText("Save?: NO SAVE DATA", 0, 10);
+    // }
 
     MOUSE_SPRITE.ox = MOUSE_SPRITE.currentAnimation.origin.x + (MOUSE_SPRITE.width * MOUSE_SPRITE.currentFrame);
     ctx.drawImage(SS, MOUSE_SPRITE.ox, MOUSE_SPRITE.currentAnimation.origin.y, MOUSE_SPRITE.width, MOUSE_SPRITE.height, MOUSE_SPRITE.x, MOUSE_SPRITE.y, MOUSE_SPRITE.width * MOUSE_SPRITE.scaleX, MOUSE_SPRITE.height * MOUSE_SPRITE.scaleY);
 
 
     ctx.restore();
-
-    // canvasTestCtx.clearRect(0, 0, canvas.width, canvas.height);
-    // canvasTestCtx.save();
-    // canvasTestCtx.scale(SCALE_X, SCALE_Y);
-
-    // canvasTestCtx.restore();
-
 }
 
 function startBtnCB(pParam) {
@@ -239,12 +231,14 @@ function startBtnCB(pParam) {
 
 function changeMainState(pNewState) {
 
+    if (FadeEffect.bActive) FadeEffect.bActive = false;
     if (typeof pNewState == "number") {
         mainState = pNewState;
     } else {
         mainState = pNewState.state;
         MainMenu.clearKanaInterval();
     }
+
 
     switch (mainState) {
         case MAIN_STATE.Infos:
@@ -257,6 +251,7 @@ function changeMainState(pNewState) {
             if (!Lessons.bInit) {
                 Lessons.init();
             }
+            FadeEffect.fade({ callback: null, direction: "in", maxTimer: 0.01 });
             Lessons.changeState(Lessons.STATE.Hiragana);
             break;
     }
@@ -267,13 +262,17 @@ function toMainMenu() {
     if (!MainMenu.bInit) {
         MainMenu.init();
     }
-    canvas.style.backgroundColor = "cornflowerblue";
+    canvas.style.backgroundColor = canvasOriginBgColor;
 
     mainState = MAIN_STATE.Menu;
 
     MainMenu.initKanaInterval();
 
     MainMenu.changeState(MainMenu.STATE.Main);
+    TRANSITION = true;
+    Button.currentList.forEach(b => {
+        b.setMoving(true);
+    });
 
     // GESTION MENU KEYBOARD
     // Button.currentList[0].setState(Button.STATE.Hover);

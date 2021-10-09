@@ -6,7 +6,7 @@ class KanaBtn extends Button {
     drawLabel(ctx) {
 
         if (this.state == Button.STATE.Hover) {
-            this.fontMainColor = "rgb(255,0,0)";
+            this.fontMainColor = "rgb(255,255,255)";
             ctx.fillStyle = this.fontMainColor;
         } else {
             this.fontMainColor = "rgb(0,0,0)";

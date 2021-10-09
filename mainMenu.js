@@ -55,84 +55,75 @@ class MainMenu {
 
         MainMenu.bInit = true;
 
-        let lessonsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 130, null, { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, "mainmenu", MainMenu.STATE.Main, "Lessons");
-        MainMenu.mainList.push(lessonsBtn.getSprite());
+        let titleImg = new Sprite({ w: 192, h: 100 }, centerX(192) + 10, 6, null, "mainmenu");
+        titleImg.addAnimation("normal", { x: 382, y: 0 });
+        titleImg.changeAnimation("normal");
+        MainMenu.mainList.push(titleImg);
 
-        let trainingBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 160, null, null, "mainmenu", MainMenu.STATE.Main, "Training");
-        MainMenu.mainList.push(trainingBtn.getSprite());
+        let subtitleImg = new Sprite({ w: 129, h: 36 }, centerX(129) + 5, 106, null, "mainmenu");
+        subtitleImg.addAnimation("normal", { x: 574, y: 0 });
+        subtitleImg.changeAnimation("normal");
+        MainMenu.mainList.push(subtitleImg);
 
-        let infosBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 190, null, { cb: changeMainState, arg: { state: MAIN_STATE.Infos, from: "mainmenu" } }, "mainmenu", MainMenu.STATE.Main, "Infos");
-        MainMenu.mainList.push(infosBtn.getSprite());
+        let hiraAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110), 0, null, "tm");
+        hiraAImg.addAnimation("normal", { x: 574, y: 36 });
+        hiraAImg.changeAnimation("normal");
+        hiraAImg.setDestination({ x: centerX(50, 110), y: 28 });
+        MainMenu.mainList.push(hiraAImg);
 
-        let optionsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 220, null, { cb: MainMenu.changeState, arg: MainMenu.STATE.Options }, "mainmenu", MainMenu.STATE.Main, "Settings");
-        MainMenu.mainList.push(optionsBtn.getSprite());
+        let kataAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110, 1), 0, null, "tm");
+        kataAImg.addAnimation("normal", { x: 624, y: 36 });
+        kataAImg.changeAnimation("normal");
+        kataAImg.setDestination({ x: centerX(50, 110, 1), y: 28 });
+        kataAImg.setDirection(-1);
+        MainMenu.mainList.push(kataAImg);
 
-        let creditsBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 250, null, { cb: MainMenu.changeState, arg: MainMenu.STATE.Credits }, "mainmenu", MainMenu.STATE.Main, "Credits");
+        let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, { cb: MainMenu.changeState, arg: MainMenu.STATE.Credits }, "mainmenu", MainMenu.STATE.Main, "Credits", 4);
+        creditsBtn.setFontColor("rgba(142,45,45,1)");
+        creditsBtn.setDestination({ x: centerX(110), y: 265 });
+        creditsBtn.setCanMove(true);
+        creditsBtn.setMoving(true);
+        creditsBtn.setMovingSpeed(0.8);
         MainMenu.mainList.push(creditsBtn.getSprite());
 
+        let optionsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 350, null, { cb: MainMenu.changeState, arg: MainMenu.STATE.Options }, "mainmenu", MainMenu.STATE.Main, "Settings", 4);
+        optionsBtn.setFontColor("rgba(142,45,45,1)");
+        optionsBtn.setDestination({ x: centerX(110), y: 237 });
+        optionsBtn.setCanMove(true);
+        optionsBtn.setMoving(true);
+        optionsBtn.setMovingSpeed(0.75);
+        MainMenu.mainList.push(optionsBtn.getSprite());
+
+        let infosBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 340, null, { cb: changeMainState, arg: { state: MAIN_STATE.Infos, from: "mainmenu" } }, "mainmenu", MainMenu.STATE.Main, "Infos", 4);
+        infosBtn.setDestination({ x: centerX(110), y: 209 });
+        infosBtn.setCanMove(true);
+        infosBtn.setMoving(true);
+        infosBtn.setMovingSpeed(0.70);
+        infosBtn.setFontColor("rgba(142,45,45,1)");
+        MainMenu.mainList.push(infosBtn.getSprite());
+
+        let trainingBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null, null, "mainmenu", MainMenu.STATE.Main, "Training", 4);
+        trainingBtn.setDestination({ x: centerX(110), y: 181 });
+        trainingBtn.setCanMove(true);
+        trainingBtn.setMoving(true);
+        trainingBtn.setMovingSpeed(0.65);
+        trainingBtn.setFontColor("rgba(142,45,45,1)");
+        MainMenu.mainList.push(trainingBtn.getSprite());
+
+        let lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 320, null, { cb: FadeEffect.fade.bind(FadeEffect), arg: { callback: { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, direction: "out", maxTimer: 0.01 } }, "mainmenu", MainMenu.STATE.Main, "Lessons", 4);
+        lessonsBtn.setFontColor("rgba(142,45,45,1)");
+        lessonsBtn.setDestination({ x: centerX(110), y: 153 });
+        lessonsBtn.setCanMove(true);
+        lessonsBtn.setMoving(true);
+        lessonsBtn.setMovingSpeed(0.6);
+        MainMenu.mainList.push(lessonsBtn.getSprite());
 
         this.muteBtn = new Button({ w: 16, h: 14 }, centerX(16, 200, 1), 50, null, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
-        this.muteBtn.getSprite().addAnimation("normal", 1, { x: 96, y: 96 }, 0.1);
-        this.muteBtn.getSprite().addAnimation("hover", 1, { x: 112, y: 96 }, 0.1);
-        this.muteBtn.getSprite().addAnimation("down", 1, { x: 128, y: 96 }, 0.1);
+        this.muteBtn.getSprite().addAnimation("normal", { x: 96, y: 96 });
+        this.muteBtn.getSprite().addAnimation("hover", { x: 112, y: 96 });
+        this.muteBtn.getSprite().addAnimation("down", { x: 128, y: 96 });
         this.muteBtn.getSprite().changeAnimation("normal");
         MainMenu.mainList.push(this.muteBtn.getSprite());
-
-
-        //TODO 
-        //! DELETE
-        // -------------- TEST ------------------
-
-        // let testPanel = new Panel({ w: 114, h: 136 }, 70, 100, null, "mainmenu", MainMenu.STATE.Main, "", 0, true);
-        // testPanel.getSprite().addAnimation("normal", 1, { x: 570, y: 0 }, 0.1);
-        // testPanel.getSprite().changeAnimation("normal");
-        // MainMenu.mainList.push(testPanel.getSprite());
-
-        // let testPanelChild = new Panel({ w: 54, h: 24 }, 30, 10, testPanel, "mainmenu", MainMenu.STATE.Main, "roma_a", 0, true);
-        // testPanelChild.getSprite().addAnimation("normal", 1, { x: 684, y: 0 }, 0.1);
-        // testPanelChild.getSprite().changeAnimation("normal");
-        // MainMenu.mainList.push(testPanelChild.getSprite());
-
-        // let buttonTestPanelChild = new Button({ w: 40, h: 20 }, 36, 80, testPanel, null, "mainmenu", MainMenu.STATE.Main, "Back", 0, true);
-        // buttonTestPanelChild.getSprite().addAnimation("normal", 1, { x: 684, y: 24 }, 0.1);
-        // buttonTestPanelChild.getSprite().addAnimation("hover", 1, { x: 724, y: 24 }, 0.1);
-        // buttonTestPanelChild.getSprite().addAnimation("down", 1, { x: 764, y: 24 }, 0.1);
-        // buttonTestPanelChild.getSprite().changeAnimation("normal");
-        // MainMenu.mainList.push(buttonTestPanelChild.getSprite());
-
-        // // ----------- TEST NOT STATIC ----------
-        // let testPanel2 = new Panel({ w: 114, h: 140, v: 7 }, centerX(114, 95, 1), 98, null, "mainmenu", MainMenu.STATE.Main, "", 12);
-        // testPanel2.setOffsets(5, 15);
-        // MainMenu.mainList.push(testPanel2.getSprite());
-
-        // let testPanelChild2 = new Panel({ w: 56, h: 26, v: 6 }, 30, 11, testPanel2, "mainmenu", MainMenu.STATE.Main, "roma_a", 11);
-        // testPanelChild2.setOffsets(5, 14);
-        // MainMenu.mainList.push(testPanelChild2.getSprite());
-
-        // let buttonTestPanelChild2 = new Button({ w: 40, h: 21, v: 5 }, 36, 80, testPanel2, null, "mainmenu", MainMenu.STATE.Main, "Back", 1);
-        // MainMenu.mainList.push(buttonTestPanelChild2.getSprite());
-
-
-
-        // let testAnimatedBtn = new Button({ w: 40, h: 21, v: 5 }, 36, 110, testPanel2, null, "mainmenu", MainMenu.STATE.Main, "Back", 11);
-        // MainMenu.mainList.push(testAnimatedBtn.getSprite());
-
-
-        // let animatedSprite = new Sprite({ w: 6, h: 6 }, 50, 50, null, "mainmenu");
-        // animatedSprite.addAnimation("normal", 4, { x: 76, y: 62 }, 0.2);
-        // animatedSprite.changeAnimation("normal");
-        // MainMenu.mainList.push(animatedSprite);
-
-
-        // let animatedSprite2 = new Sprite({ w: 11, h: 11 }, 50, 100, null, "mainmenu");
-        // animatedSprite2.addAnimation("normal", 4, { x: 114, y: 0 }, 0.2);
-        // animatedSprite2.changeAnimation("normal");
-        // MainMenu.mainList.push(animatedSprite2);
-
-        // --------------------------------------
-
-
-
 
         // ---------------- OPTIONS ----------------
 
@@ -141,30 +132,30 @@ class MainMenu {
         MainMenu.optionsList.push(volumePanel.getSprite());
 
         let musicDownBtn = new Button({ w: 16, h: 16 }, centerX(16, 20), 80, null, Sound.decreaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        musicDownBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 96 }, 0.1);
-        musicDownBtn.getSprite().addAnimation("hover", 1, { x: 16, y: 96 }, 0.1);
-        musicDownBtn.getSprite().addAnimation("down", 1, { x: 32, y: 96 }, 0.1);
+        musicDownBtn.getSprite().addAnimation("normal", { x: 0, y: 96 });
+        musicDownBtn.getSprite().addAnimation("hover", { x: 16, y: 96 });
+        musicDownBtn.getSprite().addAnimation("down", { x: 32, y: 96 });
         musicDownBtn.getSprite().changeAnimation("normal");
         MainMenu.optionsList.push(musicDownBtn.getSprite());
 
         let musicUpBtn = new Button({ w: 16, h: 16 }, centerX(16, 20, 1), 80, null, Sound.increaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        musicUpBtn.getSprite().addAnimation("normal", 1, { x: 48, y: 96 }, 0.1);
-        musicUpBtn.getSprite().addAnimation("hover", 1, { x: 64, y: 96 }, 0.1);
-        musicUpBtn.getSprite().addAnimation("down", 1, { x: 80, y: 96 }, 0.1);
+        musicUpBtn.getSprite().addAnimation("normal", { x: 48, y: 96 });
+        musicUpBtn.getSprite().addAnimation("hover", { x: 64, y: 96 });
+        musicUpBtn.getSprite().addAnimation("down", { x: 80, y: 96 });
         musicUpBtn.getSprite().changeAnimation("normal");
         MainMenu.optionsList.push(musicUpBtn.getSprite());
 
         let sfxDownBtn = new Button({ w: 16, h: 16 }, centerX(16, 20), 110, null, Sound.decreaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        sfxDownBtn.getSprite().addAnimation("normal", 1, { x: 0, y: 96 }, 0.1);
-        sfxDownBtn.getSprite().addAnimation("hover", 1, { x: 16, y: 96 }, 0.1);
-        sfxDownBtn.getSprite().addAnimation("down", 1, { x: 32, y: 96 }, 0.1);
+        sfxDownBtn.getSprite().addAnimation("normal", { x: 0, y: 96 });
+        sfxDownBtn.getSprite().addAnimation("hover", { x: 16, y: 96 });
+        sfxDownBtn.getSprite().addAnimation("down", { x: 32, y: 96 });
         sfxDownBtn.getSprite().changeAnimation("normal");
         MainMenu.optionsList.push(sfxDownBtn.getSprite());
 
         let sfxUpBtn = new Button({ w: 16, h: 16 }, centerX(16, 20, 1), 110, null, Sound.increaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        sfxUpBtn.getSprite().addAnimation("normal", 1, { x: 48, y: 96 }, 0.1);
-        sfxUpBtn.getSprite().addAnimation("hover", 1, { x: 64, y: 96 }, 0.1);
-        sfxUpBtn.getSprite().addAnimation("down", 1, { x: 80, y: 96 }, 0.1);
+        sfxUpBtn.getSprite().addAnimation("normal", { x: 48, y: 96 });
+        sfxUpBtn.getSprite().addAnimation("hover", { x: 64, y: 96 });
+        sfxUpBtn.getSprite().addAnimation("down", { x: 80, y: 96 });
         sfxUpBtn.getSprite().changeAnimation("normal");
         MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
@@ -172,19 +163,27 @@ class MainMenu {
         let deleteSaveBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(60), 150, null, SaveManager.delete, "mainmenu", MainMenu.STATE.Options, "delete_save");
         MainMenu.optionsList.push(deleteSaveBtn.getSprite());
 
-
-        let optionsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), 180, null, toMainMenu, "mainmenu", MainMenu.STATE.Options, "Back");
+        let optionsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), 180, null, toMainMenu, "mainmenu", MainMenu.STATE.Options, "", 0, true);
+        optionsBackBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
+        optionsBackBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
+        optionsBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
+        optionsBackBtn.getSprite().changeAnimation("normal");
         MainMenu.optionsList.push(optionsBackBtn.getSprite());
+
 
 
         // ---------------- CREDITS ----------------
 
         let jadonagamesLogo = new Sprite({ w: 37, h: 34 }, centerX(37), centerY(34), null, "mainmenu");
-        jadonagamesLogo.addAnimation("normal", 1, { x: 0, y: 0 }, 0.1);
+        jadonagamesLogo.addAnimation("normal", { x: 0, y: 0 });
         jadonagamesLogo.changeAnimation("normal");
         MainMenu.creditsList.push(jadonagamesLogo);
 
-        let creditsBackBtn = new Button({ w: 40, h: 20, v: 4 }, centerX(40), centerY(20, 50, 1), null, toMainMenu, "mainmenu", MainMenu.STATE.Credits, "Back");
+        let creditsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), centerY(22, 50, 1), null, toMainMenu, "mainmenu", MainMenu.STATE.Credits, "", 0, true);
+        creditsBackBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
+        creditsBackBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
+        creditsBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
+        creditsBackBtn.getSprite().changeAnimation("normal");
         MainMenu.creditsList.push(creditsBackBtn.getSprite());
 
     }
@@ -252,7 +251,7 @@ class MainMenu {
 
         let randomKana = new KanaBgSprite({ w: 10, h: 10 }, randomX, randomY, null);
         randomKana.setDirection(direction);
-        randomKana.addAnimation("normal", 1, { x: MainMenu.randomKanaList[randomKanaIndex].x, y: MainMenu.randomKanaList[randomKanaIndex].y }, 0.1);
+        randomKana.addAnimation("normal", { x: MainMenu.randomKanaList[randomKanaIndex].x, y: MainMenu.randomKanaList[randomKanaIndex].y });
         randomKana.changeAnimation("normal");
         MainMenu.randomKanaSpriteList.push(randomKana);
     }
@@ -267,6 +266,11 @@ class MainMenu {
             }
         });
 
+        Button.currentList.forEach(b => {
+            if (b.bMoving) {
+                b.update(dt);
+            }
+        });
 
         Panel.currentList.forEach(p => {
             if (p.bMoving) {
@@ -309,6 +313,10 @@ class MainMenu {
         if (FadeEffect.bActive) {
             FadeEffect.update(dt);
         }
+
+        if (Transition.bActive) {
+            Transition.update(dt);
+        }
     }
 
     static draw(ctx) {
@@ -321,16 +329,6 @@ class MainMenu {
 
         switch (MainMenu.state) {
             case MainMenu.STATE.Main:
-
-                ctx.fillStyle = "rgb(200,0,0)";
-                ctx.font = "40px jpfont";
-                ctx.textAlign = "center";
-                ctx.shadowColor = "rgb(0,0,0)";
-                ctx.shadowOffsetY = 8;
-                ctx.fillText("Proto Jap", centerX(), 40);
-                ctx.shadowOffsetY = 0;
-                ctx.textAlign = "left";
-
                 Sprite.manageBeforeDrawing(MainMenu.mainList);
                 break;
             case MainMenu.STATE.Options:
@@ -427,22 +425,28 @@ class MainMenu {
         if (FadeEffect.bActive) {
             FadeEffect.draw(ctx);
         }
+
+        if (Transition.bActive) {
+            Transition.draw(ctx);
+        }
     }
-
-
-    // static kanaExplode(pX, pY) {
-    //     let newExplosion = new Effect({ w: 10, h: 10 }, pX, pY);
-    //     newExplosion.getSprite().setType("todelete", 1); // type, maxLoop
-    //     newExplosion.getSprite().addAnimation("normal", 4, { x: 0, y: 160 }, 0.1, false);
-    //     newExplosion.getSprite().changeAnimation("normal");
-    //     MainMenu.mainList.unshift(newExplosion.getSprite());
-    // }
 
     static particles(pX, pY) {
         for (let i = 0; i < 10; i++) {
             let size = rnd(1, 3);
             // let p = new Particles(pX, pY, rnd(-2, 3), rnd(-2, 3), 0, { w: size, h: size }, rnd(1, 3));
             let p = new Particles(pX, pY, rnd(-2, 3), rnd(-2, 3), 0, { w: 1, h: 1 }, rnd(1, 3));
+        }
+    }
+
+
+    static particles2(pX, pY) {
+        for (let i = 0; i < 10; i++) {
+            let size = rnd(1, 3);
+            let rndOffsetX = rnd(1, 10);
+            let rndOffsetY = rnd(1, 5);
+            let p = new Particles(pX + rndOffsetX, pY + rndOffsetY, 1, -1, 0, { w: size, h: size }, rnd(1, 3));
+            p.setColor("rgba(150, 150, 150, 1)");
         }
     }
 }

@@ -12,7 +12,8 @@ class LanguageScreen {
     }
 
     static init() {
-        canvas.style.backgroundColor = "cornflowerblue";
+        // canvas.style.backgroundColor = "cornflowerblue";
+        canvas.style.backgroundColor = "rgb(213, 210, 193)";
 
         let frBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 80, null, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "french_lang");
         frBtn.setTextCase("all");

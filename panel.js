@@ -36,21 +36,67 @@ class Panel {
         this.id = pId;
 
 
-        if (!this.staticSize) {
-            pSize = { vertices: { w: pSize.v, h: pSize.v }, t: { w: 1, h: pSize.v }, r: { w: pSize.v, h: 1 }, b: { w: 1, h: pSize.v }, l: { w: pSize.v, h: 1 }, c: { w: 1, h: 1 } };
-            this.internWidth = this.width - pSize.vertices.w;
-            this.internHeight = this.height - pSize.vertices.h;
+        // Size fixe w/h : 1, 2, 3, 4, 5 etc..
+        // 1 correspond à un bloc, 2 à deux etc.
+        // le width ou height du bloc a une taille fixe selon le sprite bien sûr
+
+        if (Array.isArray(this.id)) {
+
+            let size = { corner: { w: pSize.v, h: pSize.v }, hori: { w: 11, h: 9 }, verti: { w: 9, h: 11 } };
+            this.internWidth = this.width * size.hori.w;
+            this.internHeight = this.height * size.verti.h;
+            this.totalWidth = (size.corner.w * 2) + this.internWidth;
+            this.totalHeight = (size.corner.h * 2) + this.internHeight;
+            // with = nb de blocs horizontaux
+            // height = nb de blocs verticaux
+
+            let t = []
+            let b = [];
+            let l = [];
+            let r = [];
+            for (let i = 1; i <= this.width; i++) {
+                let offset = (0 + size.corner.w) + ((i - 1) * size.hori.w);
+                t.push(new Sprite({ w: size.hori.w, h: size.hori.h }, offset, 0, this, this.type));
+                b.push(new Sprite({ w: size.hori.w, h: size.hori.h }, offset, size.corner.h + this.internHeight, this, this.type));
+            }
+            for (let i = 1; i <= this.height; i++) {
+                let offset = (0 + size.corner.h) + ((i - 1) * size.verti.h);
+                l.push(new Sprite({ w: size.verti.w, h: size.verti.h }, 0, offset, this, this.type));
+                r.push(new Sprite({ w: size.verti.w, h: size.verti.h }, size.corner.w + this.internWidth, offset, this, this.type));
+            }
 
             this.sp = {
-                tl: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, 0, 0, this, this.type),                                                           // 5x5
-                tr: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, 0 + this.internWidth, 0, this, this.type),                                        // 6x5
-                bl: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, 0, 0 + this.internHeight, this, this.type),                                       // 5x6
-                br: new Sprite({ w: pSize.vertices.w, h: pSize.vertices.h }, 0 + this.internWidth, 0 + this.internHeight, this, this.type),                    // 6x6
-                t: new Sprite({ w: pSize.t.w, h: pSize.t.h }, 0 + pSize.vertices.w, 0, this, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }),     // 1x5
-                r: new Sprite({ w: pSize.r.w, h: pSize.r.h }, 0 + this.internWidth, 0 + pSize.vertices.h, this, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }), // 6x1
-                b: new Sprite({ w: pSize.b.w, h: pSize.b.h }, 0 + pSize.vertices.w, 0 + this.internHeight, this, this.type, { x: this.internWidth - pSize.vertices.w, y: 1 }), // 1x6
-                l: new Sprite({ w: pSize.l.w, h: pSize.l.h }, 0, 0 + pSize.vertices.h, this, this.type, { x: 1, y: this.internHeight - pSize.vertices.h }),                    // 5x1
-                c: new Sprite({ w: pSize.c.w, h: pSize.c.h }, 0 + pSize.vertices.w, 0 + pSize.vertices.h, this, this.type, { x: this.internWidth - pSize.vertices.w, y: this.internHeight - pSize.vertices.h }), //
+                tl: new Sprite({ w: size.corner.w, h: size.corner.h }, 0, 0, this, this.type),                                                           // 9x9
+                tr: new Sprite({ w: size.corner.w, h: size.corner.h }, 0 + this.internWidth + size.corner.w, 0, this, this.type),                                        // 9x9
+                bl: new Sprite({ w: size.corner.w, h: size.corner.h }, 0, 0 + this.internHeight + size.corner.h, this, this.type),                                       // 9x9
+                br: new Sprite({ w: size.corner.w, h: size.corner.h }, 0 + this.internWidth + size.corner.w, 0 + this.internHeight + size.corner.h, this, this.type),                    // 9x9
+                t: t,
+                r: r,
+                b: b,
+                l: l,
+                c: new Sprite({ w: 1, h: 1 }, 0 + size.corner.w, 0 + size.corner.h, this, this.type, { x: this.internWidth, y: this.internHeight }),
+                class: 9,
+                parent: this,
+                delete: false
+            }
+
+            this.setPanelSprites(this.id);
+
+        } else if (!this.staticSize) {
+            let size = { corner: { w: pSize.v, h: pSize.v }, t: { w: 1, h: pSize.v }, r: { w: pSize.v, h: 1 }, b: { w: 1, h: pSize.v }, l: { w: pSize.v, h: 1 }, c: { w: 1, h: 1 } };
+            this.internWidth = this.width - size.corner.w;
+            this.internHeight = this.height - size.corner.h;
+
+            this.sp = {
+                tl: new Sprite({ w: size.corner.w, h: size.corner.h }, 0, 0, this, this.type),                                                           // 5x5
+                tr: new Sprite({ w: size.corner.w, h: size.corner.h }, 0 + this.internWidth, 0, this, this.type),                                        // 6x5
+                bl: new Sprite({ w: size.corner.w, h: size.corner.h }, 0, 0 + this.internHeight, this, this.type),                                       // 5x6
+                br: new Sprite({ w: size.corner.w, h: size.corner.h }, 0 + this.internWidth, 0 + this.internHeight, this, this.type),                    // 6x6
+                t: new Sprite({ w: size.t.w, h: size.t.h }, 0 + size.corner.w, 0, this, this.type, { x: this.internWidth - size.corner.w, y: 1 }),     // 1x5
+                r: new Sprite({ w: size.r.w, h: size.r.h }, 0 + this.internWidth, 0 + size.corner.h, this, this.type, { x: 1, y: this.internHeight - size.corner.h }), // 6x1
+                b: new Sprite({ w: size.b.w, h: size.b.h }, 0 + size.corner.w, 0 + this.internHeight, this, this.type, { x: this.internWidth - size.corner.w, y: 1 }), // 1x6
+                l: new Sprite({ w: size.l.w, h: size.l.h }, 0, 0 + size.corner.h, this, this.type, { x: 1, y: this.internHeight - size.corner.h }),                    // 5x1
+                c: new Sprite({ w: size.c.w, h: size.c.h }, 0 + size.corner.w, 0 + size.corner.h, this, this.type, { x: this.internWidth - size.corner.w, y: this.internHeight - size.corner.h }), //
                 class: 9,
                 parent: this,
                 delete: false
@@ -73,6 +119,8 @@ class Panel {
         this.fontSize = 10;
         this.fontMainColor = "rgba(0,0,0," + this.alpha + ")";
         this.fontBackgroundColor = "rgba(150,150,150," + this.alpha + ")";
+        this.hoverFontMainColor = "rgba(255,255,255" + this.alpha + ")";
+        this.hoverBackgroundColor = "rgba(100,100,100," + this.alpha + ")";
 
         this.typeState = pTypeState;
 
@@ -103,178 +151,244 @@ class Panel {
         this.children.push(pNewChild);
     }
 
+    changePanelSprite(pPos, pNb, pOrigin) {
+        if (pPos == "t") {
+            this.getSprite().t.forEach((top, index) => {
+                if (index == pNb) {
+                    top.resetAnimations("normal", { x: pOrigin.x, y: pOrigin.y });
+                }
+            });
+        } else if (pPos == "b") {
+            this.getSprite().b.forEach((top, index) => {
+                if (index == pNb) {
+                    top.resetAnimations("normal", { x: pOrigin.x, y: pOrigin.y });
+                }
+            });
+        } else if (pPos == "l") {
+            this.getSprite().l.forEach((top, index) => {
+                if (index == pNb) {
+                    top.resetAnimations("normal", { x: pOrigin.x, y: pOrigin.y });
+                }
+            });
+        } else if (pPos == "r") {
+            this.getSprite().r.forEach((top, index) => {
+                if (index == pNb) {
+                    top.resetAnimations("normal", { x: pOrigin.x, y: pOrigin.y });
+                }
+            });
+        }
+    }
+
     setPanelSprites(pId) {
-        if (pId == 0) {
-            this.getSprite().tl.addAnimation("normal", 1, { x: 0, y: 48 }, 0.1);
+
+        // tlr = 748 / blr = 768 / clr  = 757 
+
+        if (Array.isArray(pId) && pId[0] == -1) {
+
+            this.getSprite().tl.addAnimation("normal", { x: 380, y: pId[1].tlr });
             this.getSprite().tl.changeAnimation("normal");
 
-            this.getSprite().tr.addAnimation("normal", 1, { x: 5, y: 48 }, 0.1);
+            this.getSprite().tr.addAnimation("normal", { x: 400, y: pId[1].tlr });
             this.getSprite().tr.changeAnimation("normal");
 
-            this.getSprite().bl.addAnimation("normal", 1, { x: 0, y: 53 }, 0.1);
+            this.getSprite().bl.addAnimation("normal", { x: 380, y: pId[1].blr });
             this.getSprite().bl.changeAnimation("normal");
 
-            this.getSprite().br.addAnimation("normal", 1, { x: 5, y: 53 }, 0.1);
+            this.getSprite().br.addAnimation("normal", { x: 400, y: pId[1].blr });
             this.getSprite().br.changeAnimation("normal");
 
-            this.getSprite().t.addAnimation("normal", 1, { x: 4, y: 48 }, 0.1);
+            this.getSprite().t.forEach(top => {
+                top.addAnimation("normal", { x: 389, y: pId[1].tlr });
+                top.changeAnimation("normal");
+            });
+            this.getSprite().b.forEach(bottom => {
+                bottom.addAnimation("normal", { x: 389, y: pId[1].blr });
+                bottom.changeAnimation("normal");
+            });
+            this.getSprite().r.forEach(right => {
+                right.addAnimation("normal", { x: 400, y: pId[1].clr });
+                right.changeAnimation("normal");
+            });
+            this.getSprite().l.forEach(left => {
+                left.addAnimation("normal", { x: 380, y: pId[1].clr });
+                left.changeAnimation("normal");
+            });
+
+            this.getSprite().c.addAnimation("normal", { x: 388, y: pId[1].clr });
+            this.getSprite().c.changeAnimation("normal");
+        }
+
+        if (pId == 0) {
+            this.getSprite().tl.addAnimation("normal", { x: 0, y: 48 });
+            this.getSprite().tl.changeAnimation("normal");
+
+            this.getSprite().tr.addAnimation("normal", { x: 5, y: 48 });
+            this.getSprite().tr.changeAnimation("normal");
+
+            this.getSprite().bl.addAnimation("normal", { x: 0, y: 53 });
+            this.getSprite().bl.changeAnimation("normal");
+
+            this.getSprite().br.addAnimation("normal", { x: 5, y: 53 });
+            this.getSprite().br.changeAnimation("normal");
+
+            this.getSprite().t.addAnimation("normal", { x: 4, y: 48 });
             this.getSprite().t.changeAnimation("normal");
 
-            this.getSprite().r.addAnimation("normal", 1, { x: 5, y: 52 }, 0.1);
+            this.getSprite().r.addAnimation("normal", { x: 5, y: 52 });
             this.getSprite().r.changeAnimation("normal");
 
-            this.getSprite().b.addAnimation("normal", 1, { x: 4, y: 53 }, 0.1);
+            this.getSprite().b.addAnimation("normal", { x: 4, y: 53 });
             this.getSprite().b.changeAnimation("normal");
 
-            this.getSprite().l.addAnimation("normal", 1, { x: 0, y: 52 }, 0.1);
+            this.getSprite().l.addAnimation("normal", { x: 0, y: 52 });
             this.getSprite().l.changeAnimation("normal");
 
-            this.getSprite().c.addAnimation("normal", 1, { x: 4, y: 52 }, 0.1);
+            this.getSprite().c.addAnimation("normal", { x: 4, y: 52 });
             this.getSprite().c.changeAnimation("normal");
         }
 
         if (pId == 1) {
-            this.getSprite().tl.addAnimation("normal", 1, { x: 0, y: 57 }, 0.1);
+            this.getSprite().tl.addAnimation("normal", { x: 0, y: 57 });
             this.getSprite().tl.changeAnimation("normal");
 
-            this.getSprite().tr.addAnimation("normal", 1, { x: 6, y: 57 }, 0.1);
+            this.getSprite().tr.addAnimation("normal", { x: 6, y: 57 });
             this.getSprite().tr.changeAnimation("normal");
 
-            this.getSprite().bl.addAnimation("normal", 1, { x: 0, y: 63 }, 0.1);
+            this.getSprite().bl.addAnimation("normal", { x: 0, y: 63 });
             this.getSprite().bl.changeAnimation("normal");
 
-            this.getSprite().br.addAnimation("normal", 1, { x: 6, y: 63 }, 0.1);
+            this.getSprite().br.addAnimation("normal", { x: 6, y: 63 });
             this.getSprite().br.changeAnimation("normal");
 
-            this.getSprite().t.addAnimation("normal", 1, { x: 5, y: 57 }, 0.1);
+            this.getSprite().t.addAnimation("normal", { x: 5, y: 57 });
             this.getSprite().t.changeAnimation("normal");
 
-            this.getSprite().r.addAnimation("normal", 1, { x: 6, y: 62 }, 0.1);
+            this.getSprite().r.addAnimation("normal", { x: 6, y: 62 });
             this.getSprite().r.changeAnimation("normal");
 
-            this.getSprite().b.addAnimation("normal", 1, { x: 5, y: 63 }, 0.1);
+            this.getSprite().b.addAnimation("normal", { x: 5, y: 63 });
             this.getSprite().b.changeAnimation("normal");
 
-            this.getSprite().l.addAnimation("normal", 1, { x: 0, y: 62 }, 0.1);
+            this.getSprite().l.addAnimation("normal", { x: 0, y: 62 });
             this.getSprite().l.changeAnimation("normal");
 
-            this.getSprite().c.addAnimation("normal", 1, { x: 5, y: 62 }, 0.1);
+            this.getSprite().c.addAnimation("normal", { x: 5, y: 62 });
             this.getSprite().c.changeAnimation("normal");
         }
 
 
         if (pId == 11) {
-            this.getSprite().tl.addAnimation("normal", 1, { x: 0, y: 68 }, 0.1);
+            this.getSprite().tl.addAnimation("normal", { x: 0, y: 68 });
             this.getSprite().tl.changeAnimation("normal");
 
-            this.getSprite().tr.addAnimation("normal", 1, { x: 7, y: 68 }, 0.1);
+            this.getSprite().tr.addAnimation("normal", { x: 7, y: 68 });
             this.getSprite().tr.changeAnimation("normal");
 
-            this.getSprite().bl.addAnimation("normal", 1, { x: 0, y: 75 }, 0.1);
+            this.getSprite().bl.addAnimation("normal", { x: 0, y: 75 });
             this.getSprite().bl.changeAnimation("normal");
 
-            this.getSprite().br.addAnimation("normal", 1, { x: 7, y: 75 }, 0.1);
+            this.getSprite().br.addAnimation("normal", { x: 7, y: 75 });
             this.getSprite().br.changeAnimation("normal");
 
-            this.getSprite().t.addAnimation("normal", 1, { x: 6, y: 68 }, 0.1);
+            this.getSprite().t.addAnimation("normal", { x: 6, y: 68 });
             this.getSprite().t.changeAnimation("normal");
 
-            this.getSprite().r.addAnimation("normal", 1, { x: 7, y: 74 }, 0.1);
+            this.getSprite().r.addAnimation("normal", { x: 7, y: 74 });
             this.getSprite().r.changeAnimation("normal");
 
-            this.getSprite().b.addAnimation("normal", 1, { x: 6, y: 75 }, 0.1);
+            this.getSprite().b.addAnimation("normal", { x: 6, y: 75 });
             this.getSprite().b.changeAnimation("normal");
 
-            this.getSprite().l.addAnimation("normal", 1, { x: 0, y: 74 }, 0.1);
+            this.getSprite().l.addAnimation("normal", { x: 0, y: 74 });
             this.getSprite().l.changeAnimation("normal");
 
-            this.getSprite().c.addAnimation("normal", 1, { x: 6, y: 74 }, 0.1);
+            this.getSprite().c.addAnimation("normal", { x: 6, y: 74 });
             this.getSprite().c.changeAnimation("normal");
         }
         if (pId == 12) {
-            this.getSprite().tl.addAnimation("normal", 1, { x: 13, y: 57 }, 0.1);
+            this.getSprite().tl.addAnimation("normal", { x: 13, y: 57 });
             this.getSprite().tl.changeAnimation("normal");
 
-            this.getSprite().tr.addAnimation("normal", 1, { x: 21, y: 57 }, 0.1);
+            this.getSprite().tr.addAnimation("normal", { x: 21, y: 57 });
             this.getSprite().tr.changeAnimation("normal");
 
-            this.getSprite().bl.addAnimation("normal", 1, { x: 13, y: 65 }, 0.1);
+            this.getSprite().bl.addAnimation("normal", { x: 13, y: 65 });
             this.getSprite().bl.changeAnimation("normal");
 
-            this.getSprite().br.addAnimation("normal", 1, { x: 21, y: 65 }, 0.1);
+            this.getSprite().br.addAnimation("normal", { x: 21, y: 65 });
             this.getSprite().br.changeAnimation("normal");
 
-            this.getSprite().t.addAnimation("normal", 1, { x: 20, y: 57 }, 0.1);
+            this.getSprite().t.addAnimation("normal", { x: 20, y: 57 });
             this.getSprite().t.changeAnimation("normal");
 
-            this.getSprite().r.addAnimation("normal", 1, { x: 21, y: 64 }, 0.1);
+            this.getSprite().r.addAnimation("normal", { x: 21, y: 64 });
             this.getSprite().r.changeAnimation("normal");
 
-            this.getSprite().b.addAnimation("normal", 1, { x: 20, y: 65 }, 0.1);
+            this.getSprite().b.addAnimation("normal", { x: 20, y: 65 });
             this.getSprite().b.changeAnimation("normal");
 
-            this.getSprite().l.addAnimation("normal", 1, { x: 13, y: 64 }, 0.1);
+            this.getSprite().l.addAnimation("normal", { x: 13, y: 64 });
             this.getSprite().l.changeAnimation("normal");
 
-            this.getSprite().c.addAnimation("normal", 1, { x: 20, y: 64 }, 0.1);
+            this.getSprite().c.addAnimation("normal", { x: 20, y: 64 });
             this.getSprite().c.changeAnimation("normal");
         }
 
         if (pId == 2) {
-            this.getSprite().tl.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().tl.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().tl.changeAnimation("normal");
 
-            this.getSprite().tr.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().tr.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().tr.changeAnimation("normal");
 
-            this.getSprite().bl.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().bl.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().bl.changeAnimation("normal");
 
-            this.getSprite().br.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().br.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().br.changeAnimation("normal");
 
-            this.getSprite().t.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().t.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().t.changeAnimation("normal");
 
-            this.getSprite().r.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().r.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().r.changeAnimation("normal");
 
-            this.getSprite().b.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().b.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().b.changeAnimation("normal");
 
-            this.getSprite().l.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().l.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().l.changeAnimation("normal");
 
-            this.getSprite().c.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().c.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().c.changeAnimation("normal");
         }
 
         if (pId == 3) {
-            this.getSprite().tl.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().tl.addAnimation("normal", { x: 41, y: 1 });
             this.getSprite().tl.changeAnimation("normal");
 
-            this.getSprite().tr.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().tr.addAnimation("normal", { x: 41, y: 1 });
             this.getSprite().tr.changeAnimation("normal");
 
-            this.getSprite().bl.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().bl.addAnimation("normal", { x: 41, y: 1 });
             this.getSprite().bl.changeAnimation("normal");
 
-            this.getSprite().br.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().br.addAnimation("normal", { x: 41, y: 1 });
             this.getSprite().br.changeAnimation("normal");
 
-            this.getSprite().t.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().t.addAnimation("normal", { x: 41, y: 1 });
             this.getSprite().t.changeAnimation("normal");
 
-            this.getSprite().r.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().r.addAnimation("normal", { x: 41, y: 1 });
             this.getSprite().r.changeAnimation("normal");
 
-            this.getSprite().b.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().b.addAnimation("normal", { x: 41, y: 1 });
             this.getSprite().b.changeAnimation("normal");
 
-            this.getSprite().l.addAnimation("normal", 1, { x: 41, y: 1 }, 0.1);
+            this.getSprite().l.addAnimation("normal", { x: 41, y: 1 });
             this.getSprite().l.changeAnimation("normal");
 
-            this.getSprite().c.addAnimation("normal", 1, { x: 38, y: 1 }, 0.1);
+            this.getSprite().c.addAnimation("normal", { x: 38, y: 1 });
             this.getSprite().c.changeAnimation("normal");
         }
     }
@@ -347,9 +461,11 @@ class Panel {
         this.fontSize = pSize;
     }
 
-    setFontColor(pBack = "rgba(100,100,100," + this.alpha + ")", pMain = "rgba(0,0,0," + this.alpha + ")") {
+    setFontColor(pBack = "rgba(100,100,100," + this.alpha + ")", pMain = "rgba(0,0,0," + this.alpha + ")", pHoverBack = "rgba(100,100,100," + this.alpha + ")", pHoverMain = "rgba(255,255,255," + this.alpha + ")") {
         this.fontMainColor = pMain;
         this.fontBackgroundColor = pBack;
+        this.hoverBackgroundColor = pHoverBack;
+        this.hoverFontMainColor = pHoverMain;
     }
 
     setHoverable(pBool) {
@@ -419,17 +535,20 @@ class Panel {
     drawLabel(ctx) {
 
         ctx.font = this.fontSize + "px " + this.font;
-
-        if (this.id == 1) {
-            ctx.fillStyle = "rgba(209,209,209," + this.alpha + ")";
+        if (this.fontSize == 32) { // pgfont *2
+            ctx.shadowOffsetY = 4;
+        } else { // normal
+            ctx.shadowOffsetY = 2;
         }
 
-        if (this.state == Panel.STATE.Hover) {
-            this.fontMainColor = "rgba(255,255,255," + this.alpha + ")";
-            ctx.fillStyle = this.fontMainColor;
-        } else {
-            this.fontMainColor = "rgba(0,0,0," + this.alpha + ")";
-            ctx.fillStyle = this.fontMainColor;
+        ctx.fillStyle = this.fontMainColor;
+        ctx.shadowColor = this.fontBackgroundColor;
+
+        if (this.hoverable) {
+            if (this.state == Panel.STATE.Hover) {
+                ctx.fillStyle = this.hoverFontMainColor;
+                ctx.shadowColor = this.hoverBackgroundColor;
+            }
         }
 
         this.wordsArr = LANG[this.label].split(' ');
@@ -460,22 +579,15 @@ class Panel {
             switch (this.alignText) {
                 case this.ALIGN_TEXT.Left:
                     ctx.textAlign = "left";
-
-                    ctx.fillStyle = this.fontBackgroundColor;
-                    ctx.fillText(lines[i], this.x + this.textOffsetX + 1, this.y + this.textOffsetY + 1);
-                    ctx.fillStyle = this.fontMainColor;
-
                     ctx.fillText(lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
-
                     break;
                 case this.ALIGN_TEXT.Center:
                     ctx.textAlign = "center";
-                    // ctx.fillText(lines[i], this.x + (this.width * 0.5) + 0.5, this.y + (13 * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
-                    ctx.fillStyle = this.fontBackgroundColor;
-                    ctx.fillText(lines[i], this.x + (this.width * 0.5) + 1, this.y + (this.textOffsetY * (i + 1)) + 1);
-                    ctx.fillStyle = this.fontMainColor;
-
-                    ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (this.textOffsetY * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                    if (this.id == -1) {
+                        ctx.fillText(lines[i], this.x + (this.totalWidth * 0.5), this.y + (this.textOffsetY * (i + 1)));
+                    } else {
+                        ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (this.textOffsetY * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                    }
                     break;
                 case this.ALIGN_TEXT.Right:
                     ctx.textAlign = "right";
@@ -484,6 +596,9 @@ class Panel {
             }
             this.textOffsetY += 13;
         }
+
+        ctx.shadowOffsetY = 0;
+
         this.textOffsetY = this.textOffsetYOrigin;
         ctx.fillStyle = "rgba(0,0,0,1)";
 

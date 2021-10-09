@@ -183,13 +183,35 @@ function translate(pCoord, pReverse = false) {
 }
 
 
+// t = time     should go from 0 to duration
+// b = begin    value of the property being ease.
+// c = change   ending value of the property - beginning value of the property
+// d = duration
+function easeInSin(t, b, c, d) {
+    return -c * Math.cos(t / d * (Math.PI / 2)) + c + b;
+}
+
+function easeOutSin(t, b, c, d) {
+    return c * Math.sin(t / d * (Math.PI / 2)) + b;
+}
+
+function easyInOutSin(t, b, c, d) {
+    return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b
+}
+
+function inTransition() {
+    return TRANSITION || FadeEffect.bActive || Transition.bActive;
+}
+
+
 // ----------------------------------------------------
 // TODO Find a place for these : 
 // ----------------------------------------------------
-function randomizer(pArr, pNumber) {
+function randomizer(pArr, pNumber, pGoodAnswer) {
 
     let arr = [];
     for (let i = 0; i < pNumber; i++) {
+
         let rndNumber = rnd(0, pArr.length);
         if ((pArr[rndNumber] == "di" && arr.includes("ji")) ||
             (pArr[rndNumber] == "du" && arr.includes("zu")) ||
@@ -207,10 +229,10 @@ function randomizer(pArr, pNumber) {
             // console.error("randomizer : IF DI/JI DU/ZU JI/DI ZU/DU");
             i--;
         } else {
-            if (!arr.includes(pArr[rndNumber])) {
-                arr.push(pArr[rndNumber]);
-            } else {
+            if (arr.includes(pArr[rndNumber]) || (i == ALREADY_RANDOM && pArr[rndNumber] == pGoodAnswer)) {
                 i--;
+            } else {
+                arr.push(pArr[rndNumber]);
             }
         }
     }
@@ -319,7 +341,7 @@ function randomlyMix(pChoiceType, pNumber, pRange, pLessonRange) { // choiceType
     //? Liste des choix possibles
     switch (pChoiceType) {
         case "h":
-            RND_ARR = randomizer(fromObj.h, pNumber);
+            RND_ARR = randomizer(fromObj.h, pNumber, RND_CHOICE.h);
             if (!RND_ARR.includes(RND_CHOICE.h)) { // Si le choix ne fait pas déjà partie de la liste des btns, l'ajouter à une place random
                 if (RND_CHOICE.h == "ぢ" && RND_ARR.includes("じ")) {
                     // console.error("ぢ remplace じ");
@@ -339,7 +361,7 @@ function randomlyMix(pChoiceType, pNumber, pRange, pLessonRange) { // choiceType
             }
             break;
         case "k":
-            RND_ARR = randomizer(fromObj.k, pNumber);
+            RND_ARR = randomizer(fromObj.k, pNumber, RND_CHOICE.k);
             if (!RND_ARR.includes(RND_CHOICE.k)) {
                 if (RND_CHOICE.k == "ヂ" && RND_ARR.includes("ジ")) {
                     // console.error("ヂ remplace ジ");
@@ -359,7 +381,7 @@ function randomlyMix(pChoiceType, pNumber, pRange, pLessonRange) { // choiceType
             }
             break;
         case "r":
-            RND_ARR = randomizer(fromObj.r, pNumber);
+            RND_ARR = randomizer(fromObj.r, pNumber, RND_CHOICE.r);
             if (!RND_ARR.includes(RND_CHOICE.r)) {
                 if (RND_CHOICE.r == "di" && RND_ARR.includes("ji")) {
                     // console.error("DI remplace JI");
@@ -383,9 +405,8 @@ function randomlyMix(pChoiceType, pNumber, pRange, pLessonRange) { // choiceType
     }
 }
 
-function checkIfValid(pChar) {
+function checkIfValid(pChosen) {
     let choiced = "";
-    let choiceLabel = "";
 
     switch (CHOICE_TYPE) {
         case "h":
@@ -399,72 +420,109 @@ function checkIfValid(pChar) {
             break;
     }
 
-    if (pChar == choiced) {
-        Game1.resetTimer();
-        KANA_NUMBER++;
-        randomlyMix(CHOICE_TYPE, CHAR_NUMBERS, RANGE, LESSON_RANGE);
-        switch (ANSWER_TYPE) {
-            case "h":
-                choiceLabel = "hira_" + RND_CHOICE.r;
-                break;
-            case "k":
-                choiceLabel = "kata_" + RND_CHOICE.r;
-                break;
-            case "r": // Quand R est BTN ! あ -> A
-                if (RND_CHOICE.r == "di") RND_CHOICE.r = "ji";
-                if (RND_CHOICE.r == "du") RND_CHOICE.r = "zu";
-                choiceLabel = "roma_" + RND_CHOICE.r;
-                break;
-        }
-
-        Panel.currentList.forEach(p => {
-            if (p instanceof KanaPanel) {
-                p.setLabel(choiceLabel);
-            }
-        });
-
-        let rndArr = [];
-        switch (CHOICE_TYPE) {
-            case "h":
-                choiceLabel = "hira_";
-                rndArr.push(char.r[char.h.indexOf(RND_ARR[0])]);
-                rndArr.push(char.r[char.h.indexOf(RND_ARR[1])]);
-                rndArr.push(char.r[char.h.indexOf(RND_ARR[2])]);
-                rndArr.push(char.r[char.h.indexOf(RND_ARR[3])]);
-                break;
-            case "k":
-                choiceLabel = "kata_";
-                rndArr.push(char.r[char.k.indexOf(RND_ARR[0])]);
-                rndArr.push(char.r[char.k.indexOf(RND_ARR[1])]);
-                rndArr.push(char.r[char.k.indexOf(RND_ARR[2])]);
-                rndArr.push(char.r[char.k.indexOf(RND_ARR[3])]);
-                break;
-            case "r":
-                choiceLabel = "roma_";
-                rndArr.push(RND_ARR[0]);
-                rndArr.push(RND_ARR[1]);
-                rndArr.push(RND_ARR[2]);
-                rndArr.push(RND_ARR[3]);
-                for (let i = 0; i < 4; i++) {
-                    if (rndArr[i] == "di") rndArr[i] = "ji";
-                    if (rndArr[i] == "du") rndArr[i] = "zu";
-                }
-                break;
-        }
-
-        let count = 0;
+    if (pChosen.char == choiced) {
         Button.currentList.forEach(b => {
             if (b instanceof KanaBtn) {
-                b.setCallbackArg(RND_ARR[count]);
-                b.setLabel(b.label.slice(0, 5) + rndArr[count]);
-                count++;
+                b.changeSpriteAnimation("normal");
+                b.setState(Button.STATE.Normal);
+                if (b.label.slice(5) == RND_CHOICE.r) {                        //! ATTENTION b.char.slice() est obligatoirement romaji (hira_a, kata_a, roma_a) !!
+                    Game1.maru.setPosition(b.x + 3, b.y + 3);
+                }
             }
         });
-
+        for (let i = 0; i < RND_ARR.length; i++) {
+            if (RND_ARR[i] == pChosen.char) {
+                ALREADY_RANDOM = i;
+            }
+        }
+        Game1.bTimerActive = false;
+        // let timeOut = setTimeout(handleCorrectAnswer, 1000);
+        Game1.chalkboardBrush.changeAnimation("erase");
+        Game1.moe.changeAnimation("erase");
+        Game1.maru.setAlpha(1);
+        TRANSITION = true;
     } else {
         Game1.setMiss();
+        Game1.batsu.setAlpha(1);
+        Button.currentList.forEach(b => {
+            if (b instanceof KanaBtn) {
+                if (b.label.slice(5) == pChosen.label) {
+                    Game1.batsu.setPosition(b.x + 3, b.y + 3);
+                }
+            }
+        });
         setScreenShake(true);
     }
+}
+
+function handleCorrectAnswer() {
+
+    Game1.chalkboardBrush.changeAnimation("normal");
+    Game1.moe.changeAnimation("idle");
+    Game1.maru.setAlpha(0);
+    TRANSITION = false;
+
+    let choiceLabel = "";
+    Game1.resetTimer();
+    KANA_NUMBER++;
+    randomlyMix(CHOICE_TYPE, CHAR_NUMBERS, RANGE, LESSON_RANGE);
+    switch (ANSWER_TYPE) {
+        case "h":
+            choiceLabel = "hira_" + RND_CHOICE.r;
+            break;
+        case "k":
+            choiceLabel = "kata_" + RND_CHOICE.r;
+            break;
+        case "r": // Quand R est BTN ! あ -> A
+            if (RND_CHOICE.r == "di") RND_CHOICE.r = "ji";
+            if (RND_CHOICE.r == "du") RND_CHOICE.r = "zu";
+            choiceLabel = "roma_" + RND_CHOICE.r;
+            break;
+    }
+
+    Panel.currentList.forEach(p => {
+        if (p instanceof KanaPanel) {
+            p.setLabel(choiceLabel);
+        }
+    });
+
+    let rndArr = [];
+    switch (CHOICE_TYPE) {
+        case "h":
+            choiceLabel = "hira_";
+            rndArr.push(char.r[char.h.indexOf(RND_ARR[0])]);
+            rndArr.push(char.r[char.h.indexOf(RND_ARR[1])]);
+            rndArr.push(char.r[char.h.indexOf(RND_ARR[2])]);
+            rndArr.push(char.r[char.h.indexOf(RND_ARR[3])]);
+            break;
+        case "k":
+            choiceLabel = "kata_";
+            rndArr.push(char.r[char.k.indexOf(RND_ARR[0])]);
+            rndArr.push(char.r[char.k.indexOf(RND_ARR[1])]);
+            rndArr.push(char.r[char.k.indexOf(RND_ARR[2])]);
+            rndArr.push(char.r[char.k.indexOf(RND_ARR[3])]);
+            break;
+        case "r":
+            choiceLabel = "roma_";
+            rndArr.push(RND_ARR[0]);
+            rndArr.push(RND_ARR[1]);
+            rndArr.push(RND_ARR[2]);
+            rndArr.push(RND_ARR[3]);
+            for (let i = 0; i < 4; i++) {
+                if (rndArr[i] == "di") rndArr[i] = "ji";
+                if (rndArr[i] == "du") rndArr[i] = "zu";
+            }
+            break;
+    }
+
+    let count = 0;
+    Button.currentList.forEach(b => {
+        if (b instanceof KanaBtn) {
+            b.setCallbackArg({ char: RND_ARR[count], label: rndArr[count] });
+            b.setLabel(b.label.slice(0, 5) + rndArr[count]);
+            count++;
+        }
+    });
 }
 
 function resetGame(pArg) {
@@ -502,5 +560,6 @@ function setScreenShake(pBool) {
     SCREEN_SHAKE = pBool;
     if (!pBool) {
         canvas.style.backgroundColor = canvasOriginBgColor;
+        Game1.batsu.setAlpha(0);
     }
 }

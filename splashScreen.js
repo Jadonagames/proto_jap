@@ -11,10 +11,10 @@ class SplashScreen {
         this.bTransition = false;
 
         this.jadona = new Sprite({ w: 37, h: 34 }, centerX(37), centerY(34), null, "jadona");
-        this.jadona.addAnimation("normal", 1, { x: 0, y: 0 }, 0.1);
+        this.jadona.addAnimation("normal", { x: 0, y: 0 });
         this.jadona.changeAnimation("normal");
 
-        FadeEffect.fade({ cb: SplashScreen.playSound.bind(this), arg: null }, "in", 0.1);
+        FadeEffect.fade({ callback: { cb: SplashScreen.playSound.bind(this), arg: null }, direction: "in", maxTimer: 0.1 });
     }
 
     static playSound() {
