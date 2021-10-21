@@ -41,7 +41,14 @@ class Sprite {
         this.destination = { x: 0, y: 0 };
         this.direction = 1;
         this.speedCount = 0;
-        this.speed = 2;
+        this.moveSpeed = 2;
+
+        this.alpha = 1;
+        this.alphaMax = 1;
+        this.bFading = false;
+        this.fadingIncrementValue = 0.1;
+        this.timerCB = null
+        this.fadingTimer = null;
 
 
         this.class = "";
@@ -170,6 +177,14 @@ class Sprite {
         this.isMoving = pBool;
     }
 
+    setMoveSpeed(pNewSpeed) {
+        this.moveSpeed = pNewSpeed;
+    }
+
+    setDelete() {
+        this.delete = true;
+    }
+
     setActive(pBool) {
         this.active = pBool;
     }
@@ -224,22 +239,91 @@ class Sprite {
                 this.blinkTimer.update(dt);
             }
         }
+
         if (this.type == "tm") {
-            if (this.speedCount <= this.speed) {
-                if (this.direction == 1) {
-                    this.x = easyInOutSin(this.speedCount, this.startPos.x, Math.abs(this.destination.x - this.startPos.x), this.speed);
-                    this.y = easyInOutSin(this.speedCount, this.startPos.y, Math.abs(this.destination.y - this.startPos.y), this.speed);
-                } else {
-                    let x = easyInOutSin(this.speedCount, this.startPos.x, Math.abs(this.destination.x - this.startPos.x), this.speed);
-                    let y = easyInOutSin(this.speedCount, this.startPos.y, Math.abs(this.destination.y - this.startPos.y), this.speed);
-                    this.x = this.destination.x - x + this.startPos.x;
-                    this.y = this.destination.y - y + this.startPos.y;
-                }
+            if (this.speedCount <= this.moveSpeed) {
+                this.x = easeInOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.moveSpeed);
+                this.y = easeInOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
                 this.speedCount += dt;
             } else {
+                this.startPos.x = this.x;
+                this.startPos.y = this.y;
+
+                if (this.direction == 1) {
+                    this.setDestination({ x: this.x, y: 0 });
+                } else {
+                    this.setDestination({ x: this.x, y: 28 });
+                }
                 this.speedCount = 0;
                 this.direction = -this.direction;
             }
+        } else if (this.type == "sv" && (this.currentAnimation.name == "arrive" || this.currentAnimation.name == "down")) {
+            if (this.speedCount <= this.moveSpeed) {
+                if (this.currentAnimation.name == "arrive") {
+                    this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
+                } else if (this.currentAnimation.name == "down") {
+                    this.y = easeInSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
+                }
+                this.speedCount += dt;
+            } else {
+                if (this.currentAnimation.name == "arrive") {
+                    this.changeAnimation("open");
+                }
+                this.setMoveSpeed(0.2);
+                this.startPos.x = this.x;
+                this.startPos.y = this.y;
+                this.setDestination({ x: this.x, y: CANVAS_HEIGHT + 10 });
+                this.speedCount = 0;
+            }
+        } else if (this.type == "t") {
+            if (this.speedCount <= this.moveSpeed) {
+                if (this.direction == 1) {
+                    this.y = outBounce(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
+                } else if (this.direction == -1) {
+                    this.y = linear(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
+                }
+                this.speedCount += dt;
+            } else {
+                if (this.direction == 1) {
+                    this.setDestination({ x: this.x, y: 4 });
+                    this.startPos = { x: this.x, y: this.y };
+                    this.speedCount = 0;
+                }
+
+                if (!MainMenu.bTitleFinish && this.direction == -1) {
+                    this.y = this.destination.y;
+                    MainMenu.bTitleFinish = true;
+                    MainMenu.mainList.forEach(sp => {
+                        if (sp.alpha == 0) {
+                            sp.fade();
+                        }
+                        if (sp.type == "fl") {
+                            sp.changeAnimation("open");
+                        }
+                    })
+                    toMainMenu();
+                }
+                if (!MainMenu.bTitleFinish) this.direction = -this.direction;
+            }
+        }
+
+        if (this.bFading) {
+            this.fading(dt);
+        }
+
+    }
+
+    fade(pSpeed = 0.05, pDirection = 1) { // 1 or -1
+        this.bFading = true;
+        this.fadingIncrementValue = pDirection * 0.1;
+        this.timerCB = this.updateAlpha.bind(this, this.fadingIncrementValue);
+        this.fadingTimer = new Timer(pSpeed, this.timerCB);
+    }
+
+    fading(dt) {
+        this.fadingTimer.update(dt);
+        if (this.alpha >= 1) { //TODO Find a solution pour this.alphaMax   : if this.fadingIncrementValue > or < 0 ??
+            this.bFading = false;
         }
     }
 
@@ -271,10 +355,12 @@ class Sprite {
             } else {
                 this.currentFrame--;
                 this.currentAnimation.bEnd = true;
-                if (this.currentAnimation.callback.cb != null && this.currentAnimation.callback.arg != null) {
-                    this.currentAnimation.callback.cb(this.currentAnimation.callback.arg);
-                } else {
-                    this.currentAnimation.callback();
+                if (this.currentAnimation.callback != null) {
+                    if (this.currentAnimation.callback.cb != null && this.currentAnimation.callback.arg != null) {
+                        this.currentAnimation.callback.cb(this.currentAnimation.callback.arg);
+                    } else {
+                        this.currentAnimation.callback();
+                    }
                 }
                 this.loopCount++;
                 if (this.type == "todelete" && this.loopCount >= this.maxLoop) {
@@ -297,6 +383,10 @@ class Sprite {
 
     setAlpha(pNewValue) {
         this.alpha = pNewValue;
+    }
+
+    updateAlpha(pNewValue) {
+        this.alpha += pNewValue;
     }
 
     setImageDataOrigin(pImageData, pMaxStep) {
