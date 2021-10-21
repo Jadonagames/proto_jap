@@ -29,7 +29,14 @@ class Panel {
         }
 
         this.alpha = 1;
+        this.alphaMax = 1;
+        this.bFading = false;
+        this.fadingIncrementValue = 0.1;
+        this.timerCB = null
+        this.fadingTimer = null;
 
+
+        this.textOverflow = false;
         this.type = pType;
         this.staticSize = pStaticSize;
 
@@ -40,9 +47,9 @@ class Panel {
         // 1 correspond à un bloc, 2 à deux etc.
         // le width ou height du bloc a une taille fixe selon le sprite bien sûr
 
-        if (Array.isArray(this.id)) {
+        if (Array.isArray(this.id)) { // this.id = [-1, { tlr: 123, blr: 456, clr: 789 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]
 
-            let size = { corner: { w: pSize.v, h: pSize.v }, hori: { w: 11, h: 9 }, verti: { w: 9, h: 11 } };
+            let size = { corner: { w: pSize.v, h: pSize.v }, hori: { w: this.id[2].hw, h: this.id[2].hh }, verti: { w: this.id[2].vw, h: this.id[2].vh } };
             this.internWidth = this.width * size.hori.w;
             this.internHeight = this.height * size.verti.h;
             this.totalWidth = (size.corner.w * 2) + this.internWidth;
@@ -111,6 +118,7 @@ class Panel {
 
         this.hoverable = false;
         this.hoverCB = null;
+        this.bChangeOnHover = false;
 
         this.bToDelete = false;
 
@@ -125,6 +133,7 @@ class Panel {
         this.typeState = pTypeState;
 
         this.label = pLabel;
+        this.textOverflow = false;
         this.wordsArr = [];
         this.bFirstUC = true;
 
@@ -183,7 +192,7 @@ class Panel {
 
         // tlr = 748 / blr = 768 / clr  = 757 
 
-        if (Array.isArray(pId) && pId[0] == -1) {
+        if (Array.isArray(pId) && pId[0] == -1) { // this.id = [-1, { tlr: 123, blr: 456, clr: 789 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]
 
             this.getSprite().tl.addAnimation("normal", { x: 380, y: pId[1].tlr });
             this.getSprite().tl.changeAnimation("normal");
@@ -215,6 +224,48 @@ class Panel {
             });
 
             this.getSprite().c.addAnimation("normal", { x: 388, y: pId[1].clr });
+            this.getSprite().c.changeAnimation("normal");
+        }
+
+        if (Array.isArray(pId) && pId[0] == 1) {
+
+            let X_ltb = 522;
+            let X_ctb = 538;
+            let X_rtb = 548;
+            let Y_clr = 764;
+            let Y_blr = 774;
+            let Y_tlr = 748;
+
+            this.getSprite().tl.addAnimation("normal", { x: X_ltb, y: Y_tlr });
+            this.getSprite().tl.changeAnimation("normal");
+
+            this.getSprite().tr.addAnimation("normal", { x: X_rtb, y: Y_tlr });
+            this.getSprite().tr.changeAnimation("normal");
+
+            this.getSprite().bl.addAnimation("normal", { x: X_ltb, y: Y_blr });
+            this.getSprite().bl.changeAnimation("normal");
+
+            this.getSprite().br.addAnimation("normal", { x: X_rtb, y: Y_blr });
+            this.getSprite().br.changeAnimation("normal");
+
+            this.getSprite().t.forEach(top => {
+                top.addAnimation("normal", { x: X_ctb, y: Y_tlr });
+                top.changeAnimation("normal");
+            });
+            this.getSprite().b.forEach(bottom => {
+                bottom.addAnimation("normal", { x: X_ctb, y: Y_blr });
+                bottom.changeAnimation("normal");
+            });
+            this.getSprite().r.forEach(right => {
+                right.addAnimation("normal", { x: X_rtb, y: Y_clr });
+                right.changeAnimation("normal");
+            });
+            this.getSprite().l.forEach(left => {
+                left.addAnimation("normal", { x: X_ltb, y: Y_clr });
+                left.changeAnimation("normal");
+            });
+
+            this.getSprite().c.addAnimation("normal", { x: X_ctb, y: Y_clr });
             this.getSprite().c.changeAnimation("normal");
         }
 
@@ -364,31 +415,105 @@ class Panel {
         }
 
         if (pId == 3) {
-            this.getSprite().tl.addAnimation("normal", { x: 41, y: 1 });
+            this.getSprite().tl.addAnimation("normal", { x: 456, y: 748 });
+            this.getSprite().tl.addAnimation("hover", { x: 477, y: 748 });
             this.getSprite().tl.changeAnimation("normal");
 
-            this.getSprite().tr.addAnimation("normal", { x: 41, y: 1 });
+            this.getSprite().tr.addAnimation("normal", { x: 467, y: 748 });
+            this.getSprite().tr.addAnimation("hover", { x: 488, y: 748 });
             this.getSprite().tr.changeAnimation("normal");
 
-            this.getSprite().bl.addAnimation("normal", { x: 41, y: 1 });
+            this.getSprite().bl.addAnimation("normal", { x: 456, y: 759 });
+            this.getSprite().bl.addAnimation("hover", { x: 477, y: 759 });
             this.getSprite().bl.changeAnimation("normal");
 
-            this.getSprite().br.addAnimation("normal", { x: 41, y: 1 });
+            this.getSprite().br.addAnimation("normal", { x: 467, y: 759 });
+            this.getSprite().br.addAnimation("hover", { x: 488, y: 759 });
             this.getSprite().br.changeAnimation("normal");
 
-            this.getSprite().t.addAnimation("normal", { x: 41, y: 1 });
+            this.getSprite().t.addAnimation("normal", { x: 466, y: 748 });
+            this.getSprite().t.addAnimation("hover", { x: 487, y: 748 });
             this.getSprite().t.changeAnimation("normal");
 
-            this.getSprite().r.addAnimation("normal", { x: 41, y: 1 });
+            this.getSprite().r.addAnimation("normal", { x: 467, y: 758 });
+            this.getSprite().r.addAnimation("hover", { x: 488, y: 758 });
             this.getSprite().r.changeAnimation("normal");
 
-            this.getSprite().b.addAnimation("normal", { x: 41, y: 1 });
+            this.getSprite().b.addAnimation("normal", { x: 466, y: 759 });
+            this.getSprite().b.addAnimation("hover", { x: 487, y: 759 });
             this.getSprite().b.changeAnimation("normal");
 
-            this.getSprite().l.addAnimation("normal", { x: 41, y: 1 });
+            this.getSprite().l.addAnimation("normal", { x: 456, y: 758 });
+            this.getSprite().l.addAnimation("hover", { x: 477, y: 758 });
             this.getSprite().l.changeAnimation("normal");
 
-            this.getSprite().c.addAnimation("normal", { x: 38, y: 1 });
+            this.getSprite().c.addAnimation("normal", { x: 466, y: 758 });
+            this.getSprite().c.changeAnimation("normal");
+        }
+
+        if (pId == 4) {
+            this.getSprite().tl.addAnimation("normal", { x: 456, y: 769 });
+            this.getSprite().tl.changeAnimation("normal");
+
+            this.getSprite().tr.addAnimation("normal", { x: 464, y: 769 });
+            this.getSprite().tr.changeAnimation("normal");
+
+            this.getSprite().bl.addAnimation("normal", { x: 456, y: 777 });
+            this.getSprite().bl.changeAnimation("normal");
+
+            this.getSprite().br.addAnimation("normal", { x: 464, y: 777 });
+            this.getSprite().br.changeAnimation("normal");
+
+            this.getSprite().t.addAnimation("normal", { x: 463, y: 769 });
+            this.getSprite().t.changeAnimation("normal");
+
+            this.getSprite().r.addAnimation("normal", { x: 464, y: 776 });
+            this.getSprite().r.changeAnimation("normal");
+
+            this.getSprite().b.addAnimation("normal", { x: 463, y: 777 });
+            this.getSprite().b.changeAnimation("normal");
+
+            this.getSprite().l.addAnimation("normal", { x: 456, y: 776 });
+            this.getSprite().l.changeAnimation("normal");
+
+            this.getSprite().c.addAnimation("normal", { x: 463, y: 776 });
+            this.getSprite().c.changeAnimation("normal");
+        }
+    }
+
+    resetPanelSprites(pId) {
+        if (Array.isArray(pId) && pId[0] == -1) {
+
+            this.getSprite().tl.resetAnimations("normal", { x: 380, y: pId[1].tlr });
+            this.getSprite().tl.changeAnimation("normal");
+
+            this.getSprite().tr.resetAnimations("normal", { x: 400, y: pId[1].tlr });
+            this.getSprite().tr.changeAnimation("normal");
+
+            this.getSprite().bl.resetAnimations("normal", { x: 380, y: pId[1].blr });
+            this.getSprite().bl.changeAnimation("normal");
+
+            this.getSprite().br.resetAnimations("normal", { x: 400, y: pId[1].blr });
+            this.getSprite().br.changeAnimation("normal");
+
+            this.getSprite().t.forEach(top => {
+                top.resetAnimations("normal", { x: 389, y: pId[1].tlr });
+                top.changeAnimation("normal");
+            });
+            this.getSprite().b.forEach(bottom => {
+                bottom.resetAnimations("normal", { x: 389, y: pId[1].blr });
+                bottom.changeAnimation("normal");
+            });
+            this.getSprite().r.forEach(right => {
+                right.resetAnimations("normal", { x: 400, y: pId[1].clr });
+                right.changeAnimation("normal");
+            });
+            this.getSprite().l.forEach(left => {
+                left.resetAnimations("normal", { x: 380, y: pId[1].clr });
+                left.changeAnimation("normal");
+            });
+
+            this.getSprite().c.resetAnimations("normal", { x: 388, y: pId[1].clr });
             this.getSprite().c.changeAnimation("normal");
         }
     }
@@ -468,6 +593,10 @@ class Panel {
         this.hoverFontMainColor = pHoverMain;
     }
 
+    setTextOverflow(pBool) {
+        this.textOverflow = pBool;
+    }
+
     setHoverable(pBool) {
         this.hoverable = pBool;
     }
@@ -477,6 +606,10 @@ class Panel {
             cb: pCallback,
             arg: pParam
         }
+    }
+
+    setChangeOnHover(pBool) {
+        this.bChangeOnHover = pBool;
     }
 
     setTextCase(pCase) {
@@ -524,12 +657,39 @@ class Panel {
         this.x = this.parent.x + this.offX;
         this.y = this.parent.y + this.offY;
     }
-    updateAlpha() {
-        if (this.parent) {
-            this.alpha = this.parent.alpha;
-        }
+
+    setAlpha(pNewValue) {
+        this.alpha = pNewValue;
+        this.fontMainColor = this.fontMainColor.split(",");
+        this.fontMainColor = this.fontMainColor[0] + "," + this.fontMainColor[1] + "," + this.fontMainColor[2] + "," + this.alpha + ")";
         this.fontBackgroundColor = this.fontBackgroundColor.split(",");
         this.fontBackgroundColor = this.fontBackgroundColor[0] + "," + this.fontBackgroundColor[1] + "," + this.fontBackgroundColor[2] + "," + this.alpha + ")";
+    }
+
+    updateAlpha(pNewValue = 0) {
+        if (this.parent) {
+            this.alpha = this.parent.alpha;
+        } else {
+            this.alpha += pNewValue;
+        }
+        this.fontMainColor = this.fontMainColor.split(",");
+        this.fontMainColor = this.fontMainColor[0] + "," + this.fontMainColor[1] + "," + this.fontMainColor[2] + "," + this.alpha + ")";
+        this.fontBackgroundColor = this.fontBackgroundColor.split(",");
+        this.fontBackgroundColor = this.fontBackgroundColor[0] + "," + this.fontBackgroundColor[1] + "," + this.fontBackgroundColor[2] + "," + this.alpha + ")";
+    }
+
+    fade(pSpeed = 0.05, pDirection = 1) { // 1 or -1
+        this.bFading = true;
+        this.fadingIncrementValue = pDirection * 0.1;
+        this.timerCB = this.updateAlpha.bind(this, this.fadingIncrementValue);
+        this.fadingTimer = new Timer(pSpeed, this.timerCB);
+    }
+
+    fading(dt) {
+        this.fadingTimer.update(dt);
+        if (this.alpha >= 1) { //TODO Find a solution pour this.alphaMax   : if this.fadingIncrementValue > or < 0 ??
+            this.bFading = false;
+        }
     }
 
     drawLabel(ctx) {
@@ -539,6 +699,10 @@ class Panel {
             ctx.shadowOffsetY = 4;
         } else { // normal
             ctx.shadowOffsetY = 2;
+        }
+
+        if (this.parent && this.parent.bFading) {
+            this.updateAlpha();
         }
 
         ctx.fillStyle = this.fontMainColor;
@@ -551,55 +715,79 @@ class Panel {
             }
         }
 
-        this.wordsArr = LANG[this.label].split(' ');
+        if (!this.textOverflow) {
 
-        if (this.wordsArr.length == 1 && this.wordsArr[0] != "" && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
+            this.wordsArr = LANG[this.label].split(' ');
 
-        let line = "";
-        let lines = [];
-        let tmp = "";
-        this.wordsArr.forEach((word, index) => { // contenu test du tooltip 23 * 5 = 115
-            index == 0 ? tmp += word : tmp = line + " " + word;
+            if (this.wordsArr.length == 1 && this.wordsArr[0] != "" && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
 
-            if ((tmp.length * 5) > this.width - 10) {
-                lines.push(line);
-                line = word;
-                tmp = "";
-            } else {
-                index == 0 ? line += word : line += " " + word;
+            let line = "";
+            let lines = [];
+            let tmp = "";
+            this.wordsArr.forEach((word, index) => { // contenu test du tooltip 23 * 5 = 115
+                index == 0 ? tmp += word : tmp = line + " " + word;
+
+                if ((tmp.length * 5) > this.width - 10) {
+                    lines.push(line);
+                    line = word;
+                    tmp = "";
+                } else {
+                    index == 0 ? line += word : line += " " + word;
+                }
+
+                if (index == this.wordsArr.length - 1) {
+                    lines.push(line);
+                    tmp = "";
+                }
+            })
+
+            for (let i = 0; i < lines.length; i++) {
+                switch (this.alignText) {
+                    case this.ALIGN_TEXT.Left:
+                        ctx.textAlign = "left";
+                        ctx.fillText(lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                        break;
+                    case this.ALIGN_TEXT.Center:
+                        ctx.textAlign = "center";
+                        if (Array.isArray(this.id)) {
+                            ctx.fillText(lines[i], this.x + (this.totalWidth * 0.5), this.y + (this.textOffsetY * (i + 1)));
+                        } else {
+                            ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (this.textOffsetY * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                        }
+                        break;
+                    case this.ALIGN_TEXT.Right:
+                        ctx.textAlign = "right";
+                        ctx.fillText(lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
+                        break;
+                }
+                this.textOffsetY += 13;
             }
+            this.textOffsetY = this.textOffsetYOrigin;
 
-            if (index == this.wordsArr.length - 1) {
-                lines.push(line);
-                tmp = "";
-            }
-        })
-
-        for (let i = 0; i < lines.length; i++) {
+        } else {
             switch (this.alignText) {
                 case this.ALIGN_TEXT.Left:
                     ctx.textAlign = "left";
-                    ctx.fillText(lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                    ctx.fillText(LANG[this.label], this.x + this.textOffsetX, this.y + this.textOffsetY);
                     break;
                 case this.ALIGN_TEXT.Center:
                     ctx.textAlign = "center";
-                    if (this.id == -1) {
-                        ctx.fillText(lines[i], this.x + (this.totalWidth * 0.5), this.y + (this.textOffsetY * (i + 1)));
+                    if (Array.isArray(this.id)) {
+                        ctx.fillText(LANG[this.label], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
                     } else {
-                        ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (this.textOffsetY * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                        ctx.fillText(LANG[this.label], this.x + (this.width * 0.5), this.y + this.textOffsetY); // +0.5 Car en centrant le texte se retrouve entre deux pixels
                     }
                     break;
                 case this.ALIGN_TEXT.Right:
                     ctx.textAlign = "right";
-                    ctx.fillText(lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
+                    ctx.fillText(LANG[this.label], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
                     break;
             }
-            this.textOffsetY += 13;
         }
+
 
         ctx.shadowOffsetY = 0;
 
-        this.textOffsetY = this.textOffsetYOrigin;
         ctx.fillStyle = "rgba(0,0,0,1)";
 
         ctx.textAlign = "left";
