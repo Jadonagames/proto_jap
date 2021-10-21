@@ -612,8 +612,8 @@ class Button {
     update(dt) {
         if (this.speedCount <= this.movingSpeed) {
 
-            this.x = easeInSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
-            this.y = easeInSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+            this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+            this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
 
             this.speedCount += dt;
         } else {
@@ -632,8 +632,22 @@ class Button {
         this.y = this.parent.y + this.offY;
     }
 
-    updateAlpha() {
-        this.alpha = this.parent.alpha;
+    setAlpha(pNewValue) {
+        this.alpha = pNewValue;
+        this.fontMainColor = this.fontMainColor.split(",");
+        this.fontMainColor = this.fontMainColor[0] + "," + this.fontMainColor[1] + "," + this.fontMainColor[2] + "," + this.alpha + ")";
+        this.fontBackgroundColor = this.fontBackgroundColor.split(",");
+        this.fontBackgroundColor = this.fontBackgroundColor[0] + "," + this.fontBackgroundColor[1] + "," + this.fontBackgroundColor[2] + "," + this.alpha + ")";
+    }
+
+    updateAlpha(pNewValue = 0) {
+        if (this.parent) {
+            this.alpha = this.parent.alpha;
+        } else {
+            this.alpha += pNewValue;
+        }
+        this.fontMainColor = this.fontMainColor.split(",");
+        this.fontMainColor = this.fontMainColor[0] + "," + this.fontMainColor[1] + "," + this.fontMainColor[2] + "," + this.alpha + ")";
         this.fontBackgroundColor = this.fontBackgroundColor.split(",");
         this.fontBackgroundColor = this.fontBackgroundColor[0] + "," + this.fontBackgroundColor[1] + "," + this.fontBackgroundColor[2] + "," + this.alpha + ")";
     }
@@ -660,6 +674,11 @@ class Button {
     }
 
     drawLabel(ctx) {
+
+        if (this.parent && this.parent.bFading) {
+            this.updateAlpha();
+        }
+
         if (this.state == Button.STATE.Hover) {
             ctx.fillStyle = this.hoverFontMainColor;
             ctx.shadowColor = this.hoverBackgroundColor;
