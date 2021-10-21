@@ -436,42 +436,16 @@ class Game1 {
             paramsToSave = [{ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, "finish"], value: 1 }];
             SaveManager.save(paramsToSave);
 
-
+            // LessonBtn TO NORMAL MODE
             LessonBtn.list.every(b => {
                 if (Game1.currentKanaLesson == "h") {
                     if (b.typeState == Lessons.STATE.Hiragana && b.label.slice(-1) == Game1.currentLessonNumber + 1) {
-
-                        // TO NORMAL
-                        b.getSprite().resetAnimations("normal", { x: 380, y: b.getSprite().getAnimation("normal").origin.y });
-                        b.getSprite().resetAnimations("hover", { x: 452, y: b.getSprite().getAnimation("hover").origin.y });
-                        b.getSprite().resetAnimations("down", { x: 524, y: b.getSprite().getAnimation("down").origin.y });
-                        b.setBoxCollider(65, 20, 2, 5);
-
-                        b.mode = 0
-
-                        b.callback = {
-                            cb: b.savedCB.cb,
-                            arg: b.savedCB.arg
-                        };
-
+                        b.changeMode(0);
                         return false;
                     }
                 } else if (Game1.currentKanaLesson == "k") {
                     if (b.typeState == Lessons.STATE.Katakana && b.label.slice(-1) == Game1.currentLessonNumber + 1) {
-
-                        // TO NORMAL
-                        b.getSprite().resetAnimations("normal", { x: 380, y: b.getSprite().getAnimation("normal").origin.y });
-                        b.getSprite().resetAnimations("hover", { x: 452, y: b.getSprite().getAnimation("hover").origin.y });
-                        b.getSprite().resetAnimations("down", { x: 524, y: b.getSprite().getAnimation("down").origin.y });
-                        b.setBoxCollider(65, 20, 2, 5);
-
-                        b.mode = 0
-
-                        b.callback = {
-                            cb: b.savedCB.cb,
-                            arg: b.savedCB.arg
-                        };
-
+                        b.changeMode(0);
                         return false;
                     }
                 }
