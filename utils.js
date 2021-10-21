@@ -54,6 +54,21 @@ function centerY(pHeight = 0, pDistance = 0, pDirection = 0) {
     }
 }
 
+function centerXElement(pElement, pWidth = 0, pDistance = 0, pDirection = 0) {
+    if (pDirection == 0) { // left
+        if (pElement instanceof Panel && Array.isArray(pElement.id)) {
+            return Math.floor((pElement.totalWidth * 0.5) - (pWidth * 0.5) - pDistance);
+        } else {
+            return Math.floor((pElement.width * 0.5) - (pWidth * 0.5) - pDistance);
+        }
+    } else { // right
+        if (pElement instanceof Panel && Array.isArray(pElement.id)) {
+            return Math.floor((pElement.totalWidth * 0.5) - (pWidth * 0.5) + pDistance);
+        } else {
+            return Math.floor((pElement.width * 0.5) - (pWidth * 0.5) + pDistance);
+        }
+    }
+}
 // First letter UpperCase
 function firstUC(pString) {
     return pString[0].toUpperCase() + pString.slice(1);
@@ -187,6 +202,10 @@ function translate(pCoord, pReverse = false) {
 // b = begin    value of the property being ease.
 // c = change   ending value of the property - beginning value of the property
 // d = duration
+function linear(t, b, c, d) {
+    return c * t / d + b;
+}
+
 function easeInSin(t, b, c, d) {
     return -c * Math.cos(t / d * (Math.PI / 2)) + c + b;
 }
@@ -195,8 +214,46 @@ function easeOutSin(t, b, c, d) {
     return c * Math.sin(t / d * (Math.PI / 2)) + b;
 }
 
-function easyInOutSin(t, b, c, d) {
+function easeInOutSin(t, b, c, d) {
     return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b
+}
+
+function outBounce(t, b, c, d) {
+    t = t / d;
+    if (t < 1 / 2.75) {
+        return c * (7.5625 * t * t) + b;
+    } else if (t < 2 / 2.75) {
+        t = t - (1.5 / 2.75);
+        return c * (7.5625 * t * t + 0.75) + b;
+    } else if (t < 2.5 / 2.75) {
+        t = t - (2.25 / 2.75);
+        return c * (7.5625 * t * t + 0.9375) + b;
+    } else {
+        t = t - (2.625 / 2.75);
+        return c * (7.5625 * t * t + 0.984375) + b;
+    }
+}
+
+function inBounce(t, b, c, d) {
+    return c - outBounce(d - t, 0, c, d) + b;
+}
+
+function inOutBounce(t, b, c, d) {
+    if (t < d / 2) {
+        return inBounce(t * 2, 0, c, d) * 0.5 + b;
+    }
+    else {
+        return outBounce(t * 2 - d, 0, c, d) * 0.5 + c * .5 + b;
+    }
+}
+
+function outInBounce(t, b, c, d) {
+    if (t < d / 2) {
+        return outBounce(t * 2, b, c / 2, d);
+    }
+    else {
+        return inBounce((t * 2) - d, b + c / 2, c / 2, d);
+    }
 }
 
 function inTransition() {
