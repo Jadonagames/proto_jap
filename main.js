@@ -18,7 +18,8 @@ let SFX_VOLUME = 0.5;
 let TRANSITION = false;
 let SCREEN_SHAKE = false;
 let screenShakeTimer = new Timer(0.1, { cb: setScreenShake, arg: false });
-
+let SAVING = false;
+let SAVING_SPRITE = null;
 let MOUSE_SPRITE = new Sprite({ w: 8, h: 9 }, centerX(8), centerY(8));
 MOUSE_SPRITE.addAnimation("normal", { x: 114, y: 34 });
 MOUSE_SPRITE.addAnimation("hover", { x: 122, y: 34 });
@@ -40,6 +41,9 @@ Transition.init();
 /**
  * DEBUG
  */
+let log = console.log.bind(console);
+let titleSpeed = 2;
+
 let bStatsDebug = false;
 let debugDt = 0;
 let debug_STOP = false;
@@ -135,6 +139,8 @@ function run() {
             Game1.update(dt);
             break;
     }
+    if (SAVING) SAVING_SPRITE.update(dt);
+
     MOUSE_SPRITE.update(dt);
     Sprite.debug_drawcalls = 0;
 
@@ -167,6 +173,9 @@ function run() {
             Game1.draw(ctx);
             break;
     }
+
+    if (SAVING) SAVING_SPRITE.draw(ctx);
+
 
     if (SCREEN_SHAKE) {
         canvas.style.backgroundColor = "rgb(255,50,50)"
@@ -266,13 +275,16 @@ function toMainMenu() {
 
     mainState = MAIN_STATE.Menu;
 
-    MainMenu.initKanaInterval();
 
     MainMenu.changeState(MainMenu.STATE.Main);
     TRANSITION = true;
-    Button.currentList.forEach(b => {
-        b.setMoving(true);
-    });
+
+    if (MainMenu.bTitleFinish) {
+        MainMenu.initKanaInterval();
+        Button.currentList.forEach(b => {
+            if (b.bCanMove) b.setMoving(true);
+        });
+    }
 
     // GESTION MENU KEYBOARD
     // Button.currentList[0].setState(Button.STATE.Hover);
@@ -377,4 +389,26 @@ function loadImageDatas() {
 
     ctx0.restore();
     ctx0.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function displaySaving(pBool) {
+    if (pBool) {
+        SAVING = true;
+        SAVING_SPRITE = new Sprite({ w: 42, h: 26 }, 400, CANVAS_HEIGHT, null, "sv");
+        SAVING_SPRITE.addAnimation("arrive", { x: 342, y: 952 }, 5, [0.2, 0.1, 0.1, 0.1, 0.1], false);
+        // SAVING_SPRITE.setAnimationCB("arrive", { cb: SAVING_SPRITE.changeAnimation.bind(SAVING_SPRITE), arg: "open" });
+        SAVING_SPRITE.addAnimation("open", { x: 342, y: 978 }, 17, [0.15, 0.15, 0.1, 0.1, 0.15, 0.15, 0.15, 0.1, 0.3, 0.1, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15], false);
+        SAVING_SPRITE.setAnimationCB("open", { cb: SAVING_SPRITE.changeAnimation.bind(SAVING_SPRITE), arg: "close" });
+        SAVING_SPRITE.addAnimation("close", { x: 342, y: 1004 }, 9, [0.1, 0.1, 0.1, 0.1, 0.15, 0.15, 0.15, 0.15, 0.2], false);
+        SAVING_SPRITE.setAnimationCB("close", { cb: SAVING_SPRITE.changeAnimation.bind(SAVING_SPRITE), arg: "down" });
+        SAVING_SPRITE.addAnimation("down", { x: 342, y: 1030 }, 2, [1, 0.5], false);
+        SAVING_SPRITE.setAnimationCB("down", { cb: displaySaving, arg: false });
+        SAVING_SPRITE.setDestination({ x: 400, y: CANVAS_HEIGHT - 50 });
+        SAVING_SPRITE.setMoveSpeed(0.5);
+
+        SAVING_SPRITE.changeAnimation("arrive");
+    } else {
+        SAVING = false;
+        SAVING_SPRITE = null;
+    }
 }
