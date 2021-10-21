@@ -26,6 +26,68 @@ class LessonBtn extends Button {
         }
     }
 
+    setMode(pMode, pCBToSave, pOffYColor) {
+
+        if (pMode == 1) {
+            this.getSprite().addAnimation("normal", { x: 596, y: 544 + pOffYColor });
+            this.getSprite().addAnimation("hover", { x: 668, y: 544 + pOffYColor });
+            this.getSprite().addAnimation("down", { x: 668, y: 544 + pOffYColor });
+            this.getSprite().addAnimation("clicked", { x: 740, y: 544 + pOffYColor }, 4, 0.2, false);
+            this.mode = 1;
+            this.setBoxCollider(8, 20, 4, 5);
+            this.saveCallback(pCBToSave);
+            this.callback = {
+                cb: this.getSprite().changeAnimation.bind(this.getSprite()),
+                arg: "clicked"
+            };
+            this.getSprite().setAnimationCB("clicked", {
+                cb: this.getSprite().changeAnimation.bind(this.getSprite()),
+                arg: "normal"
+            });
+        } else {
+            this.getSprite().addAnimation("normal", { x: 380, y: 544 + pOffYColor });
+            this.getSprite().addAnimation("hover", { x: 452, y: 544 + pOffYColor });
+            this.getSprite().addAnimation("down", { x: 524, y: 544 + pOffYColor });
+            this.getSprite().addAnimation("inactive", { x: 289, y: 544 + pOffYColor });
+            this.getSprite().addAnimation("clicked", { x: 740, y: 544 + pOffYColor }, 4, 0.2, false);
+            this.setBoxCollider(65, 20, 2, 5);
+        }
+
+    }
+
+    changeMode(pMode) {
+
+        if (pMode == 0) {
+            this.getSprite().resetAnimations("normal", { x: 380, y: this.getSprite().getAnimation("normal").origin.y });
+            this.getSprite().resetAnimations("hover", { x: 452, y: this.getSprite().getAnimation("hover").origin.y });
+            this.getSprite().resetAnimations("down", { x: 524, y: this.getSprite().getAnimation("down").origin.y });
+            this.setBoxCollider(65, 20, 2, 5);
+            this.mode = 0;
+            this.callback = {
+                cb: this.savedCB.cb,
+                arg: this.savedCB.arg
+            };
+
+        } else {
+            // TO MODE 1
+            this.getSprite().resetAnimations("normal", { x: 596, y: this.getSprite().getAnimation("normal").origin.y });
+            this.getSprite().resetAnimations("hover", { x: 668, y: this.getSprite().getAnimation("hover").origin.y });
+            this.getSprite().resetAnimations("down", { x: 668, y: this.getSprite().getAnimation("down").origin.y });
+            this.getSprite().resetAnimations("clicked", { x: 740, y: this.getSprite().getAnimation("clicked").origin.y });
+            this.mode = 1;
+            this.setBoxCollider(8, 20, 4, 5);
+            this.saveCallback({ cb: this.callback.cb, arg: this.callback.arg });
+            this.callback = {
+                cb: this.getSprite().changeAnimation.bind(this.getSprite()),
+                arg: "clicked"
+            };
+            this.getSprite().setAnimationCB("clicked", {
+                cb: this.getSprite().changeAnimation.bind(this.getSprite()),
+                arg: "normal"
+            });
+        }
+    }
+
     drawLabel(ctx) {
 
         // "Normal" main: rgba(0,0,0,1)      | bg: rgba(176,150,124,1) 
