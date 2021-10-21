@@ -7,6 +7,7 @@ class MainMenu {
     static creditsList = [];
 
     static bInit = false;
+    static bTitleFinish = false;
 
     kanaInterval = null;
     muteBtn = null;
@@ -30,6 +31,19 @@ class MainMenu {
     static init() {
 
 
+        // let animation = new Sprite({ w: 16, h: 16 }, 50, 100, null);
+        // animation.addAnimation("normal", { x: 228, y: 83 }, 5, 0.1, false);
+        // animation.changeAnimation("normal");
+        // MainMenu.mainList.push(animation);
+
+        // let TESTbtn = new Button({ w: 60, h: 31 }, 50, 200, null, null, "mainmenu", MainMenu.STATE.Main, "", 0, true);
+        // TESTbtn.getSprite().addAnimation("normal", { x: 342, y: 408 });
+        // TESTbtn.getSprite().addAnimation("hover", { x: 402, y: 408 }, 6, 0.05, false);
+        // TESTbtn.getSprite().addAnimation("down", { x: 402, y: 408 });
+        // TESTbtn.getSprite().changeAnimation("normal");
+        // MainMenu.mainList.push(TESTbtn.getSprite());
+
+
         // this.hira = "|あ|い|う|え|お|か|き|く|け|こ|さ|し|す|せ|そ|た|ち|つ|て|と|な|に|ぬ|ね|の|は|ひ|ふ|へ|ほ|ま|み|む|め|も|や|ゆ|よ|ら|り|る|れ|ろ|わ|を|ん|";
         // this.hira2 = "|が|ぎ|ぐ|げ|ご|ざ|じ|ず|ぜ|ぞ|だ|ぢ|づ|で|ど|ば|び|ぶ|べ|ぼ|ぱ|ぴ|ぷ|ぺ|ぽ|";
         // this.kata = "|ア|イ|ウ|エ|オ|カ|キ|ク|ケ|コ|サ|シ|ス|セ|ソ|タ|チ|ツ|テ|ト|ナ|ニ|ヌ|ネ|ノ|ハ|ヒ|フ|ヘ|ホ|マ|ミ|ム|メ|モ|ヤ|ユ|ヨ|ラ|リ|ル|レ|ロ|ワ|ヲ|ン|";
@@ -51,38 +65,53 @@ class MainMenu {
             }
         }
 
-        MainMenu.initKanaInterval();
-
         MainMenu.bInit = true;
 
-        let titleImg = new Sprite({ w: 192, h: 100 }, centerX(192) + 10, 6, null, "mainmenu");
+        let titleImg = new Sprite({ w: 178, h: 101 }, centerX(178), -101, null, "t");
         titleImg.addAnimation("normal", { x: 382, y: 0 });
         titleImg.changeAnimation("normal");
+        titleImg.setDestination({ x: centerX(178), y: centerY(101) });
+        titleImg.setMoveSpeed(titleSpeed); // normal : 2
         MainMenu.mainList.push(titleImg);
 
         let subtitleImg = new Sprite({ w: 129, h: 36 }, centerX(129) + 5, 106, null, "mainmenu");
         subtitleImg.addAnimation("normal", { x: 574, y: 0 });
         subtitleImg.changeAnimation("normal");
+        subtitleImg.setAlpha(0);
         MainMenu.mainList.push(subtitleImg);
 
         let hiraAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110), 0, null, "tm");
         hiraAImg.addAnimation("normal", { x: 574, y: 36 });
         hiraAImg.changeAnimation("normal");
         hiraAImg.setDestination({ x: centerX(50, 110), y: 28 });
+        hiraAImg.setAlpha(0);
         MainMenu.mainList.push(hiraAImg);
 
-        let kataAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110, 1), 0, null, "tm");
+        let kataAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110, 1), 28, null, "tm");
         kataAImg.addAnimation("normal", { x: 624, y: 36 });
         kataAImg.changeAnimation("normal");
-        kataAImg.setDestination({ x: centerX(50, 110, 1), y: 28 });
+        kataAImg.setDestination({ x: centerX(50, 110, 1), y: 0 });
         kataAImg.setDirection(-1);
+        kataAImg.setAlpha(0);
         MainMenu.mainList.push(kataAImg);
+
+        // let flagImg = new Sprite({ w: 20, h: 17 }, 288, 44, null, "mainmenu");
+        // let flagImg = new Sprite({ w: 21, h: 17 }, 300, 64, null, "fl");
+        let flagImg = new Sprite({ w: 21, h: 17 }, 165, 58, titleImg, "fl");
+        flagImg.addAnimation("close", { x: 382, y: 118 });
+        flagImg.addAnimation("open", { x: 382, y: 118 }, 3, [0.15, 0.06, 0.3], false);
+        flagImg.addAnimation("normal", { x: 382, y: 101 }, 6, 0.2);
+        flagImg.setAnimationCB("open", { cb: flagImg.changeAnimation.bind(flagImg), arg: "normal" });
+        flagImg.changeAnimation("close");
+        MainMenu.mainList.push(flagImg);
+
+
+
 
         let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, { cb: MainMenu.changeState, arg: MainMenu.STATE.Credits }, "mainmenu", MainMenu.STATE.Main, "Credits", 4);
         creditsBtn.setFontColor("rgba(142,45,45,1)");
         creditsBtn.setDestination({ x: centerX(110), y: 265 });
         creditsBtn.setCanMove(true);
-        creditsBtn.setMoving(true);
         creditsBtn.setMovingSpeed(0.8);
         MainMenu.mainList.push(creditsBtn.getSprite());
 
@@ -90,14 +119,12 @@ class MainMenu {
         optionsBtn.setFontColor("rgba(142,45,45,1)");
         optionsBtn.setDestination({ x: centerX(110), y: 237 });
         optionsBtn.setCanMove(true);
-        optionsBtn.setMoving(true);
         optionsBtn.setMovingSpeed(0.75);
         MainMenu.mainList.push(optionsBtn.getSprite());
 
         let infosBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 340, null, { cb: changeMainState, arg: { state: MAIN_STATE.Infos, from: "mainmenu" } }, "mainmenu", MainMenu.STATE.Main, "Infos", 4);
         infosBtn.setDestination({ x: centerX(110), y: 209 });
         infosBtn.setCanMove(true);
-        infosBtn.setMoving(true);
         infosBtn.setMovingSpeed(0.70);
         infosBtn.setFontColor("rgba(142,45,45,1)");
         MainMenu.mainList.push(infosBtn.getSprite());
@@ -105,7 +132,6 @@ class MainMenu {
         let trainingBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null, null, "mainmenu", MainMenu.STATE.Main, "Training", 4);
         trainingBtn.setDestination({ x: centerX(110), y: 181 });
         trainingBtn.setCanMove(true);
-        trainingBtn.setMoving(true);
         trainingBtn.setMovingSpeed(0.65);
         trainingBtn.setFontColor("rgba(142,45,45,1)");
         MainMenu.mainList.push(trainingBtn.getSprite());
@@ -114,16 +140,15 @@ class MainMenu {
         lessonsBtn.setFontColor("rgba(142,45,45,1)");
         lessonsBtn.setDestination({ x: centerX(110), y: 153 });
         lessonsBtn.setCanMove(true);
-        lessonsBtn.setMoving(true);
         lessonsBtn.setMovingSpeed(0.6);
         MainMenu.mainList.push(lessonsBtn.getSprite());
 
-        this.muteBtn = new Button({ w: 16, h: 14 }, centerX(16, 200, 1), 50, null, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
-        this.muteBtn.getSprite().addAnimation("normal", { x: 96, y: 96 });
-        this.muteBtn.getSprite().addAnimation("hover", { x: 112, y: 96 });
-        this.muteBtn.getSprite().addAnimation("down", { x: 128, y: 96 });
-        this.muteBtn.getSprite().changeAnimation("normal");
-        MainMenu.mainList.push(this.muteBtn.getSprite());
+        // this.muteBtn = new Button({ w: 16, h: 14 }, centerX(16, 200, 1), 50, null, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
+        // this.muteBtn.getSprite().addAnimation("normal", { x: 96, y: 96 });
+        // this.muteBtn.getSprite().addAnimation("hover", { x: 112, y: 96 });
+        // this.muteBtn.getSprite().addAnimation("down", { x: 128, y: 96 });
+        // this.muteBtn.getSprite().changeAnimation("normal");
+        // MainMenu.mainList.push(this.muteBtn.getSprite());
 
         // ---------------- OPTIONS ----------------
 
@@ -249,7 +274,7 @@ class MainMenu {
             }
         }
 
-        let randomKana = new KanaBgSprite({ w: 10, h: 10 }, randomX, randomY, null);
+        let randomKana = new KanaBgSprite({ w: 10, h: 10 }, randomX, randomY, null, "rndkana"); // "rndkana" juste pour ne pas entrer dans la Sprite.list
         randomKana.setDirection(direction);
         randomKana.addAnimation("normal", { x: MainMenu.randomKanaList[randomKanaIndex].x, y: MainMenu.randomKanaList[randomKanaIndex].y });
         randomKana.changeAnimation("normal");
