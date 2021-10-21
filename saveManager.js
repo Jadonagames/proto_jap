@@ -323,9 +323,7 @@ class SaveManager {
                     if (save.value) {
                         LessonBtn.list.forEach(b => {
                             if (b.label.slice(-2) == "_1") {
-                                b.setState(LessonBtn.STATE.Normal);
-                                b.changeSpriteAnimation("normal");
-                                b.setFontColor("rgb(100,100,100)", "rgb(0,0,0)");
+                                b.changeMode(0);
                             }
                         });
                     }
@@ -388,10 +386,8 @@ class SaveManager {
         SaveManager.init();
 
         LessonBtn.list.forEach(b => {
-            if (b.state == LessonBtn.STATE.Normal) {
-                b.setState(LessonBtn.STATE.Close);
-                b.changeSpriteAnimation("inactive");
-                b.setFontColor("rgb(190,190,190)", "rgb(170,170,170)");
+            if (b.mode == 0) {
+                b.changeMode(1);
             }
         });
 
