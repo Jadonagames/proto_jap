@@ -248,6 +248,8 @@ function keyUp(k) {
 
 
         // Transition.active(5, 5, 451, 10);
+
+        displaySaving(true);
     }
 
     if (k.code == "KeyE") {
@@ -273,73 +275,6 @@ function keyUp(k) {
 
     if (k.code == "Space") {
         // debug_STOP = !debug_STOP;
-
-        // let paramsToSave = [
-        //     {
-        //         type: "prologue",
-        //         value: 1
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h1", "lessonTestGeneral"],
-        //         value: 48
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h1", "lessonTest1"],
-        //         value: 48
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h1", "lessonTest2"],
-        //         value: 48
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h1", "fullTestGeneral"],
-        //         value: 0
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h1", "fullTest1"],
-        //         value: 48
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h1", "fullTest2"],
-        //         value: 0
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h2", "lessonTestGeneral"],
-        //         value: 0
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h2", "lessonTest1"],
-        //         value: 0
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h2", "lessonTest2"],
-        //         value: 16
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h2", "fullTestGeneral"],
-        //         value: 16
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h2", "fullTest1"],
-        //         value: 16
-        //     },
-        //     {
-        //         type: "lessons",
-        //         params: ["h2", "fullTest2"],
-        //         value: 16
-        //     },
-        // ];
 
         // Game1.chalkParticles({ x: 250, y: 120, offX: 10, offY: 5, dirX: 1, dirY: -1 });
         // Game1.chalkParticles({ x: 200, y: 170, offX: 10, offY: 5, dirX: -1, dirY: 1 });
@@ -595,6 +530,10 @@ canvas.addEventListener("mousedown", e => {
                         if (b.id == 4) { // MainMenu
                             b.textOffsetX += 2;
                             b.textOffsetY += 2;
+                            b.bTextOffsetChanged = true;
+                        } else if (b.id == 41) {
+                            b.textOffsetX += 1;
+                            b.textOffsetY += 1;
                             b.bTextOffsetChanged = true;
                         }
                         MOUSE_SPRITE.changeAnimation("down");

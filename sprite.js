@@ -106,11 +106,7 @@ class Sprite {
         let animToReturn = {};
         this.animations.every(anim => {
             if (anim.name == pName) {
-                // console.log("found");
-                // console.log(anim);
                 animToReturn = anim;
-                // console.log("anim to return : ");
-                // console.log(animToReturn);
                 return false;
             }
             return true;

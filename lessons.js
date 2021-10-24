@@ -42,8 +42,8 @@ class Lessons {
 
         this.hiraganaBtn = new Button({ w: 114, h: 26 }, centerX(114, 57), chalkboard.y + 5, null, { cb: Lessons.changeState, arg: Lessons.STATE.Hiragana }, "lessons", Lessons.STATE.Katakana, "a_Hiragana", 0, true);
         this.hiraganaBtn.getSprite().addAnimation("normal", { x: 764, y: 444 });
-        this.hiraganaBtn.getSprite().addAnimation("hover", { x: 764, y: 444 });  // 878
-        this.hiraganaBtn.getSprite().addAnimation("down", { x: 764, y: 444 });   // 878
+        this.hiraganaBtn.getSprite().addAnimation("hover", { x: 764, y: 444 });
+        this.hiraganaBtn.getSprite().addAnimation("down", { x: 764, y: 444 });
         this.hiraganaBtn.getSprite().changeAnimation("normal");
         this.hiraganaBtn.setFontColor("rgb(20,102,53)", "rgb(255,255,255", "rgb(20,102,53)", "rgb(255,255,255");
         this.hiraganaBtn.setOffsets(0, 16);
@@ -65,7 +65,7 @@ class Lessons {
         backBtn.getSprite().changeAnimation("normal");
         Lessons.mainList.push(backBtn.getSprite());
 
-        let introBtn = new Button({ w: 50, h: 20, v: 4 }, 380, 20, null, { cb: SaveManager.save, arg: [{ type: "prologue", value: 1 }] }, "lessons", Lessons.STATE.Main, "Infos");
+        let introBtn = new Button({ w: 50, h: 20, v: 5 }, 380, 20, null, { cb: SaveManager.save, arg: [{ type: "prologue", value: 1 }] }, "lessons", Lessons.STATE.Main, "Infos", 1);
         Lessons.mainList.push(introBtn.getSprite());
 
         let introTooltip = new Panel({ w: 300, h: 76, v: 5 }, centerX(300), CANVAS_HEIGHT - 76, null, "lessons", Lessons.STATE.Main, "Infos", 1);
@@ -118,7 +118,7 @@ class Lessons {
             }
 
             // Le fait d'utiliser la même variable offYcolor pour les tooltip et pour les buttons est totalement un hasard (même valeur d'incrément : 29), normalement c'est avec une variable différente offYPanelColor
-            let tooltipPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT - 70, null, "lessons", Lessons.STATE.Hiragana, "", [-1, { tlr: 748 + offYColor, blr: 768 + offYColor, clr: 757 + offYColor }, { hw: 11, hh: 9, vw: 9, vh: 11 }]); // 128 = 2*9 (corner*2) + 10 * 11 (w * t.w or b.w)
+            let tooltipPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT - 70, null, "lessons", Lessons.STATE.Hiragana, "", [-1, { y_t: 748 + offYColor }, { hw: 11, hh: 9, vw: 9, vh: 11 }]); // 128 = 2*9 (corner*2) + 10 * 11 (w * t.w or b.w)
             tooltipPanel.setOffsets(5, 5);
             tooltipPanel.changePanelSprite("t", 4, { x: 427, y: 748 + offYColor });
             tooltipPanel.changePanelSprite("t", 5, { x: 438, y: 748 + offYColor });
@@ -135,7 +135,6 @@ class Lessons {
                 offYColor = 0;
             }
 
-            // let tooltipContentPanel = new Panel({ w: 250, h: 70, v: 1 }, centerX(250), CANVAS_HEIGHT - 55, null, "lessons", Lessons.STATE.Hiragana, "hira_" + arr[i], 2);
             let tooltipContentPanel = new Panel({ w: 250, h: 70, v: 1 }, centerX(250), tooltipPanel.y + 15, null, "lessons", Lessons.STATE.Hiragana, "hira_" + arr[i], 2);
             tooltipContentPanel.setFont("kyokasho");
             tooltipPanel.setOffsets(0, 10);
@@ -197,7 +196,7 @@ class Lessons {
                 Lessons.addStarTrophy("k" + i);
             }
 
-            let tooltipPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT - 70, null, "lessons", Lessons.STATE.Katakana, "", [-1, { tlr: 748 + offYColor, blr: 768 + offYColor, clr: 757 + offYColor }, { hw: 11, hh: 9, vw: 9, vh: 11 }]); // 128 = 2*9 (corner*2) + 10 * 11 (w * t.w or b.w)
+            let tooltipPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT - 70, null, "lessons", Lessons.STATE.Katakana, "", [-1, { y_t: 748 + offYColor }, { hw: 11, hh: 9, vw: 9, vh: 11 }]); // 128 = 2*9 (corner*2) + 10 * 11 (w * t.w or b.w)
             tooltipPanel.setOffsets(5, 5);
             tooltipPanel.changePanelSprite("t", 4, { x: 427, y: 748 + offYColor });
             tooltipPanel.changePanelSprite("t", 5, { x: 438, y: 748 + offYColor });
@@ -239,8 +238,7 @@ class Lessons {
         // ---------------- LESSON ----------------
         this.backgroundSprite = null;
 
-        // this.lessonTitlePanel = new Panel({ w: 60, h: 30, v: 5 }, centerX(60), CANVAS_HEIGHT + 10, null, "lessons", Lessons.STATE.Lesson, "", 1);
-        this.lessonTitlePanel = new Panel({ w: 6, h: 1, v: 9 }, centerX(84, 100), CANVAS_HEIGHT + 7, null, "lessons", Lessons.STATE.Lesson, "", [-1, { tlr: 748, blr: 768, clr: 757 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]);
+        this.lessonTitlePanel = new Panel({ w: 6, h: 1, v: 9 }, centerX(84, 100), CANVAS_HEIGHT + 7, null, "lessons", Lessons.STATE.Lesson, "", [-1, { y_t: 748 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]);
         this.lessonTitlePanel.changePanelSprite("t", 2, { x: 427, y: 748 });
         this.lessonTitlePanel.changePanelSprite("t", 3, { x: 438, y: 748 });
         this.lessonTitlePanel.changePanelSprite("b", 2, { x: 427, y: 757 });
@@ -251,7 +249,7 @@ class Lessons {
         this.lessonBackBtn = null;
         this.lessonMainPanel = new Panel({ w: 450, h: 277, v: 7 }, 0, CANVAS_HEIGHT + 17, null, "lessons", Lessons.STATE.Lesson, "", 4);
 
-        this.informationPanel = new Panel({ w: 14, h: 18, v: 9 }, 259, CANVAS_HEIGHT + 31, null, "lessons", Lessons.STATE.Lesson, "Description", [-1, { tlr: 748, blr: 768, clr: 757 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]);
+        this.informationPanel = new Panel({ w: 14, h: 18, v: 9 }, 259, CANVAS_HEIGHT + 31, null, "lessons", Lessons.STATE.Lesson, "Description", [-1, { y_t: 748 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]);
         this.informationPanel.changePanelSprite("t", 6, { x: 427, y: 748 });
         this.informationPanel.changePanelSprite("t", 7, { x: 438, y: 748 });
         this.informationPanel.changePanelSprite("b", 6, { x: 427, y: 757 });
@@ -313,8 +311,6 @@ class Lessons {
             this.backgroundSprite.addAnimation("normal", { x: 411, y: 748 + colorOffY });
             this.backgroundSprite.changeAnimation("normal");
             Lessons.lessonList.push(this.backgroundSprite);
-
-
             Lessons.lessonList.push(this.lessonMainPanel.getSprite());
 
             let offsetColor = 0;
@@ -327,14 +323,14 @@ class Lessons {
             else if (lessonNumber == 7 || lessonNumber == 14) { offsetColor = 29 * 6; }
 
             this.lessonTitlePanel.setLabel("Lesson_" + lessonNumber);
-            this.lessonTitlePanel.resetPanelSprites([-1, { tlr: 748 + offsetColor, blr: 768 + offsetColor, clr: 757 + offsetColor }]);
+            this.lessonTitlePanel.resetPanelSprites(offsetColor);
             this.lessonTitlePanel.changePanelSprite("t", 2, { x: 427, y: 748 + offsetColor });
             this.lessonTitlePanel.changePanelSprite("t", 3, { x: 438, y: 748 + offsetColor });
             this.lessonTitlePanel.changePanelSprite("b", 2, { x: 427, y: 757 + offsetColor });
             this.lessonTitlePanel.changePanelSprite("b", 3, { x: 438, y: 757 + offsetColor });
             Lessons.lessonList.push(this.lessonTitlePanel.getSprite());
 
-            this.informationPanel.resetPanelSprites([-1, { tlr: 748 + offsetColor, blr: 768 + offsetColor, clr: 757 + offsetColor }]);
+            this.informationPanel.resetPanelSprites(offsetColor);
             this.informationPanel.changePanelSprite("t", 6, { x: 427, y: 748 + offsetColor });
             this.informationPanel.changePanelSprite("t", 7, { x: 438, y: 748 + offsetColor });
             this.informationPanel.changePanelSprite("b", 6, { x: 427, y: 757 + offsetColor });
@@ -355,7 +351,6 @@ class Lessons {
             for (let i = 0; i < nb; i++) {
                 kanaPos = kana + kanaList[i];
 
-                // let containerPanel = new Panel({ w: 210, h: 38, v: 1 }, centerX(200, 80), CANVAS_HEIGHT + offY, null, "lessons", Lessons.STATE.Lesson, "", 3);
                 let containerPanel = new Panel({ w: 210, h: 38, v: 10 }, 16, CANVAS_HEIGHT + offY, null, "lessons", Lessons.STATE.Lesson, "", 3);
                 containerPanel.setHoverable(true);
                 containerPanel.setChangeOnHover(true);
@@ -372,9 +367,6 @@ class Lessons {
                     descriptionPanel.setToDelete();
                     containerPanel.setTooltip(descriptionPanel);
                 }
-
-                // containerPanel.setTooltip(strokePanel);
-                // containerPanel.setHoverCB(displayTooltip, { list: "lessons.lesson", tooltip: containerPanel.getTooltip() });
 
                 let leftSprite = new Sprite({ w: 12, h: 38 }, -12, 0, containerPanel);
                 leftSprite.addAnimation("normal", { x: 498, y: 748 });
@@ -448,13 +440,11 @@ class Lessons {
             this.trainingBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
             Lessons.lessonList.push(this.trainingBtn.getSprite());
 
-            // this.lessonTestBtn = new Button({ w: 90, h: 30, v: 4 }, centerX(90, 10, 1), CANVAS_HEIGHT + 250, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Lesson_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Lesson_test");
             this.lessonTestBtn = new Button({ w: 60, h: 31 }, centerX(90, 10, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Lesson_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Lesson_test", 0, true);
             this.lessonTestBtn.getSprite().addAnimation("normal", { x: 342, y: 408 });
             this.lessonTestBtn.getSprite().addAnimation("hover", { x: 402, y: 408 }, 6, 0.05, false);
             this.lessonTestBtn.getSprite().addAnimation("down", { x: 762, y: 408 });
             this.lessonTestBtn.getSprite().changeAnimation("normal");
-            // this.lessonTestBtn.setTextCenterY();
             this.lessonTestBtn.setOffsets(0, 18);
 
             this.lessonTestBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
@@ -482,7 +472,6 @@ class Lessons {
                 Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
             }
 
-            // this.fullTestBtn = new Button({ w: 90, h: 30, v: 4 }, centerX(90, 120, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Full_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Full_test");
             this.fullTestBtn = new Button({ w: 60, h: 31 }, centerX(90, 120, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.lengtDh - 1], type: kana[0], testType: "Full_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Full_test", 0, true);
             this.fullTestBtn.getSprite().addAnimation("normal", { x: 342, y: 408 });
             this.fullTestBtn.getSprite().addAnimation("hover", { x: 402, y: 408 }, 6, 0.05, false);
@@ -528,8 +517,6 @@ class Lessons {
 
     static displayChooseTypePanel(pParams) {
 
-        log(pParams);
-
         this.bChooseType = pParams.bool;
 
         if (this.bChooseType) {
@@ -558,8 +545,9 @@ class Lessons {
             Panel.currentList.push(this.chooseTypePanel);
             Lessons.lessonList.push(this.chooseTypePanel.getSprite());
 
-            this.chooseTypeTitle = new Panel({ w: 80, h: 30, v: 5 }, centerXElement(this.chooseTypePanel, 80), 10, this.chooseTypePanel, "lessons", Lessons.STATE.Lesson, pParams.testType, 1);
-            this.chooseTypeTitle.setOffsets(0, 18);
+            this.chooseTypeTitle = new Panel({ w: 80, h: 17, v: 4 }, centerXElement(this.chooseTypePanel, 80), 14, this.chooseTypePanel, "lessons", Lessons.STATE.Lesson, pParams.testType, 5);
+            this.chooseTypeTitle.setOffsets(0, 12);
+            this.chooseTypeTitle.setFontColor("rgba(217, 213, 188, 0)");
             this.chooseTypeTitle.setAlpha(0);
             Panel.list.push(this.chooseTypeTitle);
             Panel.currentList.push(this.chooseTypeTitle);
@@ -578,13 +566,15 @@ class Lessons {
                     break;
             }
 
-            this.kanaToRomaBtn = new Button({ w: 80, h: 20, v: 4 }, centerXElement(this.chooseTypePanel, 80), 70, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: pParams.type, choiceType: "r", testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btnLabel);
+            this.kanaToRomaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 70, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: pParams.type, choiceType: "r", testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btnLabel, 41);
+            this.kanaToRomaBtn.setFontColor("rgba(142,45,45,1)");
             this.kanaToRomaBtn.setAlpha(0);
             Button.list.push(this.kanaToRomaBtn);
             Button.currentList.push(this.kanaToRomaBtn);
             Lessons.lessonList.push(this.kanaToRomaBtn.getSprite());
 
-            this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 4 }, centerXElement(this.chooseTypePanel, 80), 110, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btn2Label);
+            this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 110, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btn2Label, 41);
+            this.romaTokanaBtn.setFontColor("rgba(142,45,45,1)");
             this.romaTokanaBtn.setAlpha(0);
             Button.list.push(this.romaTokanaBtn);
             Button.currentList.push(this.romaTokanaBtn);
@@ -706,8 +696,8 @@ class Lessons {
             case Lessons.STATE.Hiragana:
                 // No reaction
                 this.hiraganaBtn.getSprite().resetAnimations("normal", { x: 764, y: 444 });
-                this.hiraganaBtn.getSprite().resetAnimations("hover", { x: 764, y: 444 });  // 878
-                this.hiraganaBtn.getSprite().resetAnimations("down", { x: 764, y: 444 });   // 878
+                this.hiraganaBtn.getSprite().resetAnimations("hover", { x: 764, y: 444 });
+                this.hiraganaBtn.getSprite().resetAnimations("down", { x: 764, y: 444 });
                 this.hiraganaBtn.setFontColor("rgb(20,102,53)", "rgb(255,255,255", "rgb(20,102,53)", "rgb(255,255,255");
 
                 this.katakanaBtn.getSprite().resetAnimations("normal", { x: 992, y: 470 });
