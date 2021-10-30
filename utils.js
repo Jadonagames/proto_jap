@@ -169,7 +169,31 @@ function displayTooltip(pArgs) {
                 }
             })
             break;
+        case "lessonTutorial.main":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    LessonTutorial.mainList.push(sp);
+                } else {
+                    LessonTutorial.mainList.push(sp.getSprite());
+                }
+            })
+            break;
+    }
+}
 
+function displayPanelChildBtn(pBtn, pList) {
+
+    pBtn.getSprite().delete = false;
+
+    switch (pList) {
+        case "mainmenu.main":
+            MainMenu.mainList.push(pBtn.getSprite());
+            Button.currentList.push(pBtn);
+            break;
+        case "lessonTutorial.main":
+            LessonTutorial.mainList.push(pBtn.getSprite());
+            Button.currentList.push(pBtn);
+            break;
     }
 }
 

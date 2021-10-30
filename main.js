@@ -65,7 +65,8 @@ const MAIN_STATE = Object.freeze({
     Infos: 4,
     Game: 5,
     Pause: 6,
-    Transition: 7
+    Transition: 7,
+    LessonTutorial: 8
 })
 
 let mainState = 0;
@@ -138,6 +139,9 @@ function run() {
         case MAIN_STATE.Game:
             Game1.update(dt);
             break;
+        case MAIN_STATE.LessonTutorial:
+            LessonTutorial.update(dt);
+            break;
     }
     if (SAVING) SAVING_SPRITE.update(dt);
 
@@ -171,6 +175,9 @@ function run() {
             break;
         case MAIN_STATE.Game:
             Game1.draw(ctx);
+            break;
+        case MAIN_STATE.LessonTutorial:
+            LessonTutorial.draw(ctx);
             break;
     }
 
@@ -257,12 +264,26 @@ function changeMainState(pNewState) {
             Infos.changeState(Infos.STATE.Main);
             break;
         case MAIN_STATE.Lessons:
-            if (!Lessons.bInit) {
-                Lessons.init();
+
+            if (!SaveManager.SAVE_DATA["prologue"]) {
+                changeMainState(MAIN_STATE.LessonTutorial);
+            } else {
+                if (!Lessons.bInit) {
+                    Lessons.init();
+                }
+                FadeEffect.fade({ callback: null, direction: "in", maxTimer: 0.01 });
+                Lessons.changeState(Lessons.STATE.Hiragana);
+            }
+
+            break;
+        case MAIN_STATE.LessonTutorial:
+            if (!LessonTutorial.bInit) {
+                LessonTutorial.init();
             }
             FadeEffect.fade({ callback: null, direction: "in", maxTimer: 0.01 });
-            Lessons.changeState(Lessons.STATE.Hiragana);
+            LessonTutorial.changeState(LessonTutorial.STATE.Main);
             break;
+
     }
 }
 
