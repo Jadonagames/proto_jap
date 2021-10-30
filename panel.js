@@ -14,6 +14,7 @@ class Panel {
         this.offY = pY;
 
         this.width = pSize.w;
+        this.totalWidth = this.width;
         this.height = pSize.h;
         this.corner = pSize.v;
 
@@ -33,11 +34,22 @@ class Panel {
         this.alphaMax = 1;
         this.bFading = false;
         this.fadingIncrementValue = 0.1;
+        this.fadingIn = true;
         this.timerCB = null
         this.fadingTimer = null;
 
+        this.startPos = { x: pX, y: pY };
+        this.destination = { x: 0, y: 0 };
+        this.direction = 1;
+        this.bMoving = false;
+        this.bCanMove = false;
+        this.speedCount = 0;
+        this.movingSpeed = 1;
+        this.tweeningArrive = easeOutSin;
+        this.tweeningLeave = easeInSin;
+        this.arriveDir = true;
+        this.leaveDir = false;
 
-        this.textOverflow = false;
         this.type = pType;
         this.staticSize = pStaticSize;
 
@@ -128,9 +140,34 @@ class Panel {
 
         this.typeState = pTypeState;
 
-        this.label = pLabel;
+        // Dialog 関係 ---------------
+        this.bDialogType = false;
+        this.bDialogStarted = false;
+        this.lines = [];
+        this.completeLines = [];
+        this.bDialogEnd = false;
+        this.currentLine = 0;
+        this.currentChar = 0;
+        this.dialogTimer = new Timer(0.01, this.updateDialog.bind(this));
+        this.childButton = null;
+
+        if (Array.isArray(pLabel)) {
+            this.labelArr = pLabel;
+            this.currentPhrase = 0;
+            if (this.labelArr[2]) {
+                this.label = "";
+            } else {
+                this.label = this.labelArr[0] + this.currentPhrase;
+            }
+        } else {
+            this.label = pLabel;
+            this.handleTempWordArr();
+        }
+        // Dialog 関係 ---------------
+
         this.textOverflow = false;
         this.wordsArr = [];
+        this.textLinesOffsetY = 10;
         this.bFirstUC = true;
 
         this.ALIGN_TEXT = Object.freeze({
@@ -477,6 +514,16 @@ class Panel {
         }
     }
 
+    changeDirection() {
+        if (this.arriveDir) {
+            this.arriveDir = false;
+            this.leaveDir = true;
+        } else {
+            this.arriveDir = true;
+            this.leaveDir = false;
+        }
+    }
+
     // static draw() {
     //     Panel.currentList.forEach(b => {
     //         if (!b.staticSize) {
@@ -502,6 +549,36 @@ class Panel {
         } else {
             this.getSprite().changeAnimation(pName);
         }
+    }
+
+    setDestination(pDestination) {
+        this.destination = {
+            x: pDestination.x,
+            y: pDestination.y
+        };
+    }
+
+    setDirection(pDirection) {
+        this.direction = pDirection;
+    }
+
+    resetPosition() {
+        this.x = this.startPos.x;
+        this.y = this.startPos.y;
+    }
+
+    setCanMove(pBool) {
+        this.bCanMove = pBool;
+    }
+
+    setMoving(pBool) {
+        if (this.bCanMove) {
+            this.bMoving = pBool;
+        }
+    }
+
+    setMovingSpeed(pValue) {
+        this.movingSpeed = pValue;
     }
 
     updatePosition() {
@@ -530,6 +607,12 @@ class Panel {
     }
 
     fade(pSpeed = 0.05, pDirection = 1) { // 1 or -1
+        if (pDirection == -1) {
+            this.fadingIn = false;
+        } else {
+            this.fadingIn = true;
+        }
+
         this.bFading = true;
         this.fadingIncrementValue = pDirection * 0.1;
         this.timerCB = this.updateAlpha.bind(this, this.fadingIncrementValue);
@@ -538,8 +621,163 @@ class Panel {
 
     fading(dt) {
         this.fadingTimer.update(dt);
-        if (this.alpha >= 1) { //TODO Find a solution pour this.alphaMax   : if this.fadingIncrementValue > or < 0 ??
+        if ((this.fadingIn && this.alpha >= 1)) { //TODO Find a solution pour this.alphaMax   : if this.fadingIncrementValue > or < 0 ??
             this.bFading = false;
+            if (this.bDialogType && this.fadingIn) {
+                this.startDialog();
+            }
+        } else if (!this.fadingIn && this.alpha <= 0) {
+            this.alpha = 0;
+            this.bFading = false;
+            // this.changeDirection();
+            // let tmpY = this.destination.y;
+            // this.destination.y = this.startPos.y;
+            // this.startPos.y = tmpY;
+        }
+    }
+
+    setDialogType(pBool) {
+        this.bDialogType = pBool;
+        this.handleTempWordArr();
+    }
+
+    setChildBtn(pBtn, pList) {
+        this.childButton = pBtn;
+        this.childButtonList = pList;
+    }
+
+    update(dt) {
+        if (this.bDialogType && this.bDialogStarted && !this.bDialogEnd) {
+            this.dialogTimer.update(dt);
+        }
+
+        if (this.bFading) {
+            this.fading(dt);
+        }
+
+        if (this.bMoving) {
+
+            if (this.speedCount <= this.movingSpeed) {
+
+                // this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+                // this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                if (this.arriveDir) {
+                    this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                } else {
+                    this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                }
+
+                this.speedCount += dt;
+
+            } else {
+                this.x = this.destination.x;
+                this.y = this.destination.y;
+                this.bMoving = false;
+                log("this moving: ");
+                log(this.bMoving);
+                this.speedCount = 0;
+
+                if (this.leaveDir) {
+                    this.changeDirection();
+                    let tmpY = this.destination.y;
+                    this.destination.y = this.startPos.y;
+                    this.startPos.y = tmpY;
+                }
+            }
+
+            this.children.forEach(c => {
+                if (c instanceof Panel || c instanceof Button) {
+                    c.updatePosition();
+                }
+            });
+        }
+
+    }
+
+    updateDialog() {
+        // this.lines[this.currentLine] += this.completeLines[this.currentLine][this.currentChar]; //! Version 1
+        this.lines[this.currentLine] = this.lines[this.currentLine].substring(0, this.currentChar) + this.completeLines[this.currentLine][this.currentChar] + this.lines[this.currentLine].substring(this.currentChar + 1, this.lines[this.currentLine].length); //! Version 2
+
+        this.currentChar++;
+        if (this.currentChar == this.completeLines[this.currentLine].length) {
+            this.currentChar = 0;
+            this.currentLine++;
+            if (this.currentLine == this.completeLines.length) {
+                this.bDialogEnd = true;
+                if (this.childButton) {
+                    displayPanelChildBtn(this.childButton, this.childButtonList);
+                }
+            }
+        }
+    }
+
+    nextPhrase() {
+        this.currentPhrase++;
+        if (this.currentPhrase < this.labelArr[1]) {
+            this.label = this.labelArr[0] + this.currentPhrase;
+            log(this.label);
+            this.bDialogEnd = false;
+            this.completeLines = [];
+            this.lines = [];
+            this.handleTempWordArr();
+            this.dialogTimer.reset();
+            this.currentLine = 0;
+            this.currentChar = 0;
+            this.childButton.getSprite().delete = true;
+            this.childButton.removeFromCurrentList();
+        } else {
+            this.currentPhrase--;
+            this.changeDirection();
+            let tmpY = this.destination.y;
+            this.destination.y = this.startPos.y;
+            this.startPos.y = tmpY;
+            this.setMoving(true);
+            this.fade(0.04, -1);
+        }
+    }
+
+    startDialog() {
+        this.label = this.labelArr[0] + this.currentPhrase;
+        this.setDialogType(true);
+        this.bDialogStarted = true;
+    }
+
+    handleTempWordArr() {
+        if (this.label != "") {
+            this.wordsArr = LANG[this.label].split(' ');
+
+            if (this.wordsArr.length == 1 && this.wordsArr[0] != "" && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
+
+            let line = "";
+            let tmp = "";
+            this.wordsArr.forEach((word, index) => { // contenu test du tooltip 23 * 5 = 115
+                index == 0 ? tmp += word : tmp = line + " " + word;
+
+                if ((tmp.length * 5) > this.totalWidth - 20) {
+                    this.completeLines.push(line);
+                    line = word;
+                    tmp = "";
+                } else {
+                    index == 0 ? line += word : line += " " + word;
+                }
+
+                if (index == this.wordsArr.length - 1) {
+                    this.completeLines.push(line);
+                    tmp = "";
+                }
+            })
+
+            if (this.bDialogType) {
+                for (let i = 0; i < this.completeLines.length; i++) {
+                    this.lines[i] = "";
+                    // For lines avec un nombre d'espace = au nb de chars dans une ligne //! Version 2
+                    for (let j = 0; j < this.completeLines[i].length; j++) {
+                        this.lines[i] += " ";
+                    }
+                }
+            } else {
+                this.lines = this.completeLines;
+            }
         }
     }
 
@@ -568,52 +806,48 @@ class Panel {
 
         if (!this.textOverflow) {
 
-            this.wordsArr = LANG[this.label].split(' ');
+            if (this.bDialogType && this.bDialogStarted) {
 
-            if (this.wordsArr.length == 1 && this.wordsArr[0] != "" && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
-
-            let line = "";
-            let lines = [];
-            let tmp = "";
-            this.wordsArr.forEach((word, index) => { // contenu test du tooltip 23 * 5 = 115
-                index == 0 ? tmp += word : tmp = line + " " + word;
-
-                if ((tmp.length * 5) > this.width - 10) {
-                    lines.push(line);
-                    line = word;
-                    tmp = "";
-                } else {
-                    index == 0 ? line += word : line += " " + word;
+                for (let i = 0; i < this.lines.length; i++) {
+                    switch (this.alignText) {
+                        case this.ALIGN_TEXT.Left:
+                            ctx.textAlign = "left";
+                            ctx.fillText(this.lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                            break;
+                        case this.ALIGN_TEXT.Center:
+                            ctx.textAlign = "center";
+                            ctx.fillText(this.lines[i], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
+                            break;
+                        case this.ALIGN_TEXT.Right:
+                            ctx.textAlign = "right";
+                            ctx.fillText(this.lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
+                            break;
+                    }
+                    this.textOffsetY += this.textLinesOffsetY;
                 }
+                this.textOffsetY = this.textOffsetYOrigin;
 
-                if (index == this.wordsArr.length - 1) {
-                    lines.push(line);
-                    tmp = "";
-                }
-            })
+            } else if (!this.bDialogType) {
 
-            for (let i = 0; i < lines.length; i++) {
-                switch (this.alignText) {
-                    case this.ALIGN_TEXT.Left:
-                        ctx.textAlign = "left";
-                        ctx.fillText(lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
-                        break;
-                    case this.ALIGN_TEXT.Center:
-                        ctx.textAlign = "center";
-                        if (Array.isArray(this.id)) {
-                            ctx.fillText(lines[i], this.x + (this.totalWidth * 0.5), this.y + (this.textOffsetY * (i + 1)));
-                        } else {
-                            ctx.fillText(lines[i], this.x + (this.width * 0.5), this.y + (this.textOffsetY * (i + 1))); // +0.5 Car en centrant le texte se retrouve entre deux pixels
-                        }
-                        break;
-                    case this.ALIGN_TEXT.Right:
-                        ctx.textAlign = "right";
-                        ctx.fillText(lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
-                        break;
+                for (let i = 0; i < this.lines.length; i++) {
+                    switch (this.alignText) {
+                        case this.ALIGN_TEXT.Left:
+                            ctx.textAlign = "left";
+                            ctx.fillText(this.lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                            break;
+                        case this.ALIGN_TEXT.Center:
+                            ctx.textAlign = "center";
+                            ctx.fillText(this.lines[i], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
+                            break;
+                        case this.ALIGN_TEXT.Right:
+                            ctx.textAlign = "right";
+                            ctx.fillText(this.lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
+                            break;
+                    }
+                    this.textOffsetY += this.textLinesOffsetY;
                 }
-                this.textOffsetY += 13;
+                this.textOffsetY = this.textOffsetYOrigin;
             }
-            this.textOffsetY = this.textOffsetYOrigin;
 
         } else {
             switch (this.alignText) {

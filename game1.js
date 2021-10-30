@@ -112,6 +112,7 @@ class Game1 {
         this.kanaPanel.setFontSize(40);
         this.kanaPanel.setOffsets(3, 50);
         this.kanaPanel.setFontColor("rgba(255,255,255,0)", "rgb(255,255,255)");
+        this.kanaPanel.setTextOverflow(true);
         Game1.mainList.push(this.kanaPanel.getSprite());
 
         this.moe = new Sprite({ w: 24, h: 24 }, this.kanaPanel.x + 76, this.kanaPanel.y + 48);

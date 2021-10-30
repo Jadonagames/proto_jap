@@ -95,8 +95,6 @@ class MainMenu {
         kataAImg.setAlpha(0);
         MainMenu.mainList.push(kataAImg);
 
-        // let flagImg = new Sprite({ w: 20, h: 17 }, 288, 44, null, "mainmenu");
-        // let flagImg = new Sprite({ w: 21, h: 17 }, 300, 64, null, "fl");
         let flagImg = new Sprite({ w: 21, h: 17 }, 165, 58, titleImg, "fl");
         flagImg.addAnimation("close", { x: 382, y: 118 });
         flagImg.addAnimation("open", { x: 382, y: 118 }, 3, [0.15, 0.06, 0.3], false);
@@ -298,21 +296,7 @@ class MainMenu {
         });
 
         Panel.currentList.forEach(p => {
-            if (p.bMoving) {
-                p.children.forEach(c => {
-                    if (c instanceof Panel || c instanceof Button) {
-                        c.updatePosition();
-                    }
-                });
-            }
-            if (p.bFading) {
-                p.updateAlpha();
-                p.children.forEach(c => {
-                    if (c instanceof Panel || c instanceof Button) {
-                        c.updateAlpha();
-                    }
-                });
-            }
+            p.update(dt)
         });
 
         Sprite.manageBeforeUpdating(MainMenu.mainList, dt);

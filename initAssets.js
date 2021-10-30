@@ -1000,8 +1000,8 @@ function LoadAssets() {
     Sound.list["kana_zo"] = new Sound("./sounds/kana/zo.mp3");
 
     Sound.list["kana_da"] = new Sound("./sounds/kana/da.mp3");
-    Sound.list["kana_di"] = new Sound("./sounds/kana/ji.mp3");
-    Sound.list["kana_du"] = new Sound("./sounds/kana/zu.mp3");
+    Sound.list["kana_di"] = new Sound("./sounds/kana/ji.mp3"); //!
+    Sound.list["kana_du"] = new Sound("./sounds/kana/zu.mp3"); //!
     Sound.list["kana_de"] = new Sound("./sounds/kana/de.mp3");
     Sound.list["kana_do"] = new Sound("./sounds/kana/do.mp3");
 
@@ -1019,7 +1019,7 @@ function LoadAssets() {
 
     Sound.list["music"] = new Sound("./sounds/music/Galastarz.mp3", "m", true);
 
-    readTSVFile("./translation.tsv");
+    readTSVFile("./translation - 1.tsv");
     // Char.list.push("")
 
 }

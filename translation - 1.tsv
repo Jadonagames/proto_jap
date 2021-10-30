@@ -3,7 +3,10 @@ english_lang	English	English	English
 french_lang	Français	Français	Français
 japanese_lang	日本語	日本語	日本語
 ph_word	placeholder	placeholder	placeholder
-ph_text	Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+ph_text	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+ph_text_0	Pendant ce temps, du côté de Jo, on s'amuse comme on peut avec un système de dialogue.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+ph_text_1	Ça marche pas trop mal pour le moment, passage à la ligne automatique et le bouton pour passer à la suite qui apparait... maintenant ->	I'm looking at you through the glass. Cause I'm a star, lol.	I'm looking at you through the glass. Cause I'm a star, lol.
+ph_text_2	Merci de votre attention et fade out !	Button class and Panel class are hobo onaji nanode nanka shinaito patatas	Button class and Panel class are hobo onaji nanode nanka shinaito patatas
 hello	hello	bonjour	こんにちは
 game	game	jeu	ゲーム
 Start	Start	Commencer	始める

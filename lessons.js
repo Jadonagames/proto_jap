@@ -258,7 +258,7 @@ class Lessons {
         this.informationPanel.changePanelSprite("l", 9, { x: 409, y: 759 });
         this.informationPanel.changePanelSprite("r", 8, { x: 418, y: 748 });
         this.informationPanel.changePanelSprite("r", 9, { x: 418, y: 759 });
-        this.informationPanel.setOffsets(0, -4);
+        this.informationPanel.setOffsets(0, 20);
 
         this.playBtn = null;
         this.trainingBtn = null;
@@ -775,9 +775,7 @@ class Lessons {
         });
 
         Panel.currentList.forEach(p => {
-            if (p.bFading) {
-                p.fading(dt);
-            }
+            p.update(dt);
         })
 
         if (FadeEffect.bActive) {
