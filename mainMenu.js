@@ -183,10 +183,11 @@ class MainMenu {
         MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
 
-        let deleteSaveBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(60), 150, null, SaveManager.delete, "mainmenu", MainMenu.STATE.Options, "delete_save");
+        // let deleteSaveBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(60), 150, null, SaveManager.delete, "mainmenu", MainMenu.STATE.Options, "delete_save");
+        let deleteSaveBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(60), 150, null, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: true } }, "mainmenu", MainMenu.STATE.Options, "delete_save");
         MainMenu.optionsList.push(deleteSaveBtn.getSprite());
 
-        let optionsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), 180, null, toMainMenu, "mainmenu", MainMenu.STATE.Options, "", 0, true);
+        let optionsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), 180, null, MainMenu.fromOptionsToMainMenu.bind(this), "mainmenu", MainMenu.STATE.Options, "", 0, true);
         optionsBackBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
         optionsBackBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
         optionsBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
@@ -208,6 +209,15 @@ class MainMenu {
         creditsBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
         creditsBackBtn.getSprite().changeAnimation("normal");
         MainMenu.creditsList.push(creditsBackBtn.getSprite());
+
+        this.deleteSavePanel = null;
+        this.deleteSaveWarningPanel = null;
+        this.deleteSaveYesBtn = null;
+        this.deleteSaveNoBtn = null;
+
+        this.saveDeletedPanel = null;
+        this.deleteSaveAnimation = null;
+
 
     }
 
@@ -279,6 +289,121 @@ class MainMenu {
         MainMenu.randomKanaSpriteList.push(randomKana);
     }
 
+    static displayDeleteSavePanel(pParam) {
+
+        if (pParam.bool) {
+            Button.currentList.forEach(b => {
+                b.setState(Button.STATE.Inactive);
+            });
+            Panel.currentList.forEach(p => {
+                p.setState(Panel.STATE.Inactive);
+            });
+
+            this.deleteSavePanel = new Panel({ w: 200, h: 100, v: 5 }, centerX(200), centerY(100, 40, 1), null, "mainmenu", MainMenu.STATE.Options, "confirm_save_deletion", 1);
+            this.deleteSavePanel.setOffsets(0, 20);
+            MainMenu.optionsList.push(this.deleteSavePanel.getSprite());
+
+            this.deleteSaveWarningPanel = new Panel({ w: 200, h: 50, v: 1 }, 0, 30, this.deleteSavePanel, "mainmenu", MainMenu.STATE.Options, "delete_save_warning", 2);
+            this.deleteSaveWarningPanel.setFontColor("rgba(200,200,200,1)", "rgba(255,0,0,1)");
+            MainMenu.optionsList.push(this.deleteSaveWarningPanel.getSprite());
+
+            this.deleteSaveYesBtn = new Button({ w: 50, h: 22, v: 6 }, centerXElement(this.deleteSavePanel, 50, 50), 70, this.deleteSavePanel, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: false, delete: true } }, "mainmenu", MainMenu.STATE.Options, "yes", 41);
+            this.deleteSaveYesBtn.setFontColor("rgba(142,45,45,1)");
+            Button.list.push(this.deleteSaveYesBtn);
+            Button.currentList.push(this.deleteSaveYesBtn);
+            MainMenu.optionsList.push(this.deleteSaveYesBtn.getSprite());
+
+            this.deleteSaveNoBtn = new Button({ w: 50, h: 22, v: 6 }, centerXElement(this.deleteSavePanel, 50, 50, 1), 70, this.deleteSavePanel, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: false, delete: false } }, "mainmenu", MainMenu.STATE.Options, "no", 41);
+            this.deleteSaveNoBtn.setFontColor("rgba(142,45,45,1)");
+            Button.list.push(this.deleteSaveNoBtn);
+            Button.currentList.push(this.deleteSaveNoBtn);
+            MainMenu.optionsList.push(this.deleteSaveNoBtn.getSprite());
+
+        } else {
+
+            // this.chooseTypeBg.delete = true;
+            if (pParam.delete) {
+                SaveManager.delete();
+
+                this.deleteSaveAnimation = null;
+
+                this.saveDeletedPanel = new Panel({ w: 100, h: 60, v: 5 }, centerX(100), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, "save_deleted", 1);
+                this.saveDeletedPanel.setOffsets(10, 20);
+
+                this.saveDeletedPanel.setDestination({ x: centerX(100), y: CANVAS_HEIGHT - 60 });
+                this.saveDeletedPanel.setCanMove(true);
+                this.saveDeletedPanel.setMovingSpeed(0.7);
+                this.saveDeletedPanel.setMoving(true);
+
+                this.saveDeletedPanel.setAlpha(0);
+                this.saveDeletedPanel.fade(0.08);
+                Panel.list.push(this.saveDeletedPanel);
+                Panel.currentList.push(this.saveDeletedPanel);
+                MainMenu.optionsList.push(this.saveDeletedPanel.getSprite());
+
+                this.deleteSaveAnimation = new Sprite({ w: 35, h: 27 }, 25, 25, this.saveDeletedPanel);
+                this.deleteSaveAnimation.addAnimation("normal", { x: 342, y: 1060 }, 14, [1, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1, 0.1], false);
+                this.deleteSaveAnimation.changeAnimation("normal");
+                this.deleteSaveAnimation.setAnimationCB('normal', MainMenu.bla.bind(this));
+                MainMenu.optionsList.push(this.deleteSaveAnimation.getSprite());
+            }
+
+            this.deleteSavePanel.removeFromList();
+            this.deleteSaveWarningPanel.removeFromList();
+            this.deleteSaveYesBtn.removeFromList();
+            this.deleteSaveNoBtn.removeFromList();
+
+            this.deleteSavePanel.removeFromCurrentList();
+            this.deleteSaveWarningPanel.removeFromCurrentList();
+            this.deleteSaveYesBtn.removeFromCurrentList();
+            this.deleteSaveNoBtn.removeFromCurrentList();
+
+            this.deleteSavePanel.getSprite().delete = true;
+            this.deleteSaveWarningPanel.getSprite().delete = true;
+            this.deleteSaveYesBtn.getSprite().delete = true;
+            this.deleteSaveNoBtn.getSprite().delete = true;
+
+            this.deleteSavePanel = null;
+            this.deleteSaveWarningPanel = null;
+            this.deleteSaveYesBtn = null;
+            this.deleteSaveNoBtn = null;
+
+            Button.currentList.forEach(b => {
+                b.setState(Button.STATE.Normal);
+            });
+            Panel.currentList.forEach(p => {
+                p.setState(Panel.STATE.Normal);
+            });
+        }
+
+    }
+
+    static bla() {
+        log("TERMINE !!!!");
+        this.saveDeletedPanel.changeDirection();
+        let tmpY = this.saveDeletedPanel.destination.y;
+        this.saveDeletedPanel.destination.y = this.saveDeletedPanel.startPos.y;
+        this.saveDeletedPanel.startPos.y = tmpY;
+        this.saveDeletedPanel.setMoving(true);
+        this.saveDeletedPanel.fade(0.04, -1);
+    }
+
+    static fromOptionsToMainMenu() {
+        MainMenu.resetDeleteSavePanels();
+        toMainMenu();
+    }
+
+    static resetDeleteSavePanels() {
+        if (this.saveDeletedPanel != null) {
+            this.saveDeletedPanel.removeFromList();
+            this.saveDeletedPanel.removeFromCurrentList();
+            this.saveDeletedPanel.getSprite().delete = true;
+            this.saveDeletedPanel = null;
+            this.deleteSaveAnimation.delete = true;
+            this.deleteSaveAnimation = null;
+        }
+    }
+
     static update(dt) {
 
         Sprite.manageBeforeUpdating(MainMenu.randomKanaSpriteList, dt);
@@ -316,6 +441,12 @@ class MainMenu {
         MainMenu.mainList = MainMenu.mainList.filter(sp => {
             return !sp.delete;
         });
+        if (this.state == MainMenu.STATE.Options) {
+            MainMenu.optionsList = MainMenu.optionsList.filter(sp => {
+                return !sp.delete;
+            });
+            Sprite.manageBeforeUpdating(MainMenu.optionsList, dt);
+        }
 
         // ------------------
 

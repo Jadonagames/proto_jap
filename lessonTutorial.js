@@ -25,16 +25,15 @@ class LessonTutorial {
         this.blabla.changeAnimation("normal");
         LessonTutorial.mainList.push(this.blabla);
 
-        // SaveManager.save([{ type: "prologue", value: 1 }]);
+        SaveManager.save([{ type: "prologue", value: 1 }]);
 
         let lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 0, null, { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, "lessonTutorial", LessonTutorial.STATE.Main, "Lessons", 4);
         lessonsBtn.setFontColor("rgba(142,45,45,1)");
         LessonTutorial.mainList.push(lessonsBtn.getSprite());
 
 
-        this.dialogPanel = new Panel({ w: 200, h: 70, v: 5 }, centerX(200), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, ["ph_text_", 3, true], 1);
+        this.dialogPanel = new DialogPanel({ w: 200, h: 70, v: 5 }, centerX(200), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, ["ph_text_", 3, true], 1);
         this.dialogPanel.setOffsets(10, 20);
-        this.dialogPanel.setDialogType(true);
         this.dialogPanel.setAlignText(this.dialogPanel.ALIGN_TEXT.Left);
 
         this.dialogPanel.setDestination({ x: centerX(200), y: CANVAS_HEIGHT - 75 });
