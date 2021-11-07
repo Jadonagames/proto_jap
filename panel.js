@@ -122,6 +122,13 @@ class Panel {
             this.sp.setClass("panel");
         }
 
+        this.lines = [];
+        this.completeLines = [];
+        if (!Array.isArray(pLabel)) {
+            this.label = pLabel;
+            this.handleTempWordArr();
+        }
+
         this.bMoving = false;
 
         this.hoverable = false;
@@ -140,30 +147,7 @@ class Panel {
 
         this.typeState = pTypeState;
 
-        // Dialog 関係 ---------------
-        this.bDialogType = false;
-        this.bDialogStarted = false;
-        this.lines = [];
-        this.completeLines = [];
-        this.bDialogEnd = false;
-        this.currentLine = 0;
-        this.currentChar = 0;
-        this.dialogTimer = new Timer(0.01, this.updateDialog.bind(this));
-        this.childButton = null;
 
-        if (Array.isArray(pLabel)) {
-            this.labelArr = pLabel;
-            this.currentPhrase = 0;
-            if (this.labelArr[2]) {
-                this.label = "";
-            } else {
-                this.label = this.labelArr[0] + this.currentPhrase;
-            }
-        } else {
-            this.label = pLabel;
-            this.handleTempWordArr();
-        }
-        // Dialog 関係 ---------------
 
         this.textOverflow = false;
         this.wordsArr = [];
@@ -623,9 +607,6 @@ class Panel {
         this.fadingTimer.update(dt);
         if ((this.fadingIn && this.alpha >= 1)) { //TODO Find a solution pour this.alphaMax   : if this.fadingIncrementValue > or < 0 ??
             this.bFading = false;
-            if (this.bDialogType && this.fadingIn) {
-                this.startDialog();
-            }
         } else if (!this.fadingIn && this.alpha <= 0) {
             this.alpha = 0;
             this.bFading = false;
@@ -636,21 +617,12 @@ class Panel {
         }
     }
 
-    setDialogType(pBool) {
-        this.bDialogType = pBool;
-        this.handleTempWordArr();
-    }
-
     setChildBtn(pBtn, pList) {
         this.childButton = pBtn;
         this.childButtonList = pList;
     }
 
     update(dt) {
-        if (this.bDialogType && this.bDialogStarted && !this.bDialogEnd) {
-            this.dialogTimer.update(dt);
-        }
-
         if (this.bFading) {
             this.fading(dt);
         }
@@ -673,15 +645,12 @@ class Panel {
                 this.x = this.destination.x;
                 this.y = this.destination.y;
                 this.bMoving = false;
-                log("this moving: ");
-                log(this.bMoving);
                 this.speedCount = 0;
 
                 if (this.leaveDir) {
-                    this.changeDirection();
-                    let tmpY = this.destination.y;
-                    this.destination.y = this.startPos.y;
-                    this.startPos.y = tmpY;
+                    this.removeFromList();
+                    this.removeFromCurrentList();
+                    this.getSprite().delete = true;
                 }
             }
 
@@ -692,54 +661,6 @@ class Panel {
             });
         }
 
-    }
-
-    updateDialog() {
-        // this.lines[this.currentLine] += this.completeLines[this.currentLine][this.currentChar]; //! Version 1
-        this.lines[this.currentLine] = this.lines[this.currentLine].substring(0, this.currentChar) + this.completeLines[this.currentLine][this.currentChar] + this.lines[this.currentLine].substring(this.currentChar + 1, this.lines[this.currentLine].length); //! Version 2
-
-        this.currentChar++;
-        if (this.currentChar == this.completeLines[this.currentLine].length) {
-            this.currentChar = 0;
-            this.currentLine++;
-            if (this.currentLine == this.completeLines.length) {
-                this.bDialogEnd = true;
-                if (this.childButton) {
-                    displayPanelChildBtn(this.childButton, this.childButtonList);
-                }
-            }
-        }
-    }
-
-    nextPhrase() {
-        this.currentPhrase++;
-        if (this.currentPhrase < this.labelArr[1]) {
-            this.label = this.labelArr[0] + this.currentPhrase;
-            log(this.label);
-            this.bDialogEnd = false;
-            this.completeLines = [];
-            this.lines = [];
-            this.handleTempWordArr();
-            this.dialogTimer.reset();
-            this.currentLine = 0;
-            this.currentChar = 0;
-            this.childButton.getSprite().delete = true;
-            this.childButton.removeFromCurrentList();
-        } else {
-            this.currentPhrase--;
-            this.changeDirection();
-            let tmpY = this.destination.y;
-            this.destination.y = this.startPos.y;
-            this.startPos.y = tmpY;
-            this.setMoving(true);
-            this.fade(0.04, -1);
-        }
-    }
-
-    startDialog() {
-        this.label = this.labelArr[0] + this.currentPhrase;
-        this.setDialogType(true);
-        this.bDialogStarted = true;
     }
 
     handleTempWordArr() {
@@ -767,17 +688,7 @@ class Panel {
                 }
             })
 
-            if (this.bDialogType) {
-                for (let i = 0; i < this.completeLines.length; i++) {
-                    this.lines[i] = "";
-                    // For lines avec un nombre d'espace = au nb de chars dans une ligne //! Version 2
-                    for (let j = 0; j < this.completeLines[i].length; j++) {
-                        this.lines[i] += " ";
-                    }
-                }
-            } else {
-                this.lines = this.completeLines;
-            }
+            this.lines = this.completeLines;
         }
     }
 
@@ -806,48 +717,25 @@ class Panel {
 
         if (!this.textOverflow) {
 
-            if (this.bDialogType && this.bDialogStarted) {
-
-                for (let i = 0; i < this.lines.length; i++) {
-                    switch (this.alignText) {
-                        case this.ALIGN_TEXT.Left:
-                            ctx.textAlign = "left";
-                            ctx.fillText(this.lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
-                            break;
-                        case this.ALIGN_TEXT.Center:
-                            ctx.textAlign = "center";
-                            ctx.fillText(this.lines[i], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
-                            break;
-                        case this.ALIGN_TEXT.Right:
-                            ctx.textAlign = "right";
-                            ctx.fillText(this.lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
-                            break;
-                    }
-                    this.textOffsetY += this.textLinesOffsetY;
+            for (let i = 0; i < this.lines.length; i++) {
+                switch (this.alignText) {
+                    case this.ALIGN_TEXT.Left:
+                        ctx.textAlign = "left";
+                        ctx.fillText(this.lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                        break;
+                    case this.ALIGN_TEXT.Center:
+                        ctx.textAlign = "center";
+                        ctx.fillText(this.lines[i], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
+                        break;
+                    case this.ALIGN_TEXT.Right:
+                        ctx.textAlign = "right";
+                        ctx.fillText(this.lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
+                        break;
                 }
-                this.textOffsetY = this.textOffsetYOrigin;
-
-            } else if (!this.bDialogType) {
-
-                for (let i = 0; i < this.lines.length; i++) {
-                    switch (this.alignText) {
-                        case this.ALIGN_TEXT.Left:
-                            ctx.textAlign = "left";
-                            ctx.fillText(this.lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
-                            break;
-                        case this.ALIGN_TEXT.Center:
-                            ctx.textAlign = "center";
-                            ctx.fillText(this.lines[i], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
-                            break;
-                        case this.ALIGN_TEXT.Right:
-                            ctx.textAlign = "right";
-                            ctx.fillText(this.lines[i], this.x + this.width - this.textOffsetX, this.y + this.textOffsetY);
-                            break;
-                    }
-                    this.textOffsetY += this.textLinesOffsetY;
-                }
-                this.textOffsetY = this.textOffsetYOrigin;
+                this.textOffsetY += this.textLinesOffsetY;
             }
+            this.textOffsetY = this.textOffsetYOrigin;
+
 
         } else {
             switch (this.alignText) {
