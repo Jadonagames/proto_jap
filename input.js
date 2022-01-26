@@ -261,15 +261,12 @@ function keyUp(k) {
         // console.log(" --- Lesson.hiraganaList : --- ");
         // console.table(Lessons.hiraganaList);
 
-        console.log("SAVE_DATA : ");
-        console.log(SaveManager.SAVE_DATA);
+        SaveManager.delete();
     }
 
     if (k.code == "Enter") { // Q ?
         // toMainMenu();
         TURN_NUMBER = MAX_TURN - 1;
-
-
 
     }
 
@@ -287,8 +284,6 @@ function keyUp(k) {
         // console.table(Particles.list);
 
 
-        // Game1.maru.setAlpha(1);
-        // Game1.batsu.setAlpha(1);
 
         // console.log(" --- MainMenu.randomKanaSpriteList : --- ");
         // console.table(MainMenu.randomKanaSpriteList);
@@ -298,8 +293,8 @@ function keyUp(k) {
         // console.table(Sprite.list);
         // console.log(" --- MainMenu.mainList : --- ");
         // console.table(MainMenu.mainList);
-        // console.log(" --- MainMenu.mainList : --- ");
-        // console.table(MainMenu.mainList);
+        // console.log(" --- MainMenu.optionsList : --- ");
+        // console.table(MainMenu.optionsList);
         // console.log(" --- MainMenu.creditsList : --- ");
         // console.table(MainMenu.creditsList);
         // console.log(" --- Button.list : --- ");
@@ -401,11 +396,13 @@ canvas.addEventListener("mousemove", e => {
                                     b.setBoxCollider(b.boxCollider.w, 22, b.boxCollider.offX, b.boxCollider.offY);
 
                                     b.bTextOffsetChanged = true;
+                                } else if (b instanceof KanaBtn && b.bTextOffsetChanged) {
+                                    b.resetOffsets();
                                 }
 
                             }
                         }
-                    } else {
+                    } else { //? Mouse Moving and NO collision
                         if (b.getState() == Button.STATE.Hover) {
                             if (b.hoverCB) {
                                 b.getTooltip().forEach(sp => {
@@ -503,6 +500,37 @@ canvas.addEventListener("mousemove", e => {
 
 })
 
+canvas.addEventListener("wheel", e => {
+    Panel.currentList.forEach(p => {
+        if (p.getState() != Panel.STATE.Inactive && p instanceof DropdownPanel && p.getState() == Panel.STATE.Hover) {
+            if (p.list.length > 8) {
+                if (e.deltaY == -100) {        //? y++
+                    if (p.currentPos > 0) {
+                        p.currentPos--;        //? Vers le haut de la liste
+                        p.cursor.offY--;
+                        p.cursorUp.offY = p.cursor.offY - 2;  //! -2 ??
+                        p.cursorDown.offY = p.cursor.offY + p.cursor.scaleY;
+                        if (p.currentPos == 0) {
+                            p.cursor.y = p.cursorStartPos;
+                        }
+                    }
+                } else if (e.deltaY == 100) {  //? y--
+                    if (p.currentPos < p.list.length - 8) {
+                        p.currentPos++;
+                        p.cursor.offY++;
+                        p.cursorUp.offY = p.cursor.offY - 2;
+                        p.cursorDown.offY = p.cursor.offY + p.cursor.scaleY;
+                        if (p.currentPos == p.list.length - 8) {
+                            p.cursor.y = p.limit - p.cursor.scaleY - 2; //! -2 ??
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+});
+
 canvas.addEventListener("mousedown", e => {
 
     if (!TRANSITION && e.button == 0) { // Left click !
@@ -535,7 +563,12 @@ canvas.addEventListener("mousedown", e => {
                             b.textOffsetX += 1;
                             b.textOffsetY += 1;
                             b.bTextOffsetChanged = true;
+                        } else if (b instanceof KanaBtn && !b.bTextOffsetChanged) {
+                            b.textOffsetX = b.textOffsetXDown;
+                            b.textOffsetY = b.textOffsetYDown;
+                            b.bTextOffsetChanged = true;
                         }
+
                         MOUSE_SPRITE.changeAnimation("down");
                         return false;
                     }
