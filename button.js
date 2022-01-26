@@ -97,6 +97,8 @@ class Button {
         this.textOffsetY = 13;
         this.textOffsetXOrigin = this.textOffsetX;
         this.textOffsetYOrigin = this.textOffsetY;
+        this.textOffsetXDown = this.textOffsetX + 2;
+        this.textOffsetYDown = this.textOffsetY + 2;
         this.bTextOffsetChanged = false;
 
         this.tooltip = [];
@@ -369,11 +371,13 @@ class Button {
         this.alignText = pAlign;
     }
 
-    setOffsets(pX = 0, pY = 13) {
+    setOffsets(pX = 0, pY = 13, pDown = 2) {
         this.textOffsetX = pX;
         this.textOffsetY = pY;
         this.textOffsetXOrigin = pX;
         this.textOffsetYOrigin = pY;
+        this.textOffsetXDown = this.textOffsetX + pDown;
+        this.textOffsetYDown = this.textOffsetY + pDown;
     }
 
     resetOffsets() {
