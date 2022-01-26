@@ -890,11 +890,13 @@ let LESSON_RANGE = false;
 let RND_ARR = []; // Liste des choix 
 let RND_CHOICE = {}; // Le Bon choix
 let REMAINING_CHOICES = [];
+let TOTAL_NUMBER = 5;
 let CHOICES_DONE = [];
 let ALREADY_RANDOM = -1;
 let KANA_NUMBER = 0;
 let TURN_NUMBER = -1;
 let MAX_TURN = 5;
+let MISSED_LIST = [];
 // ----------------------------------
 
 
@@ -1000,8 +1002,8 @@ function LoadAssets() {
     Sound.list["kana_zo"] = new Sound("./sounds/kana/zo.mp3");
 
     Sound.list["kana_da"] = new Sound("./sounds/kana/da.mp3");
-    Sound.list["kana_di"] = new Sound("./sounds/kana/ji.mp3"); //!
-    Sound.list["kana_du"] = new Sound("./sounds/kana/zu.mp3"); //!
+    Sound.list["kana_di"] = new Sound("./sounds/kana/ji.mp3"); //! -----
+    Sound.list["kana_du"] = new Sound("./sounds/kana/zu.mp3"); //! -----
     Sound.list["kana_de"] = new Sound("./sounds/kana/de.mp3");
     Sound.list["kana_do"] = new Sound("./sounds/kana/do.mp3");
 

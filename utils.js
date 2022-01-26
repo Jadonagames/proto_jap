@@ -323,11 +323,13 @@ function randomizer(pArr, pNumber, pGoodAnswer) {
 function resetChoices(pRange, pLessonRange) {
     CHOICES_DONE = [];
     // ALREADY_RANDOM = -1;
-    if (pRange == 1) {
+    if (pRange == 1) {                        //? 
         for (let i = 0; i < char.h.length; i++) {
             REMAINING_CHOICES.push(i);
         }
-    } else if (pLessonRange) {
+        TOTAL_NUMBER = REMAINING_CHOICES.length;
+
+    } else if (pLessonRange) {                 //? training + lesson test
 
         let indexOffset = 4;
         if (pRange == "yo" || pRange == "n") indexOffset = 2;
@@ -337,13 +339,13 @@ function resetChoices(pRange, pLessonRange) {
             REMAINING_CHOICES.push(i);
         }
 
-
-
-    } else {
+        TOTAL_NUMBER = REMAINING_CHOICES.length;
+    } else {                                     //? fulltest
         let index = char.r.indexOf(pRange);
         for (let i = 0; i <= index; i++) {
             REMAINING_CHOICES.push(i);
         }
+        TOTAL_NUMBER = REMAINING_CHOICES.length;
     }
 }
 
@@ -486,6 +488,11 @@ function randomlyMix(pChoiceType, pNumber, pRange, pLessonRange) { // choiceType
     }
 }
 
+function okNextChar() {
+    Game1.chalkboardBrush.changeAnimation("erase");
+    Game1.moe.changeAnimation("erase");
+}
+
 function checkIfValid(pChosen) {
     let choiced = "";
 
@@ -501,13 +508,23 @@ function checkIfValid(pChosen) {
             break;
     }
 
-    if (pChosen.char == choiced) {
+    if (pChosen.char == choiced) {        //? OK VALID
+
+        TRANSITION = true;
+        Game1.moe.changeAnimation("good");
+
+        Game1.bAlreadyMissed = false;
+        Game1.timer = 5;
+        Game1.timerNumber.changeAnimation("5");
+        Game1.timerSprite.changeAnimation("start");
+
         Button.currentList.forEach(b => {
             if (b instanceof KanaBtn) {
                 b.changeSpriteAnimation("normal");
                 b.setState(Button.STATE.Normal);
                 if (b.label.slice(5) == RND_CHOICE.r) {                        //! ATTENTION b.char.slice() est obligatoirement romaji (hira_a, kata_a, roma_a) !!
-                    Game1.maru.setPosition(b.x + 3, b.y + 3);
+                    Game1.displayStars(b.x, b.y);
+                    b.changeSpriteAnimation("correct");
                 }
             }
         });
@@ -516,19 +533,23 @@ function checkIfValid(pChosen) {
                 ALREADY_RANDOM = i;
             }
         }
-        Game1.bTimerActive = false;
-        // let timeOut = setTimeout(handleCorrectAnswer, 1000);
-        Game1.chalkboardBrush.changeAnimation("erase");
-        Game1.moe.changeAnimation("erase");
-        Game1.maru.setAlpha(1);
-        TRANSITION = true;
-    } else {
-        Game1.setMiss();
-        Game1.batsu.setAlpha(1);
+
+    } else {                            //? NOT VALID
+        if (!MISSED_LIST.includes(RND_CHOICE.r)) {
+            MISSED_LIST.push(RND_CHOICE.r);
+        }
+        console.table(MISSED_LIST);
+        if (!Game1.bAlreadyMissed) {
+            Game1.bAlreadyMissed = true;
+            Game1.setMiss();
+        }
+        Game1.moe.changeAnimation("bad");
+        Game1.batsuSprite.changeAnimation("batsu");
         Button.currentList.forEach(b => {
             if (b instanceof KanaBtn) {
                 if (b.label.slice(5) == pChosen.label) {
-                    Game1.batsu.setPosition(b.x + 3, b.y + 3);
+                    b.getSprite().changeAnimation("batsu");
+                    b.setState(Button.STATE.Inactive);
                 }
             }
         });
@@ -540,13 +561,16 @@ function handleCorrectAnswer() {
 
     Game1.chalkboardBrush.changeAnimation("normal");
     Game1.moe.changeAnimation("idle");
-    Game1.maru.setAlpha(0);
     TRANSITION = false;
 
     let choiceLabel = "";
-    Game1.resetTimer();
     KANA_NUMBER++;
     randomlyMix(CHOICE_TYPE, CHAR_NUMBERS, RANGE, LESSON_RANGE);
+
+    if (!Game1.bEndGame) {
+        Game1.timerSprite.changeAnimation("normal");
+    }
+
     switch (ANSWER_TYPE) {
         case "h":
             choiceLabel = "hira_" + RND_CHOICE.r;
@@ -641,6 +665,5 @@ function setScreenShake(pBool) {
     SCREEN_SHAKE = pBool;
     if (!pBool) {
         canvas.style.backgroundColor = canvasOriginBgColor;
-        Game1.batsu.setAlpha(0);
     }
 }

@@ -6,14 +6,18 @@ class KanaBtn extends Button {
     drawLabel(ctx) {
 
         if (this.state == Button.STATE.Hover) {
-            this.fontMainColor = "rgb(255,255,255)";
-            ctx.fillStyle = this.fontMainColor;
+            ctx.fillStyle = "rgb(255,255,255)";
+            ctx.shadowColor = "rgba(23,88,49,1)";
+        } else if (this.state == Button.STATE.Inactive) {
+            ctx.fillStyle = "rgb(0,0,0,0.5)";
+            ctx.shadowColor = "rgba(23,88,49,0.5)";
         } else {
-            this.fontMainColor = "rgb(0,0,0)";
-            ctx.fillStyle = this.fontMainColor;
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.shadowColor = "rgba(23,88,49,1)";
         }
 
         ctx.font = this.fontSize + "px " + this.font;
+        ctx.shadowOffsetY = 4;
 
         switch (this.alignText) {
             case this.ALIGN_TEXT.Left:
@@ -25,10 +29,7 @@ class KanaBtn extends Button {
                 break;
             case this.ALIGN_TEXT.Center:
                 ctx.textAlign = "center";
-                ctx.fillStyle = this.fontBackgroundColor;
-                ctx.fillText(LANG[this.label].toUpperCase(), this.x + (this.width * 0.5) + 0.5, this.y + this.textOffsetY + 1);
-                ctx.fillStyle = this.fontMainColor;
-                ctx.fillText(LANG[this.label].toUpperCase(), this.x + (this.width * 0.5) + 0.5, this.y + this.textOffsetY); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                ctx.fillText(LANG[this.label].toUpperCase(), this.x + this.textOffsetX + (this.width * 0.5) + 0.5, this.y + this.textOffsetY); // +0.5 Car en centrant le texte se retrouve entre deux pixels
                 break;
             case this.ALIGN_TEXT.Right:
                 ctx.textAlign = "right";
@@ -36,8 +37,8 @@ class KanaBtn extends Button {
                 break;
         }
 
-        ctx.fillStyle = "rgb(0,0,0)";
-
+        ctx.shadowOffsetY = 0;
+        ctx.fillStyle = "rgba(0,0,0,1)";
         ctx.textAlign = "left";
     }
 }
