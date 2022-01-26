@@ -65,14 +65,14 @@ class Lessons {
         backBtn.getSprite().changeAnimation("normal");
         Lessons.mainList.push(backBtn.getSprite());
 
-        let introBtn = new Button({ w: 50, h: 20, v: 5 }, 380, 20, null, { cb: SaveManager.save, arg: [{ type: "prologue", value: 1 }] }, "lessons", Lessons.STATE.Main, "Infos", 1);
-        Lessons.mainList.push(introBtn.getSprite());
+        // let introBtn = new Button({ w: 50, h: 20, v: 5 }, 380, 20, null, { cb: SaveManager.save, arg: [{ type: "prologue", value: 1 }] }, "lessons", Lessons.STATE.Main, "Infos", 1);
+        // Lessons.mainList.push(introBtn.getSprite());
 
-        let introTooltip = new Panel({ w: 300, h: 76, v: 5 }, centerX(300), CANVAS_HEIGHT - 76, null, "lessons", Lessons.STATE.Main, "Infos", 1);
-        introTooltip.setOffsets(0, 18);
+        // let introTooltip = new Panel({ w: 300, h: 76, v: 5 }, centerX(300), CANVAS_HEIGHT - 76, null, "lessons", Lessons.STATE.Main, "Infos", 1);
+        // introTooltip.setOffsets(0, 18);
 
-        introBtn.setTooltip(introTooltip);
-        introBtn.setHoverCB(displayTooltip, { list: "lessons.main", tooltip: introBtn.getTooltip() });
+        // introBtn.setTooltip(introTooltip);
+        // introBtn.setHoverCB(displayTooltip, { list: "lessons.main", tooltip: introBtn.getTooltip() });
 
         this.starTrophyList = [];
 
@@ -118,7 +118,7 @@ class Lessons {
             }
 
             // Le fait d'utiliser la même variable offYcolor pour les tooltip et pour les buttons est totalement un hasard (même valeur d'incrément : 29), normalement c'est avec une variable différente offYPanelColor
-            let tooltipPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT - 70, null, "lessons", Lessons.STATE.Hiragana, "", [-1, { y_t: 748 + offYColor }, { hw: 11, hh: 9, vw: 9, vh: 11 }]); // 128 = 2*9 (corner*2) + 10 * 11 (w * t.w or b.w)
+            let tooltipPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT - 70, null, "lessons", Lessons.STATE.Hiragana, "", [-1, { y_t: 748 + offYColor }]); // 128 = 2*9 (corner*2) + 10 * 11 (w * t.w or b.w)
             tooltipPanel.setOffsets(5, 5);
             tooltipPanel.changePanelSprite("t", 4, { x: 427, y: 748 + offYColor });
             tooltipPanel.changePanelSprite("t", 5, { x: 438, y: 748 + offYColor });
@@ -196,7 +196,7 @@ class Lessons {
                 Lessons.addStarTrophy("k" + i);
             }
 
-            let tooltipPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT - 70, null, "lessons", Lessons.STATE.Katakana, "", [-1, { y_t: 748 + offYColor }, { hw: 11, hh: 9, vw: 9, vh: 11 }]); // 128 = 2*9 (corner*2) + 10 * 11 (w * t.w or b.w)
+            let tooltipPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT - 70, null, "lessons", Lessons.STATE.Katakana, "", [-1, { y_t: 748 + offYColor }]); // 128 = 2*9 (corner*2) + 10 * 11 (w * t.w or b.w)
             tooltipPanel.setOffsets(5, 5);
             tooltipPanel.changePanelSprite("t", 4, { x: 427, y: 748 + offYColor });
             tooltipPanel.changePanelSprite("t", 5, { x: 438, y: 748 + offYColor });
@@ -238,7 +238,7 @@ class Lessons {
         // ---------------- LESSON ----------------
         this.backgroundSprite = null;
 
-        this.lessonTitlePanel = new Panel({ w: 6, h: 1, v: 9 }, centerX(84, 100), CANVAS_HEIGHT + 7, null, "lessons", Lessons.STATE.Lesson, "", [-1, { y_t: 748 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]);
+        this.lessonTitlePanel = new Panel({ w: 6, h: 1, v: 9 }, centerX(84, 100), CANVAS_HEIGHT + 7, null, "lessons", Lessons.STATE.Lesson, "", [-1, { y_t: 748 }]);
         this.lessonTitlePanel.changePanelSprite("t", 2, { x: 427, y: 748 });
         this.lessonTitlePanel.changePanelSprite("t", 3, { x: 438, y: 748 });
         this.lessonTitlePanel.changePanelSprite("b", 2, { x: 427, y: 757 });
@@ -249,7 +249,7 @@ class Lessons {
         this.lessonBackBtn = null;
         this.lessonMainPanel = new Panel({ w: 450, h: 277, v: 7 }, 0, CANVAS_HEIGHT + 17, null, "lessons", Lessons.STATE.Lesson, "", 4);
 
-        this.informationPanel = new Panel({ w: 14, h: 18, v: 9 }, 259, CANVAS_HEIGHT + 31, null, "lessons", Lessons.STATE.Lesson, "Description", [-1, { y_t: 748 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]);
+        this.informationPanel = new Panel({ w: 14, h: 18, v: 9 }, 259, CANVAS_HEIGHT + 31, null, "lessons", Lessons.STATE.Lesson, "Description", [-1, { y_t: 748 }]);
         this.informationPanel.changePanelSprite("t", 6, { x: 427, y: 748 });
         this.informationPanel.changePanelSprite("t", 7, { x: 438, y: 748 });
         this.informationPanel.changePanelSprite("b", 6, { x: 427, y: 757 });
@@ -265,9 +265,7 @@ class Lessons {
         this.lessonTestBtn = null;
         this.fullTestBtn = null;
 
-        this.lessonTestTrophyBase = null;
         this.lessonTestTrophy = null;
-        this.fullTestTrophyBase = null;
         this.fullTestTrophy = null;
 
         this.lessonTestTrophyLevel = 0;
@@ -440,7 +438,7 @@ class Lessons {
             this.trainingBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
             Lessons.lessonList.push(this.trainingBtn.getSprite());
 
-            this.lessonTestBtn = new Button({ w: 60, h: 31 }, centerX(90, 10, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Lesson_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Lesson_test", 0, true);
+            this.lessonTestBtn = new Button({ w: 60, h: 31 }, centerX(60, 10, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Lesson_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Lesson_test", 0, true);
             this.lessonTestBtn.getSprite().addAnimation("normal", { x: 342, y: 408 });
             this.lessonTestBtn.getSprite().addAnimation("hover", { x: 402, y: 408 }, 6, 0.05, false);
             this.lessonTestBtn.getSprite().addAnimation("down", { x: 762, y: 408 });
@@ -460,19 +458,27 @@ class Lessons {
                 trophyLevel2 = SaveManager.SAVE_DATA["lessons"]["k" + lessonNumber]["fullTestGeneral"];
             }
 
-            this.lessonTestTrophyBase = new Sprite({ w: 36, h: 34 }, this.lessonTestBtn.x + 64, this.lessonTestBtn.y - 2);
-            this.lessonTestTrophyBase.getSprite().addAnimation("normal", { x: 456, y: 788 });
-            this.lessonTestTrophyBase.getSprite().changeAnimation("normal");
-            Lessons.lessonList.push(this.lessonTestTrophyBase.getSprite());
-
-            if (trophyLevel1 > 0) {
-                this.lessonTestTrophy = new Sprite({ w: 16, h: 19 }, this.lessonTestBtn.x + 74, this.lessonTestBtn.y + 5);
-                this.lessonTestTrophy.getSprite().addAnimation("normal", { x: 30 + trophyLevel1, y: 112 });
-                this.lessonTestTrophy.getSprite().changeAnimation("normal");
-                Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
+            let multiplicator = 0;
+            switch (trophyLevel1) {
+                case 16:
+                    multiplicator = 1;
+                    break;
+                case 32:
+                    multiplicator = 2;
+                    break;
+                case 48:
+                    multiplicator = 3;
+                    break;
+                default:
+                    multiplicator = 0;
             }
 
-            this.fullTestBtn = new Button({ w: 60, h: 31 }, centerX(90, 120, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.lengtDh - 1], type: kana[0], testType: "Full_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Full_test", 0, true);
+            this.lessonTestTrophy = new Sprite({ w: 36, h: 36 }, this.lessonTestBtn.x + 64, this.lessonTestBtn.y - 4);
+            this.lessonTestTrophy.getSprite().addAnimation("normal", { x: 452 + (36 * multiplicator), y: 826 });
+            this.lessonTestTrophy.getSprite().changeAnimation("normal");
+            Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
+
+            this.fullTestBtn = new Button({ w: 60, h: 31 }, centerX(60, 120, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Full_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Full_test", 0, true);
             this.fullTestBtn.getSprite().addAnimation("normal", { x: 342, y: 408 });
             this.fullTestBtn.getSprite().addAnimation("hover", { x: 402, y: 408 }, 6, 0.05, false);
             this.fullTestBtn.getSprite().addAnimation("down", { x: 762, y: 408 });
@@ -481,18 +487,26 @@ class Lessons {
             this.fullTestBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
             Lessons.lessonList.push(this.fullTestBtn.getSprite());
 
-            this.fullTestTrophyBase = new Sprite({ w: 36, h: 34 }, this.fullTestBtn.x + 64, this.fullTestBtn.y - 2);
-            this.fullTestTrophyBase.getSprite().addAnimation("normal", { x: 456, y: 788 });
-            this.fullTestTrophyBase.getSprite().changeAnimation("normal");
-            Lessons.lessonList.push(this.fullTestTrophyBase.getSprite());
-
-
-            if (trophyLevel2 > 0) {
-                this.fullTestTrophy = new Sprite({ w: 16, h: 19 }, this.fullTestBtn.x + 74, this.fullTestBtn.y + 5);
-                this.fullTestTrophy.getSprite().addAnimation("normal", { x: 30 + trophyLevel2, y: 112 });
-                this.fullTestTrophy.getSprite().changeAnimation("normal");
-                Lessons.lessonList.push(this.fullTestTrophy.getSprite());
+            multiplicator = 0;
+            switch (trophyLevel2) {
+                case 16:
+                    multiplicator = 1;
+                    break;
+                case 32:
+                    multiplicator = 2;
+                    break;
+                case 48:
+                    multiplicator = 3;
+                    break;
+                default:
+                    multiplicator = 0;
             }
+
+
+            this.fullTestTrophy = new Sprite({ w: 36, h: 36 }, this.fullTestBtn.x + 64, this.fullTestBtn.y - 4);
+            this.fullTestTrophy.getSprite().addAnimation("normal", { x: 452 + (36 * multiplicator), y: 826 });
+            this.fullTestTrophy.getSprite().changeAnimation("normal");
+            Lessons.lessonList.push(this.fullTestTrophy.getSprite());
 
 
         } else { // BACK TO LESSONS
@@ -534,12 +548,11 @@ class Lessons {
             this.chooseTypeBg.fade(0.01);
             Lessons.lessonList.push(this.chooseTypeBg.getSprite());
 
-            this.chooseTypePanel = new Panel({ w: 17, h: 17, v: 16 }, centerX(202), CANVAS_HEIGHT + 40, null, "lessons", Lessons.STATE.Lesson, "", [1, null, { hw: 10, hh: 16, vw: 16, vh: 10 }]);
+            this.chooseTypePanel = new Panel({ w: 17, h: 17, v: 16 }, centerX(202), CANVAS_HEIGHT + 50, null, "lessons", Lessons.STATE.Lesson, "", [1]);
             this.chooseTypePanel.changePanelSprite("t", 4, { x: 564, y: 748 });
             this.chooseTypePanel.changePanelSprite("t", 12, { x: 564, y: 748 });
 
-            this.chooseTypePanel.setAlpha(0);
-            this.chooseTypePanel.fade(0.01);
+            this.chooseTypePanel.beginMoving({ x: centerX(202), y: CANVAS_HEIGHT + 40 })
 
             Panel.list.push(this.chooseTypePanel);
             Panel.currentList.push(this.chooseTypePanel);
@@ -722,7 +735,24 @@ class Lessons {
     }
 
     static updateTrophyValue(pTrophyType, pValue) { // "general", "kana_to_roma", "roma_to_kana"
-        let newValue = 30 + pValue;
+        let newValue = 30 + pValue; // pValue == 48 32 16
+        let multiplicator = 0
+        switch (pValue) {
+            case 16:
+                multiplicator = 1;
+                break;
+            case 32:
+                multiplicator = 2;
+                break;
+            case 48:
+                multiplicator = 3;
+                break;
+        }
+
+        log("updateTrophyValue");
+        log("trophy type : " + pTrophyType);
+        log("value : " + pValue);
+
         switch (pTrophyType) {
             case "kana_to_roma":
                 if (this.kanaToRomaTrophy.currentAnimation.origin.x < newValue) this.kanaToRomaTrophy.resetAnimations("normal", { x: newValue, y: this.kanaToRomaTrophy.currentAnimation.origin.y });
@@ -731,10 +761,20 @@ class Lessons {
                 if (this.romaTokanaTrophy.currentAnimation.origin.x < newValue) this.romaTokanaTrophy.resetAnimations("normal", { x: newValue, y: this.romaTokanaTrophy.currentAnimation.origin.y });
                 break;
             case "lessonTest":
-                if (this.lessonTestTrophy.currentAnimation.origin.x < newValue) this.lessonTestTrophy.resetAnimations("normal", { x: newValue, y: this.lessonTestTrophy.currentAnimation.origin.y });
+                if (this.lessonTestTrophy.currentAnimation.origin.x < 452 + (36 * multiplicator)) {
+                    this.lessonTestTrophy.resetAnimations("normal", { x: 452 + (36 * multiplicator), y: this.lessonTestTrophy.currentAnimation.origin.y });
+                    if (!Lessons.lessonList.includes(this.lessonTestTrophy.getSprite())) {
+                        Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
+                    }
+                }
                 break;
             case "fullTest":
-                if (this.fullTestTrophy.currentAnimation.origin.x < newValue) this.fullTestTrophy.resetAnimations("normal", { x: newValue, y: this.fullTestTrophy.currentAnimation.origin.y });
+                if (this.fullTestTrophy.currentAnimation.origin.x < 452 + (36 * multiplicator)) {
+                    this.fullTestTrophy.resetAnimations("normal", { x: 452 + (36 * multiplicator), y: this.fullTestTrophy.currentAnimation.origin.y });
+                    if (!Lessons.lessonList.includes(this.fullTestTrophy.getSprite())) {
+                        Lessons.lessonList.push(this.fullTestTrophy.getSprite());
+                    }
+                }
                 break;
         }
     }
@@ -902,11 +942,11 @@ class Lessons {
         }
 
         ctx.font = "10px jpfont";
-        if (SaveManager.SAVE_DATA["prologue"]) {
-            ctx.fillText("Prologue OK", 0, 10);
-        } else {
-            ctx.fillText("Prologue NOT YET, GO prologue !!", 0, 10);
-        }
+        // if (SaveManager.SAVE_DATA["prologue"]) {
+        //     ctx.fillText("Prologue OK", 0, 10);
+        // } else {
+        //     ctx.fillText("Prologue NOT YET, GO prologue !!", 0, 10);
+        // }
 
         ctx.font = "20px jpfont";
         ctx.textAlign = "center";
