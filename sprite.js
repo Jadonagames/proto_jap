@@ -132,7 +132,7 @@ class Sprite {
         });
     }
 
-    setAnimationCB(pName, pCallback) {
+    setAnimationCB(pName, pCallback) { //? Se lance quand l'animation en question se termine (temps de la dernière frame terminé)
         this.animations.forEach(animation => {
             if (animation.name == pName) {
                 animation.callback = pCallback;
@@ -140,7 +140,7 @@ class Sprite {
         });
     }
 
-    setAnimationFrameCB(pName, pFrameCallback) {
+    setAnimationFrameCB(pName, pFrameCallback) { //? Se lance à l'arrivée sur cette frame
         this.animations.forEach(animation => {
             if (animation.name == pName) {
                 animation.frameCallback = pFrameCallback;
@@ -300,6 +300,15 @@ class Sprite {
                     toMainMenu();
                 }
                 if (!MainMenu.bTitleFinish) this.direction = -this.direction;
+            }
+        } else if (this.type == "st") {
+            if (this.speedCount <= this.moveSpeed) {
+                this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.moveSpeed);
+                this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
+                this.speedCount += dt;
+
+            } else {
+                this.delete = true;
             }
         }
 

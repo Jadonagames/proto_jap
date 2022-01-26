@@ -7,6 +7,24 @@ ph_text	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum do
 ph_text_0	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
 ph_text_1	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.	I'm looking at you through the glass. Cause I'm a star, lol.	I'm looking at you through the glass. Cause I'm a star, lol.
 ph_text_2	Puis fade out du panel de dialogue...	Button class and Panel class are hobo onaji nanode nanka shinaito patatas	Button class and Panel class are hobo onaji nanode nanka shinaito patatas
+lesson_text_0	Bienvenue dans la partie leçon.		
+lesson_text_1	La partie Leçon est composée de 15 parties pour chaque syllabaire Hiragana/Katakana		
+lesson_text_2	Dans chacune des leçons vous aurez 5 caractères à apprendre, vous avez une animation pour l'écriture et vous pouvez jouer un son.		
+lesson_text_3	La partie Informations peut contenir quelques infos importantes à ne pas négliger.		
+lesson_text_4	Pour chaque leçon vous avez trois possibilités.		
+lesson_text_5	Une partie Entraînement pour vous entraîner autant que vous le voulez.		
+lesson_text_6	Le Test Leçon pour réaliser un test sur la leçon en cours, comme il n'y a que 5 caractères, chacun d'entre eux passera 3 fois, donc 15 questions en tout.		
+lesson_text_7	"Test complet" est un test comprenant l'ensemble des caractères des leçons précédentes mélangés à ceux de la leçon actuelle. Afin de réviser en même temps les précédents.		
+lesson_text_8	Le test complet de la leçon 15 comprends plus de 71 questions !		
+lesson_text_9	Pour chaque test vous avez le choix entre un kana -> 4 choix de lecture. Ou la lecture -> 4 choix de kana.		
+lesson_text_10	Il y a donc 4 tests au final par leçon (sauf la leçon 1 qui n'a pas de Test Complet pour des raisons logiques)		
+lesson_text_11	Selon votre résultat aux tests vous obtiendrez un trophée : or (score parfait), argent ou bronze.		
+lesson_text_12	Pour passer à la leçon suivante vous devez réussir chaque test -> avoir au moins un trophée bronze (la moyenne).		
+lesson_text_13	Bonne chance		
+lesson_text_14			
+lesson_text_15			
+lesson_text_16			
+			
 hello	hello	bonjour	こんにちは
 game	game	jeu	ゲーム
 Start	Start	Commencer	始める
@@ -27,6 +45,11 @@ Lesson_12	Lesson 12	Leçon 12	レッスン 12
 Lesson_13	Lesson 13	Leçon 13	レッスン 13
 Lesson_14	Lesson 14	Leçon 14	レッスン 14
 Lesson_15	Lesson 15	Leçon 15	レッスン 15
+nb_0	0	0	0
+nb_1	1	1	1
+nb_2	2	2	2
+symbol_+	plus	plus	plus
+symbol_-	-	-	-
 Content	Content	Contenu	内容
 			
 hira_aiueo	あ　い　う　え　お	あ　い　う　え　お	あ　い　う　え　お
@@ -102,7 +125,9 @@ a_to_ア	A -> ア	A -> ア
 Infos	Infos	Infos	情報
 Credits	Credits	Crédits	クレジット
 Settings	Settings	Options	設定
+Congratulations	Congratulations !	Félicitations !	 おめでとうございます！
 game_over	Game over	Fin de la partie	ゲームオーバー
+to_review	To review	À revoir	-
 Restart	Restart	Rejouer	-
 yes	yes	oui	はい
 no	no	non	いいえ
@@ -373,7 +398,7 @@ hira_sa_description	attention écriture	attention écriture
 hira_shi_description			
 hira_su_description	Depend on context the sound [u]	Selon certains contextes le son [u] peut ne pas être prononcé	
 hira_se_description			
-hira_so_description			
+hira_so_description	attention écriture	attention écriture	
 hira_ta_description			
 hira_chi_description		t'chi	
 hira_tsu_description	Version Petit	Version Petit	

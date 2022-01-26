@@ -55,7 +55,31 @@ class Panel {
 
         this.id = pId;
 
-        if (Array.isArray(this.id)) { // this.id = [-1, { y_t: 123 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]
+        if (Array.isArray(this.id)) { // this.id = [-1, { y_t: 123 }]
+
+            switch (this.id[0]) {
+                case -1: //? Panel (Tile) plusieurs couleurs   ---- this.id = [-1, { y_t: 123 }]
+                    this.id.push({});
+                    this.id[2].hw = 11;
+                    this.id[2].hh = 9;
+                    this.id[2].vw = 9;
+                    this.id[2].vh = 11;
+                    break;
+                case 1: //? Panel (Tile) "chooseType" / "timerPanel" / "EndGame" / "MissedTiled"
+                    this.id.push(null, {});
+                    this.id[2].hw = 10;
+                    this.id[2].hh = 16;
+                    this.id[2].vw = 16;
+                    this.id[2].vh = 10;
+                    break;
+                case 2: //? Panel (Tile) Misses dropdown panel
+                    this.id.push(null, {});
+                    this.id[2].hw = 10;
+                    this.id[2].hh = 3;
+                    this.id[2].vw = 3;
+                    this.id[2].vh = 10;
+                    break;
+            }
 
             let size = { corner: { w: pSize.v, h: pSize.v }, hori: { w: this.id[2].hw, h: this.id[2].hh }, verti: { w: this.id[2].vw, h: this.id[2].vh } };
             this.internWidth = this.width * size.hori.w;
@@ -128,8 +152,7 @@ class Panel {
             this.label = pLabel;
             this.handleTempWordArr();
         }
-
-        this.bMoving = false;
+        this.bNumber = false;
 
         this.hoverable = false;
         this.hoverCB = null;
@@ -213,13 +236,17 @@ class Panel {
             let y_t = 0;
 
             switch (pId[0]) {
-                case -1: //? Panel (Tile) plusieurs couleurs   ---- this.id = [-1, { y_t: 123 }, { hw: 11, hh: 9, vw: 9, vh: 11 }]
+                case -1: //? Panel (Tile) plusieurs couleurs   ---- this.id = [-1, { y_t: 123 }]
                     x_l = 380;
                     y_t = pId[1].y_t;
                     break;
-                case 1: //? Panel (Tile) "chooseType"
+                case 1: //? Panel (Tile) "chooseType" / "timerPanel" / "EndGame" / "MissedTiled"
                     x_l = 522;
                     y_t = 748;
+                    break;
+                case 2: //? Misses dropdown panel
+                    x_l = 704;
+                    y_t = 800;
                     break;
             }
 
@@ -271,7 +298,7 @@ class Panel {
                     x_l = 0;
                     y_t = 48;
                     break;
-                case 1: //? Panel original
+                case 1: //? Panel original (v: 5)
                     x_l = 0;
                     y_t = 57;
                     break;
@@ -283,9 +310,13 @@ class Panel {
                     x_l = 13;
                     y_t = 57;
                     break;
-                case 2: //? Panel transparent
+                case 2: //? Panel transparent (v: 1)
                     x_l = 44;
                     y_t = 1;
+                    break;
+                case 21: //? Panel sombre (v: 1)
+                    x_l = 44;
+                    y_t = 5;
                     break;
                 case 3: //? Panel kana (one lesson screen)
                     x_l = 456;
@@ -296,7 +327,7 @@ class Panel {
                     x_l = 456;
                     y_t = 769;
                     break;
-                case 5: //? Panel title of panel tile id=1 "chooseType"
+                case 5: //? Panel title of panel tile id=1 "chooseType" (v: 16)
                     x_l = 574;
                     y_t = 748;
                     break;
@@ -448,6 +479,16 @@ class Panel {
 
     setLabel(pNewLabel) {
         this.label = pNewLabel;
+    }
+
+    changeLabel(pNewLabel) {
+        this.label = pNewLabel;
+        this.completeLines = [];
+        this.handleTempWordArr();
+    }
+
+    setNumberBool(pBool) {
+        this.bNumber = pBool;
     }
 
     setFont(pFont) {
@@ -617,6 +658,18 @@ class Panel {
         }
     }
 
+    beginMoving(pDestination, pMoveSpeed = 0.5, pBoolAlpha = true, pStartAlpha = 0, pFade = 0.02) { //? Lance des fonctions récurrentes pour éviter les répétition
+        this.setDestination({ x: pDestination.x, y: pDestination.y });
+        this.setCanMove(true);
+        this.setMovingSpeed(pMoveSpeed);
+        this.setMoving(true);
+
+        if (pBoolAlpha) {
+            this.setAlpha(pStartAlpha);
+            this.fade(pFade);
+        }
+    }
+
     setChildBtn(pBtn, pList) {
         this.childButton = pBtn;
         this.childButtonList = pList;
@@ -634,8 +687,10 @@ class Panel {
                 // this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
                 // this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
                 if (this.arriveDir) {
+                    this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
                     this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
                 } else {
+                    this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
                     this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
                 }
 
@@ -721,11 +776,18 @@ class Panel {
                 switch (this.alignText) {
                     case this.ALIGN_TEXT.Left:
                         ctx.textAlign = "left";
-                        ctx.fillText(this.lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                        if (this.bNumber) {
+                        } else {
+                            ctx.fillText(this.lines[i], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                        }
                         break;
                     case this.ALIGN_TEXT.Center:
                         ctx.textAlign = "center";
-                        ctx.fillText(this.lines[i], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
+                        if (this.bNumber) {
+                            ctx.fillText(this.lines[i], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
+                        } else {
+                            ctx.fillText(this.lines[i], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
+                        }
                         break;
                     case this.ALIGN_TEXT.Right:
                         ctx.textAlign = "right";
@@ -748,7 +810,11 @@ class Panel {
                     if (Array.isArray(this.id)) {
                         ctx.fillText(LANG[this.label], this.x + (this.totalWidth * 0.5), this.y + this.textOffsetY);
                     } else {
-                        ctx.fillText(LANG[this.label], this.x + (this.width * 0.5), this.y + this.textOffsetY); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                        if (this.bNumber) {
+                            ctx.fillText(this.label, this.x + (this.width * 0.5), this.y + this.textOffsetY);
+                        } else {
+                            ctx.fillText(LANG[this.label], this.x + (this.width * 0.5), this.y + this.textOffsetY); // +0.5 Car en centrant le texte se retrouve entre deux pixels
+                        }
                     }
                     break;
                 case this.ALIGN_TEXT.Right:

@@ -13,6 +13,7 @@ class Particles {
         this.life = pLife;
         this.delete = false;
         this.timer = new Timer(0.1, this.decreaseLife.bind(this));
+        this.speed = 0.2;
 
         this.body = { w: this.w, h: this.h };
         let num = rnd(0, 6);
@@ -50,11 +51,15 @@ class Particles {
         this.color = pNewColor;
     }
 
+    setSpeed(pNewSpeed) {
+        this.speed = pNewSpeed;
+    }
+
     update(dt) {
         if (this.life > 0 && !this.delete) {
             this.timer.update(dt);
-            this.x += 0.2 * this.dx * (60 * dt);
-            this.y += 0.2 * this.dy * (60 * dt);
+            this.x += this.speed * this.dx * (60 * dt);
+            this.y += this.speed * this.dy * (60 * dt);
         }
     }
 
