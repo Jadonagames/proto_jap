@@ -331,6 +331,10 @@ class Panel {
                     x_l = 574;
                     y_t = 748;
                     break;
+                case 6: //? Dialog panel, intro
+                    x_l = 583;
+                    y_t = 748;
+                    break;
                 default: //? Panel original
                     x_l = 0;
                     y_t = 57;
