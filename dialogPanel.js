@@ -29,11 +29,21 @@ class DialogPanel extends Panel {
         }
         this.handleTempWordArr();
 
+        this.scriptCallback = null;
+        this.endDialogCallback = null;
     }
 
     setChildBtn(pBtn, pList) {
         this.childButton = pBtn;
         this.childButtonList = pList;
+    }
+
+    setScriptCallback(pCB) {
+        this.scriptCallback = pCB;
+    }
+
+    setEndDialogCallback(pCB) {
+        this.endDialogCallback = pCB;
     }
 
     update(dt) {
@@ -104,7 +114,6 @@ class DialogPanel extends Panel {
         this.currentPhrase++;
         if (this.currentPhrase < this.labelArr[1]) {
             this.label = this.labelArr[0] + this.currentPhrase;
-            log(this.label);
             this.bDialogEnd = false;
             this.completeLines = [];
             this.lines = [];
@@ -114,6 +123,9 @@ class DialogPanel extends Panel {
             this.currentChar = 0;
             this.childButton.getSprite().delete = true;
             this.childButton.removeFromCurrentList();
+            if (this.scriptCallback) {
+                this.scriptCallback(this.currentPhrase);
+            }
         } else {
             this.currentPhrase--;
             this.changeDirection();
@@ -122,6 +134,7 @@ class DialogPanel extends Panel {
             this.startPos.y = tmpY;
             this.setMoving(true);
             this.fade(0.04, -1);
+            this.endDialogCallback();
         }
     }
 
@@ -143,7 +156,8 @@ class DialogPanel extends Panel {
             this.wordsArr.forEach((word, index) => { // contenu test du tooltip 23 * 5 = 115
                 index == 0 ? tmp += word : tmp = line + " " + word;
 
-                if ((tmp.length * 5) > this.totalWidth - 20) {
+                // if ((tmp.length * 5) > this.totalWidth - 20) {
+                if ((tmp.length * 5) > this.totalWidth - 30) {
                     this.completeLines.push(line);
                     line = word;
                     tmp = "";
@@ -164,12 +178,6 @@ class DialogPanel extends Panel {
                     this.lines[i] += " ";
                 }
             }
-
-            log("this.lines : ");
-
-            log(this.lines);
-        } else {
-            log("this label == ''");
         }
     }
 
