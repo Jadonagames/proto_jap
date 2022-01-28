@@ -30,19 +30,10 @@ class MainMenu {
 
     static init() {
 
-
-        // let animation = new Sprite({ w: 16, h: 16 }, 50, 100, null);
-        // animation.addAnimation("normal", { x: 228, y: 83 }, 5, 0.1, false);
-        // animation.changeAnimation("normal");
-        // MainMenu.mainList.push(animation);
-
-        // let TESTbtn = new Button({ w: 60, h: 31 }, 50, 200, null, null, "mainmenu", MainMenu.STATE.Main, "", 0, true);
-        // TESTbtn.getSprite().addAnimation("normal", { x: 342, y: 408 });
-        // TESTbtn.getSprite().addAnimation("hover", { x: 402, y: 408 }, 6, 0.05, false);
-        // TESTbtn.getSprite().addAnimation("down", { x: 402, y: 408 });
-        // TESTbtn.getSprite().changeAnimation("normal");
-        // MainMenu.mainList.push(TESTbtn.getSprite());
-
+        let debug_point = new Sprite({ w: 4, h: 4 }, 0, 273);
+        debug_point.addAnimation("normal", { x: 0, y: 0 });
+        debug_point.changeAnimation("normal");
+        MainMenu.mainList.push(debug_point);
 
         // this.hira = "|あ|い|う|え|お|か|き|く|け|こ|さ|し|す|せ|そ|た|ち|つ|て|と|な|に|ぬ|ね|の|は|ひ|ふ|へ|ほ|ま|み|む|め|も|や|ゆ|よ|ら|り|る|れ|ろ|わ|を|ん|";
         // this.hira2 = "|が|ぎ|ぐ|げ|ご|ざ|じ|ず|ぜ|ぞ|だ|ぢ|づ|で|ど|ば|び|ぶ|べ|ぼ|ぱ|ぴ|ぷ|ぺ|ぽ|";
@@ -142,11 +133,12 @@ class MainMenu {
         MainMenu.mainList.push(lessonsBtn.getSprite());
 
         // this.muteBtn = new Button({ w: 16, h: 14 }, centerX(16, 200, 1), 50, null, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
-        // this.muteBtn.getSprite().addAnimation("normal", { x: 96, y: 96 });
-        // this.muteBtn.getSprite().addAnimation("hover", { x: 112, y: 96 });
-        // this.muteBtn.getSprite().addAnimation("down", { x: 128, y: 96 });
-        // this.muteBtn.getSprite().changeAnimation("normal");
+        // this.muteBtn.setAnimations({ x: 96, y: 96 });
         // MainMenu.mainList.push(this.muteBtn.getSprite());
+
+        // this.dialogPanelBtn = new Button({ w: 14, h: 12 }, this.dialogPanel.totalWidth - 25, this.dialogPanel.height - 20, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "", MainMenu.STATE.Main, "", 0, true);
+        // this.dialogPanelBtn.setAnimations({ x: 124, y: 79 });
+        // this.dialogPanel.setChildBtn(this.dialogPanelBtn, "mainmenu.main");
 
         // ---------------- OPTIONS ----------------
 
@@ -155,43 +147,26 @@ class MainMenu {
         MainMenu.optionsList.push(volumePanel.getSprite());
 
         let musicDownBtn = new Button({ w: 16, h: 16 }, centerX(16, 20), 80, null, Sound.decreaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        musicDownBtn.getSprite().addAnimation("normal", { x: 0, y: 96 });
-        musicDownBtn.getSprite().addAnimation("hover", { x: 16, y: 96 });
-        musicDownBtn.getSprite().addAnimation("down", { x: 32, y: 96 });
-        musicDownBtn.getSprite().changeAnimation("normal");
+        musicDownBtn.setAnimations({ x: 0, y: 96 });
         MainMenu.optionsList.push(musicDownBtn.getSprite());
 
         let musicUpBtn = new Button({ w: 16, h: 16 }, centerX(16, 20, 1), 80, null, Sound.increaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        musicUpBtn.getSprite().addAnimation("normal", { x: 48, y: 96 });
-        musicUpBtn.getSprite().addAnimation("hover", { x: 64, y: 96 });
-        musicUpBtn.getSprite().addAnimation("down", { x: 80, y: 96 });
-        musicUpBtn.getSprite().changeAnimation("normal");
+        musicUpBtn.setAnimations({ x: 48, y: 96 });
         MainMenu.optionsList.push(musicUpBtn.getSprite());
 
         let sfxDownBtn = new Button({ w: 16, h: 16 }, centerX(16, 20), 110, null, Sound.decreaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        sfxDownBtn.getSprite().addAnimation("normal", { x: 0, y: 96 });
-        sfxDownBtn.getSprite().addAnimation("hover", { x: 16, y: 96 });
-        sfxDownBtn.getSprite().addAnimation("down", { x: 32, y: 96 });
-        sfxDownBtn.getSprite().changeAnimation("normal");
+        sfxDownBtn.setAnimations({ x: 0, y: 96 });
         MainMenu.optionsList.push(sfxDownBtn.getSprite());
 
         let sfxUpBtn = new Button({ w: 16, h: 16 }, centerX(16, 20, 1), 110, null, Sound.increaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        sfxUpBtn.getSprite().addAnimation("normal", { x: 48, y: 96 });
-        sfxUpBtn.getSprite().addAnimation("hover", { x: 64, y: 96 });
-        sfxUpBtn.getSprite().addAnimation("down", { x: 80, y: 96 });
-        sfxUpBtn.getSprite().changeAnimation("normal");
+        sfxUpBtn.setAnimations({ x: 48, y: 96 });
         MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
-
-        // let deleteSaveBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(60), 150, null, SaveManager.delete, "mainmenu", MainMenu.STATE.Options, "delete_save");
         let deleteSaveBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(60), 150, null, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: true } }, "mainmenu", MainMenu.STATE.Options, "delete_save");
         MainMenu.optionsList.push(deleteSaveBtn.getSprite());
 
         let optionsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), 180, null, MainMenu.fromOptionsToMainMenu.bind(this), "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        optionsBackBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-        optionsBackBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-        optionsBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-        optionsBackBtn.getSprite().changeAnimation("normal");
+        optionsBackBtn.setAnimations({ x: 86, y: 56 });
         MainMenu.optionsList.push(optionsBackBtn.getSprite());
 
 
@@ -204,10 +179,7 @@ class MainMenu {
         MainMenu.creditsList.push(jadonagamesLogo);
 
         let creditsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), centerY(22, 50, 1), null, toMainMenu, "mainmenu", MainMenu.STATE.Credits, "", 0, true);
-        creditsBackBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-        creditsBackBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-        creditsBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-        creditsBackBtn.getSprite().changeAnimation("normal");
+        creditsBackBtn.setAnimations({ x: 86, y: 56 });
         MainMenu.creditsList.push(creditsBackBtn.getSprite());
 
         this.deleteSavePanel = null;
@@ -559,7 +531,7 @@ class MainMenu {
         // ctx.shadowOffsetX = 0;
         // ctx.shadowOffsetY = 2;
         // ctx.shadowBlur = 0;
-        ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
+        // ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
         // ctx.fillText("V", CANVAS_WIDTH - 65, CANVAS_HEIGHT - 13);
 
         if (FadeEffect.bActive) {

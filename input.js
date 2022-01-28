@@ -249,7 +249,7 @@ function keyUp(k) {
 
         // Transition.active(5, 5, 451, 10);
 
-        displaySaving(true);
+        displaySaving();
     }
 
     if (k.code == "KeyE") {

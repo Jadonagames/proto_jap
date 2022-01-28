@@ -257,6 +257,13 @@ class Button {
         });
     }
 
+    setAnimations(pCoord) { //? For static size & normal Buttons
+        this.sp.getSprite().addAnimation("normal", { x: pCoord.x, y: pCoord.y });
+        this.sp.getSprite().addAnimation("hover", { x: pCoord.x + this.width, y: pCoord.y });
+        this.sp.getSprite().addAnimation("down", { x: pCoord.x + (this.width * 2), y: pCoord.y });
+        this.sp.getSprite().changeAnimation("normal");
+    }
+
     resetAnimations(pId) {
         if (!this.staticSize) {
             for (const s in this.sp) {

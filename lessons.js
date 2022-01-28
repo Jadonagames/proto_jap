@@ -35,8 +35,8 @@ class Lessons {
         table.changeAnimation("normal");
         Lessons.mainList.push(table);
 
-        let chalkboard = new Sprite({ w: 232, h: 88 }, centerX(232), 20);
-        chalkboard.addAnimation("normal", { x: 532, y: 444 });
+        let chalkboard = new Sprite({ w: 234, h: 88 }, centerX(234), 20);
+        chalkboard.addAnimation("normal", { x: 530, y: 444 });
         chalkboard.changeAnimation("normal");
         Lessons.mainList.push(chalkboard);
 
@@ -59,10 +59,7 @@ class Lessons {
         Lessons.mainList.push(this.katakanaBtn.getSprite());
 
         let backBtn = new Button({ w: 30, h: 22 }, 20, 20, null, Lessons.quitLessonsMenu, "lessons", Lessons.STATE.Main, "", 0, true);
-        backBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-        backBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-        backBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-        backBtn.getSprite().changeAnimation("normal");
+        backBtn.setAnimations({ x: 86, y: 56 });
         Lessons.mainList.push(backBtn.getSprite());
 
         // let introBtn = new Button({ w: 50, h: 20, v: 5 }, 380, 20, null, { cb: SaveManager.save, arg: [{ type: "prologue", value: 1 }] }, "lessons", Lessons.STATE.Main, "Infos", 1);
@@ -406,10 +403,7 @@ class Lessons {
                 Lessons.lessonList.push(romaPanel.getSprite());
 
                 let soundBtn = new Button({ w: 26, h: 24 }, containerPanel.x + 110, containerPanel.y + 7, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaPos].roma }, "lessons", Lessons.STATE.Lesson, "", 0, true);
-                soundBtn.getSprite().addAnimation("normal", { x: 30, y: 131 });
-                soundBtn.getSprite().addAnimation("hover", { x: 56, y: 131 });
-                soundBtn.getSprite().addAnimation("down", { x: 83, y: 131 });
-                soundBtn.getSprite().changeAnimation("normal");
+                soundBtn.setAnimations({ x: 30, y: 131 });
                 soundBtn.setToDelete();
                 Lessons.lessonList.push(soundBtn.getSprite());
 
@@ -423,10 +417,7 @@ class Lessons {
             }
 
             this.lessonBackBtn = new Button({ w: 30, h: 22 }, 23, CANVAS_HEIGHT + 254, null, { cb: Lessons.transition.bind(this), arg: ["+", Lessons.previousState] }, "lessons", Lessons.STATE.Lesson, "", 0, true);
-            this.lessonBackBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-            this.lessonBackBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-            this.lessonBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-            this.lessonBackBtn.getSprite().changeAnimation("normal");
+            this.lessonBackBtn.setAnimations({ x: 86, y: 56 });
             Lessons.lessonList.push(this.lessonBackBtn.getSprite());
 
             this.trainingBtn = new Button({ w: 60, h: 31 }, centerX(60, 80), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Training", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Training", 0, true);
@@ -618,13 +609,7 @@ class Lessons {
 
             // CTP : Choose Type Panel
             this.backFromCTPBtn = new Button({ w: 30, h: 22 }, centerXElement(this.chooseTypePanel, 30), 160, this.chooseTypePanel, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: false, testType: pParams.testType } }, "lessons", Lessons.STATE.Lesson, "", 0, true);
-
-            this.backFromCTPBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-            this.backFromCTPBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-            this.backFromCTPBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-            this.backFromCTPBtn.getSprite().changeAnimation("normal");
-
-
+            this.backFromCTPBtn.setAnimations({ x: 86, y: 56 });
             this.backFromCTPBtn.setAlpha(0);
             Button.list.push(this.backFromCTPBtn);
             Button.currentList.push(this.backFromCTPBtn);

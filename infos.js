@@ -31,10 +31,7 @@ class Infos {
         Infos.list.push(katakanaBtn.getSprite());
 
         let backBtn = new Button({ w: 30, h: 22 }, centerX(30), centerY(22, 60, 1), null, toMainMenu, "infos", Infos.STATE.Main, "", 0, true);
-        backBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-        backBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-        backBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-        backBtn.getSprite().changeAnimation("normal");
+        backBtn.setAnimations({ x: 86, y: 56 });
         Infos.list.push(backBtn.getSprite());
 
 
@@ -125,10 +122,7 @@ class Infos {
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite());
 
                 let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
-                soundBtn.getSprite().addAnimation("normal", { x: 0, y: 84 });
-                soundBtn.getSprite().addAnimation("hover", { x: 12, y: 84 });
-                soundBtn.getSprite().addAnimation("down", { x: 24, y: 84 });
-                soundBtn.getSprite().changeAnimation("normal");
+                soundBtn.setAnimations({ x: 0, y: 84 });
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(soundBtn.getSprite()) : Infos.katakanaList.push(soundBtn.getSprite());
 
                 let tooltipPanel;
@@ -173,17 +167,11 @@ class Infos {
         }
 
         let hiraganaBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Hiragana, "", 0, true);
-        hiraganaBackBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-        hiraganaBackBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-        hiraganaBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-        hiraganaBackBtn.getSprite().changeAnimation("normal");
+        hiraganaBackBtn.setAnimations({ x: 86, y: 56 });
         Infos.hiraganaList.push(hiraganaBackBtn.getSprite());
 
         let katakanaBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Katakana, "", 0, true);
-        katakanaBackBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-        katakanaBackBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-        katakanaBackBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-        katakanaBackBtn.getSprite().changeAnimation("normal");
+        katakanaBackBtn.setAnimations({ x: 86, y: 56 });
         Infos.katakanaList.push(katakanaBackBtn.getSprite());
     }
 

@@ -66,53 +66,40 @@ class Game1 {
         }
 
         this.firstBtn = new KanaBtn({ w: 52, h: 52 }, centerX(52, 80), 32, null, { cb: checkIfValid, arg: { char: RND_ARR[0], label: rndArr[0] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[0], 0, true);
-        this.firstBtn.getSprite().addAnimation("normal", { x: 342, y: 1088 });
-        this.firstBtn.getSprite().addAnimation("hover", { x: 394, y: 1088 });
-        this.firstBtn.getSprite().addAnimation("down", { x: 446, y: 1088 });
+        this.firstBtn.setAnimations({ x: 342, y: 1088 });
         this.firstBtn.getSprite().addAnimation("correct", { x: 550, y: 1088 }, 4, 0.2, false);
         this.firstBtn.getSprite().addAnimation("batsu", { x: 498, y: 1088 });
         this.firstBtn.getSprite().setAnimationCB("correct", { cb: this.firstBtn.getSprite().changeAnimation.bind(this.firstBtn.getSprite()), arg: "normal" });
-        this.firstBtn.getSprite().changeAnimation("normal");
-
         this.firstBtn.setFont("kyokasho");
         this.firstBtn.setFontSize(30);
         this.firstBtn.setOffsets(-1, 36);
         Game1.mainList.push(this.firstBtn.getSprite());
 
         this.secondBtn = new KanaBtn({ w: 52, h: 52 }, centerX(52, 80, 1), 32, null, { cb: checkIfValid, arg: { char: RND_ARR[1], label: rndArr[1] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[1], 0, true);
-        this.secondBtn.getSprite().addAnimation("normal", { x: 342, y: 1088 });
-        this.secondBtn.getSprite().addAnimation("hover", { x: 394, y: 1088 });
-        this.secondBtn.getSprite().addAnimation("down", { x: 446, y: 1088 });
+        this.secondBtn.setAnimations({ x: 342, y: 1088 });
         this.secondBtn.getSprite().addAnimation("correct", { x: 550, y: 1088 }, 4, 0.2, false);
         this.secondBtn.getSprite().addAnimation("batsu", { x: 498, y: 1088 });
         this.secondBtn.getSprite().setAnimationCB("correct", { cb: this.secondBtn.getSprite().changeAnimation.bind(this.secondBtn.getSprite()), arg: "normal" });
-        this.secondBtn.getSprite().changeAnimation("normal");
         this.secondBtn.setFont("kyokasho");
         this.secondBtn.setFontSize(30);
         this.secondBtn.setOffsets(-1, 36);
         Game1.mainList.push(this.secondBtn.getSprite());
 
         this.thirdBtn = new KanaBtn({ w: 52, h: 52 }, centerX(52, 80), 166, null, { cb: checkIfValid, arg: { char: RND_ARR[2], label: rndArr[2] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[2], 0, true);
-        this.thirdBtn.getSprite().addAnimation("normal", { x: 342, y: 1088 });
-        this.thirdBtn.getSprite().addAnimation("hover", { x: 394, y: 1088 });
-        this.thirdBtn.getSprite().addAnimation("down", { x: 446, y: 1088 });
+        this.thirdBtn.setAnimations({ x: 342, y: 1088 });
         this.thirdBtn.getSprite().addAnimation("correct", { x: 550, y: 1088 }, 4, 0.2, false);
         this.thirdBtn.getSprite().addAnimation("batsu", { x: 498, y: 1088 });
         this.thirdBtn.getSprite().setAnimationCB("correct", { cb: this.thirdBtn.getSprite().changeAnimation.bind(this.thirdBtn.getSprite()), arg: "normal" });
-        this.thirdBtn.getSprite().changeAnimation("normal");
         this.thirdBtn.setFont("kyokasho");
         this.thirdBtn.setFontSize(30);
         this.thirdBtn.setOffsets(-1, 36);
         Game1.mainList.push(this.thirdBtn.getSprite());
 
         this.fourthBtn = new KanaBtn({ w: 52, h: 52 }, centerX(52, 80, 1), 166, null, { cb: checkIfValid, arg: { char: RND_ARR[3], label: rndArr[3] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[3], 0, true);
-        this.fourthBtn.getSprite().addAnimation("normal", { x: 342, y: 1088 });
-        this.fourthBtn.getSprite().addAnimation("hover", { x: 394, y: 1088 });
-        this.fourthBtn.getSprite().addAnimation("down", { x: 446, y: 1088 });
+        this.fourthBtn.setAnimations({ x: 342, y: 1088 });
         this.fourthBtn.getSprite().addAnimation("correct", { x: 550, y: 1088 }, 4, 0.2, false);
         this.fourthBtn.getSprite().addAnimation("batsu", { x: 498, y: 1088 });
         this.fourthBtn.getSprite().setAnimationCB("correct", { cb: this.fourthBtn.getSprite().changeAnimation.bind(this.fourthBtn.getSprite()), arg: "normal" });
-        this.fourthBtn.getSprite().changeAnimation("normal");
         this.fourthBtn.setFont("kyokasho");
         this.fourthBtn.setFontSize(30);
         this.fourthBtn.setOffsets(-1, 36);
@@ -190,10 +177,7 @@ class Game1 {
         ]);
 
         let backBtn = new Button({ w: 30, h: 22 }, 10, CANVAS_HEIGHT - 30, null, { cb: resetGame, arg: "back_to_lesson" }, "game1", Game1.STATE.Game, "", 0, true);
-        backBtn.getSprite().addAnimation("normal", { x: 86, y: 56 });
-        backBtn.getSprite().addAnimation("hover", { x: 116, y: 56 });
-        backBtn.getSprite().addAnimation("down", { x: 146, y: 56 });
-        backBtn.getSprite().changeAnimation("normal");
+        backBtn.setAnimations({ x: 86, y: 56 });
         Game1.mainList.push(backBtn.getSprite());
 
 
@@ -502,6 +486,9 @@ class Game1 {
             this.endGameMark.setNumberBool(true);
             this.endGameMark.setTextOverflow(true);
             this.endGameMark.setLabel((TOTAL_NUMBER - this.misses) + "/" + TOTAL_NUMBER + "");
+            if (gotTrophyLevel == 0) {
+                this.endGameMark.setFontColor("rgba(150,150,150,0)", "rgba(215,30,30,0)");
+            }
             Panel.list.push(this.endGameMark);
             Panel.currentList.push(this.endGameMark);
             Game1.mainList.push(this.endGameMark.getSprite());
@@ -525,9 +512,11 @@ class Game1 {
                 this.dropdownPanel.setParameters();
                 this.dropdownPanel.setAlignText(0);
 
-                this.mouseSprite = new Sprite({ w: 13, h: 11 }, this.dropdownPanel.offX + this.dropdownPanel.width - 25, 36, this.endGameMissedList);
-                this.mouseSprite.addAnimation("normal", { x: 544, y: 800 }, 4, 0.3);
-                this.mouseSprite.changeAnimation("normal");
+                if (this.dropdownPanel.bOverflow) {
+                    this.mouseSprite = new Sprite({ w: 13, h: 11 }, this.dropdownPanel.offX + this.dropdownPanel.width - 25, 36, this.endGameMissedList);
+                    this.mouseSprite.addAnimation("normal", { x: 544, y: 800 }, 4, 0.3);
+                    this.mouseSprite.changeAnimation("normal");
+                }
 
                 Panel.list.push(this.endGameMissedList);
                 Panel.currentList.push(this.endGameMissedList);
@@ -537,9 +526,9 @@ class Game1 {
                 Panel.currentList.push(this.dropdownPanel);
                 Game1.mainList.push(this.dropdownPanel.getSprite());
 
-                Game1.mainList.push(this.mouseSprite);
 
                 if (this.dropdownPanel.bOverflow) {
+                    Game1.mainList.push(this.mouseSprite);
                     this.dropdownPanel.spriteList.forEach(sp => {
                         Game1.mainList.push(sp);
                     });
@@ -596,7 +585,7 @@ class Game1 {
                 this.dropdownPanel.removeFromCurrentList();
                 this.endGameMissedList.getSprite().delete = true;
                 this.dropdownPanel.deleteSprites();
-                this.mouseSprite.getSprite().delete = true;
+                if (this.mouseSprite) this.mouseSprite.getSprite().delete = true;
             }
 
             this.endGamePanel.removeFromList();
@@ -726,6 +715,8 @@ class Game1 {
             Lessons.addStarTrophy(Game1.currentKanaLesson + Game1.currentLessonNumber);
             SaveManager.save(paramsToSave);
         }
+
+        displaySaving();
     }
 
     static deleteSpritesFromList() {
