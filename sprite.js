@@ -101,6 +101,14 @@ class Sprite {
         this.animations.push(animation);
     }
 
+    changeAnimationMaxWidth(pAnim, pNewWidth) {
+        this.animations.forEach(a => {
+            if (a.name == pAnim) {
+                a.maxWidth = this.width * a.frames;
+            }
+        })
+    }
+
     getAnimation(pName) {
 
         let animToReturn = {};
