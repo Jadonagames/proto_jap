@@ -12,11 +12,14 @@ class Game1 {
     static lessonTestType = "";
     static currentKanaLesson = "";
     static currentLessonNumber = 0;
+    static transitionTimer = new Timer(2, Game1.stopTransition.bind(Game1));
 
     static mainList = [];
+    static transitionList = [];
 
     static _misses = 0;
 
+    start = null;
     chalkboardBrush = null;
     maru = null;
     batsu = null;
@@ -303,6 +306,13 @@ class Game1 {
 
     static load(pChoiceType, pAnswerType, pRange = 1, plessonRange, pLessonTestType, pLessonNumber) {
         log("load");
+        this.bStartTransition = true;
+        this.start = new Sprite({ w: 160, h: 45 }, centerX(160), CANVAS_HEIGHT, null, "g");
+        this.start.addAnimation("normal", { x: 704, y: 16 });
+        this.start.changeAnimation("normal");
+        this.start.setDestination({ x: this.start.x, y: (CANVAS_HEIGHT * 0.5) - 45 });
+        this.start.setMoveSpeed(1.5);
+        Game1.transitionList.push(this.start);
         // bStatsDebug = true;
 
         if (Game1.timerPanel != undefined) {
@@ -420,6 +430,14 @@ class Game1 {
 
             this.kanaPanel.setLabel(answerLabel);
         }
+    }
+
+    static stopTransition() {
+        log("stop transition");
+        this.bStartTransition = false;
+        this.start.delete = true;
+        Game1.transitionList = [];
+        FadeEffect.fade({ direction: "in", maxTimer: 0.02 });
     }
 
     static displayEndGamePanel(pParams) {
@@ -766,40 +784,51 @@ class Game1 {
          * DEBUG
          */
         //------------ END DEBUG
+        if (this.bStartTransition) {
+            this.transitionTimer.update(dt);
+            Sprite.manageBeforeUpdating(Game1.transitionList, dt);
 
-        if (Game1.currentState == Game1.STATE.Transition) {
-            if (FadeEffect.bActive) {
-                FadeEffect.update(dt);
+        } else {
+            if (Game1.currentState == Game1.STATE.Transition) {
+                if (FadeEffect.bActive) {
+                    FadeEffect.update(dt);
+                }
+            } else if (Game1.currentState == Game1.STATE.Pause) {
+                Pause.update(dt);
             }
-        } else if (Game1.currentState == Game1.STATE.Pause) {
-            Pause.update(dt);
-        }
 
-        if (Game1.currentState != Game1.STATE.Game) {
-            return;
-        }
-
-        if (Sound.current != null && Sound.bFadingOut) {
-            Sound.current.update(dt);
-        }
-
-        Game1.deleteSpritesFromList();
-
-        Panel.currentList.forEach(p => {
-            p.update(dt)
-        });
-
-        Sprite.manageBeforeUpdating(Game1.mainList, dt);
-
-        Particles.list.forEach(p => {
-            if (!p.delete) {
-                p.update(dt);
+            if (Game1.currentState != Game1.STATE.Game) {
+                return;
             }
-        });
 
-        this.chalkboardBrush.update(dt);
+            if (Sound.current != null && Sound.bFadingOut) {
+                Sound.current.update(dt);
+            }
 
+            Game1.deleteSpritesFromList();
 
+            Panel.currentList.forEach(p => {
+                p.update(dt)
+            });
+
+            Sprite.manageBeforeUpdating(Game1.mainList, dt);
+
+            Particles.list.forEach(p => {
+                if (!p.delete) {
+                    p.update(dt);
+                }
+            });
+
+            this.chalkboardBrush.update(dt);
+        }
+
+        if (FadeEffect.bActive) {
+            FadeEffect.update(dt);
+        }
+
+        if (Transition.bActive) {
+            Transition.update(dt);
+        }
     }
 
     static draw(ctx) {
@@ -810,44 +839,54 @@ class Game1 {
         // });
         // --------------------------------
 
-        Sprite.manageBeforeDrawing(Game1.mainList);
+        if (this.bStartTransition) {
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            Sprite.manageBeforeDrawing(Game1.transitionList);
+        } else {
+            Sprite.manageBeforeDrawing(Game1.mainList);
 
-        if (!this.bEndGame) {
-            this.chalkboardBrush.draw(ctx);
-            this.maru.draw(ctx);
-        }
+            if (!this.bEndGame) {
+                this.chalkboardBrush.draw(ctx);
+                this.maru.draw(ctx);
+            }
 
-        Particles.list.forEach(p => {
-            p.draw(ctx);
-        });
+            Particles.list.forEach(p => {
+                p.draw(ctx);
+            });
 
 
-        ctx.fillStyle = "rgb(255,255,255)";
-        ctx.font = "10px jpfont";
-        ctx.textAlign = "center";
-
-        if (!this.bEndGame) {
-            // ctx.fillText("Turns : " + TURN_NUMBER, centerX(), 10);
-            // ctx.fillText("Kana : " + KANA_NUMBER, centerX(), 30);
-            ctx.fillStyle = "rgb(150,150,150)";
-            ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, this.kanaPanel.width, 3);
-            ctx.fillStyle = "rgb(29,122,66)";
-            ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, (KANA_NUMBER / TOTAL_NUMBER) * this.kanaPanel.width, 3);
-        }
-
-        if (FadeEffect.bActive) {
-            FadeEffect.draw(ctx);
-        }
-
-        if (Game1.currentState == Game1.STATE.Pause) {
-            Pause.draw(ctx)
-        }
-
-        if (bStatsDebug) {
             ctx.fillStyle = "rgb(255,255,255)";
-            ctx.font = "32px pgfont";
-            ctx.fillText("TOTAL : " + TOTAL_NUMBER, 100, 120);
-            ctx.fillText("Mark : " + (TOTAL_NUMBER - this.misses), 100, 150);
+            ctx.font = "10px jpfont";
+            ctx.textAlign = "center";
+
+            if (!this.bEndGame) {
+                // ctx.fillText("Turns : " + TURN_NUMBER, centerX(), 10);
+                // ctx.fillText("Kana : " + KANA_NUMBER, centerX(), 30);
+                ctx.fillStyle = "rgb(150,150,150)";
+                ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, this.kanaPanel.width, 3);
+                ctx.fillStyle = "rgb(29,122,66)";
+                ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, (KANA_NUMBER / TOTAL_NUMBER) * this.kanaPanel.width, 3);
+            }
+
+            if (FadeEffect.bActive) {
+                FadeEffect.draw(ctx);
+            }
+
+            if (Game1.currentState == Game1.STATE.Pause) {
+                Pause.draw(ctx)
+            }
+
+            if (bStatsDebug) {
+                ctx.fillStyle = "rgb(255,255,255)";
+                ctx.font = "32px pgfont";
+                ctx.fillText("TOTAL : " + TOTAL_NUMBER, 100, 120);
+                ctx.fillText("Mark : " + (TOTAL_NUMBER - this.misses), 100, 150);
+            }
+        }
+
+        if (Transition.bActive) {
+            Transition.draw(ctx);
         }
     }
 

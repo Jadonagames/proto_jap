@@ -364,7 +364,7 @@ canvas.addEventListener("mousemove", e => {
     if (!inTransition()) {
         // pick(e.layerX, e.layerY);
 
-        if (MainMenu.state != MainMenu.STATE.Transition && currentState != GAME_STATE.Transition) {
+        if (MainMenu.state != MainMenu.STATE.Transition && Game1.currentState != Game1.STATE.Transition) {
 
             Button.currentList.forEach(b => {
                 if (b.getState() != Button.STATE.Inactive && !b.bMoving) {
@@ -408,6 +408,7 @@ canvas.addEventListener("mousemove", e => {
                                 b.getTooltip().forEach(sp => {
                                     if (sp instanceof Sprite) {
                                         sp.delete = true;
+                                        sp.currentFrame = 0;
                                     } else {
                                         sp.getSprite().delete = true;
                                     }
@@ -538,7 +539,7 @@ canvas.addEventListener("mousedown", e => {
         const mouseX = e.layerX / SCALE_X;
         const mouseY = e.layerY / SCALE_Y;
 
-        if (MainMenu.state != MainMenu.STATE.Transition && currentState != GAME_STATE.Transition) {
+        if (MainMenu.state != MainMenu.STATE.Transition && Game1.currentState != Game1.STATE.Transition) {
             Button.currentList.every(b => {
                 if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close) {
 
@@ -586,7 +587,7 @@ canvas.onclick = e => {
         const mouseX = e.layerX / SCALE_X;
         const mouseY = e.layerY / SCALE_Y;
 
-        if (MainMenu.state != MainMenu.STATE.Transition && currentState != GAME_STATE.Transition) {
+        if (MainMenu.state != MainMenu.STATE.Transition && Game1.currentState != Game1.STATE.Transition) {
 
             Button.currentList.every(b => {
 
