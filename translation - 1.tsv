@@ -4,9 +4,9 @@ french_lang	Français	Français	Français
 japanese_lang	日本語	日本語	日本語
 ph_word	placeholder	placeholder	placeholder
 ph_text	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-ph_text_0	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-ph_text_1	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.	I'm looking at you through the glass. Cause I'm a star, lol.	I'm looking at you through the glass. Cause I'm a star, lol.
-ph_text_2	Puis fade out du panel de dialogue...	Button class and Panel class are hobo onaji nanode nanka shinaito patatas	Button class and Panel class are hobo onaji nanode nanka shinaito patatas
+ph_text_0	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.
+ph_text_1	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.
+ph_text_2	Puis fade out du panel de dialogue...	Puis fade out du panel de dialogue...	Puis fade out du panel de dialogue...
 lesson_text_0	Bienvenue dans la partie leçon. [ENG]	Bienvenue dans la partie leçon.	-
 lesson_text_1	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	-
 lesson_text_2	Dans chacune des leçons vous aurez 5 caractères à apprendre, vous avez une animation pour l'écriture et vous pouvez jouer un son.	Dans chacune des leçons vous aurez 5 caractères à apprendre, vous avez une animation pour l'écriture et vous pouvez jouer un son.	-
@@ -106,6 +106,7 @@ roma_papipupepo	pa pi pu pe po	pa pi pu pe po	pa pi pu pe po
 Lessons	Lessons	Leçons	レッスン
 Full_test	Full test	Test complet	レッスン
 Lesson_test	Lesson test	Test leçon	レッスン
+			
 Training	Training	Entraînement	トレーニング
 hira_to_roma	Hiragana -> Romaji	Hiragana -> Romaji	-
 kata_to_roma	Katakana -> Romaji	Katakana -> Romaji	-
@@ -121,7 +122,10 @@ a_to_あ	A -> あ	A -> あ
 a_to_ア	A -> ア	A -> ア	
 			
 			
-			
+main_subtitle	Let's learn japanese Hiragana & Katakana	Apprenons les Hiragana & Katakana	仮名を覚えましょう
+kana_boards	Kana boards	Tableaux Kana	仮名表
+Boards	Boards	Tableaux	表
+Free_mode	Free mode	Mode libre	フリーモード
 Infos	Infos	Infos	情報
 Credits	Credits	Crédits	クレジット
 Settings	Settings	Options	設定
@@ -383,47 +387,62 @@ roma_pu	pu	pu	pu
 roma_pe	pe	pe	pe
 roma_po	po	po	po
 			
+hira_i_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_o_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_ki_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_ko_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_sa_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_so_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_na_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_fu_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_mu_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_yu_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_ra_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_ri_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+kata_ta_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+kata_ne_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+kata_mu_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
 			
 hira_a_description			
-hira_i_description	attention écriture	attention écriture	
+hira_i_description			
 hira_u_description			
 hira_e_description			
-hira_o_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+hira_o_description			
 hira_ka_description			
-hira_ki_description	attention écriture	attention écriture	
+hira_ki_description			
 hira_ku_description			
 hira_ke_description			
-hira_ko_description	attention écriture	attention écriture	
-hira_sa_description	attention écriture	attention écriture	
+hira_ko_description			
+hira_sa_description			
 hira_shi_description			
 hira_su_description	Depend on context the sound [u]	Selon certains contextes le son [u] peut ne pas être prononcé	
 hira_se_description			
-hira_so_description	attention écriture	attention écriture	
+hira_so_description			
 hira_ta_description			
 hira_chi_description		t'chi	
 hira_tsu_description	Version Petit	Version Petit	
 hira_te_description			
 hira_to_description			
-hira_na_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+hira_na_description			
 hira_ni_description			
 hira_nu_description			
 hira_ne_description			
 hira_no_description			
-hira_ha_description	wa / h aspiré	wa / h aspiré	
-hira_hi_description	h aspiré	h aspiré	
-hira_fu_description	h aspiré proche du f attention écriture	h aspiré, proche du f attention écriture	
-hira_he_description	h aspiré prononciation [e]	h aspiré prononciation [e]	
-hira_ho_description	h aspiré	h aspiré	
+hira_ha_description	wa / h aspiré	Le "h" est aspiré. \n Peut se prononcer de deux façons différentes selon le contexte dans la phrase : [ha] ou [wa]	
+hira_hi_description	h aspiré	Le "h" est aspiré.	
+hira_fu_description	Dans le cas de ce caractère, la prononciation du [h] c'est proche d'un [f]	Dans le cas de ce caractère la prononciation du "h" est proche d'un [f]	
+hira_he_description	h aspiré prononciation [e]	Le "h" est aspiré. \n Peut se prononcer de deux façons différentes selon le contexte dans la phrase : [he] ou [e]	
+hira_ho_description	h aspiré	Le "h" est aspiré.	
 hira_ma_description			
 hira_mi_description			
-hira_mu_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+hira_mu_description			
 hira_me_description			
 hira_mo_description	attention d'abord し puis trait - trait	attention d'abord し puis trait - trait	
-hira_ya_description	Version Petit attention écriture	Version Petit attention écriture	combi avec ki shi chi ni hi mi 
-hira_yu_description	Version Petit attention écriture	Version Petit attention écriture	
+hira_ya_description	Version Petit	Version Petit	combi avec ki shi chi ni hi mi 
+hira_yu_description	Version Petit	Version Petit	
 hira_yo_description	Version Petit	Version Petit	
-hira_ra_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
-hira_ri_description	Combinaison y-gyô attention écriture	Combinaison y-gyô attention écriture	
+hira_ra_description			
+hira_ri_description	Combinaison y-gyô	Combinaison y-gyô	
 hira_ru_description			
 hira_re_description			
 hira_ro_description			
@@ -474,7 +493,7 @@ kata_shi_description	shi tsu comparaison hira	shi tsu comparaison hira
 kata_su_description			
 kata_se_description	comparaison hira	comparaison hira	
 kata_so_description	so n	so n	
-kata_ta_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+kata_ta_description			
 kata_chi_description	importance de la courbe -> comparaison 千	importance de la courbe -> comparaison 千	
 kata_tsu_description	shi tsu comparaison hira	shi tsu comparaison hira	
 kata_te_description			
@@ -482,7 +501,7 @@ kata_to_description
 kata_na_description			
 kata_ni_description			
 kata_nu_description			
-kata_ne_description	Be careful, small differences depending on the font / write style	Attention, légères différences selon la police / style d'écriture	
+kata_ne_description			
 kata_no_description			
 kata_ha_description			
 kata_hi_description			

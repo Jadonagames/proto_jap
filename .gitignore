@@ -1,3 +1,5 @@
 NU_assets/
 NU_docs/
+./NU_docs
+NU_scripts/
 .vscode/settings.json

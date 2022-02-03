@@ -244,7 +244,7 @@ class Sprite {
             }
         }
 
-        if (this.type == "tm") {
+        if (this.type == "tm") { //? MainMenu : Boules Hira-A et Kata-A
             if (this.speedCount <= this.moveSpeed) {
                 this.x = easeInOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.moveSpeed);
                 this.y = easeInOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
@@ -254,14 +254,14 @@ class Sprite {
                 this.startPos.y = this.y;
 
                 if (this.direction == 1) {
-                    this.setDestination({ x: this.x, y: 0 });
+                    this.setDestination({ x: this.x, y: 0 }); //! Données en dur à changer
                 } else {
-                    this.setDestination({ x: this.x, y: 28 });
+                    this.setDestination({ x: this.x, y: 28 }); //! Données en dur à changer
                 }
                 this.speedCount = 0;
                 this.direction = -this.direction;
             }
-        } else if (this.type == "sv" && (this.currentAnimation.name == "arrive" || this.currentAnimation.name == "down")) {
+        } else if (this.type == "sv" && (this.currentAnimation.name == "arrive" || this.currentAnimation.name == "down")) { //? Saving Sprite
             if (this.speedCount <= this.moveSpeed) {
                 if (this.currentAnimation.name == "arrive") {
                     this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
@@ -279,7 +279,7 @@ class Sprite {
                 this.setDestination({ x: this.x, y: CANVAS_HEIGHT + 10 });
                 this.speedCount = 0;
             }
-        } else if (this.type == "t") {
+        } else if (this.type == "t") { //? MainMenu : Title
             if (this.speedCount <= this.moveSpeed) {
                 if (this.direction == 1) {
                     this.y = outBounce(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
@@ -297,6 +297,9 @@ class Sprite {
                 if (!MainMenu.bTitleFinish && this.direction == -1) {
                     this.y = this.destination.y;
                     MainMenu.bTitleFinish = true;
+                    Panel.currentList.forEach(p => {
+                        p.fade();
+                    });
                     MainMenu.mainList.forEach(sp => {
                         if (sp.alpha == 0) {
                             sp.fade();
@@ -309,7 +312,7 @@ class Sprite {
                 }
                 if (!MainMenu.bTitleFinish) this.direction = -this.direction;
             }
-        } else if (this.type == "st") {
+        } else if (this.type == "st") { //? Game1 : Stars
             if (this.speedCount <= this.moveSpeed) {
                 this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.moveSpeed);
                 this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
@@ -318,6 +321,56 @@ class Sprite {
             } else {
                 this.delete = true;
             }
+        } else if (this.type == "g") { //? Game1 : Start
+
+            if (this.speedCount <= this.moveSpeed) {
+                if (this.direction == 1) {
+                    this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
+                } else {
+                    this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
+                }
+                this.speedCount += dt;
+
+            } else {
+                this.startPos.x = this.x;
+                this.startPos.y = this.y;
+                this.setDestination({ x: this.x, y: -50 });
+                this.speedCount = 0;
+                this.moveSpeed = 0.5;
+                if (this.direction == 1) {
+                    this.direction = -1;
+                } else {
+                    this.delete = true;
+                }
+            }
+        } else if (this.type == "n") { //? Lessons : "new" icon
+            if (this.speedCount <= this.moveSpeed) {
+                this.x = easeInOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.moveSpeed);
+                this.y = easeInOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
+                this.speedCount += dt;
+            } else {
+                this.startPos.x = this.x;
+                this.startPos.y = this.y;
+
+                if (this.direction == 1) {
+                    //TODO
+                    this.setDestination({ x: this.x, y: 155 }); //! Données en dur à changer
+                } else {
+                    //TODO
+                    this.setDestination({ x: this.x, y: 165 }); //! Données en dur à changer
+                }
+                this.speedCount = 0;
+                this.direction = -this.direction;
+            }
+
+
+
+            //TODO :
+            //! "tm" et "n" font exactement la même chose : aller-retour
+            //! Créer un système pour ce type de mouvement
+
+
+
         }
 
         if (this.bFading) {

@@ -26,7 +26,6 @@ MOUSE_SPRITE.addAnimation("hover", { x: 122, y: 34 });
 MOUSE_SPRITE.addAnimation("down", { x: 130, y: 34 });
 MOUSE_SPRITE.changeAnimation("normal");
 
-Transition.init();
 //!TEST--------
 // let canvasTest = document.getElementById("canvasTest");
 // let canvasTestCtx = canvasTest.getContext("2d");
@@ -42,12 +41,12 @@ Transition.init();
  * DEBUG
  */
 let log = console.log.bind(console);
-let titleSpeed = 2;
+let titleSpeed = 2; // 0.2 - 2
 
 let bStatsDebug = false;
 let debugDt = 0;
 let debug_STOP = false;
-let shortcut_tomainmenu = 1;
+let shortcut_tomainmenu = 0; //! ------
 let boolTest = false;
 let imageData = null;
 let imageDatasArr = [];
@@ -203,8 +202,10 @@ function run() {
     //     ctx.fillText("Save?: NO SAVE DATA", 0, 10);
     // }
 
-    MOUSE_SPRITE.ox = MOUSE_SPRITE.currentAnimation.origin.x + (MOUSE_SPRITE.width * MOUSE_SPRITE.currentFrame);
-    ctx.drawImage(SS, MOUSE_SPRITE.ox, MOUSE_SPRITE.currentAnimation.origin.y, MOUSE_SPRITE.width, MOUSE_SPRITE.height, MOUSE_SPRITE.x, MOUSE_SPRITE.y, MOUSE_SPRITE.width * MOUSE_SPRITE.scaleX, MOUSE_SPRITE.height * MOUSE_SPRITE.scaleY);
+    if (!Transition.bActive) {
+        MOUSE_SPRITE.ox = MOUSE_SPRITE.currentAnimation.origin.x + (MOUSE_SPRITE.width * MOUSE_SPRITE.currentFrame);
+        ctx.drawImage(SS, MOUSE_SPRITE.ox, MOUSE_SPRITE.currentAnimation.origin.y, MOUSE_SPRITE.width, MOUSE_SPRITE.height, MOUSE_SPRITE.x, MOUSE_SPRITE.y, MOUSE_SPRITE.width * MOUSE_SPRITE.scaleX, MOUSE_SPRITE.height * MOUSE_SPRITE.scaleY);
+    }
 
 
     ctx.restore();
@@ -236,7 +237,7 @@ function startBtnCB(pParam) {
     MOUSE_SPRITE.y -= CANVAS_HEIGHT;
     if (!Game1.bGameInitialized) {
         Game1.init();
-        ScreenManager.init();
+        // ScreenManager.init();
         // Pause.init();
     }
 
@@ -261,6 +262,7 @@ function changeMainState(pNewState) {
             if (!Infos.bInit) {
                 Infos.init();
             }
+            FadeEffect.fade({ callback: null, direction: "in", maxTimer: 0.01 });
             Infos.changeState(Infos.STATE.Main);
             break;
         case MAIN_STATE.Lessons:
@@ -303,6 +305,9 @@ function toMainMenu() {
     if (MainMenu.bTitleFinish) {
         MainMenu.initKanaInterval();
         Button.currentList.forEach(b => {
+            b.getTooltip().forEach(t => {
+                t.currentFrame = 0;
+            })
             if (b.bCanMove) b.setMoving(true);
         });
     }
@@ -412,7 +417,7 @@ function loadImageDatas() {
     ctx0.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function displaySaving(pBool) {
+function displaySaving(pBool = true) {
     if (pBool) {
         SAVING = true;
         SAVING_SPRITE = new Sprite({ w: 42, h: 26 }, 400, CANVAS_HEIGHT, null, "sv");
