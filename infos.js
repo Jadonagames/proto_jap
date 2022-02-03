@@ -24,13 +24,22 @@ class Infos {
 
 
         // ---------------- MAIN ------------------
-        let hiraganaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50), null, { cb: Infos.changeState, arg: Infos.STATE.Hiragana }, "infos", Infos.STATE.Main, "Hiragana");
+
+        let titlePanel = new Panel({ w: 8, h: 2, v: 9 }, centerX(106), 20, null, "infos", Infos.STATE.Main, "kana_boards", [-1, { y_t: 748 }]);//748 835
+        titlePanel.setOffsets(0, 22);
+        Infos.list.push(titlePanel.getSprite());
+
+        let hiraganaBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80), centerY(40, 30), null, { cb: Infos.changeState, arg: Infos.STATE.Hiragana }, "infos", Infos.STATE.Main, "Hiragana", 41);
+        hiraganaBtn.setFontColor("rgba(142,45,45,1)");
+        hiraganaBtn.setOffsets(0, 22);
         Infos.list.push(hiraganaBtn.getSprite());
 
-        let katakanaBtn = new Button({ w: 50, h: 20, v: 4 }, centerX(50), centerY(50, 30, 1), null, { cb: Infos.changeState, arg: Infos.STATE.Katakana }, "infos", Infos.STATE.Main, "Katakana");
+        let katakanaBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80), centerY(50, 30, 1), null, { cb: Infos.changeState, arg: Infos.STATE.Katakana }, "infos", Infos.STATE.Main, "Katakana", 41);
+        katakanaBtn.setFontColor("rgba(142,45,45,1)");
+        katakanaBtn.setOffsets(0, 22);
         Infos.list.push(katakanaBtn.getSprite());
 
-        let backBtn = new Button({ w: 30, h: 22 }, centerX(30), centerY(22, 60, 1), null, toMainMenu, "infos", Infos.STATE.Main, "", 0, true);
+        let backBtn = new Button({ w: 30, h: 22 }, centerX(30), centerY(22, 80, 1), null, toMainMenu, "infos", Infos.STATE.Main, "", 0, true);
         backBtn.setAnimations({ x: 86, y: 56 });
         Infos.list.push(backBtn.getSprite());
 
@@ -78,11 +87,21 @@ class Infos {
             "kata_pa", "kata_pi", "kata_pu", "kata_pe", "kata_po" //152
         ];
 
-        let frameX = 30;
+        let frameX = 20;
         let kanaWidth = 34;
         let kanaOffX = 35;
         let state = Infos.STATE.Hiragana;
         let kanaList = "hiragana";
+
+
+        let hiraGreenPanel = new Panel({ w: 200, h: 265, v: 6 }, 5, 15, null, "infos", state, "", 7);
+        Infos.hiraganaList.push(hiraGreenPanel.getSprite());
+        let hiraGreenPanel2 = new Panel({ w: 200, h: 140, v: 6 }, 235, 15, null, "infos", state, "", 7);
+        Infos.hiraganaList.push(hiraGreenPanel2.getSprite());
+        let kataGreenPanel = new Panel({ w: 200, h: 265, v: 6 }, 5, 15, null, "infos", state, "", 7);
+        Infos.katakanaList.push(kataGreenPanel.getSprite());
+        let kataGreenPanel2 = new Panel({ w: 200, h: 140, v: 6 }, 235, 15, null, "infos", state, "", 7);
+        Infos.katakanaList.push(kataGreenPanel2.getSprite());
 
         for (let i = 0; i < 152; i++) {
 
@@ -90,7 +109,7 @@ class Infos {
                 columnsCount = 0;
                 offX = 0;
                 offY = 0;
-                frameX = centerX(30, 64, 1);
+                frameX = 250;
                 kanaWidth = 38;
                 kanaOffX = 32;
             }
@@ -98,7 +117,7 @@ class Infos {
                 columnsCount = 0;
                 offX = 0;
                 offY = 0;
-                frameX = 30;
+                frameX = 20;
                 kanaWidth = 34;
                 kanaOffX = 35;
                 state = Infos.STATE.Katakana;
@@ -107,22 +126,31 @@ class Infos {
 
             if (i != 36 && i != 38 && i != 46 && i != 47 && i != 48 && i != 112 && i != 114 && i != 122 && i != 123 && i != 124) {
 
-                let frame = new Sprite({ w: 30, h: 18 }, frameX + offX, 30 + offY, null, "infos");
-                frame.addAnimation("normal", { x: 0, y: 126 });
+                // let frame = new Sprite({ w: 30, h: 18 }, frameX + offX, 30 + offY, null, "infos");
+                // frame.addAnimation("normal", { x: 0, y: 126 });
+                // frame.changeAnimation("normal");
+
+
+                let frame = new Sprite({ w: 35, h: 23 }, frameX + offX, 25 + offY, null, "infos");
+                frame.addAnimation("normal", { x: 352, y: 160 });
                 frame.changeAnimation("normal");
+
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(frame) : Infos.katakanaList.push(frame);
 
-                let kanaPanel = new Panel({ w: 28, h: 16 }, frame.x + 1, frame.y + 1, null, "infos", state, kanaArray[i], 0, true);
-                kanaPanel.getSprite().addAnimation("normal", { x: 1, y: 127 });
+                let kanaPanel = new Panel({ w: 33, h: 22 }, frame.x + 1, frame.y + 1, null, "infos", state, kanaArray[i], 0, true);
+                kanaPanel.getSprite().addAnimation("normal", { x: 353, y: 161 });
                 kanaPanel.getSprite().changeAnimation("normal");
                 kanaPanel.setHoverable(true);
                 kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
-                kanaPanel.setOffsets(3, 12);
+                kanaPanel.setOffsets(0, 16);
                 kanaPanel.setFont("kyokasho");
+                kanaPanel.setFontSize(15);
+                kanaPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)", "rgba(18,72,39,1)", "rgba(0,0,0,1)");
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite());
 
-                let soundBtn = new Button({ w: 12, h: 12 }, frame.x + 16, frame.y + 3, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
-                soundBtn.setAnimations({ x: 0, y: 84 });
+                let soundBtn = new Button({ w: 16, h: 15 }, frame.x + 17, frame.y + 4, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
+                soundBtn.setAnimations({ x: 112, y: 112 });
+
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(soundBtn.getSprite()) : Infos.katakanaList.push(soundBtn.getSprite());
 
                 let tooltipPanel;
@@ -135,13 +163,19 @@ class Infos {
                     romaLabel = KANA[kanaArray[i]].roma;
                 }
 
-                tooltipPanel = new Panel({ w: 100, h: 100, v: 5 }, centerX(100, 98, 1), 130, null, "infos", state, "roma_" + romaLabel, 1);
-                tooltipPanel.setTextCase("all");
-                tooltipPanel.setFontSize(32);
-                tooltipPanel.setFont("pgfont");
-                tooltipPanel.setOffsets(5, 24);
+                tooltipPanel = new Panel({ w: 8, h: 8, v: 9 }, centerX(100, 98, 1), 170, null, "infos", state, "roma_" + romaLabel, [-1, { y_t: 777 }]);//748 835
+                tooltipPanel.setFontSize(30);
+                tooltipPanel.setFont("kyokasho");
+                tooltipPanel.setOffsets(5, 35);
+                tooltipPanel.changePanelSprite("t", 3, { x: 427, y: 777 });
+                tooltipPanel.changePanelSprite("t", 4, { x: 438, y: 777 });
+                tooltipPanel.changePanelSprite("b", 3, { x: 427, y: 786 });
+                tooltipPanel.changePanelSprite("b", 4, { x: 438, y: 786 });
 
-                let kana = new Sprite({ w: kanaWidth, h: 34 }, tooltipPanel.x + kanaOffX, tooltipPanel.y + 35, null, "kana");     // w: 38   x + 32
+
+                let kanaAnimPanel = new Panel({ w: 70, h: 45, v: 10 }, centerXElement(tooltipPanel, 70), 46, tooltipPanel, "infos", state, "", 3);
+
+                let kana = new Sprite({ w: kanaWidth, h: 34 }, tooltipPanel.x + kanaOffX, tooltipPanel.y + 50, null, "kana");     // w: 38   x + 32
 
                 for (let j = 0; j < KANA[kanaArray[i]].frames.length; j++) {
                     kana.setImageDataOrigin(KANA[kanaArray[i]].imageData[j], KANA[kanaArray[i]].frames[j]);
@@ -153,6 +187,7 @@ class Infos {
                 //     kanaPanel.setTooltip(bottomInfoPanel);
                 // }
                 kanaPanel.setTooltip(tooltipPanel);
+                kanaPanel.setTooltip(kanaAnimPanel);
                 kanaPanel.setTooltip(kana);
                 kanaPanel.setHoverCB(displayTooltip, { list: "infos." + kanaList, tooltip: kanaPanel.getTooltip() });
             }
@@ -160,9 +195,9 @@ class Infos {
             if (columnsCount == 5) {
                 columnsCount = 0;
                 offX = 0;
-                offY += 18 - 1; // 18 => frame.height
+                offY += 23 - 1; // 23 => frame.height
             } else {
-                offX += 30 - 1; // 30 => frame.width
+                offX += 35 - 1; // 35 => frame.width
             }
         }
 
@@ -215,14 +250,6 @@ class Infos {
 
         switch (Infos.state) {
             case Infos.STATE.Main:
-                ctx.fillStyle = "rgb(200,0,0)";
-                ctx.font = "40px jpfont";
-                ctx.textAlign = "center";
-                ctx.shadowColor = "rgb(0,0,0)";
-                ctx.shadowOffsetY = 8;
-                ctx.fillText(LANG["Infos"], centerX(), 40);
-                ctx.shadowOffsetY = 0;
-                ctx.textAlign = "left";
 
                 Sprite.manageBeforeDrawing(Infos.list);
                 break;
