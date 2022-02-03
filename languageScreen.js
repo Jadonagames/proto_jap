@@ -12,21 +12,18 @@ class LanguageScreen {
     }
 
     static init() {
-        // canvas.style.backgroundColor = "cornflowerblue";
         canvas.style.backgroundColor = "rgb(213, 210, 193)";
 
-        let frBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 80, null, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "french_lang");
-        frBtn.setTextCase("all");
+        let frBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80), centerY(40, 30), null, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "french_lang", 41);
+        frBtn.setFontColor("rgba(142,45,45,1)");
+        frBtn.setOffsets(0, 22);
         LanguageScreen.list.push(frBtn.getSprite());
 
-        let enBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 110, null, { cb: LanguageScreen.changeLanguage, arg: "en" }, "LanguageScreen", LanguageScreen.STATE.Main, "english_lang");
-        enBtn.setTextCase("all");
+        let enBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80), centerY(50, 30, 1), null, { cb: LanguageScreen.changeLanguage, arg: "en" }, "LanguageScreen", LanguageScreen.STATE.Main, "english_lang", 41);
+        enBtn.setFontColor("rgba(142,45,45,1)");
+        enBtn.setOffsets(0, 22);
         LanguageScreen.list.push(enBtn.getSprite());
 
-        let jpBtn = new Button({ w: 54, h: 20, v: 4 }, centerX(54), 140, null, { cb: LanguageScreen.changeLanguage, arg: "jp" }, "LanguageScreen", LanguageScreen.STATE.Main, "japanese_lang");
-        LanguageScreen.list.push(jpBtn.getSprite());
-
-        // Panel.resetTypeState("LanguageScreen", LanguageScreen.STATE.Main);
         Button.resetTypeState("LanguageScreen", LanguageScreen.STATE.Main);
     }
 
@@ -56,11 +53,6 @@ class LanguageScreen {
 
     static update(dt) {
 
-        /**
-         * DEBUG
-         */
-        //------------ END DEBUG
-
         Sprite.manageBeforeUpdating(LanguageScreen.list, dt);
 
         LanguageScreen.list = LanguageScreen.list.filter(sp => {
@@ -71,24 +63,10 @@ class LanguageScreen {
     static draw(ctx) {
 
         Sprite.manageBeforeDrawing(LanguageScreen.list);
-
-        ctx.fillStyle = "rgb(255,255,255)";
-        // ctx.font = "20px UD Digi Kyokasho NK-R";
-
         /*
         * DEBUG
         */
-
-        // ctx.font = "10px UD Digi Kyokasho NK-R";
-        ctx.font = "30px jpfont";
-
-        ctx.textAlign = "center";
-
-        ctx.fillText("Language Screen", centerX(), 30);
-        ctx.font = "10px jpfont";
-        ctx.textAlign = "left";
-
-        ctx.fillText("あいうえお", 200, 50);
+        // ctx.fillText("あいうえお", 200, 50);
         // ctx.fillText("かきくけこ", 200, 60);
         // ctx.fillText("さしすせそ", 200, 70);
         // ctx.fillText("たちつてと", 200, 80);
@@ -113,15 +91,6 @@ class LanguageScreen {
         // ctx.fillText("ン", 250, 150);
 
         // --------------- END DEBUG
-
-
     }
 
 }
-
-
-/**
- * DEBUG
- */
-
-// -------------------- END DEBUG
