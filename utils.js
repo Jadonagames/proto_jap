@@ -193,6 +193,11 @@ function displayPanelChildBtn(pBtn, pList) {
         case "lessonTutorial.main":
             LessonTutorial.mainList.push(pBtn.getSprite());
             Button.currentList.push(pBtn);
+            if (CollisionManager.MouseCollision(MOUSE_SPRITE.x, MOUSE_SPRITE.y, pBtn.getPosition().x, pBtn.getPosition().y, pBtn.getSize().w, pBtn.getSize().h)) {
+                pBtn.setState(Button.STATE.Hover);
+                pBtn.changeSpriteAnimation("hover");
+                MOUSE_SPRITE.changeAnimation("hover");
+            }
             break;
     }
 }
