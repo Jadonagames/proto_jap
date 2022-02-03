@@ -231,6 +231,14 @@ class Lessons {
             }
         }
 
+        // TODO Automatiser :
+        // this.hiraNewSprite = new Sprite({ w: 28, h: 20 }, 170, 165, null, "n");
+        // this.hiraNewSprite.addAnimation("normal", { x: 352, y: 512 }, 2, 0.3);
+        // this.hiraNewSprite.changeAnimation("normal");
+        // this.hiraNewSprite.setDestination({ x: 170, y: 155 });
+        // this.hiraNewSprite.setDirection(-1);
+        // Lessons.hiraganaList.push(this.hiraNewSprite);
+
 
         // ---------------- LESSON ----------------
         this.backgroundSprite = null;
@@ -356,12 +364,134 @@ class Lessons {
                 strokePanel.setAlignText(strokePanel.ALIGN_TEXT.Left);
                 strokePanel.setToDelete();
 
+
+                let exampleSprite = null;
+
+                let descriptionPanel = null;
                 if (LANG[kana + KANA[kanaPos].roma + "_description"]) {
-                    let descriptionPanel = new Panel({ w: 130, h: 50, v: 1 }, this.informationPanel.x + 4, strokePanel.y + 14, null, "lessons", Lessons.STATE.Lesson, kana + KANA[kanaPos].roma + "_description", 2);
+                    descriptionPanel = new Panel({ w: 160, h: 20, v: 1 }, this.informationPanel.x + 4, strokePanel.y + 14, null, "lessons", Lessons.STATE.Lesson, kana + KANA[kanaPos].roma + "_description", 2); // 21 pour voir le panel
                     descriptionPanel.setAlignText(descriptionPanel.ALIGN_TEXT.Left);
                     descriptionPanel.setToDelete();
                     containerPanel.setTooltip(descriptionPanel);
+                    descriptionPanel.setSize({ w: -1, h: (descriptionPanel.completeLines.length * 10) });
+
+                    // this.hira = "|あ|い|う|え|お|か|き|く|け|こ|さ|し|す|せ|そ|た|ち|つ|て|と|な|に|ぬ|ね|の|は|ひ|ふ|へ|ほ|ま|み|む|め|も|や|ゆ|よ|ら|り|る|れ|ろ|わ|を|ん|";
+                    // this.hira2 = "|が|ぎ|ぐ|げ|ご|ざ|じ|ず|ぜ|ぞ|だ|ぢ|づ|で|ど|ば|び|ぶ|べ|ぼ|ぱ|ぴ|ぷ|ぺ|ぽ|";
+                    // this.kata = "|ア|イ|ウ|エ|オ|カ|キ|ク|ケ|コ|サ|シ|ス|セ|ソ|タ|チ|ツ|テ|ト|ナ|ニ|ヌ|ネ|ノ|ハ|ヒ|フ|ヘ|ホ|マ|ミ|ム|メ|モ|ヤ|ユ|ヨ|ラ|リ|ル|レ|ロ|ワ|ヲ|ン|";
+                    // this.kata2 = "|ガ|ギ|グ|ゲ|ゴ|ザ|ジ|ズ|ゼ|ゾ|ダ|ヂ|ヅ|デ|ド|バ|ビ|ブ|ベ|ボ|パ|ピ|プ|ペ|ポ|";
                 }
+
+                if ((LANG[kana + KANA[kanaPos].roma + "_writing"])) {
+
+                    let posYDescription = 0;
+                    if (descriptionPanel) {
+                        posYDescription = descriptionPanel.height + 5;
+                    }
+
+                    let writingPanel = new Panel({ w: 160, h: 50, v: 1 }, this.informationPanel.x + 4, strokePanel.y + 14 + posYDescription, null, "lessons", Lessons.STATE.Lesson, kana + KANA[kanaPos].roma + "_writing", 2); // 21 pour voir le panel
+                    writingPanel.setAlignText(writingPanel.ALIGN_TEXT.Left);
+                    writingPanel.setToDelete();
+                    containerPanel.setTooltip(writingPanel);
+
+                    let posX = 1008;
+                    let offsetY = 1024;
+                    switch (LANG[kana + KANA[kanaPos].roma]) {
+                        case "い":
+                            exampleSprite = new Sprite({ w: 64, h: 17 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "お":
+                            exampleSprite = new Sprite({ w: 65, h: 20 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 18 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "き":
+                            exampleSprite = new Sprite({ w: 61, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 39 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "こ":
+                            exampleSprite = new Sprite({ w: 52, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 59 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "さ":
+                            exampleSprite = new Sprite({ w: 61, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 79 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "そ":
+                            exampleSprite = new Sprite({ w: 40, h: 21 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 99 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "な":
+                            exampleSprite = new Sprite({ w: 64, h: 20 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 121 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "ふ":
+                            exampleSprite = new Sprite({ w: 82, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 142 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "む":
+                            exampleSprite = new Sprite({ w: 61, h: 21 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 162 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "ゆ":
+                            exampleSprite = new Sprite({ w: 43, h: 21 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 184 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "ら":
+                            exampleSprite = new Sprite({ w: 58, h: 21 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 206 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "り":
+                            exampleSprite = new Sprite({ w: 53, h: 22 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 228 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "タ":
+                            exampleSprite = new Sprite({ w: 39, h: 20 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 251 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "ネ":
+                            exampleSprite = new Sprite({ w: 41, h: 20 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 272 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                        case "ム":
+                            exampleSprite = new Sprite({ w: 40, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 293 });
+                            exampleSprite.changeAnimation("normal");
+                            containerPanel.setTooltip(exampleSprite);
+                            break;
+                    }
+                }
+
+
+
+
 
                 let leftSprite = new Sprite({ w: 12, h: 38 }, -12, 0, containerPanel);
                 leftSprite.addAnimation("normal", { x: 498, y: 748 });
@@ -570,7 +700,22 @@ class Lessons {
                     break;
             }
 
-            this.kanaToRomaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 70, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: pParams.type, choiceType: "r", testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btnLabel, 41);
+            // this.kanaToRomaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 70, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: pParams.type, choiceType: "r", testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btnLabel, 41);
+            this.kanaToRomaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 70, this.chooseTypePanel,
+                {
+                    cb: Transition.init.bind(Transition),
+                    arg: {
+                        callback: { cb: startBtnCB, arg: { range: pParams.range, answerType: pParams.type, choiceType: "r", testType: pParams.testType, lessonNumber: pParams.lessonNumber } },
+                        pos: { x: centerX(), y: this.chooseTypePanel.y + 70, r: 450, maxR: 0 },
+                        speed: 1,
+                        stopEffect: false,
+                        height: true
+                    }
+                }
+                ,
+                "lessons", Lessons.STATE.Lesson, btnLabel, 41);
+            // let lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 320, null, { cb: FadeEffect.fade.bind(FadeEffect), arg: { callback: { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, direction: "out", maxTimer: 0.01 } }, "mainmenu", MainMenu.STATE.Main, "Lessons", 4);
+
             this.kanaToRomaBtn.setFontColor("rgba(142,45,45,1)");
             this.kanaToRomaBtn.setAlpha(0);
             Button.list.push(this.kanaToRomaBtn);
@@ -806,6 +951,10 @@ class Lessons {
         if (FadeEffect.bActive) {
             FadeEffect.update(dt);
         }
+
+        if (Transition.bActive) {
+            Transition.update(dt);
+        }
     }
 
     static draw(ctx) {
@@ -954,6 +1103,10 @@ class Lessons {
 
         if (FadeEffect.bActive) {
             FadeEffect.draw(ctx);
+        }
+
+        if (Transition.bActive) {
+            Transition.draw(ctx);
         }
     }
 }
