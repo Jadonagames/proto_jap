@@ -30,10 +30,10 @@ class MainMenu {
 
     static init() {
 
-        let debug_point = new Sprite({ w: 4, h: 4 }, 0, 273);
-        debug_point.addAnimation("normal", { x: 0, y: 0 });
-        debug_point.changeAnimation("normal");
-        MainMenu.mainList.push(debug_point);
+        // let debug_point = new Sprite({ w: 4, h: 4 }, 0, 273);
+        // debug_point.addAnimation("normal", { x: 0, y: 0 });
+        // debug_point.changeAnimation("normal");
+        // MainMenu.mainList.push(debug_point);
 
         // this.hira = "|あ|い|う|え|お|か|き|く|け|こ|さ|し|す|せ|そ|た|ち|つ|て|と|な|に|ぬ|ね|の|は|ひ|ふ|へ|ほ|ま|み|む|め|も|や|ゆ|よ|ら|り|る|れ|ろ|わ|を|ん|";
         // this.hira2 = "|が|ぎ|ぐ|げ|ご|ざ|じ|ず|ぜ|ぞ|だ|ぢ|づ|で|ど|ば|び|ぶ|べ|ぼ|ぱ|ぴ|ぷ|ぺ|ぽ|";
@@ -70,6 +70,11 @@ class MainMenu {
         subtitleImg.changeAnimation("normal");
         subtitleImg.setAlpha(0);
         MainMenu.mainList.push(subtitleImg);
+
+        let subtitlePanel = new Panel({ w: 129, h: 36, v: 1 }, centerX(129) + 3, 109, null, "mainmenu", MainMenu.STATE.Main, "main_subtitle", 2);
+        subtitlePanel.setAlpha(0);
+        subtitlePanel.setFontColor("rgba(176, 150, 124,1)");
+        MainMenu.mainList.push(subtitlePanel.getSprite());
 
         let hiraAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110), 0, null, "tm");
         hiraAImg.addAnimation("normal", { x: 574, y: 36 });
@@ -111,14 +116,14 @@ class MainMenu {
         optionsBtn.setMovingSpeed(0.75);
         MainMenu.mainList.push(optionsBtn.getSprite());
 
-        let infosBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 340, null, { cb: changeMainState, arg: { state: MAIN_STATE.Infos, from: "mainmenu" } }, "mainmenu", MainMenu.STATE.Main, "Infos", 4);
+        let infosBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 340, null, { cb: FadeEffect.fade.bind(FadeEffect), arg: { callback: { cb: changeMainState, arg: { state: MAIN_STATE.Infos, from: "mainmenu" } }, direction: "out", maxTimer: 0.01 } }, "mainmenu", MainMenu.STATE.Main, "kana_boards", 4);
         infosBtn.setDestination({ x: centerX(110), y: 209 });
         infosBtn.setCanMove(true);
         infosBtn.setMovingSpeed(0.70);
         infosBtn.setFontColor("rgba(142,45,45,1)");
         MainMenu.mainList.push(infosBtn.getSprite());
 
-        let trainingBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null, null, "mainmenu", MainMenu.STATE.Main, "Training", 4);
+        let trainingBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null, null, "mainmenu", MainMenu.STATE.Main, "Free_mode", 4);
         trainingBtn.setDestination({ x: centerX(110), y: 181 });
         trainingBtn.setCanMove(true);
         trainingBtn.setMovingSpeed(0.65);
@@ -132,6 +137,61 @@ class MainMenu {
         lessonsBtn.setMovingSpeed(0.6);
         MainMenu.mainList.push(lessonsBtn.getSprite());
 
+        let leftLessonsSprite = new Sprite({ w: 20, h: 20 }, 112, 0, lessonsBtn);
+        leftLessonsSprite.addAnimation("normal", { x: 704, y: 832 }, 9, [0.3, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.4]);
+        leftLessonsSprite.changeAnimation("normal");
+        lessonsBtn.setTooltip(leftLessonsSprite);
+        lessonsBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: lessonsBtn.getTooltip() });
+        let rightLessonsSprite = new Sprite({ w: 20, h: 20 }, -22, 0, lessonsBtn);
+        rightLessonsSprite.addAnimation("normal", { x: 704, y: 832 }, 9, [0.3, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.4]);
+        rightLessonsSprite.changeAnimation("normal");
+        lessonsBtn.setTooltip(rightLessonsSprite);
+        lessonsBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: lessonsBtn.getTooltip() });
+
+        let leftTrainingSprite = new Sprite({ w: 20, h: 20 }, 112, 0, trainingBtn);
+        leftTrainingSprite.addAnimation("normal", { x: 704, y: 852 }, 6, 0.2);
+        leftTrainingSprite.changeAnimation("normal");
+        trainingBtn.setTooltip(leftTrainingSprite);
+        trainingBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: trainingBtn.getTooltip() });
+        let rightTrainingSprite = new Sprite({ w: 20, h: 20 }, -22, 0, trainingBtn);
+        rightTrainingSprite.addAnimation("normal", { x: 704, y: 852 }, 6, 0.2);
+        rightTrainingSprite.changeAnimation("normal");
+        trainingBtn.setTooltip(rightTrainingSprite);
+        trainingBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: trainingBtn.getTooltip() });
+
+        let leftInfosSprite = new Sprite({ w: 20, h: 20 }, 112, 0, infosBtn);
+        leftInfosSprite.addAnimation("normal", { x: 704, y: 872 }, 10, [0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2]);
+        leftInfosSprite.changeAnimation("normal");
+        infosBtn.setTooltip(leftInfosSprite);
+        infosBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: infosBtn.getTooltip() });
+        let rightInfosSprite = new Sprite({ w: 20, h: 20 }, -22, 0, infosBtn);
+        rightInfosSprite.addAnimation("normal", { x: 704, y: 872 }, 10, [0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2]);
+        rightInfosSprite.changeAnimation("normal");
+        infosBtn.setTooltip(rightInfosSprite);
+        infosBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: infosBtn.getTooltip() });
+
+        let leftSettingsSprite = new Sprite({ w: 20, h: 20 }, 112, 0, optionsBtn);
+        leftSettingsSprite.addAnimation("normal", { x: 704, y: 892 }, 7, [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.5]);
+        leftSettingsSprite.changeAnimation("normal");
+        optionsBtn.setTooltip(leftSettingsSprite);
+        optionsBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: optionsBtn.getTooltip() });
+        let rightSettingsSprite = new Sprite({ w: 20, h: 20 }, -22, 0, optionsBtn);
+        rightSettingsSprite.addAnimation("normal", { x: 704, y: 892 }, 7, [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.5]);
+        rightSettingsSprite.changeAnimation("normal");
+        optionsBtn.setTooltip(rightSettingsSprite);
+        optionsBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: optionsBtn.getTooltip() });
+
+        let leftCreditsSprite = new Sprite({ w: 20, h: 20 }, 112, 0, creditsBtn);
+        leftCreditsSprite.addAnimation("normal", { x: 704, y: 912 }, 4, [0.3, 0.15, 0.15, 0.5]);
+        leftCreditsSprite.changeAnimation("normal");
+        creditsBtn.setTooltip(leftCreditsSprite);
+        creditsBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: creditsBtn.getTooltip() });
+        let rightCreditsSprite = new Sprite({ w: 20, h: 20 }, -22, 0, creditsBtn);
+        rightCreditsSprite.addAnimation("normal", { x: 704, y: 912 }, 4, [0.3, 0.15, 0.15, 0.5]);
+        rightCreditsSprite.changeAnimation("normal");
+        creditsBtn.setTooltip(rightCreditsSprite);
+        creditsBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: creditsBtn.getTooltip() });
+
         // this.muteBtn = new Button({ w: 16, h: 14 }, centerX(16, 200, 1), 50, null, MainMenu.muteAction.bind(this), "mainmenu", MainMenu.STATE.Main, "", 0, true);
         // this.muteBtn.setAnimations({ x: 96, y: 96 });
         // MainMenu.mainList.push(this.muteBtn.getSprite());
@@ -142,9 +202,9 @@ class MainMenu {
 
         // ---------------- OPTIONS ----------------
 
-        let volumePanel = new Panel({ w: 54, h: 20, v: 5 }, centerX(54), 50, null, "mainmenu", MainMenu.STATE.Options, "Volume", 1);
-        volumePanel.setTextCase("all");
-        MainMenu.optionsList.push(volumePanel.getSprite());
+        // let volumePanel = new Panel({ w: 54, h: 20, v: 5 }, centerX(54), 50, null, "mainmenu", MainMenu.STATE.Options, "Volume", 1);
+        // volumePanel.setTextCase("all");
+        // MainMenu.optionsList.push(volumePanel.getSprite());
 
         let musicDownBtn = new Button({ w: 16, h: 16 }, centerX(16, 20), 80, null, Sound.decreaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
         musicDownBtn.setAnimations({ x: 0, y: 96 });
@@ -432,7 +492,8 @@ class MainMenu {
     }
 
     static draw(ctx) {
-
+        // let globalCompositionArray = ["source-over", "source-in", "source-out", "source-atop", "destination-over", "destination-in", "destination-out", "destination-atop", "lighter", "copy", "xor", "multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "hard-light", "soft-light", "difference", "exclusion", "hue", "saturation", "color", "luminosity"];
+        // ctx.globalCompositeOperation = globalCompositionArray[15];
         Sprite.manageBeforeDrawing(MainMenu.randomKanaSpriteList);
 
         Particles.list.forEach(p => {
