@@ -335,6 +335,10 @@ class Panel {
                     x_l = 583;
                     y_t = 748;
                     break;
+                case 7: //? Panel chalkboard
+                    x_l = 112;
+                    y_t = 144;
+                    break;
                 default: //? Panel original
                     x_l = 0;
                     y_t = 57;
@@ -437,6 +441,11 @@ class Panel {
 
     getSize() {
         return { w: this.width, h: this.height };
+    }
+
+    setSize(pNewSize) {
+        if (pNewSize.w >= 0) this.width = pNewSize.w;
+        if (pNewSize.h >= 0) this.height = pNewSize.h;
     }
 
     getTooltip() {
@@ -730,21 +739,43 @@ class Panel {
 
             let line = "";
             let tmp = "";
+            let bNewLine = false;
             this.wordsArr.forEach((word, index) => { // contenu test du tooltip 23 * 5 = 115
-                index == 0 ? tmp += word : tmp = line + " " + word;
 
-                if ((tmp.length * 5) > this.totalWidth - 20) {
+                if (word == "\\n") {
                     this.completeLines.push(line);
-                    line = word;
+                    line = ""
                     tmp = "";
+                    bNewLine = true;
                 } else {
-                    index == 0 ? line += word : line += " " + word;
+                    if (index == 0 || bNewLine) {
+                        tmp += word;
+                    } else {
+                        tmp = line + " " + word;
+                    }
+                    // index == 0 ? tmp += word : tmp = line + " " + word;
+
+
+                    if ((tmp.length * 5) > this.totalWidth - 20) {
+                        this.completeLines.push(line);
+                        line = word;
+                        tmp = "";
+                    } else {
+                        // index == 0 ? line += word : line += " " + word;
+                        if (index == 0 || bNewLine) {
+                            line += word
+                            bNewLine = false;
+                        } else {
+                            line += " " + word;
+                        }
+                    }
+
+                    if (index == this.wordsArr.length - 1) {
+                        this.completeLines.push(line);
+                        tmp = "";
+                    }
                 }
 
-                if (index == this.wordsArr.length - 1) {
-                    this.completeLines.push(line);
-                    tmp = "";
-                }
             })
 
             this.lines = this.completeLines;
