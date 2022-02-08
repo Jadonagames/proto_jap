@@ -286,7 +286,7 @@ function outInBounce(t, b, c, d) {
 }
 
 function inTransition() {
-    return TRANSITION || FadeEffect.bActive || Transition.bActive;
+    return TRANSITION || Lessons.TRANSLATION_TRANSITION || FadeEffect.bActive || Transition.bActive;
 }
 
 
