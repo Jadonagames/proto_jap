@@ -236,7 +236,7 @@ class Panel {
             let y_t = 0;
 
             switch (pId[0]) {
-                case -1: //? Panel (Tile) plusieurs couleurs   ---- this.id = [-1, { y_t: 123 }]
+                case -1: //? Panel (Tile) plusieurs couleurs   ---- v:9 this.id = [-1, { y_t: 748 }]
                     x_l = 380;
                     y_t = pId[1].y_t;
                     break;

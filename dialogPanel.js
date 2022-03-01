@@ -19,6 +19,7 @@ class DialogPanel extends Panel {
         this.currentChar = 0;
         this.dialogTimer = new Timer(0.01, this.updateDialog.bind(this));
         this.childButton = null;
+        this.childSprite = null;
 
         this.labelArr = pLabel;
         this.currentPhrase = 0;
@@ -35,7 +36,12 @@ class DialogPanel extends Panel {
 
     setChildBtn(pBtn, pList) {
         this.childButton = pBtn;
-        this.childButtonList = pList;
+        this.childButtonList = pList; // String: "lessonTutorial.main"
+    }
+
+    setChildSprite(pSprite, pList) {
+        this.childSprite = pSprite;
+        this.childSpriteList = pList;
     }
 
     setScriptCallback(pCB) {
@@ -103,6 +109,9 @@ class DialogPanel extends Panel {
             this.currentLine++;
             if (this.currentLine == this.completeLines.length) {
                 this.bDialogEnd = true;
+                if (this.childSprite) {
+                    displayPanelChildSprite(this.childSprite, this.childSpriteList);
+                }
                 if (this.childButton) {
                     displayPanelChildBtn(this.childButton, this.childButtonList);
                 }
@@ -121,6 +130,7 @@ class DialogPanel extends Panel {
             this.dialogTimer.reset();
             this.currentLine = 0;
             this.currentChar = 0;
+            this.childSprite.delete = true;
             this.childButton.getSprite().delete = true;
             this.childButton.removeFromCurrentList();
             if (this.scriptCallback) {
@@ -128,6 +138,9 @@ class DialogPanel extends Panel {
             }
         } else {
             this.currentPhrase--;
+            this.childSprite.delete = true;
+            this.childButton.getSprite().delete = true;
+            this.childButton.removeFromCurrentList();
             this.changeDirection();
             let tmpY = this.destination.y;
             this.destination.y = this.startPos.y;

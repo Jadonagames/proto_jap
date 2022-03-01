@@ -23,6 +23,7 @@ class Sprite {
         this.originalY = this.y;
 
         this.ox = 0;
+        this.offsetSS = 0; //? To prevent quad bleeding for moving sprites
 
         this.scaleX = pScale.x;
         this.scaleY = pScale.y;
@@ -39,6 +40,8 @@ class Sprite {
 
         this.startPos = { x: pX, y: pY };
         this.destination = { x: 0, y: 0 };
+        this.originPos = { x: pX, y: pY };
+        this.originDestination = { x: 0, y: 0 };
         this.direction = 1;
         this.speedCount = 0;
         this.moveSpeed = 2;
@@ -157,6 +160,10 @@ class Sprite {
         });
     }
 
+    setOffsetSS(pNewValue) {
+        this.offsetSS = pNewValue;
+    }
+
     getClass() {
         return this.class;
     }
@@ -225,6 +232,7 @@ class Sprite {
             y: pDestination.y
         };
     }
+
 
     setDirection(pDirection) {
         this.direction = pDirection;
@@ -343,7 +351,9 @@ class Sprite {
                     this.delete = true;
                 }
             }
-        } else if (this.type == "n") { //? Lessons : "new" icon
+        } else if (this.type.slice(0, 2) == "n_") { //? Lessons : "new" icon
+            // log("nnnnn")
+            // log(this.speedCount);
             if (this.speedCount <= this.moveSpeed) {
                 this.x = easeInOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.moveSpeed);
                 this.y = easeInOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
@@ -354,10 +364,10 @@ class Sprite {
 
                 if (this.direction == 1) {
                     //TODO
-                    this.setDestination({ x: this.x, y: 155 }); //! Données en dur à changer
+                    this.setDestination({ x: this.x, y: this.originDestination.y }); //! Destination ? 155
                 } else {
                     //TODO
-                    this.setDestination({ x: this.x, y: 165 }); //! Données en dur à changer
+                    this.setDestination({ x: this.x, y: this.originPos.y }); //! Origin ? 165
                 }
                 this.speedCount = 0;
                 this.direction = -this.direction;
@@ -554,6 +564,11 @@ class Sprite {
             Sprite.debug_drawcalls++;
             if (this.type != "kana") {
                 this.ox = this.currentAnimation.origin.x + (this.originWidth * this.currentFrame);
+
+                //? To prevent quad bleeding for moving sprites
+                if (this.offsetSS == 1) {
+                    this.ox += this.offsetSS + (this.currentFrame*2);
+                }
                 // this.ox = this.currentAnimation.origin.x + (11 * this.currentFrame);
 
                 if (this.parent) {

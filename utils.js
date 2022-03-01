@@ -178,6 +178,29 @@ function displayTooltip(pArgs) {
                 }
             })
             break;
+
+        case "introduction.main":
+            pArgs.tooltip.forEach(sp => {
+                if (sp instanceof Sprite) {
+                    Introduction.mainList.push(sp);
+                } else {
+                    Introduction.mainList.push(sp.getSprite());
+                }
+            })
+            break;
+    }
+}
+
+function displayPanelChildSprite(pSprite, pList) {
+    pSprite.delete = false;
+    
+    switch(pList) {
+        case "introduction.main":
+            Introduction.mainList.push(pSprite);
+            break;
+        case "lessonTutorial.main":
+            LessonTutorial.mainList.push(pSprite);
+            break;
     }
 }
 
@@ -192,6 +215,15 @@ function displayPanelChildBtn(pBtn, pList) {
             break;
         case "lessonTutorial.main":
             LessonTutorial.mainList.push(pBtn.getSprite());
+            Button.currentList.push(pBtn);
+            if (CollisionManager.MouseCollision(MOUSE_SPRITE.x, MOUSE_SPRITE.y, pBtn.getPosition().x, pBtn.getPosition().y, pBtn.getSize().w, pBtn.getSize().h)) {
+                pBtn.setState(Button.STATE.Hover);
+                pBtn.changeSpriteAnimation("hover");
+                MOUSE_SPRITE.changeAnimation("hover");
+            }
+            break;
+        case "introduction.main":
+            Introduction.mainList.push(pBtn.getSprite());
             Button.currentList.push(pBtn);
             if (CollisionManager.MouseCollision(MOUSE_SPRITE.x, MOUSE_SPRITE.y, pBtn.getPosition().x, pBtn.getPosition().y, pBtn.getSize().w, pBtn.getSize().h)) {
                 pBtn.setState(Button.STATE.Hover);
@@ -629,7 +661,9 @@ function handleCorrectAnswer() {
     Button.currentList.forEach(b => {
         if (b instanceof KanaBtn) {
             b.setCallbackArg({ char: RND_ARR[count], label: rndArr[count] });
-            b.setLabel(b.label.slice(0, 5) + rndArr[count]);
+            let newLabel = b.label.slice(0, 5) + rndArr[count];
+            b.checkShiChiTsu(newLabel);
+            b.setLabel(newLabel);
             count++;
         }
     });
@@ -653,6 +687,8 @@ function resetGame(pArg) {
     if (pArg == "back_to_lesson") {
         Lessons.backToLesson();
         MOUSE_SPRITE.y += CANVAS_HEIGHT;
+    } else if (pArg == "back_to_freemode") {
+        FreeMode.backToFreeMode();
     }
 }
 

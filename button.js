@@ -97,6 +97,8 @@ class Button {
         this.textOffsetY = 13;
         this.textOffsetXOrigin = this.textOffsetX;
         this.textOffsetYOrigin = this.textOffsetY;
+        this.textOffsetXHover = this.textOffsetX - 1;
+        this.textOffsetYHover = this.textOffsetY - 1;
         this.textOffsetXDown = this.textOffsetX + 2;
         this.textOffsetYDown = this.textOffsetY + 2;
         this.bTextOffsetChanged = false;
@@ -186,11 +188,11 @@ class Button {
                 break;
             case 4: //? MainMenu 
                 x_l = 28;
-                y_t = 56;
+                y_t = 58;
                 break;
             case 41: //? Comme MainMenu mais ombre 1px only
                 x_l = 56;
-                y_t = 43;
+                y_t = 40;
                 break;
         }
 
@@ -378,11 +380,13 @@ class Button {
         this.alignText = pAlign;
     }
 
-    setOffsets(pX = 0, pY = 13, pDown = 2) {
+    setOffsets(pX = 0, pY = 13, pDown = 2, pHover = -1) {
         this.textOffsetX = pX;
         this.textOffsetY = pY;
         this.textOffsetXOrigin = pX;
         this.textOffsetYOrigin = pY;
+        this.textOffsetXHover = this.textOffsetX + pHover;
+        this.textOffsetYHover = this.textOffsetY + pHover;
         this.textOffsetXDown = this.textOffsetX + pDown;
         this.textOffsetYDown = this.textOffsetY + pDown;
     }

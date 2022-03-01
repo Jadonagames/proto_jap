@@ -266,7 +266,18 @@ function keyUp(k) {
 
     if (k.code == "Enter") { // Q ?
         // toMainMenu();
-        TURN_NUMBER = MAX_TURN - 1;
+        // TURN_NUMBER = MAX_TURN - 1;
+        Transition.startOpen();
+
+
+        // Transition.init({
+        //     callback: {},
+        //     type: "l",
+        //     pos: { x: centerX(), y: 150, r: 50, maxR: 450 },
+        //     speed: 1,
+        //     stopEffect: true,
+        //     height: false
+        // });
 
     }
 
@@ -277,7 +288,28 @@ function keyUp(k) {
         // Game1.chalkParticles({ x: 200, y: 170, offX: 10, offY: 5, dirX: -1, dirY: 1 });
         // Game1.chalkParticles({ x: 215, y: 115, offX: 10, offY: 5, dirX: 1, dirY: -1 });
 
+        // Lessons.displayNewLogo("h", 2);
 
+        // Transition.init({
+        //     callback: {},
+        //     type: "l",
+        //     pos: { x: centerX(), y: 150, r: 50, maxR: 450 },
+        //     speed: 1,
+        //     stopEffect: true,
+        //     height: false
+        // });
+
+        Transition.init({
+            callback: {},
+            type: "l",
+            pos: { x: centerX(), y: 150, r: 300, maxR: 50 },
+            speed: 1,
+            stopEffect: true,
+            height: false
+        });
+
+        //! FERMETURE : 
+        // r: 450 maxR 0
 
         // MainMenu.particles2(50, 50);
         // console.log(" --- MainMenu.randomKanaSpriteList : --- ");
@@ -299,8 +331,8 @@ function keyUp(k) {
         // console.table(MainMenu.creditsList);
         // console.log(" --- Button.list : --- ");
         // console.table(Button.list);
-        console.log(" --- Button.currentList : --- ");
-        console.table(Button.currentList);
+        // console.log(" --- Button.currentList : --- ");
+        // console.table(Button.currentList);
         // console.log(" --- LessonBtn.currentList : --- ");
         // console.table(LessonBtn.list);
         // console.log(" --- Panel.currentList : --- ");
@@ -389,10 +421,10 @@ canvas.addEventListener("mousemove", e => {
                                     MOUSE_SPRITE.changeAnimation("hover");
                                 }
 
-                                if (b instanceof LessonBtn && b.mode != 1) {  //! ----------------------------------------------- ////////////////////////////////
-                                    if (b.y == b.startPos.y) b.y -= 2;
-                                    b.textOffsetX -= 1;
-                                    b.textOffsetY -= 1;
+                                if (b instanceof LessonBtn && b.mode != 1) {
+                                    if (b.y == b.startPos.y) b.y -= 2; //!
+                                    b.textOffsetX = b.textOffsetXHover;
+                                    b.textOffsetY = b.textOffsetYHover;
                                     b.setBoxCollider(b.boxCollider.w, 22, b.boxCollider.offX, b.boxCollider.offY);
 
                                     b.bTextOffsetChanged = true;
@@ -432,8 +464,8 @@ canvas.addEventListener("mousemove", e => {
                             MOUSE_SPRITE.changeAnimation("normal");
 
                             // Return to normal position
-                            if (b instanceof LessonBtn && b.mode != 1) {  //! ----------------------------------------------- ////////////////////////////////
-                                if (b.y != b.startPos.y) b.y += 2;
+                            if (b instanceof LessonBtn && b.mode != 1) {
+                                if (b.y != b.startPos.y) b.y += 2; //!
                                 b.setBoxCollider(b.boxCollider.w, 20, b.boxCollider.offX, b.boxCollider.offY);
                             }
                             if (b.bTextOffsetChanged) b.resetOffsets();
@@ -534,7 +566,7 @@ canvas.addEventListener("wheel", e => {
 
 canvas.addEventListener("mousedown", e => {
 
-    if (!TRANSITION && e.button == 0) { // Left click !
+    if (!inTransition() && e.button == 0) { // Left click !
 
         const mouseX = e.layerX / SCALE_X;
         const mouseY = e.layerY / SCALE_Y;
@@ -550,9 +582,9 @@ canvas.addEventListener("mousedown", e => {
                         }
                         b.changeSpriteAnimation("down");
 
-                        if (b instanceof LessonBtn && b.mode != 1) {   //! ----------------------------------------------- ////////////////////////////////
-                            b.textOffsetX += 1;
-                            b.textOffsetY += 1;
+                        if (b instanceof LessonBtn && b.mode != 1) {
+                            b.textOffsetX = b.textOffsetXDown;
+                            b.textOffsetY = b.textOffsetYDown;
                             bTextOffsetChanged = true;
                         }
 
@@ -582,7 +614,7 @@ canvas.addEventListener("mousedown", e => {
 
 canvas.onclick = e => {
 
-    if (!TRANSITION && e.button == 0) { // Left click !
+    if (!inTransition() && e.button == 0) { // Left click !
 
         const mouseX = e.layerX / SCALE_X;
         const mouseY = e.layerY / SCALE_Y;
@@ -606,10 +638,10 @@ canvas.onclick = e => {
                             let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
                             func();
                         }
-                        if (b instanceof LessonBtn && b.mode != 1) {   //! ----------------------------------------------- ////////////////////////////////
-                            if (b.y != b.startPos.y) b.y += 2;
-                            b.textOffsetX += 1;
-                            b.textOffsetY += 1;
+                        if (b instanceof LessonBtn && b.mode != 1) {
+                            if (b.y != b.startPos.y) b.y += 2; //!
+                            b.textOffsetX = b.textOffsetXOrigin;
+                            b.textOffsetY = b.textOffsetYOrigin;
                             bTextOffsetChanged = true;
                         }
 
