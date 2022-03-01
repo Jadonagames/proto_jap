@@ -51,11 +51,18 @@ class Sound {
         Sound.list[pName].play();
     }
 
+
+
     static decreaseMusicVolume() {
         if (MUSIC_VOLUME > 0) {
             MUSIC_VOLUME *= 10;
             MUSIC_VOLUME -= 1;
             MUSIC_VOLUME /= 10;
+            MainMenu.musicSprite.changeAnimation(MUSIC_VOLUME*10);
+            if (MUSIC_VOLUME == 0) {
+                MainMenu.musicSpeaker.changeAnimation("mute");
+            }
+            SaveManager.save([{ type: "bgm", value: MUSIC_VOLUME }]);
             if (Sound.current != null) {
                 Sound.current.sound.volume = MUSIC_VOLUME;
             }
@@ -67,6 +74,11 @@ class Sound {
             MUSIC_VOLUME *= 10;
             MUSIC_VOLUME += 1;
             MUSIC_VOLUME /= 10;
+            MainMenu.musicSprite.changeAnimation(MUSIC_VOLUME*10);
+            if (MUSIC_VOLUME*10 == 1) {
+                MainMenu.musicSpeaker.changeAnimation("normal");
+            }
+            SaveManager.save([{ type: "bgm", value: MUSIC_VOLUME }]);
             if (Sound.current != null) {
                 Sound.current.sound.volume = MUSIC_VOLUME;
             }
@@ -78,6 +90,11 @@ class Sound {
             SFX_VOLUME *= 10;
             SFX_VOLUME -= 1;
             SFX_VOLUME /= 10;
+            MainMenu.sfxSprite.changeAnimation(SFX_VOLUME*10);
+            if (SFX_VOLUME == 0) {
+                MainMenu.sfxSpeaker.changeAnimation("mute");
+            }
+            SaveManager.save([{ type: "sfx", value: SFX_VOLUME }]);
         }
     }
 
@@ -86,6 +103,11 @@ class Sound {
             SFX_VOLUME *= 10;
             SFX_VOLUME += 1;
             SFX_VOLUME /= 10;
+            MainMenu.sfxSprite.changeAnimation(SFX_VOLUME*10);
+            if (SFX_VOLUME*10 == 1) {
+                MainMenu.sfxSpeaker.changeAnimation("normal");
+            }
+            SaveManager.save([{ type: "sfx", value: SFX_VOLUME }]);
         }
     }
 

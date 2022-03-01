@@ -4,7 +4,7 @@ canvas.style.fontKerning = "none";
 canvas.style.textRendering = "optimizeSpeed";
 canvas.style.letterSpacing = 0;
 let ctx0 = canvas.getContext("2d");
-let ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d");
 let checkAssetsInterval = setInterval(checkAssetsLoading, 1000 / 60);
 let interval;
 let lastUpdate = Date.now();
@@ -22,8 +22,8 @@ let SAVING = false;
 let SAVING_SPRITE = null;
 let MOUSE_SPRITE = new Sprite({ w: 8, h: 9 }, centerX(8), centerY(8));
 MOUSE_SPRITE.addAnimation("normal", { x: 114, y: 34 });
-MOUSE_SPRITE.addAnimation("hover", { x: 122, y: 34 });
-MOUSE_SPRITE.addAnimation("down", { x: 130, y: 34 });
+MOUSE_SPRITE.addAnimation("hover", { x: 124, y: 34 });
+MOUSE_SPRITE.addAnimation("down", { x: 134, y: 34 });
 MOUSE_SPRITE.changeAnimation("normal");
 
 //!TEST--------
@@ -41,12 +41,12 @@ MOUSE_SPRITE.changeAnimation("normal");
  * DEBUG
  */
 let log = console.log.bind(console);
-let titleSpeed = 2; // 0.2 - 2
+let titleSpeed = 0.2; // 0.2 - 2
 
 let bStatsDebug = false;
 let debugDt = 0;
 let debug_STOP = false;
-let shortcut_tomainmenu = 0; //! ------
+let shortcut_tomainmenu = 1; //! ------ ------------------------------------
 let boolTest = false;
 let imageData = null;
 let imageDatasArr = [];
@@ -55,6 +55,9 @@ let imageDatasArr = [];
 // SaveManager.save();
 SaveManager.init();
 SaveManager.load();
+
+MUSIC_VOLUME = SaveManager.SAVE_DATA['bgm'];
+SFX_VOLUME = SaveManager.SAVE_DATA['sfx'];
 
 const MAIN_STATE = Object.freeze({
     Language: 0,
@@ -65,7 +68,9 @@ const MAIN_STATE = Object.freeze({
     Game: 5,
     Pause: 6,
     Transition: 7,
-    LessonTutorial: 8
+    LessonTutorial: 8,
+    Introduction: 9,
+    FreeMode: 10
 })
 
 let mainState = 0;
@@ -126,11 +131,17 @@ function run() {
         case MAIN_STATE.Splash:
             SplashScreen.update(dt);
             break;
+        case MAIN_STATE.Introduction:
+            Introduction.update(dt);
+            break;
         case MAIN_STATE.Menu:
             MainMenu.update(dt);
             break;
         case MAIN_STATE.Lessons:
             Lessons.update(dt);
+            break;
+        case MAIN_STATE.FreeMode:
+            FreeMode.update(dt);
             break;
         case MAIN_STATE.Infos:
             Infos.update(dt);
@@ -163,11 +174,17 @@ function run() {
         case MAIN_STATE.Splash:
             SplashScreen.draw(ctx);
             break;
+        case MAIN_STATE.Introduction:
+            Introduction.draw(ctx);
+            break;
         case MAIN_STATE.Menu:
             MainMenu.draw(ctx);
             break;
         case MAIN_STATE.Lessons:
             Lessons.draw(ctx);
+            break;
+        case MAIN_STATE.FreeMode:
+            FreeMode.draw(ctx);
             break;
         case MAIN_STATE.Infos:
             Infos.draw(ctx);
@@ -223,12 +240,15 @@ function startBtnCB(pParam) {
             break;
         case "Lesson_test":
             bLessonRange = true;
-            // MAX_TURN = 5;
-            MAX_TURN = 1;
+            // MAX_TURN = 3;
+            MAX_TURN = 1; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             break;
         case "Full_test":
             bLessonRange = false;
-            // MAX_TURN = 2;
+            MAX_TURN = 1;
+            break;
+        case "freemode":
+            bLessonRange = false;
             MAX_TURN = 1;
             break;
     }
@@ -236,9 +256,7 @@ function startBtnCB(pParam) {
     Game1.load(pParam.choiceType, pParam.answerType, pParam.range, bLessonRange, pParam.testType, pParam.lessonNumber);
     MOUSE_SPRITE.y -= CANVAS_HEIGHT;
     if (!Game1.bGameInitialized) {
-        Game1.init();
-        // ScreenManager.init();
-        // Pause.init();
+        Game1.init(pParam.testType);
     }
 
     Panel.resetTypeState("game1", Game1.STATE.Game);
@@ -258,12 +276,26 @@ function changeMainState(pNewState) {
 
 
     switch (mainState) {
+        case MAIN_STATE.Introduction:
+            if (!Introduction.bInit) {
+                Introduction.init();
+            }
+            Introduction.changeState(Introduction.STATE.Main);
+            break;
+
         case MAIN_STATE.Infos:
             if (!Infos.bInit) {
                 Infos.init();
             }
             FadeEffect.fade({ callback: null, direction: "in", maxTimer: 0.01 });
             Infos.changeState(Infos.STATE.Main);
+            break;
+        case MAIN_STATE.FreeMode:
+            if (!FreeMode.bInit) {
+                FreeMode.init();
+            }
+            FadeEffect.fade({ callback: null, direction: "in", maxTimer: 0.01 });
+            FreeMode.changeState(FreeMode.STATE.Main);
             break;
         case MAIN_STATE.Lessons:
 
@@ -290,6 +322,12 @@ function changeMainState(pNewState) {
 }
 
 function toMainMenu() {
+
+    if (!SaveManager.SAVE_DATA["intro"] && !MainMenu.bInit) {
+        changeMainState(MAIN_STATE.Introduction);
+        canvas.style.backgroundColor = canvasOriginBgColor;
+        return;
+    }
 
     if (!MainMenu.bInit) {
         MainMenu.init();

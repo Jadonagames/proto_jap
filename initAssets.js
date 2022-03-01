@@ -929,9 +929,6 @@ function LoadAssets() {
     // Music and Sounds
     Sound.list["jadona"] = new Sound("./sounds/jadona.mp3");
 
-    Sound.list["explosion"] = new Sound("./sounds/explosion.mp3");
-    Sound.list["bonus"] = new Sound("./sounds/bonus.mp3");
-
     Sound.list["kana_a"] = new Sound("./sounds/kana/a.mp3");
     Sound.list["kana_i"] = new Sound("./sounds/kana/i.mp3");
     Sound.list["kana_u"] = new Sound("./sounds/kana/u.mp3");

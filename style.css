@@ -1,11 +1,11 @@
 @font-face {
-    font-family: 'pgfont';
-    src: url('./fonts/PGFontV2.ttf') format('truetype');
+    font-family: "pgfont";
+    src: url("./fonts/PGFontV2.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'jpfont';
-    src: url('./fonts/PixelMplus10-Regular.ttf') format('truetype');
+    font-family: "jpfont";
+    src: url("./fonts/PixelMplus10-Regular.ttf") format("truetype");
 }
 
 /* @font-face {
@@ -14,8 +14,8 @@
 } */
 
 @font-face {
-    font-family: 'kyokasho';
-    src: url('./fonts/UDDigiKyokashoN-R-01.ttf') format('truetype');
+    font-family: "kyokasho";
+    src: url("./fonts/UDDigiKyokashoN-R-01.ttf") format("truetype");
 }
 
 * {
@@ -24,7 +24,7 @@
     text-rendering: optimizeLegibility;
     font-kerning: none;
     image-rendering: pixelated;
-
+    margin: 0;
 }
 
 #canvas {

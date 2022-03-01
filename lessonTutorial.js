@@ -23,7 +23,7 @@ class LessonTutorial {
         this.lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), centerY(22), null, { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, "lessonTutorial", LessonTutorial.STATE.Main, "Lessons", 4);
         this.lessonsBtn.setFontColor("rgba(142,45,45,1)");
 
-        this.dialogPanel = new DialogPanel({ w: 220, h: 70, v: 6 }, centerX(220), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, ["lesson_text_", 14, true], 7);
+        this.dialogPanel = new DialogPanel({ w: 220, h: 70, v: 6 }, centerX(220), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, ["lesson_text_", 16, true], 7);
         this.dialogPanel.setOffsets(12, 18);
         this.dialogPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
         this.dialogPanel.setAlignText(this.dialogPanel.ALIGN_TEXT.Left);
@@ -32,23 +32,28 @@ class LessonTutorial {
         this.dialogPanel.setEndDialogCallback(LessonTutorial.endTutorial.bind(LessonTutorial));
         LessonTutorial.mainList.push(this.dialogPanel.getSprite());
 
-        this.dialogPanelBtn = new Button({ w: 16, h: 12 }, this.dialogPanel.totalWidth - 30, this.dialogPanel.height - 25, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "", LessonTutorial.STATE.Main, "", 0, true);
-        this.dialogPanelBtn.setAnimations({ x: 170, y: 80 });
+        this.dialogBtnContainer = new Sprite({w: 22, h: 21}, this.dialogPanel.width - 14, this.dialogPanel.height - 21, this.dialogPanel, "");
+        this.dialogBtnContainer.addAnimation("normal", {x: 224, y: 80});
+        this.dialogBtnContainer.changeAnimation("normal");
+        this.dialogPanel.setChildSprite(this.dialogBtnContainer, "lessonTutorial.main");
+
+        this.dialogPanelBtn = new Button({ w: 13, h: 12 }, this.dialogBtnContainer.x + 4, this.dialogBtnContainer.y + 4, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "", LessonTutorial.STATE.Main, "", 0, true);
+        this.dialogPanelBtn.setAnimations({ x: 176, y: 80 });
         this.dialogPanel.setChildBtn(this.dialogPanelBtn, "lessonTutorial.main");
 
 
-
         this.screens = new Sprite({ w: 450, h: 222 }, 0, 0);
-        this.screens.addAnimation("0", { x: 384, y: 1399 }); // 450 222
-        this.screens.addAnimation("1", { x: 834, y: 1399 }); // 450 222
-        this.screens.addAnimation("2", { x: 0, y: 1680 }, 3, [0.8, 1.3, 4]);   // 222 219  --> 1-800ms 2-400-400-500ms 10-400ms
-        this.screens.addAnimation("3", { x: 666, y: 1680 });
-        this.screens.addAnimation("4", { x: 916, y: 1680 });
-        this.screens.addAnimation("5", { x: 1252, y: 1680 });
-        this.screens.addAnimation("6", { x: 1588, y: 1680 });
-        this.screens.addAnimation("7", { x: 1924, y: 1680 });
-        this.screens.addAnimation("9", { x: 1284, y: 1399 }, 3, [0.5, 1, 1]);
-        this.screens.addAnimation("11", { x: 432, y: 1242 });
+        this.screens.addAnimation("0", { x: 384, y: 1399 }); // 450 222 //? Bienvenue
+        this.screens.addAnimation("1", { x: 834, y: 1399 }); // 450 222 //? 15 leçons
+        this.screens.addAnimation("2", { x: 0, y: 1680 }, 3, [0.8, 1.3, 4]);   // 222 219  --> 1-800ms 2-400-400-500ms 10-400ms   //? Chaque leçon 5 chars
+        this.screens.addAnimation("3", { x: 666, y: 1680 }); //? Informations
+        this.screens.addAnimation("4", { x: 916, y: 1680 }); //? Chaque leçon 3 choix
+        this.screens.addAnimation("5", { x: 1252, y: 1680 }); //? Training
+        this.screens.addAnimation("6", { x: 1588, y: 1680 }); //? Test leçon
+        this.screens.addAnimation("7", { x: 1924, y: 1680 }); //? Full test *2
+        this.screens.addAnimation("9", { x: 1284, y: 1399 }, 3, [0.5, 1, 1]); //? kana 4 choix ou roma 4 choix  *2
+        this.screens.addAnimation("11", { x: 432, y: 1242 }); //? Trophée *2
+        this.screens.addAnimation("13", { x: 842, y: 1242 }); //? Timer *2
         this.screens.setAnimationFrameCB("2", [
             {
                 nb: 1,
@@ -62,7 +67,7 @@ class LessonTutorial {
         this.screens.changeAnimation("0");
         LessonTutorial.mainList.push(this.screens);
 
-        this.moe = new Sprite({ w: 24, h: 24 }, this.dialogPanel.width + 10, 10, this.dialogPanel, "", { x: 2, y: 2 });
+        this.moe = new Sprite({ w: 24, h: 24 }, this.dialogPanel.width + 15, 10, this.dialogPanel, "", { x: 2, y: 2 });
         this.moe.addAnimation("idle", { x: 342, y: 272 }, 4, [0.3, 0.075, 0.3, 0.075]);
         this.moe.changeAnimation("idle");
         LessonTutorial.mainList.push(this.moe.getSprite());
@@ -184,6 +189,15 @@ class LessonTutorial {
                 this.fullTestPanel.removeFromList();
                 this.fullTestPanel.removeFromCurrentList();
                 this.fullTestPanel.getSprite().delete = true;
+                this.fullTestPanel = null;
+                this.screens.setSize(160, 156);
+                this.screens.originWidth = 160;
+                this.screens.x = centerX(160);
+                this.screens.y = 50;
+                this.screens.changeAnimationMaxWidth("13");
+                this.screens.changeAnimation("13");
+                break;
+            case 15:
                 this.fullTestPanel = null;
                 this.screens.delete = true;
                 this.screens = null;

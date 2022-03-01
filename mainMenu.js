@@ -42,24 +42,24 @@ class MainMenu {
 
         // 722 . 136 // 4 rows // 23 cols
         MainMenu.randomKanaList = [];
-        let x = 722;
+        let x = 1003;
         let count = 0;
-        let y = 136;
+        let y = 119;
         for (let i = 0; i < 92; i++) {
             MainMenu.randomKanaList.push({ x: x, y: y });
-            x += 10;
+            x += 12;
             count++;
             if (count == 23) {
                 count = 0;
-                y += 10;
-                x = 722;
+                y += 12;
+                x = 1003;
             }
         }
 
         MainMenu.bInit = true;
 
         let titleImg = new Sprite({ w: 178, h: 101 }, centerX(178), -101, null, "t");
-        titleImg.addAnimation("normal", { x: 382, y: 0 });
+        titleImg.addAnimation("normal", { x: 382, y: 1 });
         titleImg.changeAnimation("normal");
         titleImg.setDestination({ x: centerX(178), y: centerY(101) });
         titleImg.setMoveSpeed(titleSpeed); // normal : 2
@@ -77,14 +77,14 @@ class MainMenu {
         MainMenu.mainList.push(subtitlePanel.getSprite());
 
         let hiraAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110), 0, null, "tm");
-        hiraAImg.addAnimation("normal", { x: 574, y: 36 });
+        hiraAImg.addAnimation("normal", { x: 575, y: 37 });
         hiraAImg.changeAnimation("normal");
         hiraAImg.setDestination({ x: centerX(50, 110), y: 28 });
         hiraAImg.setAlpha(0);
         MainMenu.mainList.push(hiraAImg);
 
         let kataAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110, 1), 28, null, "tm");
-        kataAImg.addAnimation("normal", { x: 624, y: 36 });
+        kataAImg.addAnimation("normal", { x: 627, y: 37 });
         kataAImg.changeAnimation("normal");
         kataAImg.setDestination({ x: centerX(50, 110, 1), y: 0 });
         kataAImg.setDirection(-1);
@@ -92,9 +92,9 @@ class MainMenu {
         MainMenu.mainList.push(kataAImg);
 
         let flagImg = new Sprite({ w: 21, h: 17 }, 165, 58, titleImg, "fl");
-        flagImg.addAnimation("close", { x: 382, y: 118 });
-        flagImg.addAnimation("open", { x: 382, y: 118 }, 3, [0.15, 0.06, 0.3], false);
-        flagImg.addAnimation("normal", { x: 382, y: 101 }, 6, 0.2);
+        flagImg.addAnimation("close", { x: 382, y: 120 });
+        flagImg.addAnimation("open", { x: 382, y: 120 }, 3, [0.15, 0.06, 0.3], false);
+        flagImg.addAnimation("normal", { x: 382, y: 103 }, 6, 0.2);
         flagImg.setAnimationCB("open", { cb: flagImg.changeAnimation.bind(flagImg), arg: "normal" });
         flagImg.changeAnimation("close");
         MainMenu.mainList.push(flagImg);
@@ -102,14 +102,35 @@ class MainMenu {
 
 
 
-        let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, { cb: MainMenu.changeState, arg: MainMenu.STATE.Credits }, "mainmenu", MainMenu.STATE.Main, "Credits", 4);
+        let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, { 
+            cb: FadeEffect.fade.bind(FadeEffect), 
+            arg: {
+                callback: {
+                    cb: MainMenu.changeState.bind(MainMenu),
+                    arg: MainMenu.STATE.Credits
+                },
+                direction: "out", maxTimer: 0.01 
+            }
+        }, "mainmenu", MainMenu.STATE.Main, "Credits", 4);
         creditsBtn.setFontColor("rgba(142,45,45,1)");
         creditsBtn.setDestination({ x: centerX(110), y: 265 });
         creditsBtn.setCanMove(true);
         creditsBtn.setMovingSpeed(0.8);
         MainMenu.mainList.push(creditsBtn.getSprite());
 
-        let optionsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 350, null, { cb: MainMenu.changeState, arg: MainMenu.STATE.Options }, "mainmenu", MainMenu.STATE.Main, "Settings", 4);
+        let optionsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 350, null, 
+        { 
+            cb: FadeEffect.fade.bind(FadeEffect), 
+            arg: {
+                callback: {
+                    cb: MainMenu.changeState.bind(MainMenu),
+                    arg: MainMenu.STATE.Options
+                },
+                direction: "out", maxTimer: 0.01 
+            }
+        }
+        , "mainmenu", MainMenu.STATE.Main, "Settings", 4);
+
         optionsBtn.setFontColor("rgba(142,45,45,1)");
         optionsBtn.setDestination({ x: centerX(110), y: 237 });
         optionsBtn.setCanMove(true);
@@ -123,12 +144,26 @@ class MainMenu {
         infosBtn.setFontColor("rgba(142,45,45,1)");
         MainMenu.mainList.push(infosBtn.getSprite());
 
-        let trainingBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null, null, "mainmenu", MainMenu.STATE.Main, "Free_mode", 4);
-        trainingBtn.setDestination({ x: centerX(110), y: 181 });
-        trainingBtn.setCanMove(true);
-        trainingBtn.setMovingSpeed(0.65);
-        trainingBtn.setFontColor("rgba(142,45,45,1)");
-        MainMenu.mainList.push(trainingBtn.getSprite());
+
+        let freeModeBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null,
+        { 
+            cb: FadeEffect.fade.bind(FadeEffect), 
+            arg: {
+                callback: {
+                    cb: changeMainState,
+                    arg: { state: MAIN_STATE.FreeMode, from: "mainmenu" }
+                },
+                direction: "out", maxTimer: 0.01 
+            }
+        }
+        , "mainmenu", MainMenu.STATE.Main, "Free_mode", 4);
+
+        // let freeModeBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null, null, "mainmenu", MainMenu.STATE.Main, "Free_mode", 4);
+        freeModeBtn.setDestination({ x: centerX(110), y: 181 });
+        freeModeBtn.setCanMove(true);
+        freeModeBtn.setMovingSpeed(0.65);
+        freeModeBtn.setFontColor("rgba(142,45,45,1)");
+        MainMenu.mainList.push(freeModeBtn.getSprite());
 
         let lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 320, null, { cb: FadeEffect.fade.bind(FadeEffect), arg: { callback: { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, direction: "out", maxTimer: 0.01 } }, "mainmenu", MainMenu.STATE.Main, "Lessons", 4);
         lessonsBtn.setFontColor("rgba(142,45,45,1)");
@@ -148,16 +183,16 @@ class MainMenu {
         lessonsBtn.setTooltip(rightLessonsSprite);
         lessonsBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: lessonsBtn.getTooltip() });
 
-        let leftTrainingSprite = new Sprite({ w: 20, h: 20 }, 112, 0, trainingBtn);
-        leftTrainingSprite.addAnimation("normal", { x: 704, y: 852 }, 6, 0.2);
-        leftTrainingSprite.changeAnimation("normal");
-        trainingBtn.setTooltip(leftTrainingSprite);
-        trainingBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: trainingBtn.getTooltip() });
-        let rightTrainingSprite = new Sprite({ w: 20, h: 20 }, -22, 0, trainingBtn);
-        rightTrainingSprite.addAnimation("normal", { x: 704, y: 852 }, 6, 0.2);
-        rightTrainingSprite.changeAnimation("normal");
-        trainingBtn.setTooltip(rightTrainingSprite);
-        trainingBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: trainingBtn.getTooltip() });
+        let leftfreeModeSprite = new Sprite({ w: 20, h: 20 }, 112, 0, freeModeBtn);
+        leftfreeModeSprite.addAnimation("normal", { x: 704, y: 852 }, 6, 0.2);
+        leftfreeModeSprite.changeAnimation("normal");
+        freeModeBtn.setTooltip(leftfreeModeSprite);
+        freeModeBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: freeModeBtn.getTooltip() });
+        let rightfreeModeSprite = new Sprite({ w: 20, h: 20 }, -22, 0, freeModeBtn);
+        rightfreeModeSprite.addAnimation("normal", { x: 704, y: 852 }, 6, 0.2);
+        rightfreeModeSprite.changeAnimation("normal");
+        freeModeBtn.setTooltip(rightfreeModeSprite);
+        freeModeBtn.setHoverCB(displayTooltip, { list: "mainmenu.main", tooltip: freeModeBtn.getTooltip() });
 
         let leftInfosSprite = new Sprite({ w: 20, h: 20 }, 112, 0, infosBtn);
         leftInfosSprite.addAnimation("normal", { x: 704, y: 872 }, 10, [0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2]);
@@ -196,36 +231,97 @@ class MainMenu {
         // this.muteBtn.setAnimations({ x: 96, y: 96 });
         // MainMenu.mainList.push(this.muteBtn.getSprite());
 
-        // this.dialogPanelBtn = new Button({ w: 14, h: 12 }, this.dialogPanel.totalWidth - 25, this.dialogPanel.height - 20, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "", MainMenu.STATE.Main, "", 0, true);
-        // this.dialogPanelBtn.setAnimations({ x: 124, y: 79 });
-        // this.dialogPanel.setChildBtn(this.dialogPanelBtn, "mainmenu.main");
-
         // ---------------- OPTIONS ----------------
 
-        // let volumePanel = new Panel({ w: 54, h: 20, v: 5 }, centerX(54), 50, null, "mainmenu", MainMenu.STATE.Options, "Volume", 1);
-        // volumePanel.setTextCase("all");
-        // MainMenu.optionsList.push(volumePanel.getSprite());
+        let optionsMainPanel = new Panel({w: 300, h: 200, v:6 }, centerX(300), centerY(200), null, "mainmenu", MainMenu.STATE.Options, "", 7);
 
-        let musicDownBtn = new Button({ w: 16, h: 16 }, centerX(16, 20), 80, null, Sound.decreaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        musicDownBtn.setAnimations({ x: 0, y: 96 });
+        MainMenu.optionsList.push(optionsMainPanel.getSprite());
+
+        let optionsTitlePanel = new Panel({w: 70, h: 30, v:6 }, centerX(70), 40, null, "mainmenu", MainMenu.STATE.Options, "Settings", 7);
+        optionsTitlePanel.setOffsets(5, 18);
+        optionsTitlePanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
+        MainMenu.optionsList.push(optionsTitlePanel.getSprite());
+
+        let musicPanel = new Panel({w: 40, h: 20, v: 1}, centerX(40, 72), 78, null, "mainmenu", MainMenu.STATE.Options, "BGM", 2);
+        musicPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
+        MainMenu.optionsList.push(musicPanel.getSprite());
+        
+        let sfxPanel = new Panel({w: 40, h:20, v: 1}, centerX(40, 72), 108, null, "mainmenu", MainMenu.STATE.Options, "SFX", 2);
+        sfxPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
+        MainMenu.optionsList.push(sfxPanel.getSprite());
+
+        this.musicSpeaker = new Sprite({w: 16, h: 14}, musicPanel.x + 35, musicPanel.y + 3, null);
+        this.musicSpeaker.addAnimation("normal", {x: 203, y: 104});
+        this.musicSpeaker.addAnimation("mute", {x: 219, y: 104});
+        if (MUSIC_VOLUME === 0) {
+            this.musicSpeaker.changeAnimation("mute");
+        } else {
+            this.musicSpeaker.changeAnimation("normal");
+        }
+        MainMenu.optionsList.push(this.musicSpeaker.getSprite());
+
+        this.sfxSpeaker = new Sprite({w: 16, h: 14}, sfxPanel.x + 35, sfxPanel.y + 3, null);
+        this.sfxSpeaker.addAnimation("normal", {x: 203, y: 104});
+        this.sfxSpeaker.addAnimation("mute", {x: 219, y: 104});
+        if (SFX_VOLUME === 0) {
+            this.sfxSpeaker.changeAnimation("mute");
+        } else {
+            this.sfxSpeaker.changeAnimation("normal");
+        }
+        MainMenu.optionsList.push(this.sfxSpeaker.getSprite());
+
+        this.musicSprite = new Sprite({w: 60, h: 16}, centerX(60), centerY(16, 62), null);
+        this.musicSprite.addAnimation("0", {x: 672, y: 752 });
+        this.musicSprite.addAnimation("1", {x: 672 + 60, y: 752 });
+        this.musicSprite.addAnimation("2", {x: 672 + 60*2, y: 752 });
+        this.musicSprite.addAnimation("3", {x: 672 + 60*3, y: 752 });
+        this.musicSprite.addAnimation("4", {x: 672 + 60*4, y: 752 });
+        this.musicSprite.addAnimation("5", {x: 672 + 60*5, y: 752 });
+        this.musicSprite.addAnimation("6", {x: 672 + 60*6, y: 752 });
+        this.musicSprite.addAnimation("7", {x: 672 + 60*7, y: 752 });
+        this.musicSprite.addAnimation("8", {x: 672 + 60*8, y: 752 });
+        this.musicSprite.addAnimation("9", {x: 672 + 60*9, y: 752 });
+        this.musicSprite.addAnimation("10", {x: 672 + 60*10, y: 752 });
+        this.musicSprite.changeAnimation(MUSIC_VOLUME*10);
+        MainMenu.optionsList.push(this.musicSprite);
+
+        this.sfxSprite = new Sprite({w: 60, h: 16}, centerX(60), centerY(16, 32), null);
+        this.sfxSprite.addAnimation("0", {x: 672, y: 752 });
+        this.sfxSprite.addAnimation("1", {x: 672 + 60, y: 752 });
+        this.sfxSprite.addAnimation("2", {x: 672 + 60*2, y: 752 });
+        this.sfxSprite.addAnimation("3", {x: 672 + 60*3, y: 752 });
+        this.sfxSprite.addAnimation("4", {x: 672 + 60*4, y: 752 });
+        this.sfxSprite.addAnimation("5", {x: 672 + 60*5, y: 752 });
+        this.sfxSprite.addAnimation("6", {x: 672 + 60*6, y: 752 });
+        this.sfxSprite.addAnimation("7", {x: 672 + 60*7, y: 752 });
+        this.sfxSprite.addAnimation("8", {x: 672 + 60*8, y: 752 });
+        this.sfxSprite.addAnimation("9", {x: 672 + 60*9, y: 752 });
+        this.sfxSprite.addAnimation("10", {x: 672 + 60*10, y: 752 });
+        this.sfxSprite.changeAnimation(SFX_VOLUME*10);
+        MainMenu.optionsList.push(this.sfxSprite);
+
+        let musicDownBtn = new Button({ w: 17, h: 17 }, centerX(17, 50, 1), 80, null, Sound.decreaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
+        musicDownBtn.setAnimations({ x: 0, y: 95 });
         MainMenu.optionsList.push(musicDownBtn.getSprite());
 
-        let musicUpBtn = new Button({ w: 16, h: 16 }, centerX(16, 20, 1), 80, null, Sound.increaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        musicUpBtn.setAnimations({ x: 48, y: 96 });
+        let musicUpBtn = new Button({ w: 17, h: 17 }, musicDownBtn.x + 18, 80, null, Sound.increaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
+        musicUpBtn.setAnimations({ x: 51, y: 95 });
         MainMenu.optionsList.push(musicUpBtn.getSprite());
 
-        let sfxDownBtn = new Button({ w: 16, h: 16 }, centerX(16, 20), 110, null, Sound.decreaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        sfxDownBtn.setAnimations({ x: 0, y: 96 });
+        let sfxDownBtn = new Button({ w: 17, h: 17 }, centerX(17, 50, 1), 110, null, Sound.decreaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
+        sfxDownBtn.setAnimations({ x: 0, y: 95 });
         MainMenu.optionsList.push(sfxDownBtn.getSprite());
 
-        let sfxUpBtn = new Button({ w: 16, h: 16 }, centerX(16, 20, 1), 110, null, Sound.increaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
-        sfxUpBtn.setAnimations({ x: 48, y: 96 });
+        let sfxUpBtn = new Button({ w: 17, h: 17 }, sfxDownBtn.x + 18, 110, null, Sound.increaseSfxVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
+        sfxUpBtn.setAnimations({ x: 51, y: 95 });
         MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
-        let deleteSaveBtn = new Button({ w: 60, h: 20, v: 4 }, centerX(60), 150, null, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: true } }, "mainmenu", MainMenu.STATE.Options, "delete_save");
+        let deleteSaveBtn = new Button({ w: 100, h: 25, v: 6 }, centerX(100), 160, null, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: true } }, "mainmenu", MainMenu.STATE.Options, "delete_save", 41);
+        deleteSaveBtn.setFontColor("rgba(142,45,45,1)");
+        deleteSaveBtn.setOffsets(0, 15);
         MainMenu.optionsList.push(deleteSaveBtn.getSprite());
 
-        let optionsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), 180, null, MainMenu.fromOptionsToMainMenu.bind(this), "mainmenu", MainMenu.STATE.Options, "", 0, true);
+        let optionsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), 210, null, MainMenu.fromOptionsToMainMenu.bind(this), "mainmenu", MainMenu.STATE.Options, "", 0, true);
         optionsBackBtn.setAnimations({ x: 86, y: 56 });
         MainMenu.optionsList.push(optionsBackBtn.getSprite());
 
@@ -233,14 +329,33 @@ class MainMenu {
 
         // ---------------- CREDITS ----------------
 
-        let jadonagamesLogo = new Sprite({ w: 37, h: 34 }, centerX(37), centerY(34), null, "mainmenu");
+        
+        let creditsMainPanel = new Panel({ w: 19, h: 25, v: 16 }, centerX(222), 10, null, "mainmenu", MainMenu.STATE.Credits, "", [1]);
+        creditsMainPanel.changePanelSprite("t", 2, { x: 564, y: 748 });
+        creditsMainPanel.changePanelSprite("t", 16, { x: 564, y: 748 });
+        MainMenu.creditsList.push(creditsMainPanel.getSprite());
+
+        let creditsTitle = new Panel({ w: 80, h: 17, v: 4 }, centerXElement(creditsMainPanel, 80), 14, creditsMainPanel, "mainmenu", MainMenu.STATE.Credits, "Credits", 5);
+        creditsTitle.setOffsets(0, 12);
+        creditsTitle.setFontColor("rgba(217, 213, 188, 0)");
+        MainMenu.creditsList.push(creditsTitle.getSprite());
+
+        let contentPanel = new Panel({w: 200, h: 60, v: 1}, centerXElement(creditsMainPanel, 200), 30, creditsMainPanel, "mainmenu", MainMenu.STATE.Credits, "credits_content", 2);
+        MainMenu.creditsList.push(contentPanel.getSprite());
+
+        let jadonagamesLogo = new Sprite({ w: 37, h: 34 }, centerXElement(creditsMainPanel, 37, 60, 1), 230, creditsMainPanel, "mainmenu");
         jadonagamesLogo.addAnimation("normal", { x: 0, y: 0 });
         jadonagamesLogo.changeAnimation("normal");
         MainMenu.creditsList.push(jadonagamesLogo);
 
-        let creditsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), centerY(22, 50, 1), null, toMainMenu, "mainmenu", MainMenu.STATE.Credits, "", 0, true);
+        let creditsBackBtn = new Button({ w: 30, h: 22 }, centerXElement(creditsMainPanel, 30, 70), creditsMainPanel.totalHeight - 40, creditsMainPanel, toMainMenu, "mainmenu", MainMenu.STATE.Credits, "", 0, true);
         creditsBackBtn.setAnimations({ x: 86, y: 56 });
         MainMenu.creditsList.push(creditsBackBtn.getSprite());
+
+
+
+
+        // -----------------------------------------
 
         this.deleteSavePanel = null;
         this.deleteSaveWarningPanel = null;
@@ -273,6 +388,9 @@ class MainMenu {
         MainMenu.state = pNewState;
         Panel.resetTypeState("mainmenu", pNewState);
         Button.resetTypeState("mainmenu", pNewState);
+        if (pNewState == MainMenu.STATE.Options || pNewState == MainMenu.STATE.Credits) {
+            FadeEffect.fade({ callback: null, direction: "in", maxTimer: 0.01 });
+        }
     }
 
     static initKanaInterval() {
@@ -331,22 +449,35 @@ class MainMenu {
                 p.setState(Panel.STATE.Inactive);
             });
 
-            this.deleteSavePanel = new Panel({ w: 200, h: 100, v: 5 }, centerX(200), centerY(100, 40, 1), null, "mainmenu", MainMenu.STATE.Options, "confirm_save_deletion", 1);
+            this.deleteSaveBg = new Sprite({ w: 1, h: 1 }, 0, 0, null, "normal", { x: CANVAS_WIDTH, y: CANVAS_HEIGHT });
+            this.deleteSaveBg.getSprite().addAnimation("normal", { x: 38, y: 3 });
+            this.deleteSaveBg.getSprite().changeAnimation("normal");
+            this.deleteSaveBg.setAlpha(0);
+            this.deleteSaveBg.fade(0.01);
+            MainMenu.optionsList.push(this.deleteSaveBg.getSprite());
+
+            this.deleteSavePanel = new Panel({ w: 20, h: 10, v: 9 }, centerX(238), 130, null, "mainmenu", MainMenu.STATE.Options, "confirm_save_deletion", [-1, { y_t: 748 }]);
             this.deleteSavePanel.setOffsets(0, 20);
+            this.deleteSavePanel.beginMoving({ x: centerX(238), y: 100 });
             MainMenu.optionsList.push(this.deleteSavePanel.getSprite());
 
-            this.deleteSaveWarningPanel = new Panel({ w: 200, h: 50, v: 1 }, 0, 30, this.deleteSavePanel, "mainmenu", MainMenu.STATE.Options, "delete_save_warning", 2);
+            Panel.list.push(this.deleteSavePanel);
+            Panel.currentList.push(this.deleteSavePanel);
+
+            this.deleteSaveWarningPanel = new Panel({ w: 238, h: 50, v: 1 }, 0, 35, this.deleteSavePanel, "mainmenu", MainMenu.STATE.Options, "delete_save_warning", 2);
             this.deleteSaveWarningPanel.setFontColor("rgba(200,200,200,1)", "rgba(255,0,0,1)");
             MainMenu.optionsList.push(this.deleteSaveWarningPanel.getSprite());
 
             this.deleteSaveYesBtn = new Button({ w: 50, h: 22, v: 6 }, centerXElement(this.deleteSavePanel, 50, 50), 70, this.deleteSavePanel, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: false, delete: true } }, "mainmenu", MainMenu.STATE.Options, "yes", 41);
             this.deleteSaveYesBtn.setFontColor("rgba(142,45,45,1)");
+            this.deleteSaveYesBtn.setAlpha(0);
             Button.list.push(this.deleteSaveYesBtn);
             Button.currentList.push(this.deleteSaveYesBtn);
             MainMenu.optionsList.push(this.deleteSaveYesBtn.getSprite());
 
             this.deleteSaveNoBtn = new Button({ w: 50, h: 22, v: 6 }, centerXElement(this.deleteSavePanel, 50, 50, 1), 70, this.deleteSavePanel, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: false, delete: false } }, "mainmenu", MainMenu.STATE.Options, "no", 41);
             this.deleteSaveNoBtn.setFontColor("rgba(142,45,45,1)");
+            this.deleteSaveNoBtn.setAlpha(0);
             Button.list.push(this.deleteSaveNoBtn);
             Button.currentList.push(this.deleteSaveNoBtn);
             MainMenu.optionsList.push(this.deleteSaveNoBtn.getSprite());
@@ -359,10 +490,11 @@ class MainMenu {
 
                 this.deleteSaveAnimation = null;
 
-                this.saveDeletedPanel = new Panel({ w: 100, h: 60, v: 5 }, centerX(100), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, "save_deleted", 1);
+                // this.saveDeletedPanel = new Panel({ w: 100, h: 60, v: 5 }, centerX(100), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, "save_deleted", 1);
+                this.saveDeletedPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT + 62, null, "mainmenu", MainMenu.STATE.Options, "save_deleted",  [-1, { y_t: 748 }]);
                 this.saveDeletedPanel.setOffsets(10, 20);
 
-                this.saveDeletedPanel.setDestination({ x: centerX(100), y: CANVAS_HEIGHT - 60 });
+                this.saveDeletedPanel.setDestination({ x: centerX(128), y: CANVAS_HEIGHT - 62 });
                 this.saveDeletedPanel.setCanMove(true);
                 this.saveDeletedPanel.setMovingSpeed(0.7);
                 this.saveDeletedPanel.setMoving(true);
@@ -373,7 +505,7 @@ class MainMenu {
                 Panel.currentList.push(this.saveDeletedPanel);
                 MainMenu.optionsList.push(this.saveDeletedPanel.getSprite());
 
-                this.deleteSaveAnimation = new Sprite({ w: 35, h: 27 }, 25, 25, this.saveDeletedPanel);
+                this.deleteSaveAnimation = new Sprite({ w: 35, h: 27 }, 40, 25, this.saveDeletedPanel);
                 this.deleteSaveAnimation.addAnimation("normal", { x: 342, y: 1060 }, 14, [1, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1, 0.1], false);
                 this.deleteSaveAnimation.changeAnimation("normal");
                 this.deleteSaveAnimation.setAnimationCB('normal', MainMenu.bla.bind(this));
@@ -390,11 +522,13 @@ class MainMenu {
             this.deleteSaveYesBtn.removeFromCurrentList();
             this.deleteSaveNoBtn.removeFromCurrentList();
 
+            this.deleteSaveBg.delete = true;
             this.deleteSavePanel.getSprite().delete = true;
             this.deleteSaveWarningPanel.getSprite().delete = true;
             this.deleteSaveYesBtn.getSprite().delete = true;
             this.deleteSaveNoBtn.getSprite().delete = true;
 
+            this.deleteSaveBg = null;
             this.deleteSavePanel = null;
             this.deleteSaveWarningPanel = null;
             this.deleteSaveYesBtn = null;
@@ -411,7 +545,6 @@ class MainMenu {
     }
 
     static bla() {
-        log("TERMINE !!!!");
         this.saveDeletedPanel.changeDirection();
         let tmpY = this.saveDeletedPanel.destination.y;
         this.saveDeletedPanel.destination.y = this.saveDeletedPanel.startPos.y;
@@ -505,41 +638,10 @@ class MainMenu {
                 Sprite.manageBeforeDrawing(MainMenu.mainList);
                 break;
             case MainMenu.STATE.Options:
-
-                ctx.fillStyle = "rgb(200,0,0)";
-                ctx.font = "40px jpfont";
-                ctx.textAlign = "center";
-                ctx.shadowColor = "rgb(0,0,0)";
-                ctx.shadowOffsetY = 8;
-                ctx.fillText(LANG['Settings'], centerX(), 40);
-                ctx.shadowOffsetY = 0;
-                ctx.textAlign = "left";
-
                 Sprite.manageBeforeDrawing(MainMenu.optionsList);
-
-
-                ctx.fillStyle = "rgb(0,0,0)";
-                ctx.font = "10px jpfont";
-                ctx.textAlign = "center";
-                ctx.fillText(LANG["bgm"].toUpperCase(), 100, 92);
-                ctx.fillText(LANG["sfx"].toUpperCase(), 100, 122);
-                ctx.fillText(Math.floor(MUSIC_VOLUME * 10), centerX(), 92);
-                ctx.fillText(Math.floor(SFX_VOLUME * 10), centerX(), 122);
-                ctx.textAlign = "left";
                 break;
             case MainMenu.STATE.Credits:
-
-                ctx.fillStyle = "rgb(200,0,0)";
-                ctx.font = "40px jpfont";
-                ctx.textAlign = "center";
-                ctx.shadowColor = "rgb(0,0,0)";
-                ctx.shadowOffsetY = 8;
-                ctx.fillText(LANG['Credits'], centerX(), 40);
-                ctx.shadowOffsetY = 0;
-                ctx.textAlign = "left";
-
                 Sprite.manageBeforeDrawing(MainMenu.creditsList);
-
                 break;
             case MainMenu.STATE.Transition:
 
@@ -592,7 +694,7 @@ class MainMenu {
         // ctx.shadowOffsetX = 0;
         // ctx.shadowOffsetY = 2;
         // ctx.shadowBlur = 0;
-        // ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
+        ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
         // ctx.fillText("V", CANVAS_WIDTH - 65, CANVAS_HEIGHT - 13);
 
         if (FadeEffect.bActive) {
