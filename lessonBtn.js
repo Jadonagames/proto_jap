@@ -1,20 +1,28 @@
 class LessonBtn extends Button {
 
     static list = [];
+    static hiraganaList = [];
+    static katakanaList = [];
 
     static STATE = Object.freeze({
         Normal: 0,
         Hover: 1,
         Inactive: 2,
         Close: 3,
+        Open: 4
     });
 
     constructor(pSize, pX, pY, pParent, pCallback, pType = "normal", pTypeState = null, pLabel = "", pId = 0, pStaticSize = false) {
         super(pSize, pX, pY, pParent, pCallback, pType, pTypeState, pLabel, pId, pStaticSize);
 
-
         this.savedCB = {};
         this.mode = 0;
+
+        if (pTypeState == 1) {
+            LessonBtn.hiraganaList.push(this);
+        } else {
+            LessonBtn.katakanaList.push(this);
+        }
 
         LessonBtn.list.push(this);
     }
@@ -26,6 +34,17 @@ class LessonBtn extends Button {
         }
     }
 
+    setOffsets(pX = 0, pY = 13, pDown = 2, pHover = -1) {
+        this.textOffsetX = pX;
+        this.textOffsetY = pY;
+        this.textOffsetXOrigin = pX;
+        this.textOffsetYOrigin = pY;
+        this.textOffsetXHover = this.textOffsetX + pHover;
+        this.textOffsetYHover = this.textOffsetY + pHover;
+        this.textOffsetXDown = this.textOffsetX + pDown;
+        this.textOffsetYDown = this.textOffsetY + pDown;
+    }
+
     setMode(pMode, pCBToSave, pOffYColor) {
 
         if (pMode == 1) {
@@ -33,6 +52,9 @@ class LessonBtn extends Button {
             this.getSprite().addAnimation("hover", { x: 668, y: 544 + pOffYColor });
             this.getSprite().addAnimation("down", { x: 668, y: 544 + pOffYColor });
             this.getSprite().addAnimation("clicked", { x: 740, y: 544 + pOffYColor }, 4, 0.2, false);
+            this.getSprite().addAnimation("open", { x: 1028, y: 544 + pOffYColor }, 8, [1, 0.15, 0.15, 0.15, 0.05, 0.05, 0.05, 0.1], false);
+            this.getSprite().setAnimationCB("open", this.afterOpen.bind(this));
+
             this.mode = 1;
             this.setBoxCollider(8, 20, 4, 5);
             this.saveCallback(pCBToSave);
@@ -50,6 +72,8 @@ class LessonBtn extends Button {
             this.getSprite().addAnimation("down", { x: 524, y: 544 + pOffYColor });
             this.getSprite().addAnimation("inactive", { x: 289, y: 544 + pOffYColor });
             this.getSprite().addAnimation("clicked", { x: 740, y: 544 + pOffYColor }, 4, 0.2, false);
+            this.getSprite().addAnimation("open", { x: 1028, y: 544 + pOffYColor }, 8, [1, 0.15, 0.15, 0.15, 0.05, 0.05, 0.05, 0.1], false);
+            this.getSprite().setAnimationCB("open", this.afterOpen.bind(this));
             this.setBoxCollider(65, 20, 2, 5);
         }
 
@@ -61,6 +85,8 @@ class LessonBtn extends Button {
             this.getSprite().resetAnimations("normal", { x: 380, y: this.getSprite().getAnimation("normal").origin.y });
             this.getSprite().resetAnimations("hover", { x: 452, y: this.getSprite().getAnimation("hover").origin.y });
             this.getSprite().resetAnimations("down", { x: 524, y: this.getSprite().getAnimation("down").origin.y });
+            this.getSprite().resetAnimations("open", { x: 1028, y: this.getSprite().getAnimation("open").origin.y }, 7, [0.15, 0.15, 0.15, 0.05, 0.05, 0.05, 0.1], false);
+            this.getSprite().changeAnimation("open");
             this.setBoxCollider(65, 20, 2, 5);
             this.mode = 0;
             this.callback = {
@@ -85,6 +111,30 @@ class LessonBtn extends Button {
                 cb: this.getSprite().changeAnimation.bind(this.getSprite()),
                 arg: "normal"
             });
+        }
+    }
+
+    afterOpen() {
+        let kana = "";
+        let lessonNumber = this.label.split('_')[1];
+        if (this.callback.arg[1] == 1) {
+            kana = "h";
+        } else {
+            kana = "k";
+        }
+
+        let save = [];
+        save.push({ type: "buttonAnimation", params: kana + lessonNumber });
+        save.push({ type: "newAnimation", params: kana + lessonNumber });
+        SaveManager.save(save);
+        this.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+        this.getSprite().changeAnimation("normal");
+        this.state = LessonBtn.STATE.Normal;
+
+        Lessons.displayNewLogo(kana, lessonNumber);
+
+        if (inTransition()) {
+            Transition.startOpen();
         }
     }
 
