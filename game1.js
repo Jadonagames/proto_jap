@@ -13,6 +13,7 @@ class Game1 {
     static currentKanaLesson = "";
     static currentLessonNumber = 0;
     static transitionTimer = new Timer(2, Game1.stopTransition.bind(Game1));
+    static finishedLesson = 0;
 
     static mainList = [];
     static transitionList = [];
@@ -29,7 +30,7 @@ class Game1 {
 
     }
 
-    static init() {
+    static init(pType) {
 
         console.log("Game1 init()");
 
@@ -74,8 +75,7 @@ class Game1 {
         this.firstBtn.getSprite().addAnimation("batsu", { x: 498, y: 1088 });
         this.firstBtn.getSprite().setAnimationCB("correct", { cb: this.firstBtn.getSprite().changeAnimation.bind(this.firstBtn.getSprite()), arg: "normal" });
         this.firstBtn.setFont("kyokasho");
-        this.firstBtn.setFontSize(30);
-        this.firstBtn.setOffsets(-1, 36);
+        this.firstBtn.checkShiChiTsu(choiceLabel + rndArr[0]);
         Game1.mainList.push(this.firstBtn.getSprite());
 
         this.secondBtn = new KanaBtn({ w: 52, h: 52 }, centerX(52, 80, 1), 32, null, { cb: checkIfValid, arg: { char: RND_ARR[1], label: rndArr[1] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[1], 0, true);
@@ -84,8 +84,7 @@ class Game1 {
         this.secondBtn.getSprite().addAnimation("batsu", { x: 498, y: 1088 });
         this.secondBtn.getSprite().setAnimationCB("correct", { cb: this.secondBtn.getSprite().changeAnimation.bind(this.secondBtn.getSprite()), arg: "normal" });
         this.secondBtn.setFont("kyokasho");
-        this.secondBtn.setFontSize(30);
-        this.secondBtn.setOffsets(-1, 36);
+        this.secondBtn.checkShiChiTsu(choiceLabel + rndArr[1]);
         Game1.mainList.push(this.secondBtn.getSprite());
 
         this.thirdBtn = new KanaBtn({ w: 52, h: 52 }, centerX(52, 80), 166, null, { cb: checkIfValid, arg: { char: RND_ARR[2], label: rndArr[2] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[2], 0, true);
@@ -94,8 +93,7 @@ class Game1 {
         this.thirdBtn.getSprite().addAnimation("batsu", { x: 498, y: 1088 });
         this.thirdBtn.getSprite().setAnimationCB("correct", { cb: this.thirdBtn.getSprite().changeAnimation.bind(this.thirdBtn.getSprite()), arg: "normal" });
         this.thirdBtn.setFont("kyokasho");
-        this.thirdBtn.setFontSize(30);
-        this.thirdBtn.setOffsets(-1, 36);
+        this.thirdBtn.checkShiChiTsu(choiceLabel + rndArr[2]);
         Game1.mainList.push(this.thirdBtn.getSprite());
 
         this.fourthBtn = new KanaBtn({ w: 52, h: 52 }, centerX(52, 80, 1), 166, null, { cb: checkIfValid, arg: { char: RND_ARR[3], label: rndArr[3] } }, "game1", Game1.STATE.Game, choiceLabel + rndArr[3], 0, true);
@@ -104,8 +102,7 @@ class Game1 {
         this.fourthBtn.getSprite().addAnimation("batsu", { x: 498, y: 1088 });
         this.fourthBtn.getSprite().setAnimationCB("correct", { cb: this.fourthBtn.getSprite().changeAnimation.bind(this.fourthBtn.getSprite()), arg: "normal" });
         this.fourthBtn.setFont("kyokasho");
-        this.fourthBtn.setFontSize(30);
-        this.fourthBtn.setOffsets(-1, 36);
+        this.fourthBtn.checkShiChiTsu(choiceLabel + rndArr[3]);
         Game1.mainList.push(this.fourthBtn.getSprite());
 
         let answerLabel = "";
@@ -179,9 +176,14 @@ class Game1 {
             }
         ]);
 
-        let backBtn = new Button({ w: 30, h: 22 }, 10, CANVAS_HEIGHT - 30, null, { cb: resetGame, arg: "back_to_lesson" }, "game1", Game1.STATE.Game, "", 0, true);
-        backBtn.setAnimations({ x: 86, y: 56 });
-        Game1.mainList.push(backBtn.getSprite());
+        let resetGameArg = "back_to_lesson";
+        if (pType == "freemode") {
+            resetGameArg = "back_to_freemode";
+        }
+
+        this.backBtn = new Button({ w: 30, h: 22 }, 10, CANVAS_HEIGHT - 30, null, { cb: resetGame, arg: resetGameArg }, "game1", Game1.STATE.Game, "", 0, true);
+        this.backBtn.setAnimations({ x: 86, y: 56 });
+        Game1.mainList.push(this.backBtn.getSprite());
 
 
         // ------------ Panel du bas -------------
@@ -190,13 +192,15 @@ class Game1 {
         this.timerPanel.changePanelSprite("t", 2, { x: 564, y: 748 });
         this.timerPanel.changePanelSprite("t", 6, { x: 564, y: 748 });
 
-        this.timerPanel.setDestination({ x: centerX(122), y: CANVAS_HEIGHT - 66 });
-        this.timerPanel.setCanMove(true);
-        this.timerPanel.setMovingSpeed(0.6);
-        this.timerPanel.setMoving(true);
-
-        this.timerPanel.setAlpha(0);
-        this.timerPanel.fade(0.08);
+        if (pType != "Training") {
+            this.timerPanel.setDestination({ x: centerX(122), y: CANVAS_HEIGHT - 66 });
+            this.timerPanel.setCanMove(true);
+            this.timerPanel.setMovingSpeed(0.6);
+            this.timerPanel.setMoving(true);
+    
+            this.timerPanel.setAlpha(0);
+            this.timerPanel.fade(0.08);
+        }
 
         Game1.mainList.push(this.timerPanel.getSprite());
 
@@ -220,13 +224,13 @@ class Game1 {
 
         Game1.mainList.push(this.timerSprite);
 
-        this.timerNumber = new Sprite({ w: 10, h: 17 }, 52, 17, this.timerPanel);
+        this.timerNumber = new Sprite({ w: 11, h: 18 }, 52, 17, this.timerPanel);
         this.timerNumber.addAnimation("5", { x: 456, y: 928 });
-        this.timerNumber.addAnimation("4", { x: 466, y: 928 });
-        this.timerNumber.addAnimation("3", { x: 476, y: 928 });
-        this.timerNumber.addAnimation("2", { x: 486, y: 928 });
-        this.timerNumber.addAnimation("1", { x: 496, y: 928 });
-        this.timerNumber.addAnimation("0", { x: 506, y: 928 });
+        this.timerNumber.addAnimation("4", { x: 467, y: 928 });
+        this.timerNumber.addAnimation("3", { x: 478, y: 928 });
+        this.timerNumber.addAnimation("2", { x: 489, y: 928 });
+        this.timerNumber.addAnimation("1", { x: 500, y: 928 });
+        this.timerNumber.addAnimation("0", { x: 511, y: 928 });
         this.timerNumber.changeAnimation("5");
         Game1.mainList.push(this.timerNumber);
 
@@ -279,12 +283,6 @@ class Game1 {
         this.trophy = null;
         this.backToLessonBtn = null;
         this.restartBtn = null;
-
-        /**
-        TODO change place of these :
-        ScreenManager.init();
-        Pause.init();
-        */
     }
 
     static decreaseTimer() {
@@ -308,7 +306,7 @@ class Game1 {
         log("load");
         this.bStartTransition = true;
         this.start = new Sprite({ w: 160, h: 45 }, centerX(160), CANVAS_HEIGHT, null, "g");
-        this.start.addAnimation("normal", { x: 704, y: 16 });
+        this.start.addAnimation("normal", { x: 705, y: 17 });
         this.start.changeAnimation("normal");
         this.start.setDestination({ x: this.start.x, y: (CANVAS_HEIGHT * 0.5) - 45 });
         this.start.setMoveSpeed(1.5);
@@ -316,7 +314,11 @@ class Game1 {
         // bStatsDebug = true;
 
         if (Game1.timerPanel != undefined) {
-            Game1.timerPanel.setDestination({ x: centerX(122), y: CANVAS_HEIGHT - 66 });
+            if (pLessonTestType != "Training") {
+                Game1.timerPanel.setDestination({ x: centerX(122), y: CANVAS_HEIGHT - 66 });
+            } else if (pLessonTestType == "Training") {
+                Game1.timerPanel.setDestination({ x: centerX(122), y: CANVAS_HEIGHT });
+            }
             Game1.timerPanel.setCanMove(true);
             Game1.timerPanel.setMovingSpeed(0.6);
             Game1.timerPanel.setMoving(true);
@@ -396,21 +398,25 @@ class Game1 {
             this.firstBtn.setState(Button.STATE.Normal);
             this.firstBtn.getSprite().changeAnimation("normal");
             this.firstBtn.setLabel(choiceLabel + rndArr[0]);
+            this.firstBtn.checkShiChiTsu(choiceLabel + rndArr[0]);
             this.firstBtn.setCallbackArg({ char: RND_ARR[0], label: rndArr[0] });
 
             this.secondBtn.setState(Button.STATE.Normal);
             this.secondBtn.getSprite().changeAnimation("normal");
             this.secondBtn.setLabel(choiceLabel + rndArr[1]);
+            this.secondBtn.checkShiChiTsu(choiceLabel + rndArr[1]);
             this.secondBtn.setCallbackArg({ char: RND_ARR[1], label: rndArr[1] });
 
             this.thirdBtn.setState(Button.STATE.Normal);
             this.thirdBtn.getSprite().changeAnimation("normal");
             this.thirdBtn.setLabel(choiceLabel + rndArr[2]);
+            this.thirdBtn.checkShiChiTsu(choiceLabel + rndArr[2]);
             this.thirdBtn.setCallbackArg({ char: RND_ARR[2], label: rndArr[2] });
 
             this.fourthBtn.setState(Button.STATE.Normal);
             this.fourthBtn.getSprite().changeAnimation("normal");
             this.fourthBtn.setLabel(choiceLabel + rndArr[3]);
+            this.fourthBtn.checkShiChiTsu(choiceLabel + rndArr[3]);
             this.fourthBtn.setCallbackArg({ char: RND_ARR[3], label: rndArr[3] });
 
             let answerLabel = "";
@@ -429,18 +435,39 @@ class Game1 {
             }
 
             this.kanaPanel.setLabel(answerLabel);
+
+            let resetGameArg = "back_to_lesson";
+            if (Game1.lessonTestType == "freemode") {
+                resetGameArg = "back_to_freemode";
+            }
+
+            this.backBtn.setCallbackArg(resetGameArg);
         }
     }
 
     static stopTransition() {
-        log("stop transition");
+        // log("stop transition");
         this.bStartTransition = false;
         this.start.delete = true;
         Game1.transitionList = [];
         FadeEffect.fade({ direction: "in", maxTimer: 0.02 });
     }
 
-    static displayEndGamePanel(pParams) {
+
+
+
+
+
+//!     _______   _______   _                      _______    _          ______     _______    _______    _______    _______ 
+//!    (  ____ ) (  ___  ) ( (    /|              (  ____ \  ( (    /|  (  __  \   (  ____ \  (  ___  )  (       )  (  ____ \
+//!    | (    )| | (   ) | |  \  ( |              | (    \/  |  \  ( |  | (  \  )  | (    \/  | (   ) |  | () () |  | (    \/
+//!    | (____)| | (___) | |   \ | |      _____   | (__      |   \ | |  | |   ) |  | |        | (___) |  | || || |  | (__    
+//!    |  _____) |  ___  | | (\ \) |     (_____)  |  __)     | (\ \) |  | |   | |  | | ____   |  ___  |  | |(_)| |  |  __)   
+//!    | (       | (   ) | | | \   |              | (        | | \   |  | |   ) |  | | \_  )  | (   ) |  | |   | |  | (      
+//!    | )       | )   ( | | )  \  | _            | (____/\  | )  \  |  | (__/  )  | (___) |  | )   ( |  | )   ( |  | (____/\
+//!    |/        |/     \| |/    )_)(_)           (_______/  |/    )_)  (______/   (_______)  |/     \|  |/     \|  (_______/
+                                                                                                                                                                                                                                                             
+    static displayEndGamePanel(pParams) { //? { bool }
 
         this.bEndGame = pParams.bool;
 
@@ -503,7 +530,7 @@ class Game1 {
             this.endGameMark = new Panel({ w: 20, h: 20, v: 1 }, centerXElement(this.endGamePanel, 20), 90, this.endGamePanel, "game1", Game1.STATE.Game, [], 2);
             this.endGameMark.setNumberBool(true);
             this.endGameMark.setTextOverflow(true);
-            this.endGameMark.setLabel((TOTAL_NUMBER - this.misses) + "/" + TOTAL_NUMBER + "");
+            this.endGameMark.setLabel(((TOTAL_NUMBER*MAX_TURN) - this.misses) + "/" + (TOTAL_NUMBER*MAX_TURN) + "");
             if (gotTrophyLevel == 0) {
                 this.endGameMark.setFontColor("rgba(150,150,150,0)", "rgba(215,30,30,0)");
             }
@@ -583,11 +610,14 @@ class Game1 {
 
             this.restartBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.endGamePanel, 80), 120, this.endGamePanel, { cb: Game1.displayEndGamePanel.bind(this), arg: { bool: false, restart: true } }, "game1", Game1.STATE.Game, "Restart", 41);
             this.restartBtn.setFontColor("rgba(142,45,45,1)");
+            this.restartBtn.setAlpha(0);
             Button.currentList.push(this.restartBtn);
             Game1.mainList.push(this.restartBtn.getSprite());
 
+            //? Si freemode (backToLesson => back to freemode)
             this.backToLessonBtn = new Button({ w: 50, h: 20, v: 6 }, centerXElement(this.endGamePanel, 50), 150, this.endGamePanel, { cb: Game1.displayEndGamePanel.bind(this), arg: { bool: false, restart: false } }, "game1", Game1.STATE.Game, "Back", 41);
             this.backToLessonBtn.setFontColor("rgba(142,45,45,1)");
+            this.backToLessonBtn.setAlpha(0);
             Button.currentList.push(this.backToLessonBtn);
             Game1.mainList.push(this.backToLessonBtn.getSprite());
 
@@ -647,10 +677,16 @@ class Game1 {
                 p.setState(Panel.STATE.Normal);
             });
 
+            displaySaving(false);
+
             if (!pParams.restart) {
                 resetGame();
-                MOUSE_SPRITE.y += CANVAS_HEIGHT; // Back after Finish
-                Lessons.backToLesson();
+                if (Game1.lessonTestType != "freemode") {
+                    MOUSE_SPRITE.y += CANVAS_HEIGHT; // Back after Finish
+                    Lessons.backToLesson();
+                } else {
+                    FreeMode.backToFreeMode();
+                }
             } else {
                 Game1.load(CHOICE_TYPE, ANSWER_TYPE, RANGE, LESSON_RANGE, Game1.lessonTestType, Game1.currentLessonNumber);
             }
@@ -659,7 +695,64 @@ class Game1 {
 
     }
 
-    static manageEndGameSave(pGotTrophyLevel) {
+    static freeModeEndGame(pGotTrophyLevel) {
+        let paramsToSave = [];
+        let type = "";
+        let test1Mark = 0;
+        let test2Mark = 0;
+        let number = 0;
+
+        if (Game1.currentKanaLesson == "h") {
+            type = "hiragana";
+        } else {
+            type = "katakana"
+        }
+        let generalMark = SaveManager.SAVE_DATA["freemode"]["game1"][type + "General"]; //? current hiraganaGeneral | katakanaGeneral
+
+        if (ANSWER_TYPE != "r") { //? Kana to Roma
+            test1Mark = pGotTrophyLevel;
+            test2Mark = SaveManager.SAVE_DATA["freemode"]["game1"][type + "2"];
+            FreeMode.updateTrophyValue("kana_to_roma", pGotTrophyLevel);
+            number = 1;
+        } else { //? Kana to Roma
+            test1Mark = SaveManager.SAVE_DATA["freemode"]["game1"][type + "1"];
+            test2Mark = pGotTrophyLevel;
+            FreeMode.updateTrophyValue("roma_to_kana", pGotTrophyLevel);
+            number = 2;
+        }
+
+        //let currentMark = SaveManager.SAVE_DATA["freemode"]["game1"][type]; //? current hiragana1 | hiragana2 | katakana1 | katakana2
+
+        if (generalMark < test1Mark && generalMark < test2Mark) {
+            let newMark = 0;
+            if (test1Mark <= test2Mark) {
+                newMark = test1Mark;
+            } else if (test1Mark > test2Mark) {
+                newMark = test2Mark;
+            }
+            paramsToSave.push({ type: "freemode", params: type + "General", value: newMark });
+            FreeMode.updateTrophyValue(type + "General", newMark);
+        }
+
+        paramsToSave.push({ type: "freemode", params: type + number, value: pGotTrophyLevel });
+        SaveManager.save(paramsToSave);
+
+        displaySaving();
+
+    }
+
+
+
+//!     _______    _          ______     _______    _______    _______    _______             _______  _______           _______ 
+//!    (  ____ \  ( (    /|  (  __  \   (  ____ \  (  ___  )  (       )  (  ____ \           (  ____ \(  ___  )|\     /|(  ____ \
+//!    | (    \/  |  \  ( |  | (  \  )  | (    \/  | (   ) |  | () () |  | (    \/           | (    \/| (   ) || )   ( || (    \/
+//!    | (__      |   \ | |  | |   ) |  | |        | (___) |  | || || |  | (__       _____   | (_____ | (___) || |   | || (__    
+//!    |  __)     | (\ \) |  | |   | |  | | ____   |  ___  |  | |(_)| |  |  __)     (_____)  (_____  )|  ___  |( (   ) )|  __)   
+//!    | (        | | \   |  | |   ) |  | | \_  )  | (   ) |  | |   | |  | (                       ) || (   ) | \ \_/ / | (      
+//!    | (____/\  | )  \  |  | (__/  )  | (___) |  | )   ( |  | )   ( |  | (____/\           /\____) || )   ( |  \   /  | (____/\
+//!    (_______/  |/    )_)  (______/   (_______)  |/     \|  |/     \|  (_______/           \_______)|/     \|   \_/   (_______/                                                                                                                              
+    
+    static manageEndGameSave(pGotTrophyLevel) { //? Si on arrive ici c'est que
         let paramsToSave = [];
         let lessonTestType = "";
         let lessonTestGeneral = "";
@@ -672,6 +765,9 @@ class Game1 {
         } else if (Game1.lessonTestType == "Full_test") {
             lessonTestType = "fullTest";
             lessonTestGeneral = "fullTestGeneral";
+        } else if (Game1.lessonTestType == "freemode") {
+            Game1.freeModeEndGame(pGotTrophyLevel);
+            return;
         }
 
         let generalMark = SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber][lessonTestGeneral];
@@ -706,6 +802,7 @@ class Game1 {
             SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["lessonTestGeneral"] > 0 &&
             SaveManager.SAVE_DATA["lessons"][Game1.currentKanaLesson + Game1.currentLessonNumber]["fullTestGeneral"] > 0) {
             paramsToSave = [{ type: "lessons", params: [Game1.currentKanaLesson + Game1.currentLessonNumber, "finish"], value: 1 }];
+            Game1.finishedLesson = Game1.currentLessonNumber;
             SaveManager.save(paramsToSave);
 
             // LessonBtn TO NORMAL MODE
@@ -737,6 +834,8 @@ class Game1 {
         displaySaving();
     }
 
+
+
     static deleteSpritesFromList() {
         Game1.mainList = Game1.mainList.filter(sp => {
             return !sp.delete;
@@ -749,11 +848,11 @@ class Game1 {
             this.missPanel.setLabel(this.misses);
             if (this.misses == 1) {
                 this.goldTrophy.changeAnimation("batsu");
-            } else if (TOTAL_NUMBER - this.misses >= Math.ceil(TOTAL_NUMBER * 0.5) && TOTAL_NUMBER - this.misses < Math.ceil(TOTAL_NUMBER * 3 / 4)) { // this.misses < 3
+            } else if ((TOTAL_NUMBER*MAX_TURN) - this.misses >= Math.ceil((TOTAL_NUMBER*MAX_TURN) * 0.5) && (TOTAL_NUMBER*MAX_TURN) - this.misses < Math.ceil((TOTAL_NUMBER*MAX_TURN) * 3 / 4)) { // this.misses < 3
                 if (this.silverTrophy.currentAnimation.name != "batsu") {
                     this.silverTrophy.changeAnimation("batsu");
                 }
-            } else if (TOTAL_NUMBER - this.misses < Math.ceil(TOTAL_NUMBER * 0.5)) { // this.misses > 3
+            } else if ((TOTAL_NUMBER*MAX_TURN) - this.misses < Math.ceil((TOTAL_NUMBER*MAX_TURN) * 0.5)) { // this.misses > 3
                 if (this.bronzeTrophy.currentAnimation.name != "batsu") {
                     this.bronzeTrophy.changeAnimation("batsu");
                 }
@@ -762,20 +861,6 @@ class Game1 {
             this.misses = pArg;
             this.missPanel.setLabel("" + this.misses + "");
         }
-    }
-
-    static togglePause() {
-
-        if (Game1.currentState == Game1.STATE.Pause) {
-            Game1.currentState = Game1.STATE.Game;
-            Panel.resetTypeState("normal", Game1.STATE.Game);
-            Button.resetTypeState("normal", Game1.STATE.Game);
-        } else {
-            Game1.currentState = Game1.STATE.Pause;
-            Panel.resetTypeState("pause", Game1.STATE.Pause);
-            Button.resetTypeState("pause", Game1.STATE.Pause);
-        }
-
     }
 
     static update(dt) {
@@ -860,13 +945,13 @@ class Game1 {
             ctx.font = "10px jpfont";
             ctx.textAlign = "center";
 
-            if (!this.bEndGame) {
+            if (!this.bEndGame && Game1.lessonTestType != "Training") {
                 // ctx.fillText("Turns : " + TURN_NUMBER, centerX(), 10);
                 // ctx.fillText("Kana : " + KANA_NUMBER, centerX(), 30);
                 ctx.fillStyle = "rgb(150,150,150)";
                 ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, this.kanaPanel.width, 3);
                 ctx.fillStyle = "rgb(29,122,66)";
-                ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, (KANA_NUMBER / TOTAL_NUMBER) * this.kanaPanel.width, 3);
+                ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, (KANA_NUMBER / (TOTAL_NUMBER*MAX_TURN)) * this.kanaPanel.width, 3);
             }
 
             if (FadeEffect.bActive) {
@@ -909,17 +994,36 @@ class Game1 {
         let dir2Array = [{ x: pX - 20, y: pY - 15 }, { x: pX + 18, y: pY - 15 }, { x: pX + 25, y: pY + 5 }, { x: pX, y: pY + 17 }, { x: pX - 30, y: pY + 5 }]; // 3 5
         // let partDirArray = [{ x: -1, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0.5 }, { x: 0, y: 1 }, { x: -1, y: 0.5 }] // Up Right DownRight DownLeft Left
 
+        // for (let i = 0; i < 5; i++) {
+        //     let star = new Sprite({ w: 10, h: 8 }, pX, pY, null, "st");
+        //     star.addAnimation("normal", { x: 342, y: 1210 }, 8, [0.07, 0.07, 0.06, 0.06, 0.2, 0.1, 0.1, 0.1], false);
+        //     star.changeAnimation("normal");
+        //     star.setDestination({ x: dirArray[i].x, y: dirArray[i].y });
+        //     star.setMoveSpeed(1);
+        //     Game1.mainList.push(star);
+
+        //     let star2 = new Sprite({ w: 10, h: 8 }, pX, pY, null, "st");
+        //     star2.addAnimation("normal", { x: 342, y: 1219 }, 8, [0.07, 0.07, 0.06, 0.06, 0.2, 0.1, 0.1, 0.1], false);
+        //     star2.changeAnimation("normal");
+        //     star2.setDestination({ x: dir2Array[i].x, y: dir2Array[i].y });
+        //     star2.setMoveSpeed(1);
+        //     Game1.mainList.push(star2);
+
+        // }
+
         for (let i = 0; i < 5; i++) {
             let star = new Sprite({ w: 10, h: 8 }, pX, pY, null, "st");
-            star.addAnimation("normal", { x: 342, y: 1210 }, 8, [0.07, 0.07, 0.06, 0.06, 0.2, 0.1, 0.1, 0.1], false);
+            star.addAnimation("normal", { x: 442, y: 1194 }, 8, [0.07, 0.07, 0.06, 0.06, 0.2, 0.1, 0.1, 0.1], false);
             star.changeAnimation("normal");
+            star.setOffsetSS(1);
             star.setDestination({ x: dirArray[i].x, y: dirArray[i].y });
             star.setMoveSpeed(1);
             Game1.mainList.push(star);
 
             let star2 = new Sprite({ w: 10, h: 8 }, pX, pY, null, "st");
-            star2.addAnimation("normal", { x: 342, y: 1219 }, 8, [0.07, 0.07, 0.06, 0.06, 0.2, 0.1, 0.1, 0.1], false);
+            star2.addAnimation("normal", { x: 442, y: 1204 }, 8, [0.07, 0.07, 0.06, 0.06, 0.2, 0.1, 0.1, 0.1], false);
             star2.changeAnimation("normal");
+            star2.setOffsetSS(1);
             star2.setDestination({ x: dir2Array[i].x, y: dir2Array[i].y });
             star2.setMoveSpeed(1);
             Game1.mainList.push(star2);
@@ -928,18 +1032,3 @@ class Game1 {
     }
 
 }
-
-
-
-// TODO function newGame / reset / firstLoad
-function gameInit() { }
-function load() { }
-
-function togglePause() { }
-
-
-/**
- * DEBUG
- */
-
-// -------------------- END DEBUG

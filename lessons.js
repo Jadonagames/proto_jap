@@ -15,6 +15,7 @@ class Lessons {
     })
 
     static previousState = -1;
+    static TRANSLATION_TRANSITION = false;
 
     static state = Lessons.STATE.Main;
 
@@ -22,6 +23,15 @@ class Lessons {
 
     }
 
+//!    _________   _         _________  _________
+//!    \__   __/  ( (    /|  \__   __/  \__   __/
+//!       ) (     |  \  ( |     ) (        ) (   
+//!       | |     |   \ | |     | |        | |   
+//!       | |     | (\ \) |     | |        | |   
+//!       | |     | | \   |     | |        | |   
+//!    ___) (___  | )  \  |  ___) (___     | |   
+//!    \_______/  |/    )_)  \_______/     )_(   
+                                              
     static init() {
 
         this.canvasY = 0;
@@ -58,6 +68,9 @@ class Lessons {
         this.katakanaBtn.setOffsets(0, 16);
         Lessons.mainList.push(this.katakanaBtn.getSprite());
 
+        this.hiraNewSprite = null;
+        this.kataNewSprite = null;
+
         let backBtn = new Button({ w: 30, h: 22 }, 20, 20, null, Lessons.quitLessonsMenu, "lessons", Lessons.STATE.Main, "", 0, true);
         backBtn.setAnimations({ x: 86, y: 56 });
         Lessons.mainList.push(backBtn.getSprite());
@@ -80,10 +93,12 @@ class Lessons {
         let offYColor = 0;
         let columnCount = 1;
         let bNoSave = false;
+        let bDisplayNew = false;
+        let displayNew = { kana: "", number: 0 };
 
         for (let i = 1; i <= 15; i++) {
             let lessonBtn = new LessonBtn({ w: 72, h: 29 }, centerX(72, 150, 0) + offX, centerY(29, 10) + offY, null, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Hiragana, i] }, "lessons", Lessons.STATE.Hiragana, "Lesson_" + i, 0, true);
-            lessonBtn.setOffsets(0, 18);
+            lessonBtn.setOffsets(0, 18, 0, -1);
             bNoSave = false;
             if (!SaveManager.SAVE_DATA["prologue"]) {
                 bNoSave = true;
@@ -95,15 +110,35 @@ class Lessons {
                 }
             }
 
+            Lessons.hiraganaList.push(lessonBtn.getSprite());
+
             if (bNoSave) {
                 lessonBtn.setMode(1, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Hiragana, i] }, offYColor);
+                lessonBtn.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                lessonBtn.changeSpriteAnimation("normal");
             } else {
                 lessonBtn.setMode(0, null, offYColor);
-            }
-            lessonBtn.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
-            lessonBtn.changeSpriteAnimation("normal");
+                if (!SaveManager.SAVE_DATA["lessons"]["h" + i]["buttonAnimation"]) {
+                    lessonBtn.state = LessonBtn.STATE.Inactive;
+                    lessonBtn.changeSpriteAnimation("open");
+                    lessonBtn.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                } else {
+                    lessonBtn.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+                    lessonBtn.changeSpriteAnimation("normal");
 
-            Lessons.hiraganaList.push(lessonBtn.getSprite());
+
+                    if (SaveManager.SAVE_DATA["lessons"]["h" + i]["newAnimation"] && !SaveManager.SAVE_DATA["lessons"]["h" + i]["newFinish"]) {
+                        bDisplayNew = true;
+                        displayNew.kana = "h";
+                        displayNew.number = i
+                        // this.displayNewLogo("h", i);
+                    }
+                }
+            }
+            // lessonBtn.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+            // lessonBtn.changeSpriteAnimation("normal");
+
+            // Lessons.hiraganaList.push(lessonBtn.getSprite());
 
             this.starTrophyList["h" + i] = new Sprite({ w: 10, h: 8 }, 61, 1, lessonBtn);
             this.starTrophyList["h" + i].getSprite().addAnimation("normal", { x: 94, y: 112 });
@@ -153,6 +188,11 @@ class Lessons {
             }
         }
 
+        if (bDisplayNew) {
+            this.displayNewLogo(displayNew.kana, displayNew.number);
+            bDisplayNew = false;
+        }
+
         // ---------------- KATAKANA ----------------
         offX = 0;
         offY = 0;
@@ -160,7 +200,7 @@ class Lessons {
         columnCount = 1;
         for (let i = 1; i <= 15; i++) {
             let lessonBtn = new LessonBtn({ w: 72, h: 29 }, centerX(72, 150, 0) + offX, centerY(29, 10) + offY, null, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Katakana, i] }, "lessons", Lessons.STATE.Katakana, "Lesson_" + i, 0, true);
-            lessonBtn.setOffsets(0, 18);
+            lessonBtn.setOffsets(0, 18, 0, -1);
             bNoSave = false;
 
             if (!SaveManager.SAVE_DATA["prologue"]) {
@@ -173,16 +213,30 @@ class Lessons {
                 }
             }
 
+            Lessons.katakanaList.push(lessonBtn.getSprite());
+
             if (bNoSave) {
                 lessonBtn.setMode(1, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Katakana, i] }, offYColor);
+                lessonBtn.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                lessonBtn.changeSpriteAnimation("normal");
             } else {
                 lessonBtn.setMode(0, null, offYColor);
+                if (!SaveManager.SAVE_DATA["lessons"]["k" + i]["buttonAnimation"]) {
+                    lessonBtn.state = LessonBtn.STATE.Inactive;
+                    lessonBtn.changeSpriteAnimation("open");
+                    lessonBtn.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                } else {
+                    lessonBtn.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+                    lessonBtn.changeSpriteAnimation("normal");
+
+                    if (SaveManager.SAVE_DATA["lessons"]["h" + i]["newAnimation"] && !SaveManager.SAVE_DATA["lessons"]["k" + i]["newFinish"]) {
+                        bDisplayNew = true;
+                        displayNew.kana = "k";
+                        displayNew.number = i
+                    }
+                }
             }
-            lessonBtn.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
-            lessonBtn.changeSpriteAnimation("normal");
 
-
-            Lessons.katakanaList.push(lessonBtn.getSprite());
 
             this.starTrophyList["k" + i] = new Sprite({ w: 10, h: 8 }, 61, 1, lessonBtn);
             this.starTrophyList["k" + i].getSprite().addAnimation("normal", { x: 94, y: 112 });
@@ -231,13 +285,10 @@ class Lessons {
             }
         }
 
-        // TODO Automatiser :
-        // this.hiraNewSprite = new Sprite({ w: 28, h: 20 }, 170, 165, null, "n");
-        // this.hiraNewSprite.addAnimation("normal", { x: 352, y: 512 }, 2, 0.3);
-        // this.hiraNewSprite.changeAnimation("normal");
-        // this.hiraNewSprite.setDestination({ x: 170, y: 155 });
-        // this.hiraNewSprite.setDirection(-1);
-        // Lessons.hiraganaList.push(this.hiraNewSprite);
+        if (bDisplayNew) {
+            this.displayNewLogo(displayNew.kana, displayNew.number);
+            bDisplayNew = false;
+        }
 
 
         // ---------------- LESSON ----------------
@@ -272,6 +323,8 @@ class Lessons {
 
         this.lessonTestTrophy = null;
         this.fullTestTrophy = null;
+        this.lessonTestTrophyPanel = null;
+        this.fullTestTrophyPanel = null;
 
         this.lessonTestTrophyLevel = 0;
         this.fullTestTrophyLevel = 0; // 16 32 48
@@ -290,15 +343,42 @@ class Lessons {
         console.log("init lessons");
     }
 
+//!    _________   _______    _______    _          _______   _________  _________  _________   _______    _       
+//!    \__   __/  (  ____ )  (  ___  )  ( (    /|  (  ____ \  \__   __/  \__   __/  \__   __/  (  ___  )  ( (    /|
+//!       ) (     | (    )|  | (   ) |  |  \  ( |  | (    \/     ) (        ) (        ) (     | (   ) |  |  \  ( |
+//!       | |     | (____)|  | (___) |  |   \ | |  | (_____      | |        | |        | |     | |   | |  |   \ | |
+//!       | |     |     __)  |  ___  |  | (\ \) |  (_____  )     | |        | |        | |     | |   | |  | (\ \) |
+//!       | |     | (\ (     | (   ) |  | | \   |        ) |     | |        | |        | |     | |   | |  | | \   |
+//!       | |     | ) \ \__  | )   ( |  | )  \  |  /\____) |  ___) (___     | |     ___) (___  | (___) |  | )  \  |
+//!       )_(     |/   \__/  |/     \|  |/    )_)  \_______)  \_______/     )_(     \_______/  (_______)  |/    )_)
+                                                                                                                                                  
     // Params : a[0] : "-" / "+" || a[1] : Lessons.STATE.Hiragana / .Katakana || a[2] : i  (1,2,3...)
     static transition(a) {
-        if (a[0] == "-") { // TO ONE LESSON
+        if (a[0] == "-") { //? TO ONE LESSON
+
+            Game1.finishedLesson = 0;
+
             this.canvasY = 0;
             Lessons.previousState = a[1];
             Lessons.lessonList = [];
             let kana = "";
             let lessonNumber = a[2];
             Lessons.previousState == Lessons.STATE.Hiragana ? kana = "hira_" : kana = "kata_";
+
+            if (Lessons.previousState == Lessons.STATE.Hiragana) {
+                if (this.hiraNewSprite != null && this.hiraNewSprite.type.slice(-1) == lessonNumber) {
+                    console.log("hira new NOT NULL, donc DELETE");
+                    this.hiraNewSprite.delete = true;
+                    this.hiraNewSprite = null;
+                    SaveManager.save([{ type: "newFinish", params: "h" + lessonNumber }]);
+                }
+            } else if (Lessons.previousState == Lessons.STATE.Katakana) {
+                if (this.kataNewSprite != null && this.kataNewSprite.type.slice(-1) == lessonNumber) {
+                    this.kataNewSprite.delete = true;
+                    this.kataNewSprite = null;
+                    SaveManager.save([{ type: "newFinish", params: "k" + lessonNumber }]);
+                }
+            }
 
             // --- MAIN ---
             let numberOff = lessonNumber;
@@ -393,95 +473,95 @@ class Lessons {
                     writingPanel.setToDelete();
                     containerPanel.setTooltip(writingPanel);
 
-                    let posX = 1008;
-                    let offsetY = 1024;
+                    let posX = 1008; //? Position dans la SS
+                    let offsetY = 1024; //? Position dans la SS
                     switch (LANG[kana + KANA[kanaPos].roma]) {
                         case "い":
-                            exampleSprite = new Sprite({ w: 64, h: 17 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 64, h: 17 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "お":
-                            exampleSprite = new Sprite({ w: 65, h: 20 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 65, h: 20 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 18 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "き":
-                            exampleSprite = new Sprite({ w: 61, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 61, h: 19 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 39 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "こ":
-                            exampleSprite = new Sprite({ w: 52, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 52, h: 19 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 59 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "さ":
-                            exampleSprite = new Sprite({ w: 61, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 61, h: 19 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 79 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "そ":
-                            exampleSprite = new Sprite({ w: 40, h: 21 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 40, h: 21 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 99 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "な":
-                            exampleSprite = new Sprite({ w: 64, h: 20 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 64, h: 20 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 121 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "ふ":
-                            exampleSprite = new Sprite({ w: 82, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 82, h: 19 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 142 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "む":
-                            exampleSprite = new Sprite({ w: 61, h: 21 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 61, h: 21 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 162 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "ゆ":
-                            exampleSprite = new Sprite({ w: 43, h: 21 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 43, h: 21 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 184 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "ら":
-                            exampleSprite = new Sprite({ w: 58, h: 21 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 58, h: 21 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 206 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "り":
-                            exampleSprite = new Sprite({ w: 53, h: 22 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 53, h: 22 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 228 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "タ":
-                            exampleSprite = new Sprite({ w: 39, h: 20 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 39, h: 20 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 251 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "ネ":
-                            exampleSprite = new Sprite({ w: 41, h: 20 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 41, h: 20 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 272 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
                             break;
                         case "ム":
-                            exampleSprite = new Sprite({ w: 40, h: 19 }, 10, 50, writingPanel);
+                            exampleSprite = new Sprite({ w: 40, h: 19 }, 10, writingPanel.completeLines.length * 13, writingPanel);
                             exampleSprite.addAnimation("normal", { x: posX, y: offsetY + 293 });
                             exampleSprite.changeAnimation("normal");
                             containerPanel.setTooltip(exampleSprite);
@@ -571,13 +651,9 @@ class Lessons {
 
             let trophyLevel1 = 0;
             let trophyLevel2 = 0;
-            if (kana == "hira_") {
-                trophyLevel1 = SaveManager.SAVE_DATA["lessons"]["h" + lessonNumber]["lessonTestGeneral"];
-                trophyLevel2 = SaveManager.SAVE_DATA["lessons"]["h" + lessonNumber]["fullTestGeneral"];
-            } else if (kana == "kata_") {
-                trophyLevel1 = SaveManager.SAVE_DATA["lessons"]["k" + lessonNumber]["lessonTestGeneral"];
-                trophyLevel2 = SaveManager.SAVE_DATA["lessons"]["k" + lessonNumber]["fullTestGeneral"];
-            }
+
+            trophyLevel1 = SaveManager.SAVE_DATA["lessons"][kana[0] + lessonNumber]["lessonTestGeneral"]; //? kana[0] = "h" ou "k". kana = "hira_" || "kata_"
+            trophyLevel2 = SaveManager.SAVE_DATA["lessons"][kana[0] + lessonNumber]["fullTestGeneral"];
 
             let multiplicator = 0;
             switch (trophyLevel1) {
@@ -599,14 +675,40 @@ class Lessons {
             this.lessonTestTrophy.getSprite().changeAnimation("normal");
             Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
 
-            this.fullTestBtn = new Button({ w: 60, h: 31 }, centerX(60, 120, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Full_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Full_test", 0, true);
-            this.fullTestBtn.getSprite().addAnimation("normal", { x: 342, y: 408 });
-            this.fullTestBtn.getSprite().addAnimation("hover", { x: 402, y: 408 }, 6, 0.05, false);
-            this.fullTestBtn.getSprite().addAnimation("down", { x: 762, y: 408 });
-            this.fullTestBtn.getSprite().changeAnimation("normal");
-            this.fullTestBtn.setOffsets(0, 18);
-            this.fullTestBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
-            Lessons.lessonList.push(this.fullTestBtn.getSprite());
+            this.lessonTestTrophyPanel = new Panel({ w: 36, h: 13, v: 1 }, this.lessonTestBtn.x + 64, this.lessonTestBtn.y + 3, null, "lessons", Lessons.STATE.Lesson, [], 2);
+            this.lessonTestTrophyPanel.setFontColor("rgba(0,0,0,1)", "rgba(255,255,255,1)");
+            this.lessonTestTrophyPanel.setNumberBool(true);
+            this.lessonTestTrophyPanel.setTextOverflow(true);
+
+            let kanaToRomaLevel = 0;
+            let romaToKanaLevel = 0;
+            kanaToRomaLevel = SaveManager.SAVE_DATA["lessons"][kana[0] + lessonNumber]["lessonTest1"];
+            romaToKanaLevel = SaveManager.SAVE_DATA["lessons"][kana[0] + lessonNumber]["lessonTest2"];
+
+            let labelNumber = "0";
+            if (multiplicator > 0) {
+                Lesson.updateTrophyPanel("lessonTest", true);
+            } else {
+                Lessons.updateTrophyPanel(false, labelNumber);
+                if ((kanaToRomaLevel > 0 && romaToKanaLevel == 0) || (kanaToRomaLevel == 0 && romaToKanaLevel > 0)) {
+                    labelNumber = "1";
+                } else {
+                    labelNumber = "0";
+                }
+            }
+            this.lessonTestTrophyPanel.setLabel(labelNumber + "/2");
+            Lessons.lessonList.push(this.lessonTestTrophyPanel.getSprite());
+
+            if (lessonNumber > 1) {
+                this.fullTestBtn = new Button({ w: 60, h: 31 }, centerX(60, 120, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Full_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Full_test", 0, true);
+                this.fullTestBtn.getSprite().addAnimation("normal", { x: 342, y: 408 });
+                this.fullTestBtn.getSprite().addAnimation("hover", { x: 402, y: 408 }, 6, 0.05, false);
+                this.fullTestBtn.getSprite().addAnimation("down", { x: 762, y: 408 });
+                this.fullTestBtn.getSprite().changeAnimation("normal");
+                this.fullTestBtn.setOffsets(0, 18);
+                this.fullTestBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
+                Lessons.lessonList.push(this.fullTestBtn.getSprite());
+            }
 
             multiplicator = 0;
             switch (trophyLevel2) {
@@ -624,10 +726,36 @@ class Lessons {
             }
 
 
-            this.fullTestTrophy = new Sprite({ w: 36, h: 36 }, this.fullTestBtn.x + 64, this.fullTestBtn.y - 4);
-            this.fullTestTrophy.getSprite().addAnimation("normal", { x: 452 + (36 * multiplicator), y: 826 });
-            this.fullTestTrophy.getSprite().changeAnimation("normal");
-            Lessons.lessonList.push(this.fullTestTrophy.getSprite());
+            if (lessonNumber > 1) {
+                this.fullTestTrophy = new Sprite({ w: 36, h: 36 }, this.fullTestBtn.x + 64, this.fullTestBtn.y - 4);
+                this.fullTestTrophy.getSprite().addAnimation("normal", { x: 452 + (36 * multiplicator), y: 826 });
+                this.fullTestTrophy.getSprite().changeAnimation("normal");
+                Lessons.lessonList.push(this.fullTestTrophy.getSprite());
+
+
+                this.fullTestTrophyPanel = new Panel({ w: 36, h: 13, v: 1 }, this.fullTestBtn.x + 64, this.fullTestBtn.y + 3, null, "lessons", Lessons.STATE.Lesson, [], 2);
+                this.fullTestTrophyPanel.setFontColor("rgba(0,0,0,1)", "rgba(255,255,255,1)");
+                this.fullTestTrophyPanel.setNumberBool(true);
+                this.fullTestTrophyPanel.setTextOverflow(true);
+    
+                kanaToRomaLevel = 0;
+                romaToKanaLevel = 0;
+                kanaToRomaLevel = SaveManager.SAVE_DATA["lessons"][kana[0] + lessonNumber]["fullTest1"];
+                romaToKanaLevel = SaveManager.SAVE_DATA["lessons"][kana[0] + lessonNumber]["fullTest2"];
+    
+                labelNumber = "0";
+                if (multiplicator > 0) {
+                    Lesson.updateTrophyPanel("fullTest", true);
+                } else {
+                    if ((kanaToRomaLevel > 0 && romaToKanaLevel == 0) || (kanaToRomaLevel == 0 && romaToKanaLevel > 0)) {
+                        labelNumber = "1";
+                    } else {
+                        labelNumber = "0";
+                    }
+                }
+                this.fullTestTrophyPanel.setLabel(labelNumber + "/2");
+                Lessons.lessonList.push(this.fullTestTrophyPanel.getSprite());
+            }
 
 
         } else { // BACK TO LESSONS
@@ -647,9 +775,18 @@ class Lessons {
             if (this.fullTestBtn) this.fullTestBtn.removeFromList();
         }
 
-        TRANSITION = true;
+        Lessons.TRANSLATION_TRANSITION = true;
     }
 
+//!  _______               _______    _______    _______    _______    _______    _______    _          _______    _       
+//! (  ____ \  |\     /|  (  ___  )  (  ___  )  (  ____ \  (  ____ \  (  ____ )  (  ___  )  ( (    /|  (  ____ \  ( \      
+//! | (    \/  | )   ( |  | (   ) |  | (   ) |  | (    \/  | (    \/  | (    )|  | (   ) |  |  \  ( |  | (    \/  | (      
+//! | |        | (___) |  | |   | |  | |   | |  | (_____   | (__      | (____)|  | (___) |  |   \ | |  | (__      | |      
+//! | |        |  ___  |  | |   | |  | |   | |  (_____  )  |  __)     |  _____)  |  ___  |  | (\ \) |  |  __)     | |      
+//! | |        | (   ) |  | |   | |  | |   | |        ) |  | (        | (        | (   ) |  | | \   |  | (        | |      
+//! | (____/\  | )   ( |  | (___) |  | (___) |  /\____) |  | (____/\  | )        | )   ( |  | )  \  |  | (____/\  | (____/\
+//! (_______/  |/     \|  (_______)  (_______)  \_______)  (_______/  |/         |/     \|  |/    )_)  (_______/  (_______/
+                                                                                                                       
     static displayChooseTypePanel(pParams) {
 
         this.bChooseType = pParams.bool;
@@ -711,21 +848,32 @@ class Lessons {
                         stopEffect: false,
                         height: true
                     }
-                }
-                ,
+                },
                 "lessons", Lessons.STATE.Lesson, btnLabel, 41);
             // let lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 320, null, { cb: FadeEffect.fade.bind(FadeEffect), arg: { callback: { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, direction: "out", maxTimer: 0.01 } }, "mainmenu", MainMenu.STATE.Main, "Lessons", 4);
 
             this.kanaToRomaBtn.setFontColor("rgba(142,45,45,1)");
             this.kanaToRomaBtn.setAlpha(0);
-            Button.list.push(this.kanaToRomaBtn);
+            // Button.list.push(this.kanaToRomaBtn);
             Button.currentList.push(this.kanaToRomaBtn);
             Lessons.lessonList.push(this.kanaToRomaBtn.getSprite());
 
-            this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 110, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btn2Label, 41);
+            // this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 110, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btn2Label, 41);
+            this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 110, this.chooseTypePanel,
+                { 
+                    cb: Transition.init.bind(Transition),
+                    arg: {
+                        callback: { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } },
+                        pos: { x: centerX(), y: this.chooseTypePanel.y + 110, r: 450, maxR: 0 },
+                        speed: 1,
+                        stopEffect: false,
+                        height: true
+                    }
+                }, 
+                "lessons", Lessons.STATE.Lesson, btn2Label, 41);
             this.romaTokanaBtn.setFontColor("rgba(142,45,45,1)");
             this.romaTokanaBtn.setAlpha(0);
-            Button.list.push(this.romaTokanaBtn);
+            // Button.list.push(this.romaTokanaBtn);
             Button.currentList.push(this.romaTokanaBtn);
             Lessons.lessonList.push(this.romaTokanaBtn.getSprite());
 
@@ -756,7 +904,7 @@ class Lessons {
             this.backFromCTPBtn = new Button({ w: 30, h: 22 }, centerXElement(this.chooseTypePanel, 30), 160, this.chooseTypePanel, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: false, testType: pParams.testType } }, "lessons", Lessons.STATE.Lesson, "", 0, true);
             this.backFromCTPBtn.setAnimations({ x: 86, y: 56 });
             this.backFromCTPBtn.setAlpha(0);
-            Button.list.push(this.backFromCTPBtn);
+            // Button.list.push(this.backFromCTPBtn);
             Button.currentList.push(this.backFromCTPBtn);
             Lessons.lessonList.push(this.backFromCTPBtn.getSprite());
 
@@ -808,6 +956,58 @@ class Lessons {
             Lessons.hiraganaList.push(this.starTrophyList[pParams].getSprite());
         } else {
             Lessons.katakanaList.push(this.starTrophyList[pParams].getSprite());
+        }
+    }
+
+    static displayNewLogo(pKana, pLessonNumber) {
+
+        const position = Number(pLessonNumber) - 1;
+        let originX = 0;
+        let originY = 0;
+        let originDestinationX = 0;
+        let originDestinationY = 0;
+
+        log("Lesson : " + pLessonNumber);
+
+        if (pKana == "h") {
+            originX = LessonBtn.hiraganaList[position].x + 60
+            originY = LessonBtn.hiraganaList[position].y;
+            originDestinationX = LessonBtn.hiraganaList[position].x + 60;
+            originDestinationY = LessonBtn.hiraganaList[position].y - 10;
+
+            this.hiraNewSprite = new Sprite({ w: 28, h: 20 }, originX, originY, null, "n_"+pLessonNumber);
+            this.hiraNewSprite.setClass("new");
+            this.hiraNewSprite.addAnimation("normal", { x: 352, y: 513 }, 2, 0.3);
+            this.hiraNewSprite.changeAnimation("normal");
+            this.hiraNewSprite.setOffsetSS(1);
+            this.hiraNewSprite.setDestination({ x: originDestinationX, y: originDestinationY });
+            this.hiraNewSprite.setDirection(-1);
+            this.hiraNewSprite.originPos.x = originX;
+            this.hiraNewSprite.originPos.y = originY;
+            this.hiraNewSprite.originDestination.x = originDestinationX;
+            this.hiraNewSprite.originDestination.y = originDestinationY;
+
+            Lessons.hiraganaList.push(this.hiraNewSprite);
+
+        } else {
+            originX = LessonBtn.katakanaList[position].x + 60
+            originY = LessonBtn.katakanaList[position].y;
+            originDestinationX = LessonBtn.katakanaList[position].x + 60;
+            originDestinationY = LessonBtn.katakanaList[position].y - 10;
+
+            this.kataNewSprite = new Sprite({ w: 28, h: 20 }, originX, originY, null, "n_"+pLessonNumber);
+            this.kataNewSprite.setClass("new");
+            this.kataNewSprite.addAnimation("normal", { x: 352, y: 513 }, 2, 0.3);
+            this.kataNewSprite.changeAnimation("normal");
+            this.kataNewSprite.setOffsetSS(1);
+            this.kataNewSprite.setDestination({ x: originDestinationX, y: originDestinationY });
+            this.kataNewSprite.setDirection(-1);
+            this.kataNewSprite.originPos.x = originX;
+            this.kataNewSprite.originPos.y = originY;
+            this.kataNewSprite.originDestination.x = originDestinationX;
+            this.kataNewSprite.originDestination.y = originDestinationY;
+
+            Lessons.katakanaList.push(this.kataNewSprite);
         }
     }
 
@@ -864,6 +1064,20 @@ class Lessons {
         }
     }
 
+    
+
+//!                _______    ______     _______   _________   _______            _________   _______    _______    _______                       
+//!    |\     /|  (  ____ )  (  __  \   (  ___  )  \__   __/  (  ____ \           \__   __/  (  ____ )  (  ___  )  (  ____ )  |\     /|  |\     /|
+//!    | )   ( |  | (    )|  | (  \  )  | (   ) |     ) (     | (    \/              ) (     | (    )|  | (   ) |  | (    )|  | )   ( |  ( \   / )
+//!    | |   | |  | (____)|  | |   ) |  | (___) |     | |     | (__       _____      | |     | (____)|  | |   | |  | (____)|  | (___) |   \ (_) / 
+//!    | |   | |  |  _____)  | |   | |  |  ___  |     | |     |  __)     (_____)     | |     |     __)  | |   | |  |  _____)  |  ___  |    \   /  
+//!    | |   | |  | (        | |   ) |  | (   ) |     | |     | (                    | |     | (\ (     | |   | |  | (        | (   ) |     ) (   
+//!    | (___) |  | )        | (__/  )  | )   ( |     | |     | (____/\              | |     | ) \ \__  | (___) |  | )        | )   ( |     | |   
+//!    (_______)  |/         (______/   |/     \|     )_(     (_______/              )_(     |/   \__/  (_______)  |/         |/     \|     \_/   
+                                                                                                                                               
+    
+    
+
     static updateTrophyValue(pTrophyType, pValue) { // "general", "kana_to_roma", "roma_to_kana"
         let newValue = 30 + pValue; // pValue == 48 32 16
         let multiplicator = 0
@@ -885,14 +1099,19 @@ class Lessons {
 
         switch (pTrophyType) {
             case "kana_to_roma":
-                if (this.kanaToRomaTrophy.currentAnimation.origin.x < newValue) this.kanaToRomaTrophy.resetAnimations("normal", { x: newValue, y: this.kanaToRomaTrophy.currentAnimation.origin.y });
+                if (this.kanaToRomaTrophy.currentAnimation.origin.x < newValue) {
+                    this.kanaToRomaTrophy.resetAnimations("normal", { x: newValue, y: this.kanaToRomaTrophy.currentAnimation.origin.y });
+                }
                 break;
             case "roma_to_kana":
-                if (this.romaTokanaTrophy.currentAnimation.origin.x < newValue) this.romaTokanaTrophy.resetAnimations("normal", { x: newValue, y: this.romaTokanaTrophy.currentAnimation.origin.y });
+                if (this.romaTokanaTrophy.currentAnimation.origin.x < newValue) {
+                    this.romaTokanaTrophy.resetAnimations("normal", { x: newValue, y: this.romaTokanaTrophy.currentAnimation.origin.y });
+                }
                 break;
             case "lessonTest":
                 if (this.lessonTestTrophy.currentAnimation.origin.x < 452 + (36 * multiplicator)) {
                     this.lessonTestTrophy.resetAnimations("normal", { x: 452 + (36 * multiplicator), y: this.lessonTestTrophy.currentAnimation.origin.y });
+                    this.lessonTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
                     if (!Lessons.lessonList.includes(this.lessonTestTrophy.getSprite())) {
                         Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
                     }
@@ -901,12 +1120,56 @@ class Lessons {
             case "fullTest":
                 if (this.fullTestTrophy.currentAnimation.origin.x < 452 + (36 * multiplicator)) {
                     this.fullTestTrophy.resetAnimations("normal", { x: 452 + (36 * multiplicator), y: this.fullTestTrophy.currentAnimation.origin.y });
+                    this.fullTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
                     if (!Lessons.lessonList.includes(this.fullTestTrophy.getSprite())) {
                         Lessons.lessonList.push(this.fullTestTrophy.getSprite());
                     }
                 }
                 break;
         }
+    }
+
+
+
+
+
+
+
+
+//TODO
+//! TROUVER COMMENT GÉRER ÇA !!!!!
+
+
+
+
+
+
+    static updateTrophyPanel(pType, bEnd = false) {
+        if (bEnd) {
+            if (pType == "lessonTest") {
+                this.lessonTestTrophyPanel.setLabel("2/2");
+                this.lessonTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
+            } else if (pType == "fullTest") {
+                this.fullTestTrophyPanel.setLabel("2/2");
+                this.fullTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
+            }
+        } else {
+            if (pType == "lessonTest") {
+                if (this.lessonTestTrophyPanel.label[0] == "0") {
+                    this.lessonTestTrophyPanel.setLabel("1/2");
+                } else if (this.lessonTestTrophyPanel.label[0] == "2") {
+                    this.lessonTestTrophyPanel.setLabel("0/2");
+                }
+            } else if (pType == "fullTest") {
+                if (this.fullTestTrophyPanel.label[0] == "0") {
+                    this.fullTestTrophyPanel.setLabel("1/2");
+                } else if (this.fullTestTrophyPanel.label[0] == "2") {
+                    this.fullTestTrophyPanel.setLabel("0/2");
+                }
+            }
+        }
+
+
     }
 
     static update(dt) {
@@ -917,15 +1180,19 @@ class Lessons {
             return !sp.delete;
         });
 
-        Sprite.manageBeforeUpdating(Lessons.hiraganaList, dt);
-        Lessons.hiraganaList = Lessons.hiraganaList.filter(sp => {
-            return !sp.delete;
-        });
+        if (Lessons.state == Lessons.STATE.Hiragana) {
+            Sprite.manageBeforeUpdating(Lessons.hiraganaList, dt);
+            Lessons.hiraganaList = Lessons.hiraganaList.filter(sp => {
+                return !sp.delete;
+            });
+        }
 
-        Sprite.manageBeforeUpdating(Lessons.katakanaList, dt);
-        Lessons.katakanaList = Lessons.katakanaList.filter(sp => {
-            return !sp.delete;
-        });
+        if (Lessons.state == Lessons.STATE.Katakana) {
+            Sprite.manageBeforeUpdating(Lessons.katakanaList, dt);
+            Lessons.katakanaList = Lessons.katakanaList.filter(sp => {
+                return !sp.delete;
+            });
+        }
 
         Sprite.manageBeforeUpdating(Lessons.lessonList, dt);
         Lessons.lessonList = Lessons.lessonList.filter(sp => {
@@ -958,7 +1225,7 @@ class Lessons {
     }
 
     static draw(ctx) {
-        if (TRANSITION) {
+        if (Lessons.TRANSLATION_TRANSITION) {
 
             ctx.transform(1, 0, 0, 1, 0, this.canvasY);
             this.canvasY += this.translationY;
@@ -998,7 +1265,7 @@ class Lessons {
                     }
                 })
 
-                TRANSITION = false;
+                Lessons.TRANSLATION_TRANSITION = false;
                 this.changeState(Lessons.STATE.Lesson);
                 MOUSE_SPRITE.y += CANVAS_HEIGHT;
                 MOUSE_SPRITE.changeAnimation("normal");
@@ -1040,7 +1307,7 @@ class Lessons {
                 });
                 Lessons.lessonList = [];
 
-                TRANSITION = false;
+                Lessons.TRANSLATION_TRANSITION = false;
                 MOUSE_SPRITE.y -= CANVAS_HEIGHT;
                 MOUSE_SPRITE.changeAnimation("normal");
 
@@ -1050,6 +1317,34 @@ class Lessons {
                     Lessons.changeState(Lessons.STATE.Katakana, false);
                 }
                 Lessons.previousState = -1;
+
+                if (Game1.finishedLesson > 0) {
+
+                    if (this.state == Lessons.STATE.Hiragana) {
+                        Transition.init({
+                            callback: {},
+                            type: "l",
+                            pos: { x: LessonBtn.hiraganaList[Game1.finishedLesson].x + 36, y: LessonBtn.hiraganaList[Game1.finishedLesson].y + 15, r: 300, maxR: 50 },
+                            speed: 1,
+                            stopEffect: true,
+                            height: false
+                        });
+                    } else {
+                        Transition.init({
+                            callback: {},
+                            type: "l",
+                            pos: { x: LessonBtn.katakanaList[Game1.finishedLesson].x + 36, y: LessonBtn.katakanaList[Game1.finishedLesson].y + 15, r: 300, maxR: 50 },
+                            speed: 1,
+                            stopEffect: true,
+                            height: false
+                        });
+                    }
+
+                    Game1.finishedLesson = 0;
+                } else {
+                    log("no finished lesson");
+                }
+
             }
 
         }
@@ -1090,16 +1385,17 @@ class Lessons {
 
         if (Lessons.state == Lessons.STATE.Hiragana) {
             ctx.fillText("Hiragana", centerX(), 80);
-        } else {
+        } else if (Lessons.state == Lessons.STATE.Katakana) {
             ctx.fillText("Katakana", centerX(), 80);
+        } else {
+            if (Lessons.previousState == Lessons.STATE.Hiragana) {
+                ctx.fillText("Hiragana", centerX(), 80);
+            } else {
+                ctx.fillText("Katakana", centerX(), 80);
+            }
         }
         ctx.shadowOffsetY = 0;
         ctx.textAlign = "left";
-
-        /**
-         * DEBUG
-         */
-        //------------- END DEBUG
 
         if (FadeEffect.bActive) {
             FadeEffect.draw(ctx);
