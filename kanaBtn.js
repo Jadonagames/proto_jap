@@ -3,6 +3,16 @@ class KanaBtn extends Button {
         super(pSize, pX, pY, pParent, pCallback, pType, pTypeState, pLabel, pId, pStaticSize);
     }
 
+    checkShiChiTsu(newLabel) {
+        if (newLabel == "roma_shi" || newLabel == "roma_chi" || newLabel == "roma_tsu") {
+            this.setFontSize(25);
+            this.setOffsets(-1, 34);
+        } else {
+            this.setFontSize(30);
+            this.setOffsets(-1, 36);
+        }
+    }
+
     drawLabel(ctx) {
 
         if (this.state == Button.STATE.Hover) {
