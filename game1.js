@@ -1,3 +1,5 @@
+//! TEST LAPTOP
+
 class Game1 {
 
     static STATE = Object.freeze({
@@ -197,7 +199,7 @@ class Game1 {
             this.timerPanel.setCanMove(true);
             this.timerPanel.setMovingSpeed(0.6);
             this.timerPanel.setMoving(true);
-    
+
             this.timerPanel.setAlpha(0);
             this.timerPanel.fade(0.08);
         }
@@ -458,15 +460,15 @@ class Game1 {
 
 
 
-//!     _______   _______   _                      _______    _          ______     _______    _______    _______    _______ 
-//!    (  ____ ) (  ___  ) ( (    /|              (  ____ \  ( (    /|  (  __  \   (  ____ \  (  ___  )  (       )  (  ____ \
-//!    | (    )| | (   ) | |  \  ( |              | (    \/  |  \  ( |  | (  \  )  | (    \/  | (   ) |  | () () |  | (    \/
-//!    | (____)| | (___) | |   \ | |      _____   | (__      |   \ | |  | |   ) |  | |        | (___) |  | || || |  | (__    
-//!    |  _____) |  ___  | | (\ \) |     (_____)  |  __)     | (\ \) |  | |   | |  | | ____   |  ___  |  | |(_)| |  |  __)   
-//!    | (       | (   ) | | | \   |              | (        | | \   |  | |   ) |  | | \_  )  | (   ) |  | |   | |  | (      
-//!    | )       | )   ( | | )  \  | _            | (____/\  | )  \  |  | (__/  )  | (___) |  | )   ( |  | )   ( |  | (____/\
-//!    |/        |/     \| |/    )_)(_)           (_______/  |/    )_)  (______/   (_______)  |/     \|  |/     \|  (_______/
-                                                                                                                                                                                                                                                             
+    //!     _______   _______   _                      _______    _          ______     _______    _______    _______    _______ 
+    //!    (  ____ ) (  ___  ) ( (    /|              (  ____ \  ( (    /|  (  __  \   (  ____ \  (  ___  )  (       )  (  ____ \
+    //!    | (    )| | (   ) | |  \  ( |              | (    \/  |  \  ( |  | (  \  )  | (    \/  | (   ) |  | () () |  | (    \/
+    //!    | (____)| | (___) | |   \ | |      _____   | (__      |   \ | |  | |   ) |  | |        | (___) |  | || || |  | (__    
+    //!    |  _____) |  ___  | | (\ \) |     (_____)  |  __)     | (\ \) |  | |   | |  | | ____   |  ___  |  | |(_)| |  |  __)   
+    //!    | (       | (   ) | | | \   |              | (        | | \   |  | |   ) |  | | \_  )  | (   ) |  | |   | |  | (      
+    //!    | )       | )   ( | | )  \  | _            | (____/\  | )  \  |  | (__/  )  | (___) |  | )   ( |  | )   ( |  | (____/\
+    //!    |/        |/     \| |/    )_)(_)           (_______/  |/    )_)  (______/   (_______)  |/     \|  |/     \|  (_______/
+
     static displayEndGamePanel(pParams) { //? { bool }
 
         this.bEndGame = pParams.bool;
@@ -530,7 +532,7 @@ class Game1 {
             this.endGameMark = new Panel({ w: 20, h: 20, v: 1 }, centerXElement(this.endGamePanel, 20), 90, this.endGamePanel, "game1", Game1.STATE.Game, [], 2);
             this.endGameMark.setNumberBool(true);
             this.endGameMark.setTextOverflow(true);
-            this.endGameMark.setLabel(((TOTAL_NUMBER*MAX_TURN) - this.misses) + "/" + (TOTAL_NUMBER*MAX_TURN) + "");
+            this.endGameMark.setLabel(((TOTAL_NUMBER * MAX_TURN) - this.misses) + "/" + (TOTAL_NUMBER * MAX_TURN) + "");
             if (gotTrophyLevel == 0) {
                 this.endGameMark.setFontColor("rgba(150,150,150,0)", "rgba(215,30,30,0)");
             }
@@ -743,15 +745,15 @@ class Game1 {
 
 
 
-//!     _______    _          ______     _______    _______    _______    _______             _______  _______           _______ 
-//!    (  ____ \  ( (    /|  (  __  \   (  ____ \  (  ___  )  (       )  (  ____ \           (  ____ \(  ___  )|\     /|(  ____ \
-//!    | (    \/  |  \  ( |  | (  \  )  | (    \/  | (   ) |  | () () |  | (    \/           | (    \/| (   ) || )   ( || (    \/
-//!    | (__      |   \ | |  | |   ) |  | |        | (___) |  | || || |  | (__       _____   | (_____ | (___) || |   | || (__    
-//!    |  __)     | (\ \) |  | |   | |  | | ____   |  ___  |  | |(_)| |  |  __)     (_____)  (_____  )|  ___  |( (   ) )|  __)   
-//!    | (        | | \   |  | |   ) |  | | \_  )  | (   ) |  | |   | |  | (                       ) || (   ) | \ \_/ / | (      
-//!    | (____/\  | )  \  |  | (__/  )  | (___) |  | )   ( |  | )   ( |  | (____/\           /\____) || )   ( |  \   /  | (____/\
-//!    (_______/  |/    )_)  (______/   (_______)  |/     \|  |/     \|  (_______/           \_______)|/     \|   \_/   (_______/                                                                                                                              
-    
+    //!     _______    _          ______     _______    _______    _______    _______             _______  _______           _______ 
+    //!    (  ____ \  ( (    /|  (  __  \   (  ____ \  (  ___  )  (       )  (  ____ \           (  ____ \(  ___  )|\     /|(  ____ \
+    //!    | (    \/  |  \  ( |  | (  \  )  | (    \/  | (   ) |  | () () |  | (    \/           | (    \/| (   ) || )   ( || (    \/
+    //!    | (__      |   \ | |  | |   ) |  | |        | (___) |  | || || |  | (__       _____   | (_____ | (___) || |   | || (__    
+    //!    |  __)     | (\ \) |  | |   | |  | | ____   |  ___  |  | |(_)| |  |  __)     (_____)  (_____  )|  ___  |( (   ) )|  __)   
+    //!    | (        | | \   |  | |   ) |  | | \_  )  | (   ) |  | |   | |  | (                       ) || (   ) | \ \_/ / | (      
+    //!    | (____/\  | )  \  |  | (__/  )  | (___) |  | )   ( |  | )   ( |  | (____/\           /\____) || )   ( |  \   /  | (____/\
+    //!    (_______/  |/    )_)  (______/   (_______)  |/     \|  |/     \|  (_______/           \_______)|/     \|   \_/   (_______/                                                                                                                              
+
     static manageEndGameSave(pGotTrophyLevel) { //? Si on arrive ici c'est que
         let paramsToSave = [];
         let lessonTestType = "";
@@ -848,11 +850,11 @@ class Game1 {
             this.missPanel.setLabel(this.misses);
             if (this.misses == 1) {
                 this.goldTrophy.changeAnimation("batsu");
-            } else if ((TOTAL_NUMBER*MAX_TURN) - this.misses >= Math.ceil((TOTAL_NUMBER*MAX_TURN) * 0.5) && (TOTAL_NUMBER*MAX_TURN) - this.misses < Math.ceil((TOTAL_NUMBER*MAX_TURN) * 3 / 4)) { // this.misses < 3
+            } else if ((TOTAL_NUMBER * MAX_TURN) - this.misses >= Math.ceil((TOTAL_NUMBER * MAX_TURN) * 0.5) && (TOTAL_NUMBER * MAX_TURN) - this.misses < Math.ceil((TOTAL_NUMBER * MAX_TURN) * 3 / 4)) { // this.misses < 3
                 if (this.silverTrophy.currentAnimation.name != "batsu") {
                     this.silverTrophy.changeAnimation("batsu");
                 }
-            } else if ((TOTAL_NUMBER*MAX_TURN) - this.misses < Math.ceil((TOTAL_NUMBER*MAX_TURN) * 0.5)) { // this.misses > 3
+            } else if ((TOTAL_NUMBER * MAX_TURN) - this.misses < Math.ceil((TOTAL_NUMBER * MAX_TURN) * 0.5)) { // this.misses > 3
                 if (this.bronzeTrophy.currentAnimation.name != "batsu") {
                     this.bronzeTrophy.changeAnimation("batsu");
                 }
@@ -951,7 +953,7 @@ class Game1 {
                 ctx.fillStyle = "rgb(150,150,150)";
                 ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, this.kanaPanel.width, 3);
                 ctx.fillStyle = "rgb(29,122,66)";
-                ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, (KANA_NUMBER / (TOTAL_NUMBER*MAX_TURN)) * this.kanaPanel.width, 3);
+                ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, (KANA_NUMBER / (TOTAL_NUMBER * MAX_TURN)) * this.kanaPanel.width, 3);
             }
 
             if (FadeEffect.bActive) {
