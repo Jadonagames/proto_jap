@@ -193,8 +193,8 @@ function displayTooltip(pArgs) {
 
 function displayPanelChildSprite(pSprite, pList) {
     pSprite.delete = false;
-    
-    switch(pList) {
+
+    switch (pList) {
         case "introduction.main":
             Introduction.mainList.push(pSprite);
             break;
@@ -549,6 +549,10 @@ function checkIfValid(pChosen) {
 
         TRANSITION = true;
         Game1.moe.changeAnimation("good");
+        if (Game1.timerMissedSprite != null) {
+            Game1.timerMissedSprite.delete = true;
+            Game1.timerMissedSprite = null;
+        }
 
         Game1.bAlreadyMissed = false;
         Game1.timer = 5;

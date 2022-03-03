@@ -32,6 +32,16 @@ class Game1 {
 
     }
 
+
+    //!    _________   _         _________  _________
+    //!    \__   __/  ( (    /|  \__   __/  \__   __/
+    //!       ) (     |  \  ( |     ) (        ) (   
+    //!       | |     |   \ | |     | |        | |   
+    //!       | |     | (\ \) |     | |        | |   
+    //!       | |     | | \   |     | |        | |   
+    //!    ___) (___  | )  \  |  ___) (___     | |   
+    //!    \_______/  |/    )_)  \_______/     )_(   
+
     static init(pType) {
 
         console.log("Game1 init()");
@@ -285,6 +295,7 @@ class Game1 {
         this.trophy = null;
         this.backToLessonBtn = null;
         this.restartBtn = null;
+        this.timerMissedSprite = null;
     }
 
     static decreaseTimer() {
@@ -300,6 +311,13 @@ class Game1 {
                 console.table(MISSED_LIST);
                 Game1.bAlreadyMissed = true;
                 this.setMiss();
+                setScreenShake(true);
+
+                this.timerMissedSprite = new Sprite({ w: 19, h: 22 }, centerX(19), this.kanaPanel.y - 30);
+                this.timerMissedSprite.addAnimation("normal", { x: 656, y: 944 }, 4, 0.2, false);
+                this.timerMissedSprite.changeAnimation("normal");
+                Game1.mainList.push(this.timerMissedSprite);
+
             }
         }
     }
