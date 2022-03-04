@@ -17,6 +17,8 @@ let MUSIC_VOLUME = 0.5;
 let SFX_VOLUME = 0.5;
 let TRANSITION = false;
 let SCREEN_SHAKE = false;
+let SCREEN_SHAKE_X = 5;
+let SCREEN_SHAKE_Y = 5;
 let screenShakeTimer = new Timer(0.1, { cb: setScreenShake, arg: false });
 let SAVING = false;
 let SAVING_SPRITE = null;
@@ -164,7 +166,7 @@ function run() {
 
 
     if (SCREEN_SHAKE) {
-        screenShake(ctx);
+        screenShake(ctx, SCREEN_SHAKE_X, SCREEN_SHAKE_Y);
     }
 
     switch (mainState) {

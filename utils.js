@@ -579,7 +579,7 @@ function checkIfValid(pChosen) {
         if (!MISSED_LIST.includes(RND_CHOICE.r)) {
             MISSED_LIST.push(RND_CHOICE.r);
         }
-        console.table(MISSED_LIST);
+        // console.table(MISSED_LIST);
         if (!Game1.bAlreadyMissed) {
             Game1.bAlreadyMissed = true;
             Game1.setMiss();
@@ -594,7 +594,7 @@ function checkIfValid(pChosen) {
                 }
             }
         });
-        setScreenShake(true);
+        setScreenShake(true, 5, 5);
     }
 }
 
@@ -688,6 +688,11 @@ function resetGame(pArg) {
     TURN_NUMBER = -1;
     MAX_TURN = 5;
 
+    if (Game1.timerMissedSprite != null) {
+        Game1.timerMissedSprite.delete = true;
+        Game1.timerMissedSprite = null;
+    }
+
     if (pArg == "back_to_lesson") {
         Lessons.backToLesson();
         MOUSE_SPRITE.y += CANVAS_HEIGHT;
@@ -700,14 +705,16 @@ function resetGame(pArg) {
 // ----------------------------------------------------
 // ----------------------------------------------------
 
-function screenShake(pCtx) {
-    let dx = rnd(-5, 5);
-    let dy = rnd(-5, 5);
+function screenShake(pCtx, pDx = 5, pDy = 5) {
+    let dx = rnd(-pDx, pDx);
+    let dy = rnd(-pDy, pDy);
     pCtx.translate(dx, dy);
 }
 
-function setScreenShake(pBool) {
+function setScreenShake(pBool, pX = 5, pY = 5) {
     SCREEN_SHAKE = pBool;
+    SCREEN_SHAKE_X = pX;
+    SCREEN_SHAKE_Y = pY;
     if (!pBool) {
         canvas.style.backgroundColor = canvasOriginBgColor;
     }

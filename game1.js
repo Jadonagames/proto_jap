@@ -311,8 +311,7 @@ class Game1 {
                 console.table(MISSED_LIST);
                 Game1.bAlreadyMissed = true;
                 this.setMiss();
-                setScreenShake(true);
-
+                setScreenShake(true, 0, 0);
                 this.timerMissedSprite = new Sprite({ w: 19, h: 22 }, centerX(19), this.kanaPanel.y - 30);
                 this.timerMissedSprite.addAnimation("normal", { x: 656, y: 944 }, 4, 0.2, false);
                 this.timerMissedSprite.changeAnimation("normal");
@@ -321,6 +320,15 @@ class Game1 {
             }
         }
     }
+
+    //!    _          _______    _______    ______  
+    //!    ( \        (  ___  )  (  ___  )  (  __  \ 
+    //!    | (        | (   ) |  | (   ) |  | (  \  )
+    //!    | |        | |   | |  | (___) |  | |   ) |
+    //!    | |        | |   | |  |  ___  |  | |   | |
+    //!    | |        | |   | |  | (   ) |  | |   ) |
+    //!    | (____/\  | (___) |  | )   ( |  | (__/  )
+    //!    (_______/  (_______)  |/     \|  (______/ 
 
     static load(pChoiceType, pAnswerType, pRange = 1, plessonRange, pLessonTestType, pLessonNumber) {
         log("load");
@@ -702,7 +710,7 @@ class Game1 {
             if (!pParams.restart) {
                 resetGame();
                 if (Game1.lessonTestType != "freemode") {
-                    MOUSE_SPRITE.y += CANVAS_HEIGHT; // Back after Finish
+                    MOUSE_SPRITE.y += CANVAS_HEIGHT; // Back after Finish 
                     Lessons.backToLesson();
                 } else {
                     FreeMode.backToFreeMode();
