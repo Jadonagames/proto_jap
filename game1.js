@@ -1,5 +1,3 @@
-//! TEST LAPTOP
-
 class Game1 {
 
     static STATE = Object.freeze({

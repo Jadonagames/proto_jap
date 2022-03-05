@@ -23,15 +23,15 @@ class Lessons {
 
     }
 
-//!    _________   _         _________  _________
-//!    \__   __/  ( (    /|  \__   __/  \__   __/
-//!       ) (     |  \  ( |     ) (        ) (   
-//!       | |     |   \ | |     | |        | |   
-//!       | |     | (\ \) |     | |        | |   
-//!       | |     | | \   |     | |        | |   
-//!    ___) (___  | )  \  |  ___) (___     | |   
-//!    \_______/  |/    )_)  \_______/     )_(   
-                                              
+    //!    _________   _         _________  _________
+    //!    \__   __/  ( (    /|  \__   __/  \__   __/
+    //!       ) (     |  \  ( |     ) (        ) (   
+    //!       | |     |   \ | |     | |        | |   
+    //!       | |     | (\ \) |     | |        | |   
+    //!       | |     | | \   |     | |        | |   
+    //!    ___) (___  | )  \  |  ___) (___     | |   
+    //!    \_______/  |/    )_)  \_______/     )_(   
+
     static init() {
 
         this.canvasY = 0;
@@ -343,15 +343,15 @@ class Lessons {
         console.log("init lessons");
     }
 
-//!    _________   _______    _______    _          _______   _________  _________  _________   _______    _       
-//!    \__   __/  (  ____ )  (  ___  )  ( (    /|  (  ____ \  \__   __/  \__   __/  \__   __/  (  ___  )  ( (    /|
-//!       ) (     | (    )|  | (   ) |  |  \  ( |  | (    \/     ) (        ) (        ) (     | (   ) |  |  \  ( |
-//!       | |     | (____)|  | (___) |  |   \ | |  | (_____      | |        | |        | |     | |   | |  |   \ | |
-//!       | |     |     __)  |  ___  |  | (\ \) |  (_____  )     | |        | |        | |     | |   | |  | (\ \) |
-//!       | |     | (\ (     | (   ) |  | | \   |        ) |     | |        | |        | |     | |   | |  | | \   |
-//!       | |     | ) \ \__  | )   ( |  | )  \  |  /\____) |  ___) (___     | |     ___) (___  | (___) |  | )  \  |
-//!       )_(     |/   \__/  |/     \|  |/    )_)  \_______)  \_______/     )_(     \_______/  (_______)  |/    )_)
-                                                                                                                                                  
+    //!    _________   _______    _______    _          _______   _________  _________  _________   _______    _       
+    //!    \__   __/  (  ____ )  (  ___  )  ( (    /|  (  ____ \  \__   __/  \__   __/  \__   __/  (  ___  )  ( (    /|
+    //!       ) (     | (    )|  | (   ) |  |  \  ( |  | (    \/     ) (        ) (        ) (     | (   ) |  |  \  ( |
+    //!       | |     | (____)|  | (___) |  |   \ | |  | (_____      | |        | |        | |     | |   | |  |   \ | |
+    //!       | |     |     __)  |  ___  |  | (\ \) |  (_____  )     | |        | |        | |     | |   | |  | (\ \) |
+    //!       | |     | (\ (     | (   ) |  | | \   |        ) |     | |        | |        | |     | |   | |  | | \   |
+    //!       | |     | ) \ \__  | )   ( |  | )  \  |  /\____) |  ___) (___     | |     ___) (___  | (___) |  | )  \  |
+    //!       )_(     |/   \__/  |/     \|  |/    )_)  \_______)  \_______/     )_(     \_______/  (_______)  |/    )_)
+
     // Params : a[0] : "-" / "+" || a[1] : Lessons.STATE.Hiragana / .Katakana || a[2] : i  (1,2,3...)
     static transition(a) {
         if (a[0] == "-") { //? TO ONE LESSON
@@ -687,9 +687,11 @@ class Lessons {
 
             let labelNumber = "0";
             if (multiplicator > 0) {
-                Lesson.updateTrophyPanel("lessonTest", true);
+                Lessons.updateTrophyPanel("lessonTest", true); //? true : LessonTestGeneral > 0 ==> Donc Affichage normal du trophée
             } else {
-                Lessons.updateTrophyPanel(false, labelNumber);
+                // Lessons.updateTrophyPanel(false, labelNumber);
+
+                log("HEEEERE");
                 if ((kanaToRomaLevel > 0 && romaToKanaLevel == 0) || (kanaToRomaLevel == 0 && romaToKanaLevel > 0)) {
                     labelNumber = "1";
                 } else {
@@ -737,15 +739,15 @@ class Lessons {
                 this.fullTestTrophyPanel.setFontColor("rgba(0,0,0,1)", "rgba(255,255,255,1)");
                 this.fullTestTrophyPanel.setNumberBool(true);
                 this.fullTestTrophyPanel.setTextOverflow(true);
-    
+
                 kanaToRomaLevel = 0;
                 romaToKanaLevel = 0;
                 kanaToRomaLevel = SaveManager.SAVE_DATA["lessons"][kana[0] + lessonNumber]["fullTest1"];
                 romaToKanaLevel = SaveManager.SAVE_DATA["lessons"][kana[0] + lessonNumber]["fullTest2"];
-    
+
                 labelNumber = "0";
                 if (multiplicator > 0) {
-                    Lesson.updateTrophyPanel("fullTest", true);
+                    Lessons.updateTrophyPanel("fullTest", true);
                 } else {
                     if ((kanaToRomaLevel > 0 && romaToKanaLevel == 0) || (kanaToRomaLevel == 0 && romaToKanaLevel > 0)) {
                         labelNumber = "1";
@@ -778,15 +780,15 @@ class Lessons {
         Lessons.TRANSLATION_TRANSITION = true;
     }
 
-//!  _______               _______    _______    _______    _______    _______    _______    _          _______    _       
-//! (  ____ \  |\     /|  (  ___  )  (  ___  )  (  ____ \  (  ____ \  (  ____ )  (  ___  )  ( (    /|  (  ____ \  ( \      
-//! | (    \/  | )   ( |  | (   ) |  | (   ) |  | (    \/  | (    \/  | (    )|  | (   ) |  |  \  ( |  | (    \/  | (      
-//! | |        | (___) |  | |   | |  | |   | |  | (_____   | (__      | (____)|  | (___) |  |   \ | |  | (__      | |      
-//! | |        |  ___  |  | |   | |  | |   | |  (_____  )  |  __)     |  _____)  |  ___  |  | (\ \) |  |  __)     | |      
-//! | |        | (   ) |  | |   | |  | |   | |        ) |  | (        | (        | (   ) |  | | \   |  | (        | |      
-//! | (____/\  | )   ( |  | (___) |  | (___) |  /\____) |  | (____/\  | )        | )   ( |  | )  \  |  | (____/\  | (____/\
-//! (_______/  |/     \|  (_______)  (_______)  \_______)  (_______/  |/         |/     \|  |/    )_)  (_______/  (_______/
-                                                                                                                       
+    //!  _______               _______    _______    _______    _______    _______    _______    _          _______    _       
+    //! (  ____ \  |\     /|  (  ___  )  (  ___  )  (  ____ \  (  ____ \  (  ____ )  (  ___  )  ( (    /|  (  ____ \  ( \      
+    //! | (    \/  | )   ( |  | (   ) |  | (   ) |  | (    \/  | (    \/  | (    )|  | (   ) |  |  \  ( |  | (    \/  | (      
+    //! | |        | (___) |  | |   | |  | |   | |  | (_____   | (__      | (____)|  | (___) |  |   \ | |  | (__      | |      
+    //! | |        |  ___  |  | |   | |  | |   | |  (_____  )  |  __)     |  _____)  |  ___  |  | (\ \) |  |  __)     | |      
+    //! | |        | (   ) |  | |   | |  | |   | |        ) |  | (        | (        | (   ) |  | | \   |  | (        | |      
+    //! | (____/\  | )   ( |  | (___) |  | (___) |  /\____) |  | (____/\  | )        | )   ( |  | )  \  |  | (____/\  | (____/\
+    //! (_______/  |/     \|  (_______)  (_______)  \_______)  (_______/  |/         |/     \|  |/    )_)  (_______/  (_______/
+
     static displayChooseTypePanel(pParams) {
 
         this.bChooseType = pParams.bool;
@@ -860,7 +862,7 @@ class Lessons {
 
             // this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 110, this.chooseTypePanel, { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } }, "lessons", Lessons.STATE.Lesson, btn2Label, 41);
             this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 110, this.chooseTypePanel,
-                { 
+                {
                     cb: Transition.init.bind(Transition),
                     arg: {
                         callback: { cb: startBtnCB, arg: { range: pParams.range, answerType: "r", choiceType: pParams.type, testType: pParams.testType, lessonNumber: pParams.lessonNumber } },
@@ -869,7 +871,7 @@ class Lessons {
                         stopEffect: false,
                         height: true
                     }
-                }, 
+                },
                 "lessons", Lessons.STATE.Lesson, btn2Label, 41);
             this.romaTokanaBtn.setFontColor("rgba(142,45,45,1)");
             this.romaTokanaBtn.setAlpha(0);
@@ -975,7 +977,7 @@ class Lessons {
             originDestinationX = LessonBtn.hiraganaList[position].x + 60;
             originDestinationY = LessonBtn.hiraganaList[position].y - 10;
 
-            this.hiraNewSprite = new Sprite({ w: 28, h: 20 }, originX, originY, null, "n_"+pLessonNumber);
+            this.hiraNewSprite = new Sprite({ w: 28, h: 20 }, originX, originY, null, "n_" + pLessonNumber);
             this.hiraNewSprite.setClass("new");
             this.hiraNewSprite.addAnimation("normal", { x: 352, y: 513 }, 2, 0.3);
             this.hiraNewSprite.changeAnimation("normal");
@@ -995,7 +997,7 @@ class Lessons {
             originDestinationX = LessonBtn.katakanaList[position].x + 60;
             originDestinationY = LessonBtn.katakanaList[position].y - 10;
 
-            this.kataNewSprite = new Sprite({ w: 28, h: 20 }, originX, originY, null, "n_"+pLessonNumber);
+            this.kataNewSprite = new Sprite({ w: 28, h: 20 }, originX, originY, null, "n_" + pLessonNumber);
             this.kataNewSprite.setClass("new");
             this.kataNewSprite.addAnimation("normal", { x: 352, y: 513 }, 2, 0.3);
             this.kataNewSprite.changeAnimation("normal");
@@ -1064,19 +1066,19 @@ class Lessons {
         }
     }
 
-    
 
-//!                _______    ______     _______   _________   _______            _________   _______    _______    _______                       
-//!    |\     /|  (  ____ )  (  __  \   (  ___  )  \__   __/  (  ____ \           \__   __/  (  ____ )  (  ___  )  (  ____ )  |\     /|  |\     /|
-//!    | )   ( |  | (    )|  | (  \  )  | (   ) |     ) (     | (    \/              ) (     | (    )|  | (   ) |  | (    )|  | )   ( |  ( \   / )
-//!    | |   | |  | (____)|  | |   ) |  | (___) |     | |     | (__       _____      | |     | (____)|  | |   | |  | (____)|  | (___) |   \ (_) / 
-//!    | |   | |  |  _____)  | |   | |  |  ___  |     | |     |  __)     (_____)     | |     |     __)  | |   | |  |  _____)  |  ___  |    \   /  
-//!    | |   | |  | (        | |   ) |  | (   ) |     | |     | (                    | |     | (\ (     | |   | |  | (        | (   ) |     ) (   
-//!    | (___) |  | )        | (__/  )  | )   ( |     | |     | (____/\              | |     | ) \ \__  | (___) |  | )        | )   ( |     | |   
-//!    (_______)  |/         (______/   |/     \|     )_(     (_______/              )_(     |/   \__/  (_______)  |/         |/     \|     \_/   
-                                                                                                                                               
-    
-    
+
+    //!                _______    ______     _______   _________   _______            _________   _______    _______    _______                       
+    //!    |\     /|  (  ____ )  (  __  \   (  ___  )  \__   __/  (  ____ \           \__   __/  (  ____ )  (  ___  )  (  ____ )  |\     /|  |\     /|
+    //!    | )   ( |  | (    )|  | (  \  )  | (   ) |     ) (     | (    \/              ) (     | (    )|  | (   ) |  | (    )|  | )   ( |  ( \   / )
+    //!    | |   | |  | (____)|  | |   ) |  | (___) |     | |     | (__       _____      | |     | (____)|  | |   | |  | (____)|  | (___) |   \ (_) / 
+    //!    | |   | |  |  _____)  | |   | |  |  ___  |     | |     |  __)     (_____)     | |     |     __)  | |   | |  |  _____)  |  ___  |    \   /  
+    //!    | |   | |  | (        | |   ) |  | (   ) |     | |     | (                    | |     | (\ (     | |   | |  | (        | (   ) |     ) (   
+    //!    | (___) |  | )        | (__/  )  | )   ( |     | |     | (____/\              | |     | ) \ \__  | (___) |  | )        | )   ( |     | |   
+    //!    (_______)  |/         (______/   |/     \|     )_(     (_______/              )_(     |/   \__/  (_______)  |/         |/     \|     \_/   
+
+
+
 
     static updateTrophyValue(pTrophyType, pValue) { // "general", "kana_to_roma", "roma_to_kana"
         let newValue = 30 + pValue; // pValue == 48 32 16
@@ -1130,21 +1132,16 @@ class Lessons {
     }
 
 
-
-
-
-
-
-
-//TODO
-//! TROUVER COMMENT GÉRER ÇA !!!!!
-
+    //TODO Gestion 0/2 1/2
 
 
 
 
 
     static updateTrophyPanel(pType, bEnd = false) {
+
+        log("UPDATE TROPHY PANEL");
+
         if (bEnd) {
             if (pType == "lessonTest") {
                 this.lessonTestTrophyPanel.setLabel("2/2");
