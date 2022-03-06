@@ -810,7 +810,18 @@ class Game1 {
             lessonTestType += "2";
         }
 
-        if (generalMark < test1Mark && generalMark < test2Mark) {
+
+
+
+
+//TODO Search how to change 0/2 1/2
+
+
+
+
+
+
+        if (generalMark < test1Mark && generalMark < test2Mark) { //? True : Change General
             let newMark = 0;
             if (test1Mark <= test2Mark) {
                 newMark = test1Mark;

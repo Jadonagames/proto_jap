@@ -626,6 +626,45 @@ KanaWorldSaveData
 // },
 // "freemode":{"game1":{"hiraganaGeneral":0,"hiragana1":0, "hiragana2":0,"katakanaGeneral":0,"katakana1":0,"katakana2":0}},"bgm":0.7,"sfx":0.8}
 
+
+/*
+------ SAVE h:0, k:0 ------ intro prolog OK + lesson1 btn anim OK
+{"intro":1,"prologue":1,"lessons":{
+    "h1":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":48,"fullTest1":48,"fullTest2":48,"buttonAnimation":1,"newAnimation":1,"newFinish":1,"fullcompleteAnimation":0},
+    "h2":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h3":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h4":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h5":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h6":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h7":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h8":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h9":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h10":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h11":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h12":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h13":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h14":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h15":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k1":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":48,"fullTest1":48,"fullTest2":48,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k2":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k3":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k4":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k5":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k6":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k7":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k8":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k9":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k10":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k11":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k12":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k13":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k14":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k15":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0}
+},
+    "freemode":{"game1":{"hiraganaGeneral":0,"hiragana1":0, "hiragana2":0,"katakanaGeneral":0,"katakana1":0,"katakana2":0}},"bgm":0.7,"sfx":0.8}
+*/
+
+
 /*
 h5 k3
 
