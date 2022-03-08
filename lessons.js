@@ -1132,15 +1132,7 @@ class Lessons {
     }
 
 
-    //TODO Gestion 0/2 1/2
-
-
-
-
-
     static updateTrophyPanel(pType, bEnd = false) {
-
-        log("UPDATE TROPHY PANEL");
 
         if (bEnd) {
             if (pType == "lessonTest") {
@@ -1151,21 +1143,13 @@ class Lessons {
                 this.fullTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
             }
         } else {
+
             if (pType == "lessonTest") {
-                if (this.lessonTestTrophyPanel.label[0] == "0") {
-                    this.lessonTestTrophyPanel.setLabel("1/2");
-                } else if (this.lessonTestTrophyPanel.label[0] == "2") {
-                    this.lessonTestTrophyPanel.setLabel("0/2");
-                }
+                this.lessonTestTrophyPanel.setLabel("1/2");
             } else if (pType == "fullTest") {
-                if (this.fullTestTrophyPanel.label[0] == "0") {
-                    this.fullTestTrophyPanel.setLabel("1/2");
-                } else if (this.fullTestTrophyPanel.label[0] == "2") {
-                    this.fullTestTrophyPanel.setLabel("0/2");
-                }
+                this.fullTestTrophyPanel.setLabel("1/2");
             }
         }
-
 
     }
 
