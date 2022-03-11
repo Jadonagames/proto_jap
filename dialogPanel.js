@@ -102,13 +102,17 @@ class DialogPanel extends Panel {
         // this.lines[this.currentLine] += this.completeLines[this.currentLine][this.currentChar]; //! Version 1
         this.lines[this.currentLine] = this.lines[this.currentLine].substring(0, this.currentChar) + this.completeLines[this.currentLine][this.currentChar] + this.lines[this.currentLine].substring(this.currentChar + 1, this.lines[this.currentLine].length); //! Version 2
 
-
         this.currentChar++;
         if (this.currentChar == this.completeLines[this.currentLine].length) {
             this.currentChar = 0;
             this.currentLine++;
             if (this.currentLine == this.completeLines.length) {
-                this.bDialogEnd = true;
+                if (!this.bDialogEnd) {
+                    //TODO Changement de button
+                    LessonTutorial.SwitchButtons(true); //? Speed to test
+                    this.bDialogEnd = true;
+                }
+
                 if (this.childSprite) {
                     displayPanelChildSprite(this.childSprite, this.childSpriteList);
                 }
@@ -130,17 +134,19 @@ class DialogPanel extends Panel {
             this.dialogTimer.reset();
             this.currentLine = 0;
             this.currentChar = 0;
-            this.childSprite.delete = true;
-            this.childButton.getSprite().delete = true;
-            this.childButton.removeFromCurrentList();
+            // this.childSprite.delete = true;
+            // this.childButton.getSprite().delete = true;
+            // this.childButton.removeFromCurrentList();
+
+
             if (this.scriptCallback) {
                 this.scriptCallback(this.currentPhrase);
             }
         } else {
             this.currentPhrase--;
-            this.childSprite.delete = true;
-            this.childButton.getSprite().delete = true;
-            this.childButton.removeFromCurrentList();
+            // this.childSprite.delete = true;
+            // this.childButton.getSprite().delete = true;
+            // this.childButton.removeFromCurrentList();
             this.changeDirection();
             let tmpY = this.destination.y;
             this.destination.y = this.startPos.y;
@@ -148,6 +154,18 @@ class DialogPanel extends Panel {
             this.setMoving(true);
             this.fade(0.04, -1);
             this.endDialogCallback();
+        }
+    }
+
+    speedPhrase() {
+        for (let i = 0; i < this.completeLines.length; i++) {
+            this.lines[i] = this.completeLines[i];
+        }
+        if (!this.bDialogEnd) {
+            this.bDialogEnd = true;
+            //TODO  Changement de button Automatiser le système : 
+            //! ça non : vvvvvvv
+            // LessonTutorial.SwitchButtons(true); //? Speed to test
         }
     }
 
@@ -161,6 +179,9 @@ class DialogPanel extends Panel {
 
         if (this.label != "") {
             this.wordsArr = LANG[this.label].split(' ');
+
+            // log("WORD ARR : ");
+            // log(this.wordsArr);
 
             if (this.wordsArr.length == 1 && this.wordsArr[0] != "" && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
 
@@ -239,6 +260,7 @@ class DialogPanel extends Panel {
 
             if (this.bDialogStarted) {
 
+                // log(this.lines[0])
                 for (let i = 0; i < this.lines.length; i++) {
                     switch (this.alignText) {
                         case this.ALIGN_TEXT.Left:

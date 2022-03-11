@@ -32,14 +32,21 @@ class LessonTutorial {
         this.dialogPanel.setEndDialogCallback(LessonTutorial.endTutorial.bind(LessonTutorial));
         LessonTutorial.mainList.push(this.dialogPanel.getSprite());
 
-        this.dialogBtnContainer = new Sprite({w: 22, h: 21}, this.dialogPanel.width - 14, this.dialogPanel.height - 21, this.dialogPanel, "");
-        this.dialogBtnContainer.addAnimation("normal", {x: 224, y: 80});
+        this.dialogBtnContainer = new Sprite({ w: 30, h: 28 }, this.dialogPanel.width - 14, this.dialogPanel.height - 28, this.dialogPanel, "");
+        this.dialogBtnContainer.addAnimation("normal", { x: 416, y: 144 });
         this.dialogBtnContainer.changeAnimation("normal");
-        this.dialogPanel.setChildSprite(this.dialogBtnContainer, "lessonTutorial.main");
+        //this.dialogPanel.setChildSprite(this.dialogBtnContainer, "lessonTutorial.main");
+        LessonTutorial.mainList.push(this.dialogBtnContainer);
 
-        this.dialogPanelBtn = new Button({ w: 13, h: 12 }, this.dialogBtnContainer.x + 4, this.dialogBtnContainer.y + 4, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "", LessonTutorial.STATE.Main, "", 0, true);
-        this.dialogPanelBtn.setAnimations({ x: 176, y: 80 });
-        this.dialogPanel.setChildBtn(this.dialogPanelBtn, "lessonTutorial.main");
+        this.dialogSpeedBtn = new Button({ w: 19, h: 17 }, this.dialogBtnContainer.x + 5, this.dialogBtnContainer.y - 20, this.dialogPanel, this.dialogPanel.speedPhrase.bind(this.dialogPanel), "lessonTutorial", LessonTutorial.STATE.Main, "", 0, true);
+        this.dialogSpeedBtn.setAnimations({ x: 255, y: 89 });
+        LessonTutorial.mainList.push(this.dialogSpeedBtn.getSprite());
+
+
+        this.dialogPanelBtn = new Button({ w: 19, h: 17 }, this.dialogBtnContainer.x + 5, this.dialogBtnContainer.y + 5, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "lessonTutorial", LessonTutorial.STATE.Main, "", 0, true);
+        this.dialogPanelBtn.setAnimations({ x: 255, y: 106 });
+        LessonTutorial.mainList.push(this.dialogPanelBtn.getSprite());
+        // this.dialogPanel.setChildBtn(this.dialogPanelBtn, "lessonTutorial.main");
 
 
         this.screens = new Sprite({ w: 450, h: 222 }, 0, 0);
@@ -77,6 +84,18 @@ class LessonTutorial {
         this.trainingPanel = null;
         this.lessonTestPanel = null;
         this.fullTestPanel = null;
+    }
+
+    static SwitchButtons(pSpeedToNext) {
+        if (pSpeedToNext) {
+            this.dialogSpeedBtn.getSprite().delete = true;
+            this.dialogSpeedBtn.removeFromCurrentList();
+            LessonTutorial.mainList.push(this.dialogPanelBtn.getSprite());
+            Button.currentList.push(this.dialogPanelBtn);
+        } else {
+            this.dialogPanelBtn.removeFromCurrentList();
+            Button.currentList.push(this.dialogSpeedBtn);
+        }
     }
 
     static createSoundBtn() {

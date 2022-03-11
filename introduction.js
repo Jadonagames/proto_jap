@@ -28,14 +28,14 @@ class Introduction {
         this.dialogPanel.setEndDialogCallback(Introduction.endIntro.bind(Introduction));
         Introduction.mainList.push(this.dialogPanel.getSprite());
 
-        this.dialogBtnContainer = new Sprite({w: 22, h: 21}, this.dialogPanel.width - 14, this.dialogPanel.height - 21, this.dialogPanel, "");
-        this.dialogBtnContainer.addAnimation("normal", {x: 224, y: 80});
+        this.dialogBtnContainer = new Sprite({ w: 22, h: 21 }, this.dialogPanel.width - 14, this.dialogPanel.height - 21, this.dialogPanel, "");
+        this.dialogBtnContainer.addAnimation("normal", { x: 224, y: 80 });
         this.dialogBtnContainer.changeAnimation("normal");
         this.dialogPanel.setChildSprite(this.dialogBtnContainer, "introduction.main");
 
 
-        this.dialogPanelBtn = new Button({ w: 13, h: 12 }, this.dialogBtnContainer.x + 4, this.dialogBtnContainer.y + 4, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "", Introduction.STATE.Main, "", 0, true);
-        this.dialogPanelBtn.setAnimations({ x: 176, y: 80 });
+        this.dialogPanelBtn = new Button({ w: 19, h: 17 }, this.dialogBtnContainer.x + 4, this.dialogBtnContainer.y + 4, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "", Introduction.STATE.Main, "", 0, true);
+        this.dialogPanelBtn.setAnimations({ x: 255, y: 106 });
         // this.dialogPanelBtn = new Button({ w: 16, h: 12 }, this.dialogPanel.totalWidth - 30, this.dialogPanel.height - 25, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "", Introduction.STATE.Main, "", 0, true);
         // this.dialogPanelBtn.setAnimations({ x: 170, y: 80 });
         this.dialogPanel.setChildBtn(this.dialogPanelBtn, "introduction.main");
@@ -110,14 +110,14 @@ class Introduction {
                 this.kanjiExample.setFontSize(30);
                 this.kanjiExample.setFont("kyokasho");
 
-                this.arrow1 = new Sprite({w: 26, h: 29}, 70, 95);
-                this.arrow1.addAnimation("normal", {x: 305, y: 0});
+                this.arrow1 = new Sprite({ w: 26, h: 29 }, 70, 95);
+                this.arrow1.addAnimation("normal", { x: 305, y: 0 });
                 this.arrow1.changeAnimation("normal");
-                this.arrow2 = new Sprite({w: 26, h: 29}, 220, 95);
-                this.arrow2.addAnimation("normal", {x: 305, y: 0});
+                this.arrow2 = new Sprite({ w: 26, h: 29 }, 220, 95);
+                this.arrow2.addAnimation("normal", { x: 305, y: 0 });
                 this.arrow2.changeAnimation("normal");
-                this.arrow3 = new Sprite({w: 26, h: 29}, 360, 95);
-                this.arrow3.addAnimation("normal", {x: 305, y: 0});
+                this.arrow3 = new Sprite({ w: 26, h: 29 }, 360, 95);
+                this.arrow3.addAnimation("normal", { x: 305, y: 0 });
                 this.arrow3.changeAnimation("normal");
 
                 Panel.list.push(this.hiraganaTitle);
@@ -187,13 +187,13 @@ class Introduction {
                 this.bKatakanaActive = true;
                 break;
             case 4: //? 4 - 5 Pour plus d'efficacité dans votre apprentissage, si vous voulez le faire sérieusement, je vous recommande vivement de vous entraîner à écrire les caractères.
-                    //? 5 - Pour ce faire l'*ordre* ET le *nombre* de traits sont importants. N'hésitez pas à vous référer à l'animation disponible
+                //? 5 - Pour ce faire l'*ordre* ET le *nombre* de traits sont importants. N'hésitez pas à vous référer à l'animation disponible
                 this.bKatakanaActive = false;
                 Introduction.createKanaAnimation();
                 this.screens.setSize(143, 34);
                 this.screens.originWidth = 143;
                 this.screens.x = centerX(143);
-                this.screens.y = centerY(34,35);
+                this.screens.y = centerY(34, 35);
                 this.screens.changeAnimationMaxWidth("4");
                 this.screens.changeAnimation("4");
                 break;
@@ -282,7 +282,7 @@ class Introduction {
         ctx.font = "15px kyokasho";
 
         if (this.bHiranagaActive) {
-            
+
             ctx.fillText("あいうえお", this.hiraganaX, 30);
             ctx.fillText("かきくけこ", this.hiraganaX, 45);
             ctx.fillText("さしすせそ", this.hiraganaX, 60);
