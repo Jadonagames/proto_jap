@@ -32,6 +32,11 @@ class DialogPanel extends Panel {
 
         this.scriptCallback = null;
         this.endDialogCallback = null;
+        this.stateList = "";
+    }
+
+    setStateList(pList) {
+        this.stateList = pList;
     }
 
     setChildBtn(pBtn, pList) {
@@ -108,8 +113,7 @@ class DialogPanel extends Panel {
             this.currentLine++;
             if (this.currentLine == this.completeLines.length) {
                 if (!this.bDialogEnd) {
-                    //TODO Changement de button
-                    LessonTutorial.SwitchButtons(true); //? Speed to test
+                    this.switchButtons(true); 
                     this.bDialogEnd = true;
                 }
 
@@ -134,6 +138,7 @@ class DialogPanel extends Panel {
             this.dialogTimer.reset();
             this.currentLine = 0;
             this.currentChar = 0;
+            this.switchButtons(false);
             // this.childSprite.delete = true;
             // this.childButton.getSprite().delete = true;
             // this.childButton.removeFromCurrentList();
@@ -142,7 +147,7 @@ class DialogPanel extends Panel {
             if (this.scriptCallback) {
                 this.scriptCallback(this.currentPhrase);
             }
-        } else {
+        } else { //? End of Dialog
             this.currentPhrase--;
             // this.childSprite.delete = true;
             // this.childButton.getSprite().delete = true;
@@ -158,14 +163,24 @@ class DialogPanel extends Panel {
     }
 
     speedPhrase() {
-        for (let i = 0; i < this.completeLines.length; i++) {
+        for (let i = 0; i <  this.completeLines.length; i++) {
             this.lines[i] = this.completeLines[i];
         }
         if (!this.bDialogEnd) {
             this.bDialogEnd = true;
-            //TODO  Changement de button Automatiser le système : 
-            //! ça non : vvvvvvv
-            // LessonTutorial.SwitchButtons(true); //? Speed to test
+            this.switchButtons(true);
+
+        }
+    }
+
+    switchButtons(pSpeedToNext) {
+        switch(this.stateList) {
+            case "introduction":
+                
+                break;                    
+            case "lessonTutorial":
+                LessonTutorial.switchButtons(pSpeedToNext);
+                break;
         }
     }
 

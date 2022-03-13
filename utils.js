@@ -234,6 +234,15 @@ function displayPanelChildBtn(pBtn, pList) {
     }
 }
 
+//? Check if mouse is colliding with a new popping button
+function checkMouseHover(pBtn) {
+    if (CollisionManager.MouseCollision(MOUSE_SPRITE.x, MOUSE_SPRITE.y, pBtn.getPosition().x, pBtn.getPosition().y, pBtn.getSize().w, pBtn.getSize().h)) {
+        pBtn.setState(Button.STATE.Hover);
+        pBtn.changeSpriteAnimation("hover");
+        MOUSE_SPRITE.changeAnimation("hover");
+    }
+}
+
 function translate(pCoord, pReverse = false) {
     for (const s in this.sp) {
         if (this.sp[s] instanceof Sprite) {

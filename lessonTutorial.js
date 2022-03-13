@@ -30,6 +30,7 @@ class LessonTutorial {
         this.dialogPanel.beginMoving({ x: centerX(220), y: CANVAS_HEIGHT - 75 }, 1, true, 0, 0.08);
         this.dialogPanel.setScriptCallback(LessonTutorial.nextStep.bind(LessonTutorial));
         this.dialogPanel.setEndDialogCallback(LessonTutorial.endTutorial.bind(LessonTutorial));
+        this.dialogPanel.setStateList("lessonTutorial");
         LessonTutorial.mainList.push(this.dialogPanel.getSprite());
 
         this.dialogBtnContainer = new Sprite({ w: 30, h: 28 }, this.dialogPanel.width - 14, this.dialogPanel.height - 28, this.dialogPanel, "");
@@ -38,15 +39,17 @@ class LessonTutorial {
         //this.dialogPanel.setChildSprite(this.dialogBtnContainer, "lessonTutorial.main");
         LessonTutorial.mainList.push(this.dialogBtnContainer);
 
-        this.dialogSpeedBtn = new Button({ w: 19, h: 17 }, this.dialogBtnContainer.x + 5, this.dialogBtnContainer.y - 20, this.dialogPanel, this.dialogPanel.speedPhrase.bind(this.dialogPanel), "lessonTutorial", LessonTutorial.STATE.Main, "", 0, true);
+        // this.dialogSpeedBtn = new Button({ w: 19, h: 17 }, this.dialogBtnContainer.x + 5, this.dialogBtnContainer.y - 20, this.dialogPanel, this.dialogPanel.speedPhrase.bind(this.dialogPanel), "lessonTutorial", LessonTutorial.STATE.Main, "", 0, true);
+        this.dialogSpeedBtn = new Button({ w: 19, h: 17 }, this.dialogBtnContainer.x + 5, this.dialogBtnContainer.y + 5, this.dialogPanel, this.dialogPanel.speedPhrase.bind(this.dialogPanel), "lessonTutorial", LessonTutorial.STATE.Main, "", 0, true);
         this.dialogSpeedBtn.setAnimations({ x: 255, y: 89 });
         LessonTutorial.mainList.push(this.dialogSpeedBtn.getSprite());
 
 
         this.dialogPanelBtn = new Button({ w: 19, h: 17 }, this.dialogBtnContainer.x + 5, this.dialogBtnContainer.y + 5, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "lessonTutorial", LessonTutorial.STATE.Main, "", 0, true);
         this.dialogPanelBtn.setAnimations({ x: 255, y: 106 });
-        LessonTutorial.mainList.push(this.dialogPanelBtn.getSprite());
+        // LessonTutorial.mainList.push(this.dialogPanelBtn.getSprite());
         // this.dialogPanel.setChildBtn(this.dialogPanelBtn, "lessonTutorial.main");
+
 
 
         this.screens = new Sprite({ w: 450, h: 222 }, 0, 0);
@@ -86,15 +89,25 @@ class LessonTutorial {
         this.fullTestPanel = null;
     }
 
-    static SwitchButtons(pSpeedToNext) {
+    static switchButtons(pSpeedToNext) {
         if (pSpeedToNext) {
             this.dialogSpeedBtn.getSprite().delete = true;
             this.dialogSpeedBtn.removeFromCurrentList();
+
+            this.dialogPanelBtn.getSprite().delete = false;
             LessonTutorial.mainList.push(this.dialogPanelBtn.getSprite());
             Button.currentList.push(this.dialogPanelBtn);
+
+            checkMouseHover(this.dialogPanelBtn);
         } else {
+            this.dialogPanelBtn.getSprite().delete = true;
             this.dialogPanelBtn.removeFromCurrentList();
+
+            this.dialogSpeedBtn.getSprite().delete = false;
+            LessonTutorial.mainList.push(this.dialogSpeedBtn.getSprite());
             Button.currentList.push(this.dialogSpeedBtn);
+
+            checkMouseHover(this.dialogSpeedBtn);
         }
     }
 
@@ -233,6 +246,7 @@ class LessonTutorial {
         LessonTutorial.state = pNewState;
         Button.resetTypeState("lessonTutorial", pNewState);
         Panel.resetTypeState("lessonTutorial", pNewState);
+        this.dialogPanelBtn.removeFromCurrentList();
     }
 
     static update(dt) {
