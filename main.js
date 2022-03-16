@@ -48,7 +48,7 @@ let titleSpeed = 0.2; // 0.2 - 2
 let bStatsDebug = false;
 let debugDt = 0;
 let debug_STOP = false;
-let shortcut_tomainmenu = 1; //! ------ ------------------------------------
+let shortcut_tomainmenu = 0; //! ------ ------------------------------------
 let boolTest = false;
 let imageData = null;
 let imageDatasArr = [];
@@ -62,6 +62,7 @@ MUSIC_VOLUME = SaveManager.SAVE_DATA['bgm'];
 SFX_VOLUME = SaveManager.SAVE_DATA['sfx'];
 
 const MAIN_STATE = Object.freeze({
+    Load: -1,
     Language: 0,
     Splash: 1,
     Menu: 2,
@@ -79,7 +80,8 @@ let mainState = 0;
 if (shortcut_tomainmenu) {
     mainState = MAIN_STATE.Menu;
 } else {
-    mainState = MAIN_STATE.Language;
+    // mainState = MAIN_STATE.Language;
+    mainState = MAIN_STATE.Load;
 }
 
 function checkAssetsLoading() {
@@ -107,7 +109,8 @@ function init() {
         MainMenu.init();
         toMainMenu()
     } else {
-        LanguageScreen.init();
+        // LanguageScreen.init();
+        LoadScreen.init()
     }
 
 
@@ -127,6 +130,9 @@ function run() {
     }
 
     switch (mainState) {
+        case MAIN_STATE.Load:
+            LoadScreen.update(dt);
+            break;
         case MAIN_STATE.Language:
             LanguageScreen.update(dt);
             break;
@@ -170,6 +176,9 @@ function run() {
     }
 
     switch (mainState) {
+        case MAIN_STATE.Load:
+            LoadScreen.draw(ctx);
+            break;
         case MAIN_STATE.Language:
             LanguageScreen.draw(ctx);
             break;
@@ -278,6 +287,9 @@ function changeMainState(pNewState) {
 
 
     switch (mainState) {
+        case MAIN_STATE.Language:
+            LanguageScreen.init();
+            break;
         case MAIN_STATE.Introduction:
             if (!Introduction.bInit) {
                 Introduction.init();
