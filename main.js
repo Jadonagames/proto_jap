@@ -7,7 +7,8 @@ let ctx0 = canvas.getContext("2d");
 const ctx = canvas.getContext("2d");
 let checkAssetsInterval = setInterval(checkAssetsLoading, 1000 / 60);
 let interval;
-let lastUpdate = Date.now();
+// let lastUpdate = Date.now();
+let lastUpdate = 0;
 const SCALE_X = 2;
 const SCALE_Y = 2;
 const CANVAS_WIDTH = canvas.width / SCALE_X;
@@ -115,14 +116,23 @@ function init() {
 
 
 
-    interval = setInterval(run, 1000 / 60);
+    //! interval = setInterval(run, 1000 / 60);
+
+    requestAnimationFrame(run);
 }
 
-function run() {
-    let now = Date.now();
-    let dt = (now - lastUpdate) / 1000;
-    lastUpdate = now;
+function run(pTime) { //? Time est envoyé automatiquement par "requestAnimationFrame"
+    requestAnimationFrame(run);
 
+    //! let now = Date.now();
+    //! let dt = (now - lastUpdate) / 1000;
+    let dt = (pTime - lastUpdate) / 1000;
+
+    if (dt < (1 / 60) - 0.001) {
+        return;
+    }
+    //! lastUpdate = now;
+    lastUpdate = pTime;
     debugDt = dt;
 
     if (SCREEN_SHAKE) {
@@ -215,7 +225,8 @@ function run() {
         canvas.style.backgroundColor = "rgb(255,50,50)"
     }
 
-    if (bStatsDebug) {
+    // if (bStatsDebug) {
+    if (1) {
         ctx.font = "10px jpfont";
         ctx.fillText("Drawcalls: " + Sprite.debug_drawcalls, 0, 10);
         ctx.fillText("fps: " + Math.floor(dt * 3750), 0, 20);
