@@ -148,7 +148,17 @@ class DialogPanel extends Panel {
                 this.scriptCallback(this.currentPhrase);
             }
         } else { //? End of Dialog
+            log("End of dialog");
             this.currentPhrase--;
+            switch(this.stateList) {
+                case "introduction":
+                    Introduction.desactiveDialogButton();
+                    break;                    
+                case "lessonTutorial":
+                    LessonTutorial.desactiveDialogButton();
+                    break;
+            }
+
             // this.childSprite.delete = true;
             // this.childButton.getSprite().delete = true;
             // this.childButton.removeFromCurrentList();
@@ -176,7 +186,7 @@ class DialogPanel extends Panel {
     switchButtons(pSpeedToNext) {
         switch(this.stateList) {
             case "introduction":
-                
+                Introduction.switchButtons(pSpeedToNext);
                 break;                    
             case "lessonTutorial":
                 LessonTutorial.switchButtons(pSpeedToNext);

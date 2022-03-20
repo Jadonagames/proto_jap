@@ -16,6 +16,7 @@ class Lessons {
 
     static previousState = -1;
     static TRANSLATION_TRANSITION = false;
+    static FIRST_TIME = false;
 
     static state = Lessons.STATE.Main;
 
@@ -33,6 +34,9 @@ class Lessons {
     //!    \_______/  |/    )_)  \_______/     )_(   
 
     static init() {
+
+
+        log("LESSONS INIT");
 
         this.canvasY = 0;
         this.translationY = -50;
@@ -95,6 +99,11 @@ class Lessons {
         let bNoSave = false;
         let bDisplayNew = false;
         let displayNew = { kana: "", number: 0 };
+        if (!SaveManager.SAVE_DATA["prologue"]) {
+            Lessons.FIRST_TIME = true;
+        } else {
+            Lessons.FIRST_TIME = false;
+        }
 
         for (let i = 1; i <= 15; i++) {
             let lessonBtn = new LessonBtn({ w: 72, h: 29 }, centerX(72, 150, 0) + offX, centerY(29, 10) + offY, null, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Hiragana, i] }, "lessons", Lessons.STATE.Hiragana, "Lesson_" + i, 0, true);
@@ -690,8 +699,6 @@ class Lessons {
                 Lessons.updateTrophyPanel("lessonTest", true); //? true : LessonTestGeneral > 0 ==> Donc Affichage normal du trophée
             } else {
                 // Lessons.updateTrophyPanel(false, labelNumber);
-
-                log("HEEEERE");
                 if ((kanaToRomaLevel > 0 && romaToKanaLevel == 0) || (kanaToRomaLevel == 0 && romaToKanaLevel > 0)) {
                     labelNumber = "1";
                 } else {
@@ -1156,6 +1163,149 @@ class Lessons {
     static update(dt) {
 
 
+        if (Lessons.FIRST_TIME) {
+            SaveManager.save([{ type: "prologue", value: 1 }]);
+            if (this.state == Lessons.STATE.Hiragana) {
+                Transition.init({
+                    callback: {},
+                    type: "l",
+                    pos: { x: LessonBtn.hiraganaList[0].x + 36, y: LessonBtn.hiraganaList[0].y + 15, r: 300, maxR: 50 },
+                    speed: 1,
+                    stopEffect: true,
+                    height: false
+                });
+            }
+            Lessons.FIRST_TIME = false;
+        }
+
+        if (Lessons.TRANSLATION_TRANSITION) {
+            this.canvasY += this.translationY * (60 * dt);
+
+
+            if (this.canvasY <= -600 && Lessons.state != Lessons.STATE.Lesson) { // GO TO LESSON
+                
+                this.canvasY = -600;
+
+                this.translationY = 50;
+                Button.currentList.forEach(b => {
+                    if (b.getState() != Button.STATE.Normal && b.getState() != LessonBtn.STATE.Close) {
+                        b.setState(Button.STATE.Normal);
+
+                        if (b.bTextOffsetChanged) {
+                            b.resetOffsets();
+                        }
+
+                        b.getTooltip().forEach(sp => {
+                            if (sp instanceof Sprite) {
+                                sp.delete = true;
+                            } else {
+                                sp.getSprite().delete = true;
+                            }
+                        });
+                        for (const sp in b.getSprite()) {
+                            if (b.getSprite()[sp] instanceof Sprite) {
+                                b.getSprite()[sp].changeAnimation("normal");
+                            }
+                        }
+                    } else {
+                        if (b.bTextOffsetChanged) {
+                            b.resetOffsets();
+                        }
+                    }
+                });
+
+                Sprite.kanaList.forEach(k => {
+                    if (k.kanaToDelete) {
+                        k.setActive(true);
+                    }
+                })
+
+                Lessons.TRANSLATION_TRANSITION = false;
+                this.changeState(Lessons.STATE.Lesson);
+                MOUSE_SPRITE.y += CANVAS_HEIGHT;
+                MOUSE_SPRITE.changeAnimation("normal");
+
+            } else if (this.canvasY > 0 && Lessons.state == Lessons.STATE.Lesson) { // BACK TO MENU
+                this.canvasY = 0;
+                this.translationY = -50;
+                Button.currentList.forEach(b => {
+                    if (b.getState() != Button.STATE.Normal && b.getState() != LessonBtn.STATE.Close) {
+                        b.setState(Button.STATE.Normal);
+                        b.getTooltip().forEach(sp => {
+                            if (sp instanceof Sprite) {
+                                sp.delete = true;
+                            } else {
+                                sp.getSprite().delete = true;
+                            }
+                        });
+                        for (const sp in b.getSprite()) {
+                            if (b.getSprite()[sp] instanceof Sprite) {
+                                b.getSprite()[sp].changeAnimation("normal");
+                            }
+                        }
+                    }
+                });
+
+                Sprite.kanaList = Sprite.kanaList.filter(sp => {
+                    return !sp.kanaToDelete;
+                });
+
+                Button.currentList.forEach(b => {
+                    if (b.bToDelete) {
+                        b.removeFromList();
+                    }
+                });
+                Panel.currentList.forEach(p => {
+                    if (p.bToDelete) {
+                        p.removeFromList();
+                    }
+                });
+                Lessons.lessonList = [];
+
+                Lessons.TRANSLATION_TRANSITION = false;
+                MOUSE_SPRITE.y -= CANVAS_HEIGHT;
+                MOUSE_SPRITE.changeAnimation("normal");
+
+                if (Lessons.previousState == Lessons.STATE.Hiragana) {
+                    Lessons.changeState(Lessons.STATE.Hiragana, false);
+                } else {
+                    Lessons.changeState(Lessons.STATE.Katakana, false);
+                }
+                Lessons.previousState = -1;
+
+                if (Game1.finishedLesson > 0) {
+
+                    if (this.state == Lessons.STATE.Hiragana) {
+                        Transition.init({
+                            callback: {},
+                            type: "l",
+                            pos: { x: LessonBtn.hiraganaList[Game1.finishedLesson].x + 36, y: LessonBtn.hiraganaList[Game1.finishedLesson].y + 15, r: 300, maxR: 50 },
+                            speed: 1,
+                            stopEffect: true,
+                            height: false
+                        });
+                    } else {
+                        Transition.init({
+                            callback: {},
+                            type: "l",
+                            pos: { x: LessonBtn.katakanaList[Game1.finishedLesson].x + 36, y: LessonBtn.katakanaList[Game1.finishedLesson].y + 15, r: 300, maxR: 50 },
+                            speed: 1,
+                            stopEffect: true,
+                            height: false
+                        });
+                    }
+
+                    Game1.finishedLesson = 0;
+                } else {
+                    log("no finished lesson");
+                }
+
+            }
+
+
+
+        }
+
         Sprite.manageBeforeUpdating(Lessons.mainList, dt);
         Lessons.mainList = Lessons.mainList.filter(sp => {
             return !sp.delete;
@@ -1209,7 +1359,9 @@ class Lessons {
         if (Lessons.TRANSLATION_TRANSITION) {
 
             ctx.transform(1, 0, 0, 1, 0, this.canvasY);
-            this.canvasY += this.translationY;
+            // this.canvasY += this.translationY;
+
+/*
 
             if (this.canvasY <= -600 && Lessons.state != Lessons.STATE.Lesson) { // GO TO LESSON
                 this.translationY = 50;
@@ -1327,7 +1479,7 @@ class Lessons {
                 }
 
             }
-
+*/
         }
         ctx.setTransform(1 * SCALE_X, 0, 0, 1 * SCALE_Y, 0, this.canvasY);
 
@@ -1376,6 +1528,20 @@ class Lessons {
             }
         }
         ctx.shadowOffsetY = 0;
+
+
+        // ----------
+        // ctx.font = "10px jpfont";
+        // ctx.fillStyle = "rgb(0,0,0)";
+
+
+        // ctx.fillText("CanvasY : " + this.canvasY, 50, 250);
+
+        // ctx.fillText("CanvasY : " + this.canvasY, 45, 500);
+
+        // ctx.font = "20px jpfont";
+        // ---------
+
         ctx.textAlign = "left";
 
         if (FadeEffect.bActive) {

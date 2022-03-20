@@ -111,6 +111,12 @@ class LessonTutorial {
         }
     }
 
+    static desactiveDialogButton() {
+        this.dialogPanelBtn.getSprite().delete = true;
+        this.dialogPanelBtn.removeFromCurrentList();
+        // checkMouseHover(this.dialogSpeedBtn);
+    }
+
     static createSoundBtn() {
         this.soundBtn = new Sprite({ w: 49, h: 31 }, 222, 17, null, "todelete");
         this.soundBtn.addAnimation("normal", { x: 294, y: 1632 }, 3, [0.4, 0.4, 0.5], false);
@@ -238,6 +244,9 @@ class LessonTutorial {
     }
 
     static endTutorial() {
+
+        //TODO
+        
         SaveManager.save([{ type: "prologue", value: 1 }]);
         LessonTutorial.mainList.push(this.lessonsBtn.getSprite());
     }
