@@ -80,7 +80,6 @@ class LessonBtn extends Button {
     }
 
     changeMode(pMode) {
-
         if (pMode == 0) {
             this.getSprite().resetAnimations("normal", { x: 380, y: this.getSprite().getAnimation("normal").origin.y });
             this.getSprite().resetAnimations("hover", { x: 452, y: this.getSprite().getAnimation("hover").origin.y });

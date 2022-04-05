@@ -448,7 +448,7 @@ class SaveManager {
     /**
      * @param {Objects' Array} pArr - [ { type: "lessons", params: ["h1", "fullTestGeneral"], value: 16 }, ...] 
      */
-    static save(pArr) {
+    static OLD_save(pArr) {
         if (pArr) {
             pArr.forEach(save => {
                 if (save.type == "intro") {
@@ -456,7 +456,7 @@ class SaveManager {
                 }
                 if (save.type == "prologue") {
                     SaveManager.SAVE_DATA[save.type] = save.value;
-                    if (save.value) {
+                    if (save.value == 1 || save.value == 11) {
                         LessonBtn.list.forEach(b => {
                             if (b.label.slice(-2) == "_1") {
                                 b.changeMode(0);
@@ -500,9 +500,87 @@ class SaveManager {
 
         }
     }
+    static save(pArr) {
+        if (pArr) {
+            pArr.forEach(save => {
+                if (save.type == "intro") {
+                    SaveManager.SAVE_DATA[save.type] = save.value;
+                }
+                if (save.type == "prologue") {
+                    SaveManager.SAVE_DATA[save.type] = save.value;
+                    if (save.value == 1 || save.value == 11) {
+                        LessonBtn.list.forEach(b => {
+                            if (b.label.slice(-2) == "_1") {
+                                b.changeMode(0);
+                            }
+                        });
+                    }
+                }
+                if (save.type == "lessons") {
+                    // ex: SAVE_DATA[lessons][h1][lessonTestGeneral]
+                    if (SaveManager.SAVE_DATA[save.type][save.params[0]][save.params[1]] < save.value) {
+                        SaveManager.SAVE_DATA[save.type][save.params[0]][save.params[1]] = save.value;
+                    }
+                }
+                if (save.type == "buttonAnimation") {
+                    SaveManager.SAVE_DATA["lessons"][save.params][save.type] = 1;
+                }
+                if (save.type == "newAnimation") {
+                    SaveManager.SAVE_DATA["lessons"][save.params][save.type] = 1;
+                }
+                if (save.type == "newFinish") {
+                    SaveManager.SAVE_DATA["lessons"][save.params][save.type] = 1;
+                }
+                if (save.type == "freemode") {
+                    if (SaveManager.SAVE_DATA[save.type]["game1"][save.params] < save.value) {
+                        SaveManager.SAVE_DATA[save.type]["game1"][save.params] = save.value;
+                    }
+                    // SaveManager.SAVE_DATA["freemode"]["game1"]["HIRAGANA OR KATAKANA"] = 16 32 48; // save.params
+                }
+                if (save.type == "bgm") {
+                    SaveManager.SAVE_DATA[save.type] = save.value;
+                }
+                if (save.type == "sfx") {
+                    SaveManager.SAVE_DATA[save.type] = save.value;
+                }
 
-    static load() {
-        let saveData = localStorage.getItem("KanaWorldSaveData");
+            });
+            // let saveDataJSON = JSON.stringify(SaveManager.SAVE_DATA);
+            let saveData = JSON.stringify(SaveManager.SAVE_DATA);
+            SaveManager.bSaveDataExists = true;
+
+            const id = USER.id
+            const name = USER.name;
+
+            const userData = JSON.stringify({
+                id,
+                name,
+                saveData
+            });
+
+            fetch(`${SERVER_URL}/save`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'cors',
+                body: userData
+            }).then((response) => {
+                return response.json()
+            }).then((res) => {
+                console.log(res)
+                USER.saveData = "";
+                USER.saveData = SaveManager.SAVE_DATA;
+            }).catch((e) => console.log(e))
+
+            // localStorage.setItem("KanaWorldSaveData", saveDataJSON);
+
+        }
+    }
+
+    static load(pSaveData = "") {
+        // let saveData = localStorage.getItem("KanaWorldSaveData");
+        let saveData = pSaveData;
         if (saveData) {
             SaveManager.bSaveDataExists = true;
             saveData = JSON.parse(saveData);
@@ -560,6 +638,7 @@ class SaveManager {
 
         SaveManager.init();
 
+        Lessons.FIRST_TIME = true;
         LessonBtn.list.forEach(b => {
             if (b.mode == 0) {
                 b.changeMode(1);
@@ -580,6 +659,7 @@ class SaveManager {
 
         LessonTutorial.bInit = false;
         LessonTutorial.mainList = [];
+
     }
 }
 

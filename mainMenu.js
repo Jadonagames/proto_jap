@@ -102,14 +102,14 @@ class MainMenu {
 
 
 
-        let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, { 
-            cb: FadeEffect.fade.bind(FadeEffect), 
+        let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, {
+            cb: FadeEffect.fade.bind(FadeEffect),
             arg: {
                 callback: {
                     cb: MainMenu.changeState.bind(MainMenu),
                     arg: MainMenu.STATE.Credits
                 },
-                direction: "out", maxTimer: 0.01 
+                direction: "out", maxTimer: 0.01
             }
         }, "mainmenu", MainMenu.STATE.Main, "Credits", 4);
         creditsBtn.setFontColor("rgba(142,45,45,1)");
@@ -118,18 +118,18 @@ class MainMenu {
         creditsBtn.setMovingSpeed(0.8);
         MainMenu.mainList.push(creditsBtn.getSprite());
 
-        let optionsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 350, null, 
-        { 
-            cb: FadeEffect.fade.bind(FadeEffect), 
-            arg: {
-                callback: {
-                    cb: MainMenu.changeState.bind(MainMenu),
-                    arg: MainMenu.STATE.Options
-                },
-                direction: "out", maxTimer: 0.01 
+        let optionsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 350, null,
+            {
+                cb: FadeEffect.fade.bind(FadeEffect),
+                arg: {
+                    callback: {
+                        cb: MainMenu.changeState.bind(MainMenu),
+                        arg: MainMenu.STATE.Options
+                    },
+                    direction: "out", maxTimer: 0.01
+                }
             }
-        }
-        , "mainmenu", MainMenu.STATE.Main, "Settings", 4);
+            , "mainmenu", MainMenu.STATE.Main, "Settings", 4);
 
         optionsBtn.setFontColor("rgba(142,45,45,1)");
         optionsBtn.setDestination({ x: centerX(110), y: 237 });
@@ -146,17 +146,17 @@ class MainMenu {
 
 
         let freeModeBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null,
-        { 
-            cb: FadeEffect.fade.bind(FadeEffect), 
-            arg: {
-                callback: {
-                    cb: changeMainState,
-                    arg: { state: MAIN_STATE.FreeMode, from: "mainmenu" }
-                },
-                direction: "out", maxTimer: 0.01 
+            {
+                cb: FadeEffect.fade.bind(FadeEffect),
+                arg: {
+                    callback: {
+                        cb: changeMainState,
+                        arg: { state: MAIN_STATE.FreeMode, from: "mainmenu" }
+                    },
+                    direction: "out", maxTimer: 0.01
+                }
             }
-        }
-        , "mainmenu", MainMenu.STATE.Main, "Free_mode", 4);
+            , "mainmenu", MainMenu.STATE.Main, "Free_mode", 4);
 
         // let freeModeBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 330, null, null, "mainmenu", MainMenu.STATE.Main, "Free_mode", 4);
         freeModeBtn.setDestination({ x: centerX(110), y: 181 });
@@ -233,26 +233,26 @@ class MainMenu {
 
         // ---------------- OPTIONS ----------------
 
-        let optionsMainPanel = new Panel({w: 300, h: 200, v:6 }, centerX(300), centerY(200), null, "mainmenu", MainMenu.STATE.Options, "", 7);
+        let optionsMainPanel = new Panel({ w: 300, h: 200, v: 6 }, centerX(300), centerY(200), null, "mainmenu", MainMenu.STATE.Options, "", 7);
 
         MainMenu.optionsList.push(optionsMainPanel.getSprite());
 
-        let optionsTitlePanel = new Panel({w: 70, h: 30, v:6 }, centerX(70), 40, null, "mainmenu", MainMenu.STATE.Options, "Settings", 7);
+        let optionsTitlePanel = new Panel({ w: 70, h: 30, v: 6 }, centerX(70), 40, null, "mainmenu", MainMenu.STATE.Options, "Settings", 7);
         optionsTitlePanel.setOffsets(5, 18);
         optionsTitlePanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
         MainMenu.optionsList.push(optionsTitlePanel.getSprite());
 
-        let musicPanel = new Panel({w: 40, h: 20, v: 1}, centerX(40, 72), 78, null, "mainmenu", MainMenu.STATE.Options, "BGM", 2);
+        let musicPanel = new Panel({ w: 40, h: 20, v: 1 }, centerX(40, 72), 78, null, "mainmenu", MainMenu.STATE.Options, "BGM", 2);
         musicPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
         MainMenu.optionsList.push(musicPanel.getSprite());
-        
-        let sfxPanel = new Panel({w: 40, h:20, v: 1}, centerX(40, 72), 108, null, "mainmenu", MainMenu.STATE.Options, "SFX", 2);
+
+        let sfxPanel = new Panel({ w: 40, h: 20, v: 1 }, centerX(40, 72), 108, null, "mainmenu", MainMenu.STATE.Options, "SFX", 2);
         sfxPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
         MainMenu.optionsList.push(sfxPanel.getSprite());
 
-        this.musicSpeaker = new Sprite({w: 16, h: 14}, musicPanel.x + 35, musicPanel.y + 3, null);
-        this.musicSpeaker.addAnimation("normal", {x: 203, y: 104});
-        this.musicSpeaker.addAnimation("mute", {x: 219, y: 104});
+        this.musicSpeaker = new Sprite({ w: 16, h: 14 }, musicPanel.x + 35, musicPanel.y + 3, null);
+        this.musicSpeaker.addAnimation("normal", { x: 203, y: 104 });
+        this.musicSpeaker.addAnimation("mute", { x: 219, y: 104 });
         if (MUSIC_VOLUME === 0) {
             this.musicSpeaker.changeAnimation("mute");
         } else {
@@ -260,9 +260,9 @@ class MainMenu {
         }
         MainMenu.optionsList.push(this.musicSpeaker.getSprite());
 
-        this.sfxSpeaker = new Sprite({w: 16, h: 14}, sfxPanel.x + 35, sfxPanel.y + 3, null);
-        this.sfxSpeaker.addAnimation("normal", {x: 203, y: 104});
-        this.sfxSpeaker.addAnimation("mute", {x: 219, y: 104});
+        this.sfxSpeaker = new Sprite({ w: 16, h: 14 }, sfxPanel.x + 35, sfxPanel.y + 3, null);
+        this.sfxSpeaker.addAnimation("normal", { x: 203, y: 104 });
+        this.sfxSpeaker.addAnimation("mute", { x: 219, y: 104 });
         if (SFX_VOLUME === 0) {
             this.sfxSpeaker.changeAnimation("mute");
         } else {
@@ -270,34 +270,34 @@ class MainMenu {
         }
         MainMenu.optionsList.push(this.sfxSpeaker.getSprite());
 
-        this.musicSprite = new Sprite({w: 60, h: 16}, centerX(60), centerY(16, 62), null);
-        this.musicSprite.addAnimation("0", {x: 672, y: 752 });
-        this.musicSprite.addAnimation("1", {x: 672 + 60, y: 752 });
-        this.musicSprite.addAnimation("2", {x: 672 + 60*2, y: 752 });
-        this.musicSprite.addAnimation("3", {x: 672 + 60*3, y: 752 });
-        this.musicSprite.addAnimation("4", {x: 672 + 60*4, y: 752 });
-        this.musicSprite.addAnimation("5", {x: 672 + 60*5, y: 752 });
-        this.musicSprite.addAnimation("6", {x: 672 + 60*6, y: 752 });
-        this.musicSprite.addAnimation("7", {x: 672 + 60*7, y: 752 });
-        this.musicSprite.addAnimation("8", {x: 672 + 60*8, y: 752 });
-        this.musicSprite.addAnimation("9", {x: 672 + 60*9, y: 752 });
-        this.musicSprite.addAnimation("10", {x: 672 + 60*10, y: 752 });
-        this.musicSprite.changeAnimation(MUSIC_VOLUME*10);
+        this.musicSprite = new Sprite({ w: 60, h: 16 }, centerX(60), centerY(16, 62), null);
+        this.musicSprite.addAnimation("0", { x: 672, y: 752 });
+        this.musicSprite.addAnimation("1", { x: 672 + 60, y: 752 });
+        this.musicSprite.addAnimation("2", { x: 672 + 60 * 2, y: 752 });
+        this.musicSprite.addAnimation("3", { x: 672 + 60 * 3, y: 752 });
+        this.musicSprite.addAnimation("4", { x: 672 + 60 * 4, y: 752 });
+        this.musicSprite.addAnimation("5", { x: 672 + 60 * 5, y: 752 });
+        this.musicSprite.addAnimation("6", { x: 672 + 60 * 6, y: 752 });
+        this.musicSprite.addAnimation("7", { x: 672 + 60 * 7, y: 752 });
+        this.musicSprite.addAnimation("8", { x: 672 + 60 * 8, y: 752 });
+        this.musicSprite.addAnimation("9", { x: 672 + 60 * 9, y: 752 });
+        this.musicSprite.addAnimation("10", { x: 672 + 60 * 10, y: 752 });
+        this.musicSprite.changeAnimation(MUSIC_VOLUME * 10);
         MainMenu.optionsList.push(this.musicSprite);
 
-        this.sfxSprite = new Sprite({w: 60, h: 16}, centerX(60), centerY(16, 32), null);
-        this.sfxSprite.addAnimation("0", {x: 672, y: 752 });
-        this.sfxSprite.addAnimation("1", {x: 672 + 60, y: 752 });
-        this.sfxSprite.addAnimation("2", {x: 672 + 60*2, y: 752 });
-        this.sfxSprite.addAnimation("3", {x: 672 + 60*3, y: 752 });
-        this.sfxSprite.addAnimation("4", {x: 672 + 60*4, y: 752 });
-        this.sfxSprite.addAnimation("5", {x: 672 + 60*5, y: 752 });
-        this.sfxSprite.addAnimation("6", {x: 672 + 60*6, y: 752 });
-        this.sfxSprite.addAnimation("7", {x: 672 + 60*7, y: 752 });
-        this.sfxSprite.addAnimation("8", {x: 672 + 60*8, y: 752 });
-        this.sfxSprite.addAnimation("9", {x: 672 + 60*9, y: 752 });
-        this.sfxSprite.addAnimation("10", {x: 672 + 60*10, y: 752 });
-        this.sfxSprite.changeAnimation(SFX_VOLUME*10);
+        this.sfxSprite = new Sprite({ w: 60, h: 16 }, centerX(60), centerY(16, 32), null);
+        this.sfxSprite.addAnimation("0", { x: 672, y: 752 });
+        this.sfxSprite.addAnimation("1", { x: 672 + 60, y: 752 });
+        this.sfxSprite.addAnimation("2", { x: 672 + 60 * 2, y: 752 });
+        this.sfxSprite.addAnimation("3", { x: 672 + 60 * 3, y: 752 });
+        this.sfxSprite.addAnimation("4", { x: 672 + 60 * 4, y: 752 });
+        this.sfxSprite.addAnimation("5", { x: 672 + 60 * 5, y: 752 });
+        this.sfxSprite.addAnimation("6", { x: 672 + 60 * 6, y: 752 });
+        this.sfxSprite.addAnimation("7", { x: 672 + 60 * 7, y: 752 });
+        this.sfxSprite.addAnimation("8", { x: 672 + 60 * 8, y: 752 });
+        this.sfxSprite.addAnimation("9", { x: 672 + 60 * 9, y: 752 });
+        this.sfxSprite.addAnimation("10", { x: 672 + 60 * 10, y: 752 });
+        this.sfxSprite.changeAnimation(SFX_VOLUME * 10);
         MainMenu.optionsList.push(this.sfxSprite);
 
         let musicDownBtn = new Button({ w: 17, h: 17 }, centerX(17, 50, 1), 80, null, Sound.decreaseMusicVolume, "mainmenu", MainMenu.STATE.Options, "", 0, true);
@@ -316,7 +316,12 @@ class MainMenu {
         sfxUpBtn.setAnimations({ x: 51, y: 95 });
         MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
-        let deleteSaveBtn = new Button({ w: 100, h: 25, v: 6 }, centerX(100), 160, null, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: true } }, "mainmenu", MainMenu.STATE.Options, "delete_save", 41);
+        let watchIntroBtn = new Button({ w: 100, h: 25, v: 6 }, centerX(100), 140, null, MainMenu.watchIntroductionAgain, "mainmenu", MainMenu.STATE.Options, "watch_intro", 41);
+        watchIntroBtn.setFontColor("rgba(142,45,45,1)");
+        watchIntroBtn.setOffsets(0, 15);
+        MainMenu.optionsList.push(watchIntroBtn.getSprite());
+
+        let deleteSaveBtn = new Button({ w: 100, h: 25, v: 6 }, centerX(100), 175, null, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: true } }, "mainmenu", MainMenu.STATE.Options, "delete_save", 41);
         deleteSaveBtn.setFontColor("rgba(142,45,45,1)");
         deleteSaveBtn.setOffsets(0, 15);
         MainMenu.optionsList.push(deleteSaveBtn.getSprite());
@@ -329,7 +334,7 @@ class MainMenu {
 
         // ---------------- CREDITS ----------------
 
-        
+
         let creditsMainPanel = new Panel({ w: 19, h: 25, v: 16 }, centerX(222), 10, null, "mainmenu", MainMenu.STATE.Credits, "", [1]);
         creditsMainPanel.changePanelSprite("t", 2, { x: 564, y: 748 });
         creditsMainPanel.changePanelSprite("t", 16, { x: 564, y: 748 });
@@ -340,7 +345,7 @@ class MainMenu {
         creditsTitle.setFontColor("rgba(217, 213, 188, 0)");
         MainMenu.creditsList.push(creditsTitle.getSprite());
 
-        let contentPanel = new Panel({w: 200, h: 60, v: 1}, centerXElement(creditsMainPanel, 200), 30, creditsMainPanel, "mainmenu", MainMenu.STATE.Credits, "credits_content", 2);
+        let contentPanel = new Panel({ w: 200, h: 60, v: 1 }, centerXElement(creditsMainPanel, 200), 30, creditsMainPanel, "mainmenu", MainMenu.STATE.Credits, "credits_content", 2);
         MainMenu.creditsList.push(contentPanel.getSprite());
 
         let jadonagamesLogo = new Sprite({ w: 37, h: 34 }, centerXElement(creditsMainPanel, 37, 60, 1), 230, creditsMainPanel, "mainmenu");
@@ -365,7 +370,87 @@ class MainMenu {
         this.saveDeletedPanel = null;
         this.deleteSaveAnimation = null;
 
+        let signupBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 200, null, MainMenu.API_Signup, "mainmenu", MainMenu.STATE.Main, "signup", 4);
+        signupBtn.setFontColor("rgba(142,45,45,1)");
+        MainMenu.mainList.push(signupBtn.getSprite());
 
+        let loginBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 230, null, MainMenu.API_Login, "mainmenu", MainMenu.STATE.Main, "login", 4);
+        loginBtn.setFontColor("rgba(142,45,45,1)");
+        MainMenu.mainList.push(loginBtn.getSprite());
+
+        let delBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 260, null, MainMenu.API_Delete, "mainmenu", MainMenu.STATE.Main, "delete_user", 4);
+        delBtn.setFontColor("rgba(142,45,45,1)");
+        MainMenu.mainList.push(delBtn.getSprite());
+    }
+
+    static API_Login() {
+        const name = "UserFromKanaWorld";
+        const password = "azerty";
+
+        const loginData = JSON.stringify({
+            name,
+            password
+        });
+
+        fetch(`${SERVER_URL}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            body: loginData
+        }).then((response) => {
+            return response.json()
+        }).then((res) => {
+            bLogged = true;
+            USER.id = res.userId
+            USER.name = res.userName;
+            USER.saveData = res.saveData;
+            SaveManager.load(USER.saveData)
+        }).catch((e) => console.log(e))
+    }
+
+    static API_Signup() {
+
+        //? Création
+        const name = "UserFromKanaWorld";
+        const password = "azerty";
+        const saveData = JSON.stringify(SaveManager.BLANK_SAVE_DATA);
+
+        const signupData = JSON.stringify({
+            name,
+            password,
+            saveData
+        });
+
+        // log("Signup Data : ");
+        // log(signupData);
+
+        fetch(`${SERVER_URL}/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            body: signupData
+        }).then((response) => {
+            return response.json()
+        }).then((res) => {
+            if (res.error === "already") {
+                bAlreadyExists = true;
+                alreadyTimeOut = setTimeout(MainMenu.stopAlreadyExistsMessage, 2000);
+            }
+
+        }).catch((e) => console.log(e))
+
+    }
+
+    static API_Delete() {
+        console.log("Delete user");
+    }
+
+    static stopAlreadyExistsMessage() {
+        bAlreadyExists = false;
     }
 
     static muteAction() {
@@ -393,9 +478,16 @@ class MainMenu {
         }
     }
 
+    static watchIntroductionAgain() {
+        if (Introduction.bInit) {
+            Introduction.bInit = false;
+        }
+        MainMenu.clearKanaInterval();
+        changeMainState(MAIN_STATE.Introduction);
+    }
+
     static initKanaInterval() {
         Particles.list = [];
-
         clearInterval(this.kanaInterval);
         this.kanaInterval = setInterval(MainMenu.createRandomKana, 500);
     }
@@ -491,7 +583,7 @@ class MainMenu {
                 this.deleteSaveAnimation = null;
 
                 // this.saveDeletedPanel = new Panel({ w: 100, h: 60, v: 5 }, centerX(100), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, "save_deleted", 1);
-                this.saveDeletedPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT + 62, null, "mainmenu", MainMenu.STATE.Options, "save_deleted",  [-1, { y_t: 748 }]);
+                this.saveDeletedPanel = new Panel({ w: 10, h: 4, v: 9 }, centerX(128), CANVAS_HEIGHT + 62, null, "mainmenu", MainMenu.STATE.Options, "save_deleted", [-1, { y_t: 748 }]);
                 this.saveDeletedPanel.setOffsets(10, 20);
 
                 this.saveDeletedPanel.setDestination({ x: centerX(128), y: CANVAS_HEIGHT - 62 });
@@ -695,6 +787,18 @@ class MainMenu {
         // ctx.shadowOffsetY = 2;
         // ctx.shadowBlur = 0;
         ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
+
+        if (bLogged) {
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fillText("Logged : " + USER.name, 10, CANVAS_HEIGHT - 4);
+        }
+
+        if (bAlreadyExists) {
+            ctx.fillStyle = "rgb(255,0,0)";
+            ctx.fillText("ALREADY EXISTS !", 10, CANVAS_HEIGHT - 20);
+        }
+        ctx.fillStyle = "rgb(255,255,255)";
+
         // ctx.fillText("V", CANVAS_WIDTH - 65, CANVAS_HEIGHT - 13);
 
         if (FadeEffect.bActive) {

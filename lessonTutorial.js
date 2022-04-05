@@ -8,8 +8,6 @@ class LessonTutorial {
         Main: 0,
     })
 
-    static previousState = -1;
-
     static state = LessonTutorial.STATE.Main;
 
     constructor() {
@@ -17,6 +15,14 @@ class LessonTutorial {
     }
 
     static init() {
+
+        LessonTutorial.mainList = [];
+        Button.list = Button.list.filter(b => {
+            return b.type != "lessonTutorial"
+        });
+        Panel.list = Panel.list.filter(p => {
+            return p.type != "lessonTutorial"
+        });
 
         LessonTutorial.bInit = true;
 
@@ -245,9 +251,9 @@ class LessonTutorial {
 
     static endTutorial() {
 
-        //TODO
-        
-        SaveManager.save([{ type: "prologue", value: 1 }]);
+        if (SaveManager.SAVE_DATA["prologue"] == 0) { //? Pour savoir si c'est la première fois qu'on fait le lessonTutorial ou pas
+            SaveManager.save([{ type: "prologue", value: 1 }]);
+        }
         LessonTutorial.mainList.push(this.lessonsBtn.getSprite());
     }
 

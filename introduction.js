@@ -7,8 +7,6 @@ class Introduction {
         Main: 0,
     })
 
-    static previousState = -1;
-
     static state = Introduction.STATE.Main;
 
     constructor() {
@@ -16,6 +14,14 @@ class Introduction {
     }
 
     static init() {
+
+        Introduction.mainList = [];
+        Button.list = Button.list.filter(b => {
+            return b.type != "introduction"
+        });
+        Panel.list = Panel.list.filter(p => {
+            return p.type != "introduction"
+        });
 
         Introduction.bInit = true;
 
@@ -43,7 +49,7 @@ class Introduction {
         // // this.dialogPanelBtn.setAnimations({ x: 170, y: 80 });
         // this.dialogPanel.setChildBtn(this.dialogPanelBtn, "introduction.main");
 
-//! ------------------------------------------------------
+        //! ------------------------------------------------------
 
         this.dialogBtnContainer = new Sprite({ w: 30, h: 28 }, this.dialogPanel.width - 14, this.dialogPanel.height - 28, this.dialogPanel, "");
         this.dialogBtnContainer.addAnimation("normal", { x: 416, y: 144 });
@@ -56,7 +62,7 @@ class Introduction {
 
         this.dialogPanelBtn = new Button({ w: 19, h: 17 }, this.dialogBtnContainer.x + 5, this.dialogBtnContainer.y + 5, this.dialogPanel, this.dialogPanel.nextPhrase.bind(this.dialogPanel), "introduction", Introduction.STATE.Main, "", 0, true);
         this.dialogPanelBtn.setAnimations({ x: 255, y: 106 });
-//! ------------------------------------------------------
+        //! ------------------------------------------------------
         this.disclaimerPanel = null;
 
         this.screens = new Sprite({ w: 178, h: 101 }, centerX(178), centerY(101, 50));
@@ -283,8 +289,13 @@ class Introduction {
     }
 
     static endIntro() {
-        SaveManager.save([{ type: "intro", value: 1 }]);
-        toMainMenu();
+        if (SaveManager.SAVE_DATA["intro"] == 1) {
+            changeMainState(MAIN_STATE.Menu);
+            MainMenu.changeState(MainMenu.STATE.Options);
+        } else {
+            SaveManager.save([{ type: "intro", value: 1 }]);
+            toMainMenu();
+        }
     }
 
     static changeState(pNewState) {

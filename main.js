@@ -28,6 +28,19 @@ MOUSE_SPRITE.addAnimation("normal", { x: 114, y: 34 });
 MOUSE_SPRITE.addAnimation("hover", { x: 124, y: 34 });
 MOUSE_SPRITE.addAnimation("down", { x: 134, y: 34 });
 MOUSE_SPRITE.changeAnimation("normal");
+//TODO 
+//! Move these 
+// const SERVER_URL = "http://localhost:3000/test";
+const SERVER_URL = "https://kanaworld.herokuapp.com/test";
+let bLogged = false;
+let bAlreadyExists = false;
+let alreadyTimeOut = null;
+let USER = {
+    id: -1,
+    name: "",
+    saveData: ""
+}
+//! --------------
 
 //!TEST--------
 // let canvasTest = document.getElementById("canvasTest");
@@ -74,7 +87,8 @@ const MAIN_STATE = Object.freeze({
     Transition: 7,
     LessonTutorial: 8,
     Introduction: 9,
-    FreeMode: 10
+    FreeMode: 10,
+    Login: 11
 })
 
 let mainState = 0;
@@ -170,6 +184,9 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
         case MAIN_STATE.LessonTutorial:
             LessonTutorial.update(dt);
             break;
+        case MAIN_STATE.Login:
+            Login.update(dt);
+            break;
     }
     if (SAVING) SAVING_SPRITE.update(dt);
 
@@ -215,6 +232,9 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
             break;
         case MAIN_STATE.LessonTutorial:
             LessonTutorial.draw(ctx);
+            break;
+        case MAIN_STATE.Login:
+            Login.draw(ctx);
             break;
     }
 

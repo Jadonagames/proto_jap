@@ -16,7 +16,7 @@ intro_text_4	Pour plus d'efficacité dans votre apprentissage, si vous voulez le
 intro_text_5	Pour ce faire l'ORDRE ET le NOMBRE de traits sont importants. N'hésitez pas à vous référer à l'animation disponible.	Pour ce faire l'ORDRE ET le NOMBRE de traits sont importants. N'hésitez pas à vous référer à l'animation disponible.	
 intro_text_6	Les sons sont les mêmes pour les deux syllabaires. On retrouve 46 caractères dans chaque syllabaire. Soit 92 caractères au total.	Les sons sont les mêmes pour les deux syllabaires. On retrouve 46 caractères dans chaque syllabaire. Soit 92 caractères au total.	
 intro_text_7	Attention ce jeu n'est pas un cours de japonais en soi, il ne vous apprendra pas de vocabulaire ou de kanji.	Attention ce jeu n'est pas un cours de japonais en soi, il ne vous apprendra pas de vocabulaire ou de kanji.	
-intro_text_8	Il est destiné aux curieux ou peut être aux futurs apprenant du japonais. Apprendre ce syllabaire est la première étape obligatoire dans cette grande aventure qu'est l'apprentissage du japonais. 	Il est destiné aux curieux ou peut être aux futurs apprenant du japonais. Apprendre ce syllabaire est la première étape obligatoire dans cette grande aventure qu'est l'apprentissage du japonais. 	
+intro_text_8	Il est destiné aux curieux ou peut être aux futurs apprenants du japonais. Apprendre ce syllabaire est la première étape obligatoire dans cette grande aventure qu'est l'apprentissage du japonais. 	Il est destiné aux curieux ou peut être aux futurs apprenants du japonais. Apprendre ce syllabaire est la première étape obligatoire dans cette grande aventure qu'est l'apprentissage du japonais. 	
 intro_text_9	Bonne chance à vous.	Bonne chance à vous.	
 			
 intro_hiragana	ひらがな	ひらがな	ひらがな
@@ -24,7 +24,11 @@ intro_katakana	カタカナ	カタカナ	カタカナ
 intro_kanji	漢字	漢字	漢字
 same_sound_example	あ => a <= ア い => i <= イ う => u <= ウ え => e <= エ お => o <= オ	あ => a <= ア い => i <= イ う => u <= ウ え => e <= エ お => o <= オ	
 			
-			
+testapi	TESTAPI	TESTAPI	TESTAPI
+signup	Signup	Signup	Signup
+login	Login	Login	Login
+delete_user	Del User	Del User	Del User
+user_name	User:	User :	User:
 			
 lesson_text_0	Bienvenue dans la partie leçon.	Bienvenue dans la partie leçon.	-
 lesson_text_1	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	-
@@ -34,7 +38,7 @@ lesson_text_4	Pour chaque leçon vous avez trois possibilités.	Pour chaque leç
 lesson_text_5	La partie Entraînement est un mode infini sans contrainte de temps, pour vous entraîner autant que vous le voulez.	La partie Entraînement est un mode infini sans contrainte de temps, pour vous entraîner autant que vous le voulez.	-
 lesson_text_6	Le Test Leçon pour réaliser un test sur la leçon en cours, comme il n'y a que 5 caractères, chacun d'entre eux passera 3 fois, donc 15 questions en tout.	Le Test Leçon pour réaliser un test sur la leçon en cours, comme il n'y a que 5 caractères, chacun d'entre eux passera 3 fois, donc 15 questions en tout.	-
 lesson_text_7	"Test complet" est un test comprenant l'ensemble des caractères des leçons précédentes mélangés à ceux de la leçon actuelle. Afin de réviser en même temps les précédents.	"Test complet" est un test comprenant l'ensemble des caractères des leçons précédentes mélangés à ceux de la leçon actuelle. Afin de réviser en même temps les précédents.	-
-lesson_text_8	Le test complet de la leçon 15 comprends plus de 71 questions !	Le test complet de la leçon 15 comprends plus de 71 questions !	-
+lesson_text_8	Le test complet de la leçon 15 comprend plus de 71 questions !	Le test complet de la leçon 15 comprend plus de 71 questions !	-
 lesson_text_9	Pour chaque test vous avez le choix entre un kana -> 4 choix de lecture. Ou la lecture -> 4 choix de kana.	Pour chaque test vous avez le choix entre un kana -> 4 choix de lecture. Ou la lecture -> 4 choix de kana.	-
 lesson_text_10	Il y a donc 4 tests au final par leçon (sauf la leçon 1 qui n'a pas de Test Complet pour des raisons logiques)	Il y a donc 4 tests au final par leçon (sauf la leçon 1 qui n'a pas de Test Complet pour des raisons logiques)	-
 lesson_text_11	Selon votre résultat aux tests vous obtiendrez un trophée : or (score parfait), argent ou bronze.	Selon votre résultat aux tests vous obtiendrez un trophée : or (score parfait), argent ou bronze.	-
@@ -65,6 +69,8 @@ Lesson_12	Lesson 12	Leçon 12	レッスン 12
 Lesson_13	Lesson 13	Leçon 13	レッスン 13
 Lesson_14	Lesson 14	Leçon 14	レッスン 14
 Lesson_15	Lesson 15	Leçon 15	レッスン 15
+watch_prologue	Watch prologue	Revoir Prologue	Revoir Prologue
+watch_intro	Watch introduction	Revoir l'intro	Revoir l'intro
 nb_0	0	0	0
 nb_1	1	1	1
 nb_2	2	2	2
