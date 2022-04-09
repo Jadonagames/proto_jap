@@ -25,10 +25,15 @@ intro_kanji	漢字	漢字	漢字
 same_sound_example	あ => a <= ア い => i <= イ う => u <= ウ え => e <= エ お => o <= オ	あ => a <= ア い => i <= イ う => u <= ウ え => e <= エ お => o <= オ	
 			
 testapi	TESTAPI	TESTAPI	TESTAPI
-signup	Signup	Signup	Signup
-login	Login	Login	Login
+signup	Signup	S'inscrire	S'inscrire
+login	Login	Se connecter	Se connecter
 delete_user	Del User	Del User	Del User
 user_name	User:	User :	User:
+go	Go	Go	Go
+no_account	No account ? 	Pas de compte ?	Pas de compte ?
+signup_here	Signup here (No email required)	Inscrivez-vous ici (email non requis)	Inscrivez-vous ici (email non requis)
+password	Password	Mot de passe	パスワード
+confirm	Confirm	Confirmez	Confirmez
 			
 lesson_text_0	Bienvenue dans la partie leçon.	Bienvenue dans la partie leçon.	-
 lesson_text_1	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	-
@@ -577,3 +582,40 @@ kata_pi_description	L'ajout du petit rond permet de transformer le son [h] en [p
 kata_pu_description	L'ajout du petit rond permet de transformer le son [f] en [p]. \n \n フ fu => プ pu	L'ajout du petit rond permet de transformer le son [f] en [p]. \n \n フ fu => プ pu	
 kata_pe_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n へ he => ぺ pe	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n へ he => ぺ pe	
 kata_po_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ホ ho => ポ po	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ホ ho => ポ po	
+			
+alpha_a	a	a	a
+alpha_b	b	b	b
+alpha_c	c	c	c
+alpha_d	d	d	d
+alpha_e	e	e	e
+alpha_f	f	f	f
+alpha_g	g	g	g
+alpha_h	h	h	h
+alpha_i	i	i	i
+alpha_j	j	j	j
+alpha_k	k	k	k
+alpha_l	l	l	l
+alpha_m	m	m	m
+alpha_n	n	n	n
+alpha_o	o	o	o
+alpha_p	p	p	p
+alpha_q	q	q	q
+alpha_r	r	r	r
+alpha_s	s	s	s
+alpha_t	t	t	t
+alpha_u	u	u	u
+alpha_v	v	v	v
+alpha_w	w	w	w
+alpha_x	x	x	x
+alpha_y	y	y	y
+alpha_z	z	z	z
+num_0	0	0	0
+num_1	1	1	1
+num_2	2	2	2
+num_3	3	3	3
+num_4	4	4	4
+num_5	5	5	5
+num_6	6	6	6
+num_7	7	7	7
+num_8	8	8	8
+num_9	9	9	9

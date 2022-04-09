@@ -42,7 +42,8 @@ class LanguageScreen {
                 LANG = translationEn;
         }
         if (!MainMenu.bInit) {
-            SplashScreen.init();
+            // SplashScreen.init();
+            Login.init();
         }
 
     }
