@@ -27,6 +27,7 @@ let MOUSE_SPRITE = new Sprite({ w: 8, h: 9 }, centerX(8), centerY(8));
 MOUSE_SPRITE.addAnimation("normal", { x: 114, y: 34 });
 MOUSE_SPRITE.addAnimation("hover", { x: 124, y: 34 });
 MOUSE_SPRITE.addAnimation("down", { x: 134, y: 34 });
+MOUSE_SPRITE.addAnimation("entry", { x: 144, y: 34 });
 MOUSE_SPRITE.changeAnimation("normal");
 //TODO 
 //! Move these 

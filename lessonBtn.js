@@ -169,3 +169,9 @@ class LessonBtn extends Button {
 
     }
 }
+
+class KeyboardBtn extends Button {
+    constructor(pSize, pX, pY, pParent, pCallback, pType = "normal", pTypeState = null, pLabel = "", pId = 0, pStaticSize = false) {
+        super(pSize, pX, pY, pParent, pCallback, pType, pTypeState, pLabel, pId, pStaticSize);
+    }
+}
