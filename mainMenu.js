@@ -370,17 +370,20 @@ class MainMenu {
         this.saveDeletedPanel = null;
         this.deleteSaveAnimation = null;
 
-        let signupBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 200, null, MainMenu.API_Signup, "mainmenu", MainMenu.STATE.Main, "signup", 4);
-        signupBtn.setFontColor("rgba(142,45,45,1)");
-        MainMenu.mainList.push(signupBtn.getSprite());
+        // let signupBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 200, null, MainMenu.API_Signup, "mainmenu", MainMenu.STATE.Main, "signup", 4);
+        // signupBtn.setFontColor("rgba(142,45,45,1)");
+        // MainMenu.mainList.push(signupBtn.getSprite());
 
-        let loginBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 230, null, MainMenu.API_Login, "mainmenu", MainMenu.STATE.Main, "login", 4);
-        loginBtn.setFontColor("rgba(142,45,45,1)");
+        // let loginBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 230, null, MainMenu.API_Login, "mainmenu", MainMenu.STATE.Main, "login", 4);
+
+        let loginBtn = new Button({ w: 48, h: 32 }, 400, 250, null, MainMenu.API_Login, "mainmenu", MainMenu.STATE.Main, "", 0, true);
+        loginBtn.setAnimations({ x: 880, y: 32 });
+        // loginBtn.setFontColor("rgba(142,45,45,1)");
         MainMenu.mainList.push(loginBtn.getSprite());
 
-        let delBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 260, null, MainMenu.API_Delete, "mainmenu", MainMenu.STATE.Main, "delete_user", 4);
-        delBtn.setFontColor("rgba(142,45,45,1)");
-        MainMenu.mainList.push(delBtn.getSprite());
+        // let delBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 260, null, MainMenu.API_Delete, "mainmenu", MainMenu.STATE.Main, "delete_user", 4);
+        // delBtn.setFontColor("rgba(142,45,45,1)");
+        // MainMenu.mainList.push(delBtn.getSprite());
     }
 
     static API_Login() {

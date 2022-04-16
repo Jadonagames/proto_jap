@@ -11,16 +11,16 @@ class Input {
                 if (pKey === -1) {
                     if (e.label != "" && e.sp.cursor.offX != e.cursorPosXOrigin) {
 
-                        if (e.sp.cursor.offX == e.cursorPosXOrigin + (e.label.length*5)) { //? Si le cursor est à la fin du label
+                        if (e.sp.cursor.offX == e.cursorPosXOrigin + (e.label.length * 5)) { //? Si le cursor est à la fin du label
                             e.label = e.label.slice(0, e.label.length - 1);
-                            e.sp.cursor.offX -= 5;                            
+                            e.sp.cursor.offX -= 5;
                         } else {
                             let char = (e.sp.cursor.offX - e.cursorPosXOrigin) / 5;
                             if (char == 1) {
                                 e.label = e.label.substring(1, e.label.length);
                                 e.sp.cursor.offX = e.cursorPosXOrigin;
                             } else {
-                                e.label = e.label.substring(0, char-1) + e.label.substring(char, e.label.length);
+                                e.label = e.label.substring(0, char - 1) + e.label.substring(char, e.label.length);
                                 e.sp.cursor.offX -= 5;
                             }
                         }
@@ -28,7 +28,7 @@ class Input {
                     }
                 } else {
 
-                    if (e.sp.cursor.offX == e.cursorPosXOrigin + (e.label.length*5)) { //? Si le cursor est à la fin du label                    
+                    if (e.sp.cursor.offX == e.cursorPosXOrigin + (e.label.length * 5)) { //? Si le cursor est à la fin du label                    
                         e.label += pKey;
                         e.sp.cursor.offX += 5;
                     } else {
@@ -53,8 +53,8 @@ class Input {
             if (e.getState() == EntryField.STATE.Focus) {
                 if (pRight) {
                     e.sp.cursor.offX += 5;
-                    if (e.sp.cursor.offX > e.cursorPosXOrigin + (e.label.length*5)) {
-                        e.sp.cursor.offX  = e.cursorPosXOrigin + (e.label.length*5);
+                    if (e.sp.cursor.offX > e.cursorPosXOrigin + (e.label.length * 5)) {
+                        e.sp.cursor.offX = e.cursorPosXOrigin + (e.label.length * 5);
                     }
                 } else {
                     e.sp.cursor.offX -= 5;
@@ -79,7 +79,6 @@ function keyDown(k) {
     // k.key => a, b, c, ..., A, B, C etc..
     // si a, b, c et que Login.bCaps == true alors !=bCaps
     if (!Input.bIsKeyDown) {
-        log("down");
         Input.bIsKeyDown = true;
         let LC_alphabet = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
         if (mainState == MAIN_STATE.Login) {
@@ -87,7 +86,7 @@ function keyDown(k) {
             if (k.code[0] == "K" && k.code[1] == "e" && k.code[2] == "y" && k.code.length == 4) {
                 let lastChar = k.code[3];
                 // log("key : " + lastChar);
-    
+
             }
         }
     }
@@ -556,11 +555,11 @@ canvas.addEventListener("mousemove", e => {
             });
             EntryField.currentList.forEach(e => {
                 // if (!CollisionManager.MouseCollision(mouseX, mouseY, e.x, e.y, e.getSize().w, e.getSize().h)) {
-                    if (e.getState() == EntryField.STATE.Focus && !bCollided) {
-                        if (MOUSE_SPRITE.currentAnimation.name == "entry") {
-                            MOUSE_SPRITE.changeAnimation("normal");
-                        }
+                if (e.getState() == EntryField.STATE.Focus && !bCollided) {
+                    if (MOUSE_SPRITE.currentAnimation.name == "entry") {
+                        MOUSE_SPRITE.changeAnimation("normal");
                     }
+                }
                 // }
 
             });
@@ -621,6 +620,7 @@ canvas.addEventListener("mousedown", e => {
 
                         if (b instanceof KeyboardBtn) {
                             bClickedOnKeyboard = true;
+                            log(b.label);
                         }
                         if (b instanceof LessonBtn && b.mode == 1 && b.getSprite().currentAnimation.name == "clicked") {
                             return false;
@@ -661,36 +661,36 @@ canvas.addEventListener("mousedown", e => {
                         if (e.getState() == EntryField.STATE.Hover) {
                             bClickedOnAnotherEntryField = true;
                             e.setState(EntryField.STATE.Focus);
-                            e.changeSpriteAnimation("focus");                        
+                            e.changeSpriteAnimation("focus");
                             e.textOffsetX = e.textOffsetXFocus;
                             e.textOffsetY = e.textOffsetYFocus;
                         }
 
                         e.sp.cursor.changeAnimation("normal");
-    
+
                         if (mouseX < e.x + e.cursorPosXOrigin) {
                             e.sp.cursor.offX = e.cursorPosXOrigin;
-                        } 
+                        }
                         else if (mouseX > e.x + e.cursorPosXOrigin + e.label.length * 5) {
                             e.sp.cursor.offX = e.cursorPosXOrigin + e.label.length * 5
-                        } 
+                        }
                         else {
                             let char = Math.ceil((mouseX - (e.x + e.cursorPosXOrigin)) / 5);
-                            e.sp.cursor.offX =  e.cursorPosXOrigin + char * 5;
+                            e.sp.cursor.offX = e.cursorPosXOrigin + char * 5;
                         }
                     }
                 }
             });
             EntryField.currentList.forEach(e => {
-                if (e.getState() == EntryField.STATE.Focus 
-                    && !CollisionManager.MouseCollision(mouseX, mouseY, e.x, e.y, e.getSize().w, e.getSize().h) 
-                    && !bClickedOnKeyboard 
+                if (e.getState() == EntryField.STATE.Focus
+                    && !CollisionManager.MouseCollision(mouseX, mouseY, e.x, e.y, e.getSize().w, e.getSize().h)
+                    && !bClickedOnKeyboard
                     && bClickedOnAnotherEntryField) {
                     e.setState(EntryField.STATE.Normal);
                     e.changeSpriteAnimation("normal");
                     e.sp.cursor.changeAnimation("none");
                     e.textOffsetX = e.textOffsetXOrigin;
-                    e.textOffsetY = e.textOffsetYOrigin;                    
+                    e.textOffsetY = e.textOffsetYOrigin;
                 }
             });
 

@@ -18,8 +18,6 @@ class Login {
     static bCaps = true;
     static bKeyboardActive = false;
 
-    // openKeyboardBtn = null;
-
     constructor() {
     }
 
@@ -71,58 +69,96 @@ class Login {
         signupBackBtn.setAnimations({ x: 86, y: 56 });
         Login.signupList.push(signupBackBtn.getSprite());
 
+        // 267 175
+        this.schoolpaperBG = new Panel({ w: 267, h: 175 }, centerX(267), 28, null, "login", Login.STATE.Signup, "", 0, true);
+        this.schoolpaperBG.getSprite().addAnimation("normal", { x: 920, y: 268 });
+        this.schoolpaperBG.getSprite().changeAnimation("normal")
+        // this.schoolpaperBG.setDestination({ x: 0, y: 100 });
+        // this.schoolpaperBG.setCanMove(true);
+        // this.schoolpaperBG.setMovingSpeed(0.6);
+        Login.signupList.push(this.schoolpaperBG.getSprite());
 
-        let testEntry = new EntryField({ w: 128, h: 28, v: 10 }, centerX(128), 80, null, null, "login", Login.STATE.Signup, "JaDona974", 1);
-        testEntry.setOffsets(15,18);
+        let testEntry = new EntryField({ w: 128, h: 28, v: 10 }, centerX(128), 50, null, null, "login", Login.STATE.Signup, "JaDona974", 1);
+        testEntry.setOffsets(15, 18);
         Login.signupList.push(testEntry.getSprite());
 
-        let testEntry2 = new EntryField({ w: 128, h: 28, v: 10 }, centerX(128), 120, null, null, "login", Login.STATE.Signup, "J", 1);
-        testEntry2.setOffsets(15,18);
+        let testEntry2 = new EntryField({ w: 128, h: 28, v: 10 }, centerX(128), 90, null, null, "login", Login.STATE.Signup, "*****", 1);
+        testEntry2.setOffsets(15, 18);
         Login.signupList.push(testEntry2.getSprite());
 
-        this.keyboardPanel = new Panel({ w: 450, h: 124, v: 1 }, 0, 300, null, "login", Login.STATE.Signup, "", 21);
+
+        let submitBtn = new Button({ w: 28, h: 27 }, 350, 90, null, null, "login", Login.STATE.Signup, "", 0, true);
+        submitBtn.setInactiveAnimation();
+        submitBtn.setAnimations({ x: 832, y: 117 });
+        submitBtn.setState(Button.STATE.Inactive);
+        submitBtn.changeSpriteAnimation("inactive");
+        Login.signupList.push(submitBtn.getSprite());
+
+
+        // this.keyboardPanel = new Panel({ w: 450, h: 124, v: 1 }, 0, 300, null, "login", Login.STATE.Signup, "", 21);
+        // this.keyboardPanel.setDestination({ x: 0, y: CANVAS_HEIGHT - 124 });
+        // this.keyboardPanel.setCanMove(true);
+        // this.keyboardPanel.setMovingSpeed(0.6);
+        // Login.signupList.push(this.keyboardPanel.getSprite());
+
+        this.keyboardPanel = new Panel({ w: 450, h: 124, v: 6 }, 0, 300, null, "login", Login.STATE.Signup, "", 8);
         this.keyboardPanel.setDestination({ x: 0, y: CANVAS_HEIGHT - 124 });
         this.keyboardPanel.setCanMove(true);
         this.keyboardPanel.setMovingSpeed(0.6);
         Login.signupList.push(this.keyboardPanel.getSprite());
 
 
-        let capsBtn = new KeyboardBtn({ w: 44, h: 22 }, 220, 5, this.keyboardPanel, Login.caps, "login", Login.STATE.Signup, "",  0, true);
-        capsBtn.setAnimations({x: 560, y: 144});
+        let capsBtn = new KeyboardBtn({ w: 44, h: 22 }, 200, 10, this.keyboardPanel, Login.caps, "login", Login.STATE.Signup, "", 0, true);
+        capsBtn.setAnimations({ x: 560, y: 144 });
         Login.signupList.push(capsBtn.getSprite());
+        Login.keyboardList.push(capsBtn);
 
-        let delBtn = new KeyboardBtn({ w: 42, h: 22 }, 270, 5, this.keyboardPanel, { cb: Login.handleKeyboardClick, arg: -1 }, "login", Login.STATE.Signup, "",  0, true);
-        delBtn.setAnimations({x: 560, y: 166});
+        let delBtn = new KeyboardBtn({ w: 42, h: 22 }, 251, 10, this.keyboardPanel, { cb: Login.handleKeyboardClick, arg: -1 }, "login", Login.STATE.Signup, "", 0, true);
+        delBtn.setAnimations({ x: 560, y: 166 });
         Login.signupList.push(delBtn.getSprite());
+        Login.keyboardList.push(delBtn);
 
-        let leftBtn = new KeyboardBtn({ w: 23, h: 22 }, 150, 5, this.keyboardPanel, { cb: Input.moveCursor, arg: false }, "login", Login.STATE.Signup, "",  0, true);
-        leftBtn.setAnimations({x: 692, y: 144});
+        let leftBtn = new KeyboardBtn({ w: 23, h: 22 }, 278, 90, this.keyboardPanel, { cb: Input.moveCursor, arg: false }, "login", Login.STATE.Signup, "", 0, true);
+        leftBtn.setAnimations({ x: 692, y: 144 });
         Login.signupList.push(leftBtn.getSprite());
+        Login.keyboardList.push(leftBtn);
 
-        let rightBtn = new KeyboardBtn({ w: 23, h: 22 }, 180, 5, this.keyboardPanel, { cb: Input.moveCursor, arg: true }, "login", Login.STATE.Signup, "",  0, true);
-        rightBtn.setAnimations({x: 692, y: 166});
+        let rightBtn = new KeyboardBtn({ w: 23, h: 22 }, 330, 90, this.keyboardPanel, { cb: Input.moveCursor, arg: true }, "login", Login.STATE.Signup, "", 0, true);
+        rightBtn.setAnimations({ x: 692, y: 166 });
         Login.signupList.push(rightBtn.getSprite());
+        Login.keyboardList.push(rightBtn);
 
-        this.openKeyboardBtn = new Button({ w: 22, h: 22 }, 0, -22, this.keyboardPanel, Login.openKeyboard.bind(this), "login", Login.STATE.Signup, "", 0, true);
-        this.openKeyboardBtn.setAnimations({ x: 560, y: 100 });
+        let upBtn = new KeyboardBtn({ w: 23, h: 22 }, 304, 65, this.keyboardPanel, { cb: Input.moveCursor, arg: false }, "login", Login.STATE.Signup, "", 0, true);
+        upBtn.setAnimations({ x: 761, y: 144 });
+        Login.signupList.push(upBtn.getSprite());
+        Login.keyboardList.push(upBtn);
+
+        let downBtn = new KeyboardBtn({ w: 23, h: 22 }, 304, 90, this.keyboardPanel, { cb: Input.moveCursor, arg: true }, "login", Login.STATE.Signup, "", 0, true);
+        downBtn.setAnimations({ x: 761, y: 166 });
+        Login.signupList.push(downBtn.getSprite());
+        Login.keyboardList.push(downBtn);
+
+        let nextBtn = new KeyboardBtn({ w: 29, h: 27 }, 302, 20, this.keyboardPanel, { cb: Input.moveCursor, arg: true }, "login", Login.STATE.Signup, "", 0, true);
+        nextBtn.setAnimations({ x: 832, y: 144 });
+        Login.signupList.push(nextBtn.getSprite());
+        Login.keyboardList.push(nextBtn);
+
+        this.openKeyboardBtn = new Button({ w: 51, h: 8 }, centerXElement(this.keyboardPanel, 51), -8, this.keyboardPanel, Login.openKeyboard.bind(this), "login", Login.STATE.Signup, "", 0, true);
+        this.openKeyboardBtn.setAnimations({ x: 626, y: 120 });
         Login.signupList.push(this.openKeyboardBtn.getSprite());
 
-        let originX = 65;
-        // let originY = 213;
+        let originX = 45;
         let originY = 40;
         let x = originX;
         let y = originY;
-        // let destinationY = 213;
-        
+
         for (let i = 0; i < 26; i++) {
             if (i == 10) {
                 x = originX + 11;
                 y += 25;
-                // destinationY += 25;
             } else if (i == 19) {
                 x = originX + 36;
                 y += 25;
-                // destinationY += 25;
             }
 
             let alphabetBtn = new KeyboardBtn({ w: 23, h: 22, v: 6 }, x, y, this.keyboardPanel, { cb: Login.handleKeyboardClick, arg: i }, "login", Login.STATE.Signup, "alpha_" + Login.LC_alphabet[i], 41);
@@ -134,6 +170,34 @@ class Login {
 
             x += 25;
         }
+
+        originX = 406;
+        x = originX;
+        y = 15;
+
+        for (let i = 9; i >= 0; i--) {
+
+            if (i == 6 || i == 3) {
+                x = originX;
+                y += 25;
+            }
+            if (i == 0) {
+                x = originX - 25;
+                y += 25;
+            }
+
+            let numBtn = new KeyboardBtn({ w: 23, h: 22, v: 6 }, x, y, this.keyboardPanel, { cb: Login.handleKeyboardClick, arg: i }, "login", Login.STATE.Signup, "num_" + i, 41);
+            numBtn.setFontColor("rgba(142,45,45,1)");
+            numBtn.setOffsets(-1, 13);
+            Login.signupList.push(numBtn.getSprite());
+            Login.keyboardList.push(numBtn);
+
+            x -= 25;
+        }
+
+        Login.keyboardList.forEach(b => {
+            b.setState(Button.STATE.Inactive);
+        });
 
 
 
@@ -180,32 +244,27 @@ class Login {
     }
 
     static openKeyboard() {
-        if (Login.bKeyboardActive) {
+        if (Login.bKeyboardActive) { //? Close
             this.keyboardPanel.startPos.x = this.keyboardPanel.x;
             this.keyboardPanel.startPos.y = this.keyboardPanel.y;
-            this.keyboardPanel.setDestination({x: 0, y: CANVAS_HEIGHT});
+            this.keyboardPanel.setDestination({ x: 0, y: CANVAS_HEIGHT });
             this.keyboardPanel.setMoving(true);
-            
 
             Login.bKeyboardActive = false;
-            this.openKeyboardBtn.setAnimations({ x: 560, y: 100 });
+            this.openKeyboardBtn.setAnimations({ x: 626, y: 120 });
             Login.keyboardList.forEach(b => {
-                if (b.bCanMove) {
-                    b.setMoving(true);
-                }
+                b.setState(Button.STATE.Inactive);
             });
-        } else {
+        } else { //? Open
             this.keyboardPanel.startPos.x = this.keyboardPanel.x;
             this.keyboardPanel.startPos.y = this.keyboardPanel.y;
-            this.keyboardPanel.setDestination({x: 0, y: CANVAS_HEIGHT - 124});
+            this.keyboardPanel.setDestination({ x: 0, y: CANVAS_HEIGHT - 124 });
             this.keyboardPanel.setMoving(true);
 
             Login.bKeyboardActive = true;
-            this.openKeyboardBtn.setAnimations({ x: 560, y: 122 });
+            this.openKeyboardBtn.setAnimations({ x: 626, y: 128 });
             Login.keyboardList.forEach(b => {
-                if (b.bCanMove) {
-                    b.setMoving(true);
-                }
+                b.setState(Button.STATE.Normal);
             });
         }
 
@@ -232,11 +291,6 @@ class Login {
                 });
                 break;
             case Login.STATE.Signup:
-                // Login.keyboardList.forEach(b => {
-                //     if (b.bMoving) {
-                //         b.update(dt);
-                //     }
-                // });
                 if (this.keyboardPanel.bMoving) {
                     this.keyboardPanel.update(dt);
                 }
