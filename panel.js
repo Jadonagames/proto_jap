@@ -339,6 +339,10 @@ class Panel {
                     x_l = 112;
                     y_t = 144;
                     break;
+                case 8: //? Keyboard Panel
+                    x_l = 928;
+                    y_t = 160;
+                    break;
                 default: //? Panel original
                     x_l = 0;
                     y_t = 57;
