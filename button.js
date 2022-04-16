@@ -106,6 +106,8 @@ class Button {
         this.tooltip = [];
         this.hoverOffset = null;
 
+        this.bInactiveAnimation = false;
+
         Button.list.push(this);
     }
 
@@ -259,10 +261,18 @@ class Button {
         });
     }
 
+    setInactiveAnimation() {
+        this.bInactiveAnimation = true;
+    }
+
     setAnimations(pCoord) { //? For static size & normal Buttons
         this.sp.getSprite().addAnimation("normal", { x: pCoord.x, y: pCoord.y });
         this.sp.getSprite().addAnimation("hover", { x: pCoord.x + this.width, y: pCoord.y });
         this.sp.getSprite().addAnimation("down", { x: pCoord.x + (this.width * 2), y: pCoord.y });
+        if (this.bInactiveAnimation) {
+            this.sp.getSprite().addAnimation("inactive", { x: pCoord.x + (this.width * 3), y: pCoord.y });
+        }
+
         this.sp.getSprite().changeAnimation("normal");
     }
 
