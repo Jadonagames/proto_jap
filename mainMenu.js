@@ -76,18 +76,23 @@ class MainMenu {
         subtitlePanel.setFontColor("rgba(176, 150, 124,1)");
         MainMenu.mainList.push(subtitlePanel.getSprite());
 
-        let hiraAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110), 0, null, "tm");
+        let hiraAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110), 0, null, "tm");      //? 0 -> originY
         hiraAImg.addAnimation("normal", { x: 575, y: 37 });
         hiraAImg.changeAnimation("normal");
+        hiraAImg.setOriginPos({ x: centerX(50, 110), y: 0 });
+        hiraAImg.setOriginDestination({ x: centerX(50, 110), y: 28 });
+        hiraAImg.setMovingType(Sprite.MOVING_TYPE.ComeAndGo);
         hiraAImg.setDestination({ x: centerX(50, 110), y: 28 });
         hiraAImg.setAlpha(0);
         MainMenu.mainList.push(hiraAImg);
 
-        let kataAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110, 1), 28, null, "tm");
+        let kataAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110, 1), 28, null, "tm");   //? 28 -> originY
         kataAImg.addAnimation("normal", { x: 627, y: 37 });
         kataAImg.changeAnimation("normal");
+        kataAImg.setOriginPos({ x: centerX(50, 110, 1), y: 28 });
+        kataAImg.setOriginDestination({ x: centerX(50, 110, 1), y: 0 });
+        kataAImg.setMovingType(Sprite.MOVING_TYPE.ComeAndGo);
         kataAImg.setDestination({ x: centerX(50, 110, 1), y: 0 });
-        kataAImg.setDirection(-1);
         kataAImg.setAlpha(0);
         MainMenu.mainList.push(kataAImg);
 
@@ -98,8 +103,6 @@ class MainMenu {
         flagImg.setAnimationCB("open", { cb: flagImg.changeAnimation.bind(flagImg), arg: "normal" });
         flagImg.changeAnimation("close");
         MainMenu.mainList.push(flagImg);
-
-
 
 
         let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, {
@@ -448,13 +451,6 @@ class MainMenu {
 
     }
 
-    static API_Delete() {
-        console.log("Delete user");
-    }
-
-    static stopAlreadyExistsMessage() {
-        bAlreadyExists = false;
-    }
 
     static muteAction() {
         this.muteBtn.callback = MainMenu.unMuteAction.bind(this);

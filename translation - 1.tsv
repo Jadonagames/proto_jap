@@ -28,12 +28,24 @@ testapi	TESTAPI	TESTAPI	TESTAPI
 signup	Signup	S'inscrire	S'inscrire
 login	Login	Se connecter	Se connecter
 delete_user	Del User	Del User	Del User
-user_name	User:	User :	User:
+user_name	Name	Nom	Nom
 go	Go	Go	Go
 no_account	No account ? 	Pas de compte ?	Pas de compte ?
 signup_here	Signup here (No email required)	Inscrivez-vous ici (email non requis)	Inscrivez-vous ici (email non requis)
 password	Password	Mot de passe	パスワード
-confirm	Confirm	Confirmez	Confirmez
+confirm	Confirm	Confirmer	Confirmer
+sign_up	sign up	inscription	サインアップ
+log_in	log in	connexion	ログイン
+already_exists	Name already used	Nom déjà utilisé	Nom déjà utilisé
+min_size_6	Min. 6	Min. 6	Min. 6
+min_size_6_2	Min.6	Min.6	Min.6
+min_size_6_3	min.6	min.6	min.6
+min_size_6_4	min. 6	min. 6	min. 6
+virtual_keyboard	Virtual keyboard	Clavier virtuel	Clavier virtuel
+keyboard_instruction	Close virtual keyboard \n to use yours.	Fermez le clavier virtuel \n pour utiliser le vôtre.	Fermez le clavier virtuel \n pour utiliser le vôtre.
+username_instruction	Alphabet & numbers only. \n \n 6 characters min.	Alphabet & nombres uniquement. \n \n 6 caractères min.	Alphabet & nombres uniquement. \n \n 6 caractères min.
+password_instruction	Be careful, the password is non-recoverable. Keep it in mind	Attention mot de passe non récupérable par la suite. Retenez-le bien	Attention mot de passe non récupérable par la suite. Retenez-le bien
+incorrect_message	Incorrect name or password	Nom ou mot de passe incorrect	Nom ou mot de passe incorrect
 			
 lesson_text_0	Bienvenue dans la partie leçon.	Bienvenue dans la partie leçon.	-
 lesson_text_1	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	-

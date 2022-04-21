@@ -3,9 +3,17 @@ class Sprite {
     static list = [];
     static kanaList = [];
 
+    static MOVING_TYPE = Object.freeze({
+        None: -1,
+        ComeAndGo: 0,
+    });
+
     static debug_drawcalls = 0;
 
     constructor(pSize, pX = 0, pY = 0, pParent = null, pType = "normal", pScale = { x: 1, y: 1 }) {
+
+
+        this.id_test = -1;
 
         this.width = pSize.w;
         this.originWidth = this.width;
@@ -62,7 +70,7 @@ class Sprite {
 
         this.animations = [];
 
-
+        this.movingType = Sprite.MOVING_TYPE.None;
         this.isMoving = false;
 
         this.bTranlate = false;
@@ -87,6 +95,10 @@ class Sprite {
             this.strokeNumber = 1;
             this.kanaToDelete = false;
         }
+    }
+
+    setIdTest(pId) {
+        this.id_test = pId;
     }
 
     addAnimation(pName, pOrigin, pFramesNb = 1, pSpeed = 0.1, pLoop = true) {
@@ -226,6 +238,20 @@ class Sprite {
         };
     }
 
+    setOriginPos(pPos) {
+        this.originPos = {
+            x: pPos.x,
+            y: pPos.y
+        };
+    }
+
+    setOriginDestination(pDestination) {
+        this.originDestination = {
+            x: pDestination.x,
+            y: pDestination.y
+        };
+    }
+
     setDestination(pDestination) {
         this.destination = {
             x: pDestination.x,
@@ -236,6 +262,10 @@ class Sprite {
 
     setDirection(pDirection) {
         this.direction = pDirection;
+    }
+
+    setMovingType(pType) {
+        this.movingType = pType;
     }
 
     update(dt) {
@@ -252,19 +282,19 @@ class Sprite {
             }
         }
 
-        if (this.type == "tm") { //? MainMenu : Boules Hira-A et Kata-A
+        if (this.movingType == Sprite.MOVING_TYPE.ComeAndGo) {
             if (this.speedCount <= this.moveSpeed) {
                 this.x = easeInOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.moveSpeed);
                 this.y = easeInOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
                 this.speedCount += dt;
             } else {
-                this.startPos.x = this.x;
-                this.startPos.y = this.y;
-
-                if (this.direction == 1) {
-                    this.setDestination({ x: this.x, y: 0 }); //! Données en dur à changer
-                } else {
-                    this.setDestination({ x: this.x, y: 28 }); //! Données en dur à changer
+                //? Direction : qu'importe le sens, direction 1 = aller | direction -1 = retour
+                if (this.direction == 1) { //? Donc fin de l'aller ici
+                    this.setStartPos({ x: this.originDestination.x, y: this.originDestination.y })
+                    this.setDestination({ x: this.originPos.x, y: this.originPos.y });
+                } else { //? Fin du retour ici
+                    this.setStartPos({ x: this.originPos.x, y: this.originPos.y })
+                    this.setDestination({ x: this.originDestination.x, y: this.originDestination.y });
                 }
                 this.speedCount = 0;
                 this.direction = -this.direction;
@@ -351,36 +381,6 @@ class Sprite {
                     this.delete = true;
                 }
             }
-        } else if (this.type.slice(0, 2) == "n_") { //? Lessons : "new" icon
-            // log("nnnnn")
-            // log(this.speedCount);
-            if (this.speedCount <= this.moveSpeed) {
-                this.x = easeInOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.moveSpeed);
-                this.y = easeInOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.moveSpeed);
-                this.speedCount += dt;
-            } else {
-                this.startPos.x = this.x;
-                this.startPos.y = this.y;
-
-                if (this.direction == 1) {
-                    //TODO
-                    this.setDestination({ x: this.x, y: this.originDestination.y }); //! Destination ? 155
-                } else {
-                    //TODO
-                    this.setDestination({ x: this.x, y: this.originPos.y }); //! Origin ? 165
-                }
-                this.speedCount = 0;
-                this.direction = -this.direction;
-            }
-
-
-
-            //TODO :
-            //! "tm" et "n" font exactement la même chose : aller-retour
-            //! Créer un système pour ce type de mouvement
-
-
-
         }
 
         if (this.bFading) {

@@ -188,6 +188,20 @@ function displayTooltip(pArgs) {
                 }
             })
             break;
+        case "login.signup": 
+            pArgs.tooltip.forEach(sp => {
+                if (!Login.bTooltipIncluded) {
+                    Login.bTooltipIncluded = true;
+                    if (sp instanceof Sprite) {
+                        Login.signupList.push(sp);
+                    } else {
+                        Login.signupList.push(sp.getSprite());
+                        sp.resetPosition();
+                        sp.beginMoving({ x: 10, y: 95 }, 0.6, true, 0, 0.05);
+                    }
+                }
+            })
+            break;
     }
 }
 
@@ -727,4 +741,95 @@ function setScreenShake(pBool, pX = 5, pY = 5) {
     if (!pBool) {
         canvas.style.backgroundColor = canvasOriginBgColor;
     }
+}
+
+
+//!         _______    _______   _________
+//!        (  ___  )  (  ____ )  \__   __/
+//!        | (   ) |  | (    )|     ) (   
+//!        | (___) |  | (____)|     | |   
+//!        |  ___  |  |  _____)     | |   
+//!        | (   ) |  | (           | |   
+//!        | )   ( |  | )        ___) (___
+//!        |/     \|  |/         \_______/
+                               
+function API_Login(pName, pPassword) {
+    const name = pName;
+    const password = pPassword;
+
+    log("name : " + name + " | pass : " + password);
+    // return;
+
+    const loginData = JSON.stringify({
+        name,
+        password
+    });
+
+    fetch(`${SERVER_URL}/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+        body: loginData
+    }).then((response) => {
+        return response.json()
+    }).then((res) => {
+        log(res);
+
+        if (res.error) {
+            setScreenShake(true, 5, 5);
+            bIncorrectCredentials = true;
+            messageTimeOut = setTimeout(stopMessage, 2000);
+        } else {
+            bLogged = true;
+            USER.id = res.userId
+            USER.name = res.userName;
+            USER.saveData = res.saveData;
+            SaveManager.load(USER.saveData)
+        }
+    }).catch((e) => console.log(e))
+}
+
+function API_Signup(pName, pPassword) {
+
+    //? Création
+    // const name = "UserFromKanaWorld";
+    // const password = "azerty";
+    const name = pName;
+    const password = pPassword;
+    const saveData = JSON.stringify(SaveManager.BLANK_SAVE_DATA);
+
+    const signupData = JSON.stringify({
+        name,
+        password,
+        saveData
+    });
+
+    // log("Signup Data : ");
+    // log(signupData);
+
+    fetch(`${SERVER_URL}/signup`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+        body: signupData
+    }).then((response) => {
+        return response.json()
+    }).then((res) => {
+        if (res.error === "already") {
+            bAlreadyExists = true;
+            setScreenShake(true, 5, 5);
+            messageTimeOut = setTimeout(stopMessage, 2000);
+        }
+
+    }).catch((e) => console.log(e))
+
+}
+
+function stopMessage() {
+    bAlreadyExists = false;
+    bIncorrectCredentials = false;
 }

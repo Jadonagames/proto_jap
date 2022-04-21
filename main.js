@@ -35,7 +35,8 @@ MOUSE_SPRITE.changeAnimation("normal");
 const SERVER_URL = "https://kanaworld.herokuapp.com/test";
 let bLogged = false;
 let bAlreadyExists = false;
-let alreadyTimeOut = null;
+let bIncorrectCredentials = false;
+let messageTimeOut = null;
 let USER = {
     id: -1,
     name: "",
@@ -248,6 +249,7 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
 
     // if (bStatsDebug) {
     if (1) {
+        ctx.textAlign = "left";
         ctx.font = "10px jpfont";
         ctx.fillText("Drawcalls: " + Sprite.debug_drawcalls, 0, 10);
         ctx.fillText("fps: " + Math.floor(dt * 3750), 0, 20);
@@ -255,7 +257,6 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
 
 
     ctx.font = "10px jpfont";
-    ctx.textAlign = "left";
     // if (SaveManager.bSaveDataExists) {
     //     ctx.fillText("Save?: SAVE DATA", 0, 10);
     // } else {
@@ -264,7 +265,7 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
 
     if (!Transition.bActive) {
         MOUSE_SPRITE.ox = MOUSE_SPRITE.currentAnimation.origin.x + (MOUSE_SPRITE.width * MOUSE_SPRITE.currentFrame);
-        ctx.drawImage(SS, MOUSE_SPRITE.ox, MOUSE_SPRITE.currentAnimation.origin.y, MOUSE_SPRITE.width, MOUSE_SPRITE.height, MOUSE_SPRITE.x, MOUSE_SPRITE.y, MOUSE_SPRITE.width * MOUSE_SPRITE.scaleX, MOUSE_SPRITE.height * MOUSE_SPRITE.scaleY);
+        ctx.drawImage(SS, MOUSE_SPRITE.ox, MOUSE_SPRITE.currentAnimation.origin.y, MOUSE_SPRITE.width, MOUSE_SPRITE.height, Math.floor(MOUSE_SPRITE.x), Math.floor(MOUSE_SPRITE.y), MOUSE_SPRITE.width * MOUSE_SPRITE.scaleX, MOUSE_SPRITE.height * MOUSE_SPRITE.scaleY);
     }
 
 

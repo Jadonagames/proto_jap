@@ -990,12 +990,9 @@ class Lessons {
             this.hiraNewSprite.changeAnimation("normal");
             this.hiraNewSprite.setOffsetSS(1);
             this.hiraNewSprite.setDestination({ x: originDestinationX, y: originDestinationY });
-            this.hiraNewSprite.setDirection(-1);
-            this.hiraNewSprite.originPos.x = originX;
-            this.hiraNewSprite.originPos.y = originY;
-            this.hiraNewSprite.originDestination.x = originDestinationX;
-            this.hiraNewSprite.originDestination.y = originDestinationY;
-
+            this.hiraNewSprite.setOriginPos({x: originX, y: originY});
+            this.hiraNewSprite.setOriginDestination({x: originDestinationX, y: originDestinationY});
+            this.hiraNewSprite.setMovingType(Sprite.MOVING_TYPE.ComeAndGo);
             Lessons.hiraganaList.push(this.hiraNewSprite);
 
         } else {
@@ -1010,12 +1007,9 @@ class Lessons {
             this.kataNewSprite.changeAnimation("normal");
             this.kataNewSprite.setOffsetSS(1);
             this.kataNewSprite.setDestination({ x: originDestinationX, y: originDestinationY });
-            this.kataNewSprite.setDirection(-1);
-            this.kataNewSprite.originPos.x = originX;
-            this.kataNewSprite.originPos.y = originY;
-            this.kataNewSprite.originDestination.x = originDestinationX;
-            this.kataNewSprite.originDestination.y = originDestinationY;
-
+            this.kataNewSprite.setOriginPos({x: originX, y: originY});
+            this.kataNewSprite.setOriginDestination({x: originDestinationX, y: originDestinationY});
+            this.kataNewSprite.setMovingType(Sprite.MOVING_TYPE.ComeAndGo);
             Lessons.katakanaList.push(this.kataNewSprite);
         }
     }

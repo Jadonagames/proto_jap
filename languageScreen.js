@@ -43,6 +43,9 @@ class LanguageScreen {
         }
         if (!MainMenu.bInit) {
             // SplashScreen.init();
+            if (!Input.bInit) {
+                Input.init();
+            }
             Login.init();
         }
 

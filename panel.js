@@ -7,11 +7,20 @@ class Panel {
         Hover: 1,
         Inactive: 2
     });
+    static MOVING_TYPE = Object.freeze({
+        None: -1,
+        ComeAndGo: 0,
+    });
 
     constructor(pSize, pX, pY, pParent, pType = "normal", pTypeState = null, pLabel = "", pId = 0, pStaticSize = false) {
 
+        this.id_test = -1;
+
         this.offX = pX;
         this.offY = pY;
+
+        this.originPos = { x: pX, y: pY };
+        this.originDestination = { x: 0, y: 0 };
 
         this.width = pSize.w;
         this.totalWidth = this.width;
@@ -52,6 +61,7 @@ class Panel {
 
         this.type = pType;
         this.staticSize = pStaticSize;
+        this.movingType = Panel.MOVING_TYPE.None;
 
         this.id = pId;
 
@@ -189,7 +199,13 @@ class Panel {
 
         this.tooltip = [];
 
+        this.moveCB = null;
+
         Panel.list.push(this);
+    }
+
+    setIdTest(pId) {
+        this.id_test = pId;
     }
 
     getParent() {
@@ -335,7 +351,7 @@ class Panel {
                     x_l = 583;
                     y_t = 748;
                     break;
-                case 7: //? Panel chalkboard
+                case 7: //? Panel chalkboard (v: 6)
                     x_l = 112;
                     y_t = 144;
                     break;
@@ -542,6 +558,13 @@ class Panel {
         this.bChangeOnHover = pBool;
     }
 
+    setMoveCB(pCallback, pParam) {
+        this.moveCB = {
+            cb: pCallback,
+            arg: pParam
+        }
+    }
+
     setTextCase(pCase) {
         switch (pCase) {
             case "first":
@@ -593,6 +616,27 @@ class Panel {
         }
     }
 
+    setStartPos(pStartPos) {
+        this.startPos = {
+            x: pStartPos.x,
+            y: pStartPos.y
+        };
+    }
+
+    setOriginPos(pPos) {
+        this.originPos = {
+            x: pPos.x,
+            y: pPos.y
+        };
+    }
+
+    setOriginDestination(pDestination) {
+        this.originDestination = {
+            x: pDestination.x,
+            y: pDestination.y
+        };
+    }
+
     setDestination(pDestination) {
         this.destination = {
             x: pDestination.x,
@@ -604,9 +648,14 @@ class Panel {
         this.direction = pDirection;
     }
 
+    setMovingType(pType) {
+        this.movingType = pType;
+    }
+
     resetPosition() {
         this.x = this.startPos.x;
         this.y = this.startPos.y;
+        this.speedCount = 0;
     }
 
     setCanMove(pBool) {
@@ -640,6 +689,11 @@ class Panel {
         if (this.parent) {
             this.alpha = this.parent.alpha;
         } else {
+            if (this.children.length > 0) {
+                this.children.forEach(c => {
+                    c.updateAlpha();
+                });
+            }
             this.alpha += pNewValue;
         }
         this.fontMainColor = this.fontMainColor.split(",");
@@ -664,9 +718,20 @@ class Panel {
     fading(dt) {
         this.fadingTimer.update(dt);
         if ((this.fadingIn && this.alpha >= 1)) { //TODO Find a solution pour this.alphaMax   : if this.fadingIncrementValue > or < 0 ??
+            this.alpha = 1;
+            if (this.children.length > 0) {
+                this.children.forEach(c => {
+                    c.alpha = 1;
+                });
+            }
             this.bFading = false;
         } else if (!this.fadingIn && this.alpha <= 0) {
             this.alpha = 0;
+            if (this.children.length > 0) {
+                this.children.forEach(c => {
+                    c.alpha = 0;
+                });
+            }
             this.bFading = false;
             // this.changeDirection();
             // let tmpY = this.destination.y;
@@ -699,38 +764,63 @@ class Panel {
 
         if (this.bMoving) {
 
-            if (this.speedCount <= this.movingSpeed) {
+            if (this.movingType == Panel.MOVING_TYPE.ComeAndGo) {
 
-                // this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
-                // this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
-                if (this.arriveDir) {
-                    this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
-                    this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                if (this.speedCount <= this.movingSpeed) {
+                    this.x = easeInOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+                    this.y = easeInOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                    this.speedCount += dt;
                 } else {
-                    this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
-                    this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                    if (this.direction == 1) { //? direction 1 = aller. Donc fin de l'aller ici
+                        this.setStartPos({ x: this.originDestination.x, y: this.originDestination.y })
+                        this.setDestination({ x: this.originPos.x, y: this.originPos.y });
+                    } else { //? direction -1 = retour. Donc Fin du retour ici
+                        this.setStartPos({ x: this.originPos.x, y: this.originPos.y })
+                        this.setDestination({ x: this.originDestination.x, y: this.originDestination.y });
+                    }
+                    this.speedCount = 0;
+                    this.direction = -this.direction;
                 }
-
-                this.speedCount += dt;
 
             } else {
-                this.x = this.destination.x;
-                this.y = this.destination.y;
-                this.bMoving = false;
-                this.speedCount = 0;
 
-                if (this.leaveDir) {
-                    this.removeFromList();
-                    this.removeFromCurrentList();
-                    this.getSprite().delete = true;
+                if (this.speedCount <= this.movingSpeed) {
+    
+                    // this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+                    // this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                    if (this.arriveDir) {
+                        this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+                        this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                    } else {
+                        this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+                        this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                    }
+    
+                    this.speedCount += dt;
+    
+                } else {
+                    this.x = this.destination.x;
+                    this.y = this.destination.y;
+                    this.bMoving = false;
+                    this.speedCount = 0;
+    
+                    if (this.leaveDir) {
+                        this.removeFromList();
+                        this.removeFromCurrentList();
+                        this.getSprite().delete = true;
+                    }
+                    if (this.moveCB != null) {
+                        this.moveCB.cb(this.moveCB.arg);
+                    } 
                 }
+    
             }
-
             this.children.forEach(c => {
-                if (c instanceof Panel || c instanceof Button) {
+                if (c instanceof Panel || c instanceof Button || c instanceof EntryField) {
                     c.updatePosition();
                 }
             });
+
         }
 
     }
@@ -793,10 +883,6 @@ class Panel {
             ctx.shadowOffsetY = 4;
         } else { // normal
             ctx.shadowOffsetY = 2;
-        }
-
-        if (this.parent && this.parent.bFading) {
-            this.updateAlpha();
         }
 
         ctx.fillStyle = this.fontMainColor;

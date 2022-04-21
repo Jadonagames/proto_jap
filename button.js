@@ -10,6 +10,8 @@ class Button {
 
     constructor(pSize, pX, pY, pParent, pCallback, pType = "normal", pTypeState = null, pLabel = "", pId = 0, pStaticSize = false) {
 
+        this.id_test = -1;
+
         this.offX = pX;
         this.offY = pY;
 
@@ -109,6 +111,10 @@ class Button {
         this.bInactiveAnimation = false;
 
         Button.list.push(this);
+    }
+
+    setIdTest(pId) {
+        this.id_test = pId;
     }
 
     setWidthForDynamicButtons(pOriginWidth) {
@@ -346,6 +352,7 @@ class Button {
     resetPosition() {
         this.x = this.startPos.x;
         this.y = this.startPos.y;
+        this.speedCount = 0;
     }
 
     setCanMove(pBool) {
@@ -480,6 +487,9 @@ class Button {
             this.y = this.destination.y;
             this.bMoving = false;
             this.speedCount = 0;
+            
+            //TODO
+            //! MoveCB !
             if (this.label == "Credits") {
                 TRANSITION = false;
             }
@@ -511,6 +521,7 @@ class Button {
         this.fontBackgroundColor = this.fontBackgroundColor[0] + "," + this.fontBackgroundColor[1] + "," + this.fontBackgroundColor[2] + "," + this.alpha + ")";
     }
 
+    //? Jamais appelé (ancienne version ?)
     static draw() {
         Button.currentList.forEach(b => {
             if (b.state == Button.STATE.Hover && b.hoverCB) {

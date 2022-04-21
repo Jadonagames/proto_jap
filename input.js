@@ -3,12 +3,186 @@ class Input {
     static bUpKey = false;
     static bEnterKey = false;
     static bIsKeyDown = false;
-    constructor() { }
 
-    static handleVirtualKeyboard(pKey) {
-        EntryField.currentList.forEach(e => {
+    static passwordTimer = null;
+
+    static bKeyboardClose = true;
+    static bKeyboardActive = false; //? Général
+    static keyboardSpriteList = [];
+    static keyboardList = [];
+
+    static LC_alphabet = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
+    static UC_alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"];
+    static num = ["0","1","2","3","4","5","6","7","8","9"];
+    static bCaps = true;
+
+    constructor() {}
+
+    static init() {
+        
+        
+        this.keyboardPanel = new Panel({ w: 450, h: 124, v: 6 }, 0, 300, null, "", null, "", 8);
+        this.keyboardPanel.setDestination({ x: 0, y: CANVAS_HEIGHT - 124 });
+        this.keyboardPanel.setCanMove(true);
+        this.keyboardPanel.setMovingSpeed(0.6);
+        this.keyboardPanel.setMoveCB(Input.activeKeyboardBtn.bind(this), "");
+        Input.keyboardSpriteList.push(this.keyboardPanel.getSprite());
+
+        this.keyboardSprite = new Sprite({ w: 33, h: 24}, 10, 8, this.keyboardPanel);
+        this.keyboardSprite.addAnimation("normal", {x: 931, y: 90});
+        this.keyboardSprite.addAnimation("nope", {x: 964, y: 90}, 4, 0.4, false);
+        this.keyboardSprite.setAnimationCB("nope", { cb: Input.hideCloseKeyboardMessage.bind(this), arg: ""});
+        this.keyboardSprite.changeAnimation("normal");
+        Input.keyboardSpriteList.push(this.keyboardSprite);
+
+        this.keyboardInstructionPanel = new Panel({w: 150, h: 20}, 50, 5, this.keyboardPanel, "", null, "keyboard_instruction", 0, true);
+        this.keyboardInstructionPanel.getSprite().addAnimation("normal", {x: 352, y: 208}); //? Espace vide dans la sprite sheet
+        this.keyboardInstructionPanel.getSprite().changeAnimation("normal");
+        this.keyboardInstructionPanel.setFontColor("rgba(162,162,162,1)", "rgba(255,0,0,1)");
+        this.keyboardInstructionPanel.setAlpha(0);
+        this.keyboardInstructionPanel.setAlignText(0);
+        this.keyboardInstructionPanel.setIdTest(1);
+        Input.keyboardSpriteList.push(this.keyboardInstructionPanel.getSprite());
+
+        let originX = centerX(91,1,1);
+        let originY = CANVAS_HEIGHT - 36;
+        let originDestinationX = originX;
+        let originDestinationY = CANVAS_HEIGHT - 26;
+
+        this.virtualKeyboardMessage = new Panel({ w: 91, h: 18 }, originX, originY, null, "", null, "virtual_keyboard", 0, true);
+        this.virtualKeyboardMessage.getSprite().addAnimation("normal", { x: 862, y: 72 });
+        this.virtualKeyboardMessage.getSprite().changeAnimation("normal");
+        this.virtualKeyboardMessage.setFontColor("rgba(172,50,50,1)");
+        this.virtualKeyboardMessage.setAlignText(1);
+        this.virtualKeyboardMessage.setTextOverflow(true);
+        this.virtualKeyboardMessage.setOffsets(5, 10);
+        this.virtualKeyboardMessage.setMovingType(Panel.MOVING_TYPE.ComeAndGo);
+        this.virtualKeyboardMessage.setOriginPos({x: originX, y: originY});
+        this.virtualKeyboardMessage.setOriginDestination({x: originDestinationX, y: originDestinationY});
+        this.virtualKeyboardMessage.beginMoving({ x: originDestinationX, y: originDestinationY }, 1);
+        Input.keyboardSpriteList.push(this.virtualKeyboardMessage.getSprite());
+
+        let capsBtn = new KeyboardBtn({ w: 44, h: 22 }, 200, 10, this.keyboardPanel, Input.caps, "", null, "", 0, true);
+        capsBtn.setAnimations({ x: 560, y: 144 });
+        Input.keyboardSpriteList.push(capsBtn.getSprite());
+        Input.keyboardList.push(capsBtn);
+
+        let delBtn = new KeyboardBtn({ w: 42, h: 22 }, 251, 10, this.keyboardPanel, { cb: Input.handleKeyboardClick, arg: -1 }, "", null, "", 0, true);
+        delBtn.setAnimations({ x: 560, y: 166 });
+        Input.keyboardSpriteList.push(delBtn.getSprite());
+        Input.keyboardList.push(delBtn);
+
+        let leftBtn = new KeyboardBtn({ w: 23, h: 22 }, 278, 90, this.keyboardPanel, { cb: Input.moveCursor, arg: false }, "", null, "", 0, true);
+        leftBtn.setAnimations({ x: 692, y: 144 });
+        Input.keyboardSpriteList.push(leftBtn.getSprite());
+        Input.keyboardList.push(leftBtn);
+
+        let rightBtn = new KeyboardBtn({ w: 23, h: 22 }, 330, 90, this.keyboardPanel, { cb: Input.moveCursor, arg: true }, "", null, "", 0, true);
+        rightBtn.setAnimations({ x: 692, y: 166 });
+        Input.keyboardSpriteList.push(rightBtn.getSprite());
+        Input.keyboardList.push(rightBtn);
+
+        let upBtn = new KeyboardBtn({ w: 23, h: 22 }, 304, 65, this.keyboardPanel, { cb: Input.changeFocus, arg: false }, "", null, "", 0, true);
+        upBtn.setAnimations({ x: 761, y: 144 });
+        Input.keyboardSpriteList.push(upBtn.getSprite());
+        Input.keyboardList.push(upBtn);
+
+        let downBtn = new KeyboardBtn({ w: 23, h: 22 }, 304, 90, this.keyboardPanel, { cb: Input.changeFocus, arg: true }, "", null, "", 0, true);
+        downBtn.setAnimations({ x: 761, y: 166 });
+        Input.keyboardSpriteList.push(downBtn.getSprite());
+        Input.keyboardList.push(downBtn);
+
+        let nextBtn = new KeyboardBtn({ w: 29, h: 27 }, 302, 20, this.keyboardPanel, { cb: Input.changeFocus, arg: true }, "", null, "", 0, true);
+        nextBtn.setAnimations({ x: 832, y: 144 });
+        Input.keyboardSpriteList.push(nextBtn.getSprite());
+        Input.keyboardList.push(nextBtn);
+
+        this.openKeyboardBtn = new Button({ w: 51, h: 8 }, centerXElement(this.keyboardPanel, 51), -8, this.keyboardPanel, Input.openKeyboard.bind(this), "", null, "", 0, true);
+        this.openKeyboardBtn.setAnimations({ x: 626, y: 120 });
+        Input.keyboardSpriteList.push(this.openKeyboardBtn.getSprite());
+        Input.keyboardList.push(this.openKeyboardBtn);
+
+        originX = 45;
+        originY = 40;
+        let x = originX;
+        let y = originY;
+
+        for (let i = 0; i < 26; i++) {
+            if (i == 10) {
+                x = originX + 11;
+                y += 25;
+            } else if (i == 19) {
+                x = originX + 36;
+                y += 25;
+            }
+
+            let alphabetBtn = new KeyboardBtn({ w: 23, h: 22 }, x, y, this.keyboardPanel, { cb: Input.handleKeyboardClick, arg: i }, "", null, "alpha_" + Input.LC_alphabet[i], 0, true);
+            alphabetBtn.setAnimations({ x: 862, y: 92});
+            alphabetBtn.setFontColor("rgba(142,45,45,1)");
+            alphabetBtn.setOffsets(-1, 13);
+            alphabetBtn.setTextCase("all");
+            Input.keyboardSpriteList.push(alphabetBtn.getSprite());
+            Input.keyboardList.push(alphabetBtn);
+
+            x += 25;
+        }
+
+        originX = 406;
+        x = originX;
+        y = 15;
+
+        for (let i = 9; i >= 0; i--) {
+
+            if (i == 6 || i == 3) {
+                x = originX;
+                y += 25;
+            }
+            if (i == 0) {
+                x = originX - 25;
+                y += 25;
+            }
+
+            let numBtn = new KeyboardBtn({ w: 23, h: 22 }, x, y, this.keyboardPanel, { cb: Input.handleKeyboardClick, arg: "num_" + i }, "", null, "num_" + i, 0, true);
+            numBtn.setAnimations({ x: 862, y: 92});
+            numBtn.setFontColor("rgba(142,45,45,1)");
+            numBtn.setOffsets(-1, 13);
+            Input.keyboardSpriteList.push(numBtn.getSprite());
+            Input.keyboardList.push(numBtn);
+
+            x -= 25;
+        }
+
+        Input.keyboardList.forEach(b => {
+            b.setState(Button.STATE.Inactive);
+        });
+    }
+
+    static resetKeyboardPosition() {
+        Input.bKeyboardClose = true;
+        this.keyboardPanel.x = this.keyboardPanel.startPos.x;
+        this.keyboardPanel.y = this.keyboardPanel.startPos.y;
+        this.keyboardPanel.children.forEach(c => {
+            c.updatePosition();
+        });
+
+        this.keyboardList.forEach(b => {
+            b.setState(Button.STATE.Inactive);
+        });
+
+        this.openKeyboardBtn.setAnimations({ x: 626, y: 120 });
+        this.openKeyboardBtn.setState(Button.STATE.Normal);
+        this.openKeyboardBtn.getSprite().changeAnimation("Normal");
+
+        this.keyboardSprite.changeAnimation("normal");
+        this.keyboardInstructionPanel.setAlpha(0);
+        
+    }
+
+    //?! Handle l'insertion d'un char dans les EntryField
+    static handleEntryField(pKey) {
+        EntryField.currentList.every(e => {
             if (e.getState() == EntryField.STATE.Focus) {
-                if (pKey === -1) {
+                if (pKey === -1) { //? Remove
                     if (e.label != "" && e.sp.cursor.offX != e.cursorPosXOrigin) {
 
                         if (e.sp.cursor.offX == e.cursorPosXOrigin + (e.label.length * 5)) { //? Si le cursor est à la fin du label
@@ -26,28 +200,32 @@ class Input {
                         }
                         e.sp.cursor.changeAnimation("normal");
                     }
-                } else {
+                } else { //? Add new char
 
-                    if (e.sp.cursor.offX == e.cursorPosXOrigin + (e.label.length * 5)) { //? Si le cursor est à la fin du label                    
-                        e.label += pKey;
-                        e.sp.cursor.offX += 5;
-                    } else {
-                        let char = (e.sp.cursor.offX - e.cursorPosXOrigin) / 5;
-                        if (e.sp.cursor.offX == e.cursorPosXOrigin) {
-                            e.label = pKey + e.label;
+                    if (e.label.length < 20) {
+                        if (e.sp.cursor.offX == e.cursorPosXOrigin + (e.label.length * 5)) { //? Si le cursor est à la fin du label                    
+                            e.label += pKey;
                             e.sp.cursor.offX += 5;
                         } else {
-                            e.label = e.label.slice(0, char) + pKey + e.label.slice(char, e.label.length);
-                            e.sp.cursor.offX += 5;
+                            let char = (e.sp.cursor.offX - e.cursorPosXOrigin) / 5;
+                            if (e.sp.cursor.offX == e.cursorPosXOrigin) {
+                                e.label = pKey + e.label;
+                                e.sp.cursor.offX += 5;
+                            } else {
+                                e.label = e.label.slice(0, char) + pKey + e.label.slice(char, e.label.length);
+                                e.sp.cursor.offX += 5;
+                            }
                         }
                     }
                     e.sp.cursor.changeAnimation("normal");
-
                 }
+                return false;
             }
+            return true;
         });
     }
 
+    //? Right/Left
     static moveCursor(pRight) {
         EntryField.currentList.forEach(e => {
             if (e.getState() == EntryField.STATE.Focus) {
@@ -67,6 +245,191 @@ class Input {
         });
     }
 
+    //? Next, Up/Down, Tab physic key
+    static changeFocus(pDown) {
+        let newIndex = -1;
+        let oldIndex = -1;
+        EntryField.currentList.forEach( (e, index )=> {
+            if (e.getState() == EntryField.STATE.Focus) {
+                oldIndex = index
+                if (pDown) {
+                    if (index < EntryField.currentList.length - 1) {
+                        newIndex = index + 1
+                    } else {
+                        newIndex = 0;
+                    }
+                } else {
+                    if (index > 0) {
+                        newIndex = index - 1;
+                    } else {
+                        newIndex = EntryField.currentList.length - 1;
+                    }
+                }
+            }
+        });
+
+        if (newIndex != -1 && oldIndex != -1) {
+    
+            EntryField.currentList[newIndex].setState(EntryField.STATE.Focus);
+            EntryField.currentList[newIndex].changeSpriteAnimation("focus");
+            EntryField.currentList[newIndex].textOffsetX = EntryField.currentList[newIndex].textOffsetXFocus;
+            EntryField.currentList[newIndex].textOffsetY = EntryField.currentList[newIndex].textOffsetYFocus;
+            EntryField.currentList[newIndex].sp.cursor.changeAnimation("normal");
+            EntryField.currentList[newIndex].sp.cursor.offX = EntryField.currentList[newIndex].cursorPosXOrigin + EntryField.currentList[newIndex].label.length * 5
+
+            //! En dur
+            if (EntryField.currentList[oldIndex].focusCB) {
+                if (newIndex == 0) { //! Index en dur
+                    Login.bTooltipIncluded = false;
+                    EntryField.currentList[oldIndex].getTooltip().forEach(sp => {
+                        if (sp instanceof Sprite) {
+                            sp.delete = true;
+                            sp.currentFrame = 0;
+                        } else {
+                            sp.getSprite().delete = true;
+                        }
+                    })
+                }
+            }
+
+            if (EntryField.currentList[newIndex].focusCB) {
+                EntryField.currentList[newIndex].focusCB.cb(EntryField.currentList[newIndex].focusCB.arg);
+            }
+
+            EntryField.currentList[oldIndex].setState(EntryField.STATE.Normal);
+            EntryField.currentList[oldIndex].changeSpriteAnimation("normal");
+            EntryField.currentList[oldIndex].sp.cursor.changeAnimation("none");
+            EntryField.currentList[oldIndex].textOffsetX = EntryField.currentList[oldIndex].textOffsetXOrigin;
+            EntryField.currentList[oldIndex].textOffsetY = EntryField.currentList[oldIndex].textOffsetYOrigin;
+        }
+        
+
+    }
+
+    static showPassword() {
+        Input.passwordTimer = new Timer(2, Input.hidePassword)
+        EntryField.currentList.forEach(e => {
+            if (e.bPasswordField) {
+                e.setPassword(false);
+            }
+        });
+    }
+
+    static hidePassword() {
+        Input.passwordTimer = null;
+        EntryField.currentList.forEach(e => {
+            if (e.bPasswordField) {
+                e.setPassword(true);
+            }
+        });
+    }
+
+    static caps() {
+        Input.bCaps = !Input.bCaps;
+        Input.keyboardList.forEach(b => {
+            if (Input.bCaps) {
+                b.setTextCase("all");
+            } else {
+                b.setTextCase("normal");
+            }
+        });
+    }
+
+    //? Mouse click on virtual keyboard keys (A-Z, 0-9, DEL)
+    static handleKeyboardClick(pIndex) {
+        if (pIndex == -1) { //? Del
+            Input.handleEntryField(pIndex);
+        } else if (typeof pIndex == "string") { //? "num_" + index
+            Input.handleEntryField(pIndex.split("_")[1]);
+        } else { //? Normal 
+            if (Input.bCaps) {
+                Input.handleEntryField(Input.UC_alphabet[pIndex]);
+            } else {
+                Input.handleEntryField(Input.LC_alphabet[pIndex]);
+            }
+        }
+    }
+
+    static openKeyboard() {
+        if (!Input.bKeyboardClose) { //? Close
+            this.keyboardPanel.startPos.x = this.keyboardPanel.x;
+            this.keyboardPanel.startPos.y = this.keyboardPanel.y;
+            this.keyboardPanel.setDestination({ x: 0, y: CANVAS_HEIGHT });
+            this.keyboardPanel.setMoving(true);
+            Input.bKeyboardClose = true;
+
+            this.openKeyboardBtn.setAnimations({ x: 626, y: 120 });
+            this.openKeyboardBtn.setState(Button.STATE.Inactive);
+            this.openKeyboardBtn.getSprite().changeAnimation("Normal");
+            Input.keyboardList.forEach(b => {
+                b.setState(Button.STATE.Inactive);
+            });
+
+
+
+        } else { //? Open
+            this.keyboardPanel.startPos.x = this.keyboardPanel.x;
+            this.keyboardPanel.startPos.y = this.keyboardPanel.y;
+            this.keyboardPanel.setDestination({ x: 0, y: CANVAS_HEIGHT - 124 });
+            this.keyboardPanel.setMoving(true);
+            Input.bKeyboardClose = false;
+
+            this.openKeyboardBtn.setAnimations({ x: 626, y: 128 });
+            this.openKeyboardBtn.setState(Button.STATE.Inactive);
+            this.openKeyboardBtn.getSprite().changeAnimation("Normal");
+
+            this.virtualKeyboardMessage.setAlpha(0);
+            this.virtualKeyboardMessage.bMoving = false;
+        }
+
+    }
+
+    static activeKeyboardBtn() {
+        this.openKeyboardBtn.setState(Button.STATE.Normal);
+        if (!Input.bKeyboardClose) {
+            Input.keyboardList.forEach(b => {
+                b.setState(Button.STATE.Normal);
+
+                if (CollisionManager.MouseCollision(MOUSE_SPRITE.x, MOUSE_SPRITE.y, b.x, b.y, b.getSize().w, b.getSize().h)) {
+                    b.setState(Button.STATE.Hover);
+                    b.changeSpriteAnimation("hover");
+                    MOUSE_SPRITE.changeAnimation("hover");
+                }
+            });
+        } else {
+            Input.resetVirtualKeyboardMessage();
+        }
+    }
+
+    static resetVirtualKeyboardMessage() {
+        this.virtualKeyboardMessage.setStartPos({ x: this.virtualKeyboardMessage.originPos.x, y: this.virtualKeyboardMessage.originPos.y })
+        this.virtualKeyboardMessage.resetPosition();
+        this.virtualKeyboardMessage.setDirection(1);
+        this.virtualKeyboardMessage.beginMoving({ x: this.virtualKeyboardMessage.originDestination.x, y: this.virtualKeyboardMessage.originDestination.y }, 1);
+    }
+
+    static setKeyboardActive(pBool = true) {
+        Input.bKeyboardActive = pBool;
+    }
+
+    static hideCloseKeyboardMessage() {
+        this.keyboardSprite.changeAnimation("normal");
+        this.keyboardInstructionPanel.setAlpha(0);
+    }
+
+    static update(dt) {
+
+        if (this.keyboardPanel.bMoving) {
+            this.keyboardPanel.update(dt);
+        }
+        if (this.virtualKeyboardMessage.bMoving) {
+            this.virtualKeyboardMessage.update(dt);
+        }
+        // this.keyboardInstructionPanel.update(dt);
+        if (Input.passwordTimer != null) Input.passwordTimer.update(dt);
+        Sprite.manageBeforeUpdating(Input.keyboardSpriteList, dt);
+    }
+
 }
 
 // Key event
@@ -76,36 +439,76 @@ document.addEventListener("keyup", keyUp, false);
 function keyDown(k) {
 
     k.preventDefault();
-    // k.key => a, b, c, ..., A, B, C etc..
-    // si a, b, c et que Login.bCaps == true alors !=bCaps
-    if (!Input.bIsKeyDown) {
-        Input.bIsKeyDown = true;
-        let LC_alphabet = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
-        if (mainState == MAIN_STATE.Login) {
-            log(k);
-            if (k.code[0] == "K" && k.code[1] == "e" && k.code[2] == "y" && k.code.length == 4) {
-                let lastChar = k.code[3];
-                // log("key : " + lastChar);
 
+    if (Input.bKeyboardActive && !Input.bIsKeyDown && k.key != "Shift") {
+        // Input.bIsKeyDown = true;
+
+        if (!Input.bKeyboardClose) {
+            Input.keyboardSprite.changeAnimation("nope");
+            Input.keyboardInstructionPanel.setAlpha(1);
+        } else {
+            if (Input.LC_alphabet.includes(k.key) || Input.UC_alphabet.includes(k.key) || Input.num.includes(k.key)) {
+                Input.handleEntryField(k.key);
+            } else if (k.key == "Backspace") {
+                Input.handleEntryField(-1);
+            } else if (k.key.slice(0,5) == "Arrow") {
+                switch(k.key.slice(5)) {
+                    case "Left":
+                        Input.moveCursor(false);
+                        break;
+                    case "Right":
+                        Input.moveCursor(true);
+                        break;
+                    case "Up":
+                        Input.changeFocus(false);
+                        Input.bIsKeyDown = true;
+                        break;
+                    case "Down":
+                        Input.changeFocus(true);
+                        Input.bIsKeyDown = true;
+                        break;
+                }
+            } else if (k.key == "Enter") {
+                Input.changeFocus(true);
+                Input.bIsKeyDown = true;
+            } else if (k.key == "Tab") {
+                if (k.shiftKey) {
+                    Input.changeFocus(false);
+                } else {
+                    Input.changeFocus(true);
+                }
+                Input.bIsKeyDown = true;
             }
+            /*
+                ! A
+                key: 'a'
+                code: 'KeyQ'
+                q -> KeyA
+                w -> KeyZ
+                z -> KeyW
+                , -> KeyM
+                m -> Semicolon
+
+                ! Backspace
+                key: 'Backspace'
+                code: 'Backspace'
+
+                ! Left / Right / Up / Down
+                key: 'ArrowLeft' / ...
+                code: 'ArrowLeft' / ...
+
+                ! Enter / NumpadEnter
+                key: 'Enter' / 'Enter'
+                code: 'Enter' / 'NumpadEnter'
+
+                ! Tab
+                key: 'Tab'
+                code: 'Tab'
+                shiftKey : true / false
+            */
+
         }
     }
-
-
-    if (k.code == "ArrowRight") {
-
-    }
-    if (k.code == "ArrowLeft") {
-
-    }
-
-    if (k.code == "ArrowUp") {
-
-    }
-    if (k.code == "ArrowDown") {
-
-    }
-
 
     /**
      * 
@@ -179,35 +582,8 @@ function keyDown(k) {
 function keyUp(k) {
     k.preventDefault();
 
-    if (Input.bIsKeyDown) Input.bIsKeyDown = false;
-
-    if (mainState == MAIN_STATE.Game) {
-        if (k.code == "ArrowRight") {
-            player.bKeyRight = false;
-        }
-        if (k.code == "ArrowLeft") {
-            player.bKeyLeft = false;
-        }
-        if (k.code == "ArrowUp") {
-            player.bKeyUp = false;
-            Input.bUpkey = false;
-        }
-        if (k.code == "ArrowDown") {
-            player.bKeyDown = false;
-        }
-    }
-
-    if (k.code == "ArrowRight") {
-
-    }
-    if (k.code == "ArrowLeft") {
-
-    }
-    if (k.code == "ArrowUp") {
-
-    }
-    if (k.code == "ArrowDown") {
-
+    if (Input.bIsKeyDown) {
+        Input.bIsKeyDown = false;
     }
 
     /**
@@ -231,12 +607,6 @@ function keyUp(k) {
     * FIN GESTION MENU KEYBOARD
     */
 
-    // PAUSE
-    if (k.code == "Escape") {
-        if (mainState == MAIN_STATE.Game && (currentState == GAME_STATE.Game || currentState == GAME_STATE.Pause)) {
-            togglePause();
-        }
-    }
 
     /**
      * DEBUG
@@ -491,6 +861,53 @@ canvas.addEventListener("mousemove", e => {
                 }
             });
 
+            if (Input.bKeyboardActive) {
+                Input.keyboardList.forEach(b => {
+                    if (b.getState() != Button.STATE.Inactive && !b.bMoving) {
+                        if (CollisionManager.MouseCollision(mouseX, mouseY, b.getPosition().x, b.getPosition().y, b.getSize().w, b.getSize().h)) {
+                            if ((b.getSprite().tl != undefined && b.getSprite().tl.currentAnimation.name != "down") || // not staticSize
+                                (b.getSprite().tl == undefined && b.getSprite().currentAnimation.name != "down")) {    // staticSize
+    
+                                if (b.getState() != Button.STATE.Hover) {
+                                    if (b.hoverCB) {
+                                        b.hoverCB.cb(b.hoverCB.arg);
+                                    }
+    
+                                    b.setState(Button.STATE.Hover);
+                                    b.changeSpriteAnimation("hover");
+                                    MOUSE_SPRITE.changeAnimation("hover");
+                                }
+                            }
+                        } else { //? Mouse Moving and NO collision
+                            if (b.getState() == Button.STATE.Hover) {
+                                if (b.hoverCB) {
+                                    b.getTooltip().forEach(sp => {
+                                        if (sp instanceof Sprite) {
+                                            sp.delete = true;
+                                            sp.currentFrame = 0;
+                                        } else {
+                                            sp.getSprite().delete = true;
+                                        }
+                                    })
+                                    if (b.getHoverOffset()) {
+                                        let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
+                                        func();
+                                    }
+                                }
+    
+                                b.setState(Button.STATE.Normal);
+                                b.changeSpriteAnimation("normal");
+                                
+                                MOUSE_SPRITE.changeAnimation("normal");
+    
+                                if (b.bTextOffsetChanged) b.resetOffsets();
+    
+                            }
+                        }
+                    }
+                });
+            }
+
             Panel.currentList.forEach(p => {
                 if (p.getState() != Panel.STATE.Inactive && p.hoverable) {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, p.x, p.y, p.getSize().w, p.getSize().h)) {
@@ -654,8 +1071,30 @@ canvas.addEventListener("mousedown", e => {
                 return true;
             });
 
+            if (Input.bKeyboardActive) {
+                Input.keyboardList.every(b => {
+                    if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close) {
+                        if (b.getState() == Button.STATE.Hover) {
+                            if (b instanceof KeyboardBtn) {
+                                bClickedOnKeyboard = true;
+                            }
+
+                            b.textOffsetX += 1;
+                            b.textOffsetY += 1;
+                            b.bTextOffsetChanged = true;
+
+                            b.changeSpriteAnimation("down");
+                            MOUSE_SPRITE.changeAnimation("down");
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+            }
+
             let bClickedOnAnotherEntryField = false;
-            EntryField.currentList.forEach(e => {
+            let newIndex = -1;
+            EntryField.currentList.forEach( (e, index) => {
                 if (e.getState() != EntryField.STATE.Inactive) {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, e.x, e.y, e.getSize().w, e.getSize().h)) {
                         if (e.getState() == EntryField.STATE.Hover) {
@@ -664,35 +1103,60 @@ canvas.addEventListener("mousedown", e => {
                             e.changeSpriteAnimation("focus");
                             e.textOffsetX = e.textOffsetXFocus;
                             e.textOffsetY = e.textOffsetYFocus;
+                            if (e.focusCB) {
+                                e.focusCB.cb(e.focusCB.arg);
+                            }
+                            newIndex = index;
+
+                        }
+                        if (e.getState() == EntryField.STATE.Hover || e.getState() == EntryField.STATE.Focus) {
+                            e.sp.cursor.changeAnimation("normal");
+    
+                            if (mouseX < e.x + e.cursorPosXOrigin) {
+                                e.sp.cursor.offX = e.cursorPosXOrigin;
+                            }
+                            else if (mouseX > e.x + e.cursorPosXOrigin + e.label.length * 5) {
+                                e.sp.cursor.offX = e.cursorPosXOrigin + e.label.length * 5
+                            }
+                            else {
+                                let char = Math.ceil((mouseX - (e.x + e.cursorPosXOrigin)) / 5);
+                                e.sp.cursor.offX = e.cursorPosXOrigin + char * 5;
+                            }
                         }
 
-                        e.sp.cursor.changeAnimation("normal");
-
-                        if (mouseX < e.x + e.cursorPosXOrigin) {
-                            e.sp.cursor.offX = e.cursorPosXOrigin;
-                        }
-                        else if (mouseX > e.x + e.cursorPosXOrigin + e.label.length * 5) {
-                            e.sp.cursor.offX = e.cursorPosXOrigin + e.label.length * 5
-                        }
-                        else {
-                            let char = Math.ceil((mouseX - (e.x + e.cursorPosXOrigin)) / 5);
-                            e.sp.cursor.offX = e.cursorPosXOrigin + char * 5;
-                        }
                     }
                 }
             });
-            EntryField.currentList.forEach(e => {
-                if (e.getState() == EntryField.STATE.Focus
-                    && !CollisionManager.MouseCollision(mouseX, mouseY, e.x, e.y, e.getSize().w, e.getSize().h)
-                    && !bClickedOnKeyboard
-                    && bClickedOnAnotherEntryField) {
-                    e.setState(EntryField.STATE.Normal);
-                    e.changeSpriteAnimation("normal");
-                    e.sp.cursor.changeAnimation("none");
-                    e.textOffsetX = e.textOffsetXOrigin;
-                    e.textOffsetY = e.textOffsetYOrigin;
-                }
-            });
+
+            if (bClickedOnAnotherEntryField) {
+
+                EntryField.currentList.forEach( (e, index) => {
+                    if (e.getState() == EntryField.STATE.Focus
+                        && !CollisionManager.MouseCollision(mouseX, mouseY, e.x, e.y, e.getSize().w, e.getSize().h)
+                        && !bClickedOnKeyboard) {
+                        e.setState(EntryField.STATE.Normal);
+                        e.changeSpriteAnimation("normal");
+                        e.sp.cursor.changeAnimation("none");
+                        e.textOffsetX = e.textOffsetXOrigin;
+                        e.textOffsetY = e.textOffsetYOrigin;
+    
+                        if (e.focusCB) {
+                            if (newIndex == 0) { //! Index en dur
+                                Login.bTooltipIncluded = false;
+                                e.getTooltip().forEach(sp => {
+                                    if (sp instanceof Sprite) {
+                                        sp.delete = true;
+                                        sp.currentFrame = 0;
+                                    } else {
+                                        sp.getSprite().delete = true;
+                                    }
+                                })
+                            }
+                        }
+                    }
+                });
+            }
+
 
         }
     }
@@ -708,8 +1172,6 @@ canvas.onclick = e => {
         if (MainMenu.state != MainMenu.STATE.Transition && Game1.currentState != Game1.STATE.Transition) {
 
             Button.currentList.every(b => {
-
-
                 if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close && !b.bMoving) {
                     if (b.getState() == Button.STATE.Hover) {
 
@@ -760,6 +1222,49 @@ canvas.onclick = e => {
                 return true;
             });
 
+            if (Input.bKeyboardActive) {
+                Input.keyboardList.every(b => {
+                    if (b.getState() != Button.STATE.Inactive && !b.bMoving) {
+                        if (b.getState() == Button.STATE.Hover) {
+    
+                            if ((b.getSprite().class == 9 && b.getSprite().tl.currentAnimation.name != "down")
+                                || (b.getSprite().class != 9 && b.getSprite().currentAnimation.name != "down")
+                            ) {
+                                return false;
+                            }
+    
+                            if (b.getHoverOffset()) {
+                                let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
+                                func();
+                            }
+    
+                            if (b.bTextOffsetChanged) b.resetOffsets();
+    
+                            b.setState(Button.STATE.Normal);
+                            b.changeSpriteAnimation("normal");
+                            MOUSE_SPRITE.changeAnimation("normal");
+    
+                            if (b.callback.cb != null && b.callback.arg != null) {
+                                b.callback.cb(b.callback.arg);
+                            } else {
+                                b.callback();
+                            }
+                            if (b.hoverCB) {
+                                b.getTooltip().forEach(sp => {
+                                    if (sp instanceof Sprite) {
+                                        sp.delete = true;
+                                    } else {
+                                        sp.getSprite().delete = true;
+                                    }
+                                });
+                            }
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+            }
+
             // Check after a screen change if the mouse isn't hovering
 
             if (!inTransition()) {
@@ -791,6 +1296,33 @@ canvas.onclick = e => {
                     }
                     return true;
                 });
+
+                if (Input.bKeyboardActive) {
+
+                    Input.keyboardList.every(b => {
+                        if (b.getState() != Button.STATE.Inactive && !b.bMoving) {
+                            if (CollisionManager.MouseCollision(mouseX, mouseY, b.x, b.y, b.getSize().w, b.getSize().h)) {
+                                if (b.hoverCB && b.getState() != Button.STATE.Hover) {
+                                    b.hoverCB.cb(b.hoverCB.arg);
+                                }
+                                if (b.bTextOffsetChanged) b.resetOffsets();
+
+                                b.setState(Button.STATE.Hover);
+                                b.changeSpriteAnimation("hover");
+                                MOUSE_SPRITE.changeAnimation("hover");
+                                return false;
+                            } else {
+                                if (b.getState() == Button.STATE.Hover) {
+                                    if (b.bTextOffsetChanged) b.resetOffsets();
+                                    b.setState(Button.STATE.Normal);
+                                    b.changeSpriteAnimation("normal");
+                                    MOUSE_SPRITE.changeAnimation("normal");
+                                }
+                            }
+                        }
+                        return true;
+                    });
+                }
 
             }
 

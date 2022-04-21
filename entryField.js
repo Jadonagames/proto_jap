@@ -86,6 +86,7 @@ class EntryField {
 
         this.callback = pCallback;
         this.hoverCB = null;
+        this.focusCB = null;
 
         this.bToDelete = false;
 
@@ -116,6 +117,9 @@ class EntryField {
 
         this.tooltip = [];
         this.hoverOffset = null;
+
+        this.bPasswordField = false;
+        this.bPassword = false;
 
         EntryField.list.push(this);
     }
@@ -201,6 +205,18 @@ class EntryField {
         this.sp.c.changeAnimation("normal");
     }
 
+    reset() {
+        this.setState(EntryField.STATE.Inactive);
+        this.changeSpriteAnimation("normal");
+        this.sp.cursor.changeAnimation("none");
+        this.sp.cursor.offX = this.cursorPosXOrigin + this.label.length * 5
+    }
+
+    setPassword(pBool = true) {
+        this.bPasswordField = true;
+        this.bPassword = pBool;
+    }
+
     static resetTypeState(pType, pTypeState, pTypeState2 = -1) {
         EntryField.currentList = EntryField.list.filter(b => {
             return (b.type == pType && b.typeState == pTypeState) || b.type == pType && b.typeState == pTypeState2;
@@ -284,6 +300,7 @@ class EntryField {
     resetPosition() {
         this.x = this.startPos.x;
         this.y = this.startPos.y;
+        this.speedCount = 0;
     }
 
     setCanMove(pBool) {
@@ -381,6 +398,13 @@ class EntryField {
             arg: pParam
         }
     }
+    
+    setFocusCB(pCallback, pParam) {
+        this.focusCB = {
+            cb: pCallback,
+            arg: pParam
+        };
+    }
 
     setTextCase(pCase) {
         switch (pCase) {
@@ -477,10 +501,6 @@ class EntryField {
 
     drawLabel(ctx) {
 
-        if (this.parent && this.parent.bFading) {
-            this.updateAlpha();
-        }
-
         if (this.state == EntryField.STATE.Hover) {
             ctx.fillStyle = this.hoverFontMainColor;
             ctx.shadowColor = this.hoverBackgroundColor;
@@ -495,7 +515,15 @@ class EntryField {
         switch (this.alignText) {
             case this.ALIGN_TEXT.Left:
                 ctx.textAlign = "left";
-                ctx.fillText(this.label, this.x + this.textOffsetX, this.y + this.textOffsetY);
+                if (this.bPassword) {
+                    let star = "";
+                    for (let i = 0; i < this.label.length; i++) {
+                        star += "*";
+                    }
+                    ctx.fillText(star, this.x + this.textOffsetX, this.y + this.textOffsetY);
+                } else {
+                    ctx.fillText(this.label, this.x + this.textOffsetX, this.y + this.textOffsetY);
+                }
                 break;
             case this.ALIGN_TEXT.Center:
                 ctx.textAlign = "center";
