@@ -475,6 +475,12 @@ class Button {
         }
     }
 
+    delete() {
+        this.removeFromCurrentList();
+        this.removeFromList();
+        this.getSprite().delete = true;
+    }
+
     update(dt) {
         if (this.speedCount <= this.movingSpeed) {
 
@@ -487,7 +493,7 @@ class Button {
             this.y = this.destination.y;
             this.bMoving = false;
             this.speedCount = 0;
-            
+
             //TODO
             //! MoveCB !
             if (this.label == "Credits") {

@@ -7,6 +7,9 @@ ph_text	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum do
 ph_text_0	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.
 ph_text_1	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.
 ph_text_2	Puis fade out du panel de dialogue...	Puis fade out du panel de dialogue...	Puis fade out du panel de dialogue...
+connection_error1	Oops! The connection to the server failed.	Oups ! La connexion au serveur a échouée.	Oups ! La connexion au serveur a échouée.
+connection_error2	Try to refresh the page or retry later...	Essayez de rafraîchir la page ou réessayez plus tard...	Essayez de rafraîchir la page ou réessayez plus tard...
+entry_error	An error occurred with name or password.	Erreur avec le nom ou le mot de passe.	Erreur avec le nom ou le mot de passe.
 			
 intro_text_0	Bienvenue dans KanaWorld. Avant de commencer je vais vous présenter quelques points importants à prendre en compte pour votre apprentissage des kana.	Bienvenue dans KanaWorld. Avant de commencer je vais vous présenter quelques points importants à prendre en compte pour votre apprentissage des kana.	
 intro_text_1	La langue japonaise est composée de trois systèmes d'écriture : Hiragana, Katakana et Kanji. Ces derniers tirent leur origine du système d'écriture Chinois.	La langue japonaise est composée de trois systèmes d'écriture : Hiragana, Katakana et Kanji. Ces derniers tirent leur origine du système d'écriture Chinois.	

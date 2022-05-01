@@ -20,6 +20,7 @@ let TRANSITION = false;
 let SCREEN_SHAKE = false;
 let SCREEN_SHAKE_X = 5;
 let SCREEN_SHAKE_Y = 5;
+let SCREEN_SHAKE_RED = true;
 let screenShakeTimer = new Timer(0.1, { cb: setScreenShake, arg: false });
 let SAVING = false;
 let SAVING_SPRITE = null;
@@ -28,19 +29,21 @@ MOUSE_SPRITE.addAnimation("normal", { x: 114, y: 34 });
 MOUSE_SPRITE.addAnimation("hover", { x: 124, y: 34 });
 MOUSE_SPRITE.addAnimation("down", { x: 134, y: 34 });
 MOUSE_SPRITE.addAnimation("entry", { x: 144, y: 34 });
+MOUSE_SPRITE.addAnimation("error", { x: 154, y: 34 });
 MOUSE_SPRITE.changeAnimation("normal");
 //TODO 
 //! Move these 
-// const SERVER_URL = "http://localhost:3000/test";
-const SERVER_URL = "https://kanaworld.herokuapp.com/test";
-let bLogged = false;
+const SERVER_URL = "http://localhost:3000/test";
+// const SERVER_URL = "https://kanaworld.herokuapp.com/test";
 let bAlreadyExists = false;
+let bEntryError = false;
 let bIncorrectCredentials = false;
 let messageTimeOut = null;
 let USER = {
     id: -1,
     name: "",
-    saveData: ""
+    saveData: "",
+    token: ""
 }
 //! --------------
 
@@ -59,7 +62,7 @@ let USER = {
  * DEBUG
  */
 let log = console.log.bind(console);
-let titleSpeed = 0.2; // 0.2 - 2
+let titleSpeed = 2; // 0.2 - 2
 
 let bStatsDebug = false;
 let debugDt = 0;
@@ -74,9 +77,6 @@ let imageDatasArr = [];
 SaveManager.init();
 SaveManager.load();
 
-MUSIC_VOLUME = SaveManager.SAVE_DATA['bgm'];
-SFX_VOLUME = SaveManager.SAVE_DATA['sfx'];
-
 const MAIN_STATE = Object.freeze({
     Load: -1,
     Language: 0,
@@ -90,7 +90,8 @@ const MAIN_STATE = Object.freeze({
     LessonTutorial: 8,
     Introduction: 9,
     FreeMode: 10,
-    Login: 11
+    Login: 11,
+    Error: 12
 })
 
 let mainState = 0;
@@ -189,6 +190,9 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
         case MAIN_STATE.Login:
             Login.update(dt);
             break;
+        case MAIN_STATE.Error:
+            ErrorScreen.update(dt);
+            break;
     }
     if (SAVING) SAVING_SPRITE.update(dt);
 
@@ -238,12 +242,15 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
         case MAIN_STATE.Login:
             Login.draw(ctx);
             break;
+        case MAIN_STATE.Error:
+            ErrorScreen.draw(ctx);
+            break;
     }
 
     if (SAVING) SAVING_SPRITE.draw(ctx);
 
 
-    if (SCREEN_SHAKE) {
+    if (SCREEN_SHAKE && SCREEN_SHAKE_RED) {
         canvas.style.backgroundColor = "rgb(255,50,50)"
     }
 
@@ -255,13 +262,7 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
         ctx.fillText("fps: " + Math.floor(dt * 3750), 0, 20);
     }
 
-
     ctx.font = "10px jpfont";
-    // if (SaveManager.bSaveDataExists) {
-    //     ctx.fillText("Save?: SAVE DATA", 0, 10);
-    // } else {
-    //     ctx.fillText("Save?: NO SAVE DATA", 0, 10);
-    // }
 
     if (!Transition.bActive) {
         MOUSE_SPRITE.ox = MOUSE_SPRITE.currentAnimation.origin.x + (MOUSE_SPRITE.width * MOUSE_SPRITE.currentFrame);
@@ -275,7 +276,6 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
 function startBtnCB(pParam) {
     mainState = MAIN_STATE.Game;
 
-    // console.log(pParam);
     let bLessonRange = false;
     switch (pParam.testType) {
         case "Training":
@@ -365,6 +365,10 @@ function changeMainState(pNewState) {
             LessonTutorial.changeState(LessonTutorial.STATE.Main);
             break;
 
+        case MAIN_STATE.Error:
+            ErrorScreen.init();
+            ErrorScreen.changeState(ErrorScreen.STATE.Main);
+            break;
     }
 }
 
@@ -394,6 +398,9 @@ function toMainMenu() {
                 t.currentFrame = 0;
             })
             if (b.bCanMove) b.setMoving(true);
+        });
+        Panel.currentList.forEach(p => {
+            if (p.bCanMove) p.setMoving(true);
         });
     }
 

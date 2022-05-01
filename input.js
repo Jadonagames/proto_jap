@@ -13,14 +13,14 @@ class Input {
 
     static LC_alphabet = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
     static UC_alphabet = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"];
-    static num = ["0","1","2","3","4","5","6","7","8","9"];
+    static num = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     static bCaps = true;
 
-    constructor() {}
+    constructor() { }
 
     static init() {
-        
-        
+
+
         this.keyboardPanel = new Panel({ w: 450, h: 124, v: 6 }, 0, 300, null, "", null, "", 8);
         this.keyboardPanel.setDestination({ x: 0, y: CANVAS_HEIGHT - 124 });
         this.keyboardPanel.setCanMove(true);
@@ -28,23 +28,22 @@ class Input {
         this.keyboardPanel.setMoveCB(Input.activeKeyboardBtn.bind(this), "");
         Input.keyboardSpriteList.push(this.keyboardPanel.getSprite());
 
-        this.keyboardSprite = new Sprite({ w: 33, h: 24}, 10, 8, this.keyboardPanel);
-        this.keyboardSprite.addAnimation("normal", {x: 931, y: 90});
-        this.keyboardSprite.addAnimation("nope", {x: 964, y: 90}, 4, 0.4, false);
-        this.keyboardSprite.setAnimationCB("nope", { cb: Input.hideCloseKeyboardMessage.bind(this), arg: ""});
+        this.keyboardSprite = new Sprite({ w: 33, h: 24 }, 10, 8, this.keyboardPanel);
+        this.keyboardSprite.addAnimation("normal", { x: 931, y: 90 });
+        this.keyboardSprite.addAnimation("nope", { x: 964, y: 90 }, 4, 0.4, false);
+        this.keyboardSprite.setAnimationCB("nope", { cb: Input.hideCloseKeyboardMessage.bind(this), arg: "" });
         this.keyboardSprite.changeAnimation("normal");
         Input.keyboardSpriteList.push(this.keyboardSprite);
 
-        this.keyboardInstructionPanel = new Panel({w: 150, h: 20}, 50, 5, this.keyboardPanel, "", null, "keyboard_instruction", 0, true);
-        this.keyboardInstructionPanel.getSprite().addAnimation("normal", {x: 352, y: 208}); //? Espace vide dans la sprite sheet
+        this.keyboardInstructionPanel = new Panel({ w: 150, h: 20 }, 50, 5, this.keyboardPanel, "", null, "keyboard_instruction", 0, true);
+        this.keyboardInstructionPanel.getSprite().addAnimation("normal", { x: 352, y: 208 }); //? Espace vide dans la sprite sheet
         this.keyboardInstructionPanel.getSprite().changeAnimation("normal");
         this.keyboardInstructionPanel.setFontColor("rgba(162,162,162,1)", "rgba(255,0,0,1)");
         this.keyboardInstructionPanel.setAlpha(0);
         this.keyboardInstructionPanel.setAlignText(0);
-        this.keyboardInstructionPanel.setIdTest(1);
         Input.keyboardSpriteList.push(this.keyboardInstructionPanel.getSprite());
 
-        let originX = centerX(91,1,1);
+        let originX = centerX(91, 1, 1);
         let originY = CANVAS_HEIGHT - 36;
         let originDestinationX = originX;
         let originDestinationY = CANVAS_HEIGHT - 26;
@@ -57,8 +56,8 @@ class Input {
         this.virtualKeyboardMessage.setTextOverflow(true);
         this.virtualKeyboardMessage.setOffsets(5, 10);
         this.virtualKeyboardMessage.setMovingType(Panel.MOVING_TYPE.ComeAndGo);
-        this.virtualKeyboardMessage.setOriginPos({x: originX, y: originY});
-        this.virtualKeyboardMessage.setOriginDestination({x: originDestinationX, y: originDestinationY});
+        this.virtualKeyboardMessage.setOriginPos({ x: originX, y: originY });
+        this.virtualKeyboardMessage.setOriginDestination({ x: originDestinationX, y: originDestinationY });
         this.virtualKeyboardMessage.beginMoving({ x: originDestinationX, y: originDestinationY }, 1);
         Input.keyboardSpriteList.push(this.virtualKeyboardMessage.getSprite());
 
@@ -117,7 +116,7 @@ class Input {
             }
 
             let alphabetBtn = new KeyboardBtn({ w: 23, h: 22 }, x, y, this.keyboardPanel, { cb: Input.handleKeyboardClick, arg: i }, "", null, "alpha_" + Input.LC_alphabet[i], 0, true);
-            alphabetBtn.setAnimations({ x: 862, y: 92});
+            alphabetBtn.setAnimations({ x: 862, y: 92 });
             alphabetBtn.setFontColor("rgba(142,45,45,1)");
             alphabetBtn.setOffsets(-1, 13);
             alphabetBtn.setTextCase("all");
@@ -143,7 +142,7 @@ class Input {
             }
 
             let numBtn = new KeyboardBtn({ w: 23, h: 22 }, x, y, this.keyboardPanel, { cb: Input.handleKeyboardClick, arg: "num_" + i }, "", null, "num_" + i, 0, true);
-            numBtn.setAnimations({ x: 862, y: 92});
+            numBtn.setAnimations({ x: 862, y: 92 });
             numBtn.setFontColor("rgba(142,45,45,1)");
             numBtn.setOffsets(-1, 13);
             Input.keyboardSpriteList.push(numBtn.getSprite());
@@ -175,7 +174,7 @@ class Input {
 
         this.keyboardSprite.changeAnimation("normal");
         this.keyboardInstructionPanel.setAlpha(0);
-        
+
     }
 
     //?! Handle l'insertion d'un char dans les EntryField
@@ -249,7 +248,7 @@ class Input {
     static changeFocus(pDown) {
         let newIndex = -1;
         let oldIndex = -1;
-        EntryField.currentList.forEach( (e, index )=> {
+        EntryField.currentList.forEach((e, index) => {
             if (e.getState() == EntryField.STATE.Focus) {
                 oldIndex = index
                 if (pDown) {
@@ -269,7 +268,7 @@ class Input {
         });
 
         if (newIndex != -1 && oldIndex != -1) {
-    
+
             EntryField.currentList[newIndex].setState(EntryField.STATE.Focus);
             EntryField.currentList[newIndex].changeSpriteAnimation("focus");
             EntryField.currentList[newIndex].textOffsetX = EntryField.currentList[newIndex].textOffsetXFocus;
@@ -302,7 +301,7 @@ class Input {
             EntryField.currentList[oldIndex].textOffsetX = EntryField.currentList[oldIndex].textOffsetXOrigin;
             EntryField.currentList[oldIndex].textOffsetY = EntryField.currentList[oldIndex].textOffsetYOrigin;
         }
-        
+
 
     }
 
@@ -364,9 +363,6 @@ class Input {
             Input.keyboardList.forEach(b => {
                 b.setState(Button.STATE.Inactive);
             });
-
-
-
         } else { //? Open
             this.keyboardPanel.startPos.x = this.keyboardPanel.x;
             this.keyboardPanel.startPos.y = this.keyboardPanel.y;
@@ -374,7 +370,7 @@ class Input {
             this.keyboardPanel.setMoving(true);
             Input.bKeyboardClose = false;
 
-            this.openKeyboardBtn.setAnimations({ x: 626, y: 128 });
+            this.openKeyboardBtn.setAnimations({ x: 626, y: 129 });
             this.openKeyboardBtn.setState(Button.STATE.Inactive);
             this.openKeyboardBtn.getSprite().changeAnimation("Normal");
 
@@ -398,6 +394,11 @@ class Input {
             });
         } else {
             Input.resetVirtualKeyboardMessage();
+
+            //? Dernière fermeture avant de passer au splashscreen :
+            if (Login.bConnectionSucceed) {
+                Input.setKeyboardActive(false);
+            }
         }
     }
 
@@ -440,7 +441,7 @@ function keyDown(k) {
 
     k.preventDefault();
 
-    if (Input.bKeyboardActive && !Input.bIsKeyDown && k.key != "Shift") {
+    if (Input.bKeyboardActive && !Input.bIsKeyDown && k.key != "Shift" && !Login.bLoading) {
         // Input.bIsKeyDown = true;
 
         if (!Input.bKeyboardClose) {
@@ -451,8 +452,8 @@ function keyDown(k) {
                 Input.handleEntryField(k.key);
             } else if (k.key == "Backspace") {
                 Input.handleEntryField(-1);
-            } else if (k.key.slice(0,5) == "Arrow") {
-                switch(k.key.slice(5)) {
+            } else if (k.key.slice(0, 5) == "Arrow") {
+                switch (k.key.slice(5)) {
                     case "Left":
                         Input.moveCursor(false);
                         break;
@@ -469,8 +470,14 @@ function keyDown(k) {
                         break;
                 }
             } else if (k.key == "Enter") {
-                Input.changeFocus(true);
-                Input.bIsKeyDown = true;
+                if (Login.currentState == Login.STATE.Login && Login.loginSubmitBtn.getState() == Button.STATE.Normal) {
+                    Login.handleSubmit();
+                } else if (Login.currentState == Login.STATE.Signup && Login.submitBtn.getState() == Button.STATE.Normal) {
+                    Login.handleSubmit();
+                } else {
+                    Input.changeFocus(true);
+                    Input.bIsKeyDown = true;
+                }
             } else if (k.key == "Tab") {
                 if (k.shiftKey) {
                     Input.changeFocus(false);
@@ -612,17 +619,43 @@ function keyUp(k) {
      * DEBUG
      */
     if (k.code == "KeyQ") { // => A
-
-        // console.table(Button.currentList);
-        // Button.currentList.forEach(b => {
-
-        //     console.log(b.label + ":" + b.state);
-        // });
-
+        if (mainState == MAIN_STATE.Login) {
+            // Login.TEST();
+            // Login.schoolPaperStartLeaving();
+        }
 
         // Transition.active(5, 5, 451, 10);
 
         // displaySaving();
+    }
+
+    if (k.key == "$") {
+
+        // const saveData = JSON.stringify(SaveManager.JADONA);
+
+        // const id = USER.id
+        // const name = USER.name;
+
+        // const userData = JSON.stringify({
+        //     id,
+        //     name,
+        //     saveData
+        // });
+
+        // fetch(`${SERVER_URL}/save`, {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${USER.token}`
+        //     },
+        //     mode: 'cors',
+        //     body: userData
+        // }).then((response) => {
+        //     return response.json()
+        // }).then((res) => {
+        //     USER.saveData = "";
+        //     USER.saveData = SaveManager.SAVE_DATA;
+        // }).catch((e) => {})
     }
 
     if (k.code == "KeyE") {
@@ -766,7 +799,7 @@ canvas.addEventListener("mousemove", e => {
     } else {
         MOUSE_SPRITE.y = mouseY;
     }
-    if (!inTransition()) {
+    if (!inTransition() && mainState != MAIN_STATE.Error) {
         // pick(e.layerX, e.layerY);
 
         if (MainMenu.state != MainMenu.STATE.Transition && Game1.currentState != Game1.STATE.Transition) {
@@ -861,18 +894,18 @@ canvas.addEventListener("mousemove", e => {
                 }
             });
 
-            if (Input.bKeyboardActive) {
+            if (Input.bKeyboardActive && !Login.bLoading) {
                 Input.keyboardList.forEach(b => {
                     if (b.getState() != Button.STATE.Inactive && !b.bMoving) {
                         if (CollisionManager.MouseCollision(mouseX, mouseY, b.getPosition().x, b.getPosition().y, b.getSize().w, b.getSize().h)) {
                             if ((b.getSprite().tl != undefined && b.getSprite().tl.currentAnimation.name != "down") || // not staticSize
                                 (b.getSprite().tl == undefined && b.getSprite().currentAnimation.name != "down")) {    // staticSize
-    
+
                                 if (b.getState() != Button.STATE.Hover) {
                                     if (b.hoverCB) {
                                         b.hoverCB.cb(b.hoverCB.arg);
                                     }
-    
+
                                     b.setState(Button.STATE.Hover);
                                     b.changeSpriteAnimation("hover");
                                     MOUSE_SPRITE.changeAnimation("hover");
@@ -894,14 +927,14 @@ canvas.addEventListener("mousemove", e => {
                                         func();
                                     }
                                 }
-    
+
                                 b.setState(Button.STATE.Normal);
                                 b.changeSpriteAnimation("normal");
-                                
+
                                 MOUSE_SPRITE.changeAnimation("normal");
-    
+
                                 if (b.bTextOffsetChanged) b.resetOffsets();
-    
+
                             }
                         }
                     }
@@ -1022,7 +1055,7 @@ canvas.addEventListener("wheel", e => {
 
 canvas.addEventListener("mousedown", e => {
 
-    if (!inTransition() && e.button == 0) { // Left click !
+    if (!inTransition() && e.button == 0 && mainState != MAIN_STATE.Error) { // Left click !
 
         const mouseX = e.layerX / SCALE_X;
         const mouseY = e.layerY / SCALE_Y;
@@ -1071,7 +1104,7 @@ canvas.addEventListener("mousedown", e => {
                 return true;
             });
 
-            if (Input.bKeyboardActive) {
+            if (Input.bKeyboardActive && !Login.bLoading) {
                 Input.keyboardList.every(b => {
                     if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close) {
                         if (b.getState() == Button.STATE.Hover) {
@@ -1094,7 +1127,7 @@ canvas.addEventListener("mousedown", e => {
 
             let bClickedOnAnotherEntryField = false;
             let newIndex = -1;
-            EntryField.currentList.forEach( (e, index) => {
+            EntryField.currentList.forEach((e, index) => {
                 if (e.getState() != EntryField.STATE.Inactive) {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, e.x, e.y, e.getSize().w, e.getSize().h)) {
                         if (e.getState() == EntryField.STATE.Hover) {
@@ -1111,7 +1144,7 @@ canvas.addEventListener("mousedown", e => {
                         }
                         if (e.getState() == EntryField.STATE.Hover || e.getState() == EntryField.STATE.Focus) {
                             e.sp.cursor.changeAnimation("normal");
-    
+
                             if (mouseX < e.x + e.cursorPosXOrigin) {
                                 e.sp.cursor.offX = e.cursorPosXOrigin;
                             }
@@ -1130,7 +1163,7 @@ canvas.addEventListener("mousedown", e => {
 
             if (bClickedOnAnotherEntryField) {
 
-                EntryField.currentList.forEach( (e, index) => {
+                EntryField.currentList.forEach((e, index) => {
                     if (e.getState() == EntryField.STATE.Focus
                         && !CollisionManager.MouseCollision(mouseX, mouseY, e.x, e.y, e.getSize().w, e.getSize().h)
                         && !bClickedOnKeyboard) {
@@ -1139,7 +1172,7 @@ canvas.addEventListener("mousedown", e => {
                         e.sp.cursor.changeAnimation("none");
                         e.textOffsetX = e.textOffsetXOrigin;
                         e.textOffsetY = e.textOffsetYOrigin;
-    
+
                         if (e.focusCB) {
                             if (newIndex == 0) { //! Index en dur
                                 Login.bTooltipIncluded = false;
@@ -1164,7 +1197,7 @@ canvas.addEventListener("mousedown", e => {
 
 canvas.onclick = e => {
 
-    if (!inTransition() && e.button == 0) { // Left click !
+    if (!inTransition() && e.button == 0 && mainState != MAIN_STATE.Error) { // Left click !
 
         const mouseX = e.layerX / SCALE_X;
         const mouseY = e.layerY / SCALE_Y;
@@ -1222,28 +1255,28 @@ canvas.onclick = e => {
                 return true;
             });
 
-            if (Input.bKeyboardActive) {
+            if (Input.bKeyboardActive && !Login.bLoading) {
                 Input.keyboardList.every(b => {
                     if (b.getState() != Button.STATE.Inactive && !b.bMoving) {
                         if (b.getState() == Button.STATE.Hover) {
-    
+
                             if ((b.getSprite().class == 9 && b.getSprite().tl.currentAnimation.name != "down")
                                 || (b.getSprite().class != 9 && b.getSprite().currentAnimation.name != "down")
                             ) {
                                 return false;
                             }
-    
+
                             if (b.getHoverOffset()) {
                                 let func = translate.bind(b, { x: b.getHoverOffset().x, y: b.getHoverOffset().y }, true);
                                 func();
                             }
-    
+
                             if (b.bTextOffsetChanged) b.resetOffsets();
-    
+
                             b.setState(Button.STATE.Normal);
                             b.changeSpriteAnimation("normal");
                             MOUSE_SPRITE.changeAnimation("normal");
-    
+
                             if (b.callback.cb != null && b.callback.arg != null) {
                                 b.callback.cb(b.callback.arg);
                             } else {
@@ -1297,7 +1330,7 @@ canvas.onclick = e => {
                     return true;
                 });
 
-                if (Input.bKeyboardActive) {
+                if (Input.bKeyboardActive && !Login.bLoading) {
 
                     Input.keyboardList.every(b => {
                         if (b.getState() != Button.STATE.Inactive && !b.bMoving) {

@@ -231,6 +231,11 @@ class Sprite {
         this.height = pHeight;
     }
 
+    setScale(pX, pY) {
+        this.scaleX = pX;
+        this.scaleY = pY;
+    }
+
     setStartPos(pStart) {
         this.startPos = {
             x: pStart.x,
@@ -567,7 +572,7 @@ class Sprite {
 
                 //? To prevent quad bleeding for moving sprites
                 if (this.offsetSS == 1) {
-                    this.ox += this.offsetSS + (this.currentFrame*2);
+                    this.ox += this.offsetSS + (this.currentFrame * 2);
                 }
                 // this.ox = this.currentAnimation.origin.x + (11 * this.currentFrame);
 

@@ -306,7 +306,6 @@ class Game1 {
                 if (!MISSED_LIST.includes(RND_CHOICE.r)) {
                     MISSED_LIST.push(RND_CHOICE.r);
                 }
-                console.table(MISSED_LIST);
                 Game1.bAlreadyMissed = true;
                 this.setMiss();
                 setScreenShake(true, 0, 0);
@@ -472,7 +471,6 @@ class Game1 {
     }
 
     static stopTransition() {
-        // log("stop transition");
         this.bStartTransition = false;
         this.start.delete = true;
         Game1.transitionList = [];

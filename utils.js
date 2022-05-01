@@ -69,6 +69,22 @@ function centerXElement(pElement, pWidth = 0, pDistance = 0, pDirection = 0) {
         }
     }
 }
+
+function centerYElement(pElement, pHeight = 0, pDistance = 0, pDirection = 0) {
+    if (pDirection == 0) { // left
+        if (pElement instanceof Panel && Array.isArray(pElement.id)) {
+            return Math.floor((pElement.totalHeight * 0.5) - (pHeight * 0.5) - pDistance);
+        } else {
+            return Math.floor((pElement.height * 0.5) - (pHeight * 0.5) - pDistance);
+        }
+    } else { // right
+        if (pElement instanceof Panel && Array.isArray(pElement.id)) {
+            return Math.floor((pElement.totalHeight * 0.5) - (pHeight * 0.5) + pDistance);
+        } else {
+            return Math.floor((pElement.height * 0.5) - (pHeight * 0.5) + pDistance);
+        }
+    }
+}
 // First letter UpperCase
 function firstUC(pString) {
     return pString[0].toUpperCase() + pString.slice(1);
@@ -188,7 +204,7 @@ function displayTooltip(pArgs) {
                 }
             })
             break;
-        case "login.signup": 
+        case "login.signup":
             pArgs.tooltip.forEach(sp => {
                 if (!Login.bTooltipIncluded) {
                     Login.bTooltipIncluded = true;
@@ -602,7 +618,6 @@ function checkIfValid(pChosen) {
         if (!MISSED_LIST.includes(RND_CHOICE.r)) {
             MISSED_LIST.push(RND_CHOICE.r);
         }
-        // console.table(MISSED_LIST);
         if (!Game1.bAlreadyMissed) {
             Game1.bAlreadyMissed = true;
             Game1.setMiss();
@@ -734,10 +749,11 @@ function screenShake(pCtx, pDx = 5, pDy = 5) {
     pCtx.translate(dx, dy);
 }
 
-function setScreenShake(pBool, pX = 5, pY = 5) {
+function setScreenShake(pBool, pX = 5, pY = 5, pRed = true) {
     SCREEN_SHAKE = pBool;
     SCREEN_SHAKE_X = pX;
     SCREEN_SHAKE_Y = pY;
+    SCREEN_SHAKE_RED = pRed;
     if (!pBool) {
         canvas.style.backgroundColor = canvasOriginBgColor;
     }
@@ -752,13 +768,29 @@ function setScreenShake(pBool, pX = 5, pY = 5) {
 //!        | (   ) |  | (           | |   
 //!        | )   ( |  | )        ___) (___
 //!        |/     \|  |/         \_______/
-                               
+
+
+function API_Connection_Test() {
+    fetch(`${SERVER_URL}/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+    }).then((response) => {
+        return response.json()
+    }).then((res) => {
+        if (res == "OK") {
+            LoadScreen.setConnectionStatus(true);
+        }
+    }).catch((e) => {
+        LoadScreen.setConnectionStatus(false);
+    })
+}
+
 function API_Login(pName, pPassword) {
     const name = pName;
     const password = pPassword;
-
-    log("name : " + name + " | pass : " + password);
-    // return;
 
     const loginData = JSON.stringify({
         name,
@@ -778,17 +810,17 @@ function API_Login(pName, pPassword) {
         log(res);
 
         if (res.error) {
-            setScreenShake(true, 5, 5);
-            bIncorrectCredentials = true;
-            messageTimeOut = setTimeout(stopMessage, 2000);
+            let timeout = setTimeout(Login.displayErrorMessage, 1000, 0);
         } else {
-            bLogged = true;
             USER.id = res.userId
             USER.name = res.userName;
             USER.saveData = res.saveData;
+            USER.token = res.token;
             SaveManager.load(USER.saveData)
+
+            let timeout = setTimeout(Login.connectionSucceed.bind(Login), 2000, false);
         }
-    }).catch((e) => console.log(e))
+    }).catch((e) => { })
 }
 
 function API_Signup(pName, pPassword) {
@@ -798,6 +830,26 @@ function API_Signup(pName, pPassword) {
     // const password = "azerty";
     const name = pName;
     const password = pPassword;
+    let bNameOk = false;
+    let bPassOk = false;
+    let authorizedChar = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    if (name.length >= 6 && name.length <= 20) {
+        bNameOk = true;
+        for (let i = 0; i < name.length; i++) {
+            if (!authorizedChar.includes(name[i])) {
+                bNameOk = false;
+            }
+        }
+    }
+    if (password.length >= 6 && password.length <= 20) {
+        bPassOk = true;
+        for (let i = 0; i < password.length; i++) {
+            if (!authorizedChar.includes(password[i])) {
+                bPassOk = false;
+            }
+        }
+    }
     const saveData = JSON.stringify(SaveManager.BLANK_SAVE_DATA);
 
     const signupData = JSON.stringify({
@@ -806,30 +858,43 @@ function API_Signup(pName, pPassword) {
         saveData
     });
 
-    // log("Signup Data : ");
-    // log(signupData);
+    if (bNameOk && bPassOk) {
+        fetch(`${SERVER_URL}/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            body: signupData
+        }).then((response) => {
+            return response.json()
+        }).then((res) => {
+            log(res);
+            if (res.error === "already") {
+                let timeout = setTimeout(Login.displayErrorMessage, 1000, 1);
+            } else if (res.error === "Ko") {
+                let timeout = setTimeout(Login.displayErrorMessage, 1000, 2);
+            } else {
+                USER.id = res.userId
+                USER.name = res.userName;
+                USER.saveData = res.saveData;
+                USER.token = res.token;
+                SaveManager.load(USER.saveData);
 
-    fetch(`${SERVER_URL}/signup`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        mode: 'cors',
-        body: signupData
-    }).then((response) => {
-        return response.json()
-    }).then((res) => {
-        if (res.error === "already") {
-            bAlreadyExists = true;
-            setScreenShake(true, 5, 5);
-            messageTimeOut = setTimeout(stopMessage, 2000);
-        }
+                let timeout = setTimeout(Login.connectionSucceed.bind(Login), 2000, false);
+            }
 
-    }).catch((e) => console.log(e))
+        }).catch((e) => { })
+    }
 
 }
 
-function stopMessage() {
+function API_Save() {
+
+}
+
+function stopErrorMessage() {
     bAlreadyExists = false;
     bIncorrectCredentials = false;
+    bEntryError = false;
 }

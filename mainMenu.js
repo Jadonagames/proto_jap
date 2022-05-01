@@ -104,6 +104,39 @@ class MainMenu {
         flagImg.changeAnimation("close");
         MainMenu.mainList.push(flagImg);
 
+        let panelLength = USER.name.length * 5;
+
+        let userPanel = new Panel({ w: 1, h: 14 }, -panelLength - 5, CANVAS_HEIGHT - 14, null, "mainmenu", MainMenu.STATE.Main, "", -1, true);
+        userPanel.setNumberBool(true);
+        userPanel.setTextOverflow(true);
+        userPanel.setAlignText(0);
+        userPanel.setOffsets(0, 11);
+        userPanel.setLabel(USER.name);
+        userPanel.setFontColor("rgba(217, 160, 102, 1)")
+        userPanel.getSprite().addAnimation("normal", { x: 11, y: 77 });
+        userPanel.getSprite().changeAnimation("normal");
+        userPanel.getSprite().setScale(panelLength, 1);
+        userPanel.totalWidth = panelLength;
+        userPanel.setDestination({ x: 13, y: CANVAS_HEIGHT - 14 });
+        userPanel.setCanMove(true);
+        userPanel.setMovingSpeed(0.5);
+        MainMenu.mainList.push(userPanel.getSprite());
+
+        let userPanelLeft = new Sprite({ w: 13, h: 14 }, -13, 0, userPanel);
+        userPanelLeft.addAnimation("normal", { x: 0, y: 77 });
+        userPanelLeft.changeAnimation("normal");
+        MainMenu.mainList.push(userPanelLeft);
+
+        let userPanelRight = new Sprite({ w: 5, h: 14 }, userPanel.totalWidth, 0, userPanel);
+        userPanelRight.addAnimation("normal", { x: 13, y: 77 });
+        userPanelRight.changeAnimation("normal");
+        MainMenu.mainList.push(userPanelRight);
+
+
+
+
+
+
 
         let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, {
             cb: FadeEffect.fade.bind(FadeEffect),
@@ -408,12 +441,11 @@ class MainMenu {
         }).then((response) => {
             return response.json()
         }).then((res) => {
-            bLogged = true;
             USER.id = res.userId
             USER.name = res.userName;
             USER.saveData = res.saveData;
             SaveManager.load(USER.saveData)
-        }).catch((e) => console.log(e))
+        }).catch((e) => { })
     }
 
     static API_Signup() {
@@ -428,9 +460,6 @@ class MainMenu {
             password,
             saveData
         });
-
-        // log("Signup Data : ");
-        // log(signupData);
 
         fetch(`${SERVER_URL}/signup`, {
             method: 'POST',
@@ -447,7 +476,7 @@ class MainMenu {
                 alreadyTimeOut = setTimeout(MainMenu.stopAlreadyExistsMessage, 2000);
             }
 
-        }).catch((e) => console.log(e))
+        }).catch((e) => { })
 
     }
 
@@ -557,6 +586,7 @@ class MainMenu {
 
             this.deleteSaveWarningPanel = new Panel({ w: 238, h: 50, v: 1 }, 0, 35, this.deleteSavePanel, "mainmenu", MainMenu.STATE.Options, "delete_save_warning", 2);
             this.deleteSaveWarningPanel.setFontColor("rgba(200,200,200,1)", "rgba(255,0,0,1)");
+            this.deleteSaveWarningPanel.setAlpha(0);
             MainMenu.optionsList.push(this.deleteSaveWarningPanel.getSprite());
 
             this.deleteSaveYesBtn = new Button({ w: 50, h: 22, v: 6 }, centerXElement(this.deleteSavePanel, 50, 50), 70, this.deleteSavePanel, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: false, delete: true } }, "mainmenu", MainMenu.STATE.Options, "yes", 41);
@@ -786,11 +816,6 @@ class MainMenu {
         // ctx.shadowOffsetY = 2;
         // ctx.shadowBlur = 0;
         ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
-
-        if (bLogged) {
-            ctx.fillStyle = "rgb(0,0,0)";
-            ctx.fillText("Logged : " + USER.name, 10, CANVAS_HEIGHT - 4);
-        }
 
         if (bAlreadyExists) {
             ctx.fillStyle = "rgb(255,0,0)";

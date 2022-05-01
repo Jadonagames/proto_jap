@@ -558,10 +558,22 @@ class Panel {
         this.bChangeOnHover = pBool;
     }
 
-    setMoveCB(pCallback, pParam) {
-        this.moveCB = {
-            cb: pCallback,
-            arg: pParam
+    setMoveCB(pCallback, pParam = "") {
+        if (pCallback == null) {
+            this.moveCB = null;
+        } else if (Array.isArray(pCallback)) {
+            this.moveCB = [];
+            pCallback.forEach(c => {
+                this.moveCB.push({
+                    cb: c.cb,
+                    arg: c.arg
+                });
+            });
+        } else {
+            this.moveCB = {
+                cb: pCallback,
+                arg: pParam
+            }
         }
     }
 
@@ -733,14 +745,10 @@ class Panel {
                 });
             }
             this.bFading = false;
-            // this.changeDirection();
-            // let tmpY = this.destination.y;
-            // this.destination.y = this.startPos.y;
-            // this.startPos.y = tmpY;
         }
     }
 
-    beginMoving(pDestination, pMoveSpeed = 0.5, pBoolAlpha = true, pStartAlpha = 0, pFade = 0.02) { //? Lance des fonctions récurrentes pour éviter les répétition
+    beginMoving(pDestination, pMoveSpeed = 0.5, pBoolAlpha = true, pStartAlpha = 0, pFade = 0.02, pDirection = 1) { //? Lance des fonctions récurrentes pour éviter les répétition
         this.setDestination({ x: pDestination.x, y: pDestination.y });
         this.setCanMove(true);
         this.setMovingSpeed(pMoveSpeed);
@@ -748,13 +756,29 @@ class Panel {
 
         if (pBoolAlpha) {
             this.setAlpha(pStartAlpha);
-            this.fade(pFade);
+            this.fade(pFade, pDirection);
         }
     }
 
     setChildBtn(pBtn, pList) {
         this.childButton = pBtn;
         this.childButtonList = pList;
+    }
+
+    delete() {
+        this.removeFromCurrentList();
+        this.removeFromList();
+        this.getSprite().delete = true;
+        this.children.forEach(c => {
+            if (c instanceof Panel || c instanceof Button) {
+                c.removeFromCurrentList();
+                c.removeFromList();
+                c.getSprite().delete = true;
+            }
+            if (c instanceof Sprite) {
+                c.delete = true;
+            }
+        });
     }
 
     update(dt) {
@@ -785,7 +809,7 @@ class Panel {
             } else {
 
                 if (this.speedCount <= this.movingSpeed) {
-    
+
                     // this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
                     // this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
                     if (this.arriveDir) {
@@ -795,25 +819,39 @@ class Panel {
                         this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
                         this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
                     }
-    
+
                     this.speedCount += dt;
-    
+
                 } else {
                     this.x = this.destination.x;
                     this.y = this.destination.y;
                     this.bMoving = false;
                     this.speedCount = 0;
-    
+
                     if (this.leaveDir) {
                         this.removeFromList();
                         this.removeFromCurrentList();
                         this.getSprite().delete = true;
                     }
                     if (this.moveCB != null) {
-                        this.moveCB.cb(this.moveCB.arg);
-                    } 
+                        if (Array.isArray(this.moveCB)) {
+                            this.moveCB.forEach(cb => {
+                                if (cb.arg !== null) {
+                                    cb.cb(cb.arg);
+                                } else {
+                                    cb.cb();
+                                }
+                            })
+                        } else {
+                            if (this.moveCB.arg !== null) {
+                                this.moveCB.cb(this.moveCB.arg);
+                            } else {
+                                this.moveCB.cb();
+                            }
+                        }
+                    }
                 }
-    
+
             }
             this.children.forEach(c => {
                 if (c instanceof Panel || c instanceof Button || c instanceof EntryField) {
@@ -928,7 +966,11 @@ class Panel {
             switch (this.alignText) {
                 case this.ALIGN_TEXT.Left:
                     ctx.textAlign = "left";
-                    ctx.fillText(LANG[this.label], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                    if (this.bNumber) {
+                        ctx.fillText(this.label, this.x + this.textOffsetX, this.y + this.textOffsetY);
+                    } else {
+                        ctx.fillText(LANG[this.label], this.x + this.textOffsetX, this.y + this.textOffsetY);
+                    }
                     break;
                 case this.ALIGN_TEXT.Center:
                     ctx.textAlign = "center";

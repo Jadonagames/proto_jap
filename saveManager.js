@@ -442,6 +442,42 @@ class SaveManager {
     }
     static SAVE_DATA = {};
 
+    static JADONA = {
+        intro: 1, prologue: 12, lessons: {
+            h1: { fullcomplete: 1, finish: 1, lessonTestGeneral: 48, lessonTest1: 48, lessonTest2: 48, fullTestGeneral: 48, fullTest1: 48, fullTest2: 48, buttonAnimation: 1, newAnimation: 1, newFinish: 1, fullcompleteAnimation: 0 },
+            h2: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 48, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 1, newAnimation: 1, newFinish: 1, fullcompleteAnimation: 0 },
+            h3: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h4: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h5: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h6: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h7: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h8: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h9: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h10: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h11: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h12: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h13: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h14: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            h15: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k1: { fullcomplete: 1, finish: 1, lessonTestGeneral: 48, lessonTest1: 48, lessonTest2: 48, fullTestGeneral: 48, fullTest1: 48, fullTest2: 48, buttonAnimation: 1, newAnimation: 1, newFinish: 1, fullcompleteAnimation: 0 },
+            k2: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 1, newAnimation: 1, newFinish: 0, fullcompleteAnimation: 0 },
+            k3: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k4: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k5: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k6: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k7: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k8: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k9: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k10: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k11: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k12: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k13: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k14: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 },
+            k15: { fullcomplete: 0, finish: 0, lessonTestGeneral: 0, lessonTest1: 0, lessonTest2: 0, fullTestGeneral: 0, fullTest1: 0, fullTest2: 0, buttonAnimation: 0, newAnimation: 0, newFinish: 0, fullcompleteAnimation: 0 }
+        },
+        freemode: { game1: { hiraganaGeneral: 0, hiragana1: 0, hiragana2: 0, katakanaGeneral: 0, katakana1: 0, katakana2: 0 } }, bgm: 0.2, sfx: 0.1
+    }
+
     constructor() {
     }
 
@@ -561,17 +597,22 @@ class SaveManager {
             fetch(`${SERVER_URL}/save`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${USER.token}`
                 },
                 mode: 'cors',
                 body: userData
             }).then((response) => {
                 return response.json()
             }).then((res) => {
-                console.log(res)
-                USER.saveData = "";
-                USER.saveData = SaveManager.SAVE_DATA;
-            }).catch((e) => console.log(e))
+                if (res.error === 0) {
+                    changeMainState(MAIN_STATE.Error);
+
+                } else {
+                    USER.saveData = "";
+                    USER.saveData = SaveManager.SAVE_DATA;
+                }
+            }).catch((e) => { })
 
             // localStorage.setItem("KanaWorldSaveData", saveDataJSON);
 
@@ -624,6 +665,9 @@ class SaveManager {
             SaveManager.SAVE_DATA["freemode"]["game1"]["katakana2"] = saveData["freemode"]["game1"]["katakana2"];
             SaveManager.SAVE_DATA["bgm"] = saveData["bgm"];
             SaveManager.SAVE_DATA["sfx"] = saveData["sfx"];
+
+            MUSIC_VOLUME = SaveManager.SAVE_DATA['bgm'];
+            SFX_VOLUME = SaveManager.SAVE_DATA['sfx'];
         }
     }
 
@@ -632,11 +676,13 @@ class SaveManager {
     }
 
     static delete() {
-        localStorage.removeItem("KanaWorldSaveData");
         SaveManager.bSaveDataExists = false;
         SaveManager.SAVE_DATA = null;
 
         SaveManager.init();
+
+        SaveManager.save([{ type: "bgm", value: MUSIC_VOLUME }]);
+        SaveManager.save([{ type: "sfx", value: SFX_VOLUME }]);
 
         Lessons.FIRST_TIME = true;
         LessonBtn.list.forEach(b => {
@@ -659,6 +705,32 @@ class SaveManager {
 
         LessonTutorial.bInit = false;
         LessonTutorial.mainList = [];
+
+        let saveData = JSON.stringify(SaveManager.SAVE_DATA); //? Empty
+
+        const id = USER.id
+        const name = USER.name;
+
+        const userData = JSON.stringify({
+            id,
+            name,
+            saveData
+        });
+
+        fetch(`${SERVER_URL}/save`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${USER.token}`
+            },
+            mode: 'cors',
+            body: userData
+        }).then((response) => {
+            return response.json()
+        }).then((res) => {
+            USER.saveData = "";
+            USER.saveData = SaveManager.SAVE_DATA;
+        }).catch((e) => { })
 
     }
 }
@@ -819,5 +891,44 @@ h5 k3
     "k15":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0}
 },
     "freemode":{"game1":{"hiraganaGeneral":0,"hiragana1":0, "hiragana2":0,"katakanaGeneral":0,"katakana1":0,"katakana2":0}},"bgm":0.7,"sfx":0.8}
+
+*/
+
+/* JADONA
+h2 k2
+
+{"intro":1,"prologue":12,"lessons":{
+    "h1":{"fullcomplete":1,"finish":1,"lessonTestGeneral":48,"lessonTest1":48,"lessonTest2":48,"fullTestGeneral":48,"fullTest1":48,"fullTest2":48,"buttonAnimation":1,"newAnimation":1,"newFinish":1,"fullcompleteAnimation":0},
+    "h2":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":48,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":1,"newAnimation":1,"newFinish":1,"fullcompleteAnimation":0},
+    "h3":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h4":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h5":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h6":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h7":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h8":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h9":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h10":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h11":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h12":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h13":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h14":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "h15":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k1":{"fullcomplete":1,"finish":1,"lessonTestGeneral":48,"lessonTest1":48,"lessonTest2":48,"fullTestGeneral":48,"fullTest1":48,"fullTest2":48,"buttonAnimation":1,"newAnimation":1,"newFinish":1,"fullcompleteAnimation":0},
+    "k2":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":1,"newAnimation":1,"newFinish":0,"fullcompleteAnimation":0},
+    "k3":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k4":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k5":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k6":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k7":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k8":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k9":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k10":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k11":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k12":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k13":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k14":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0},
+    "k15":{"fullcomplete":0,"finish":0,"lessonTestGeneral":0,"lessonTest1":0,"lessonTest2":0,"fullTestGeneral":0,"fullTest1":0,"fullTest2":0,"buttonAnimation":0,"newAnimation":0,"newFinish":0,"fullcompleteAnimation":0}
+},
+    "freemode":{"game1":{"hiraganaGeneral":0,"hiragana1":0,"hiragana2":0,"katakanaGeneral":0,"katakana1":0,"katakana2":0}},"bgm":0.2,"sfx":0.2}
 
 */

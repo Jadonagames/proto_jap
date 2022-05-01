@@ -113,7 +113,7 @@ class DialogPanel extends Panel {
             this.currentLine++;
             if (this.currentLine == this.completeLines.length) {
                 if (!this.bDialogEnd) {
-                    this.switchButtons(true); 
+                    this.switchButtons(true);
                     this.bDialogEnd = true;
                 }
 
@@ -148,12 +148,11 @@ class DialogPanel extends Panel {
                 this.scriptCallback(this.currentPhrase);
             }
         } else { //? End of Dialog
-            log("End of dialog");
             this.currentPhrase--;
-            switch(this.stateList) {
+            switch (this.stateList) {
                 case "introduction":
                     Introduction.desactiveDialogButton();
-                    break;                    
+                    break;
                 case "lessonTutorial":
                     LessonTutorial.desactiveDialogButton();
                     break;
@@ -173,7 +172,7 @@ class DialogPanel extends Panel {
     }
 
     speedPhrase() {
-        for (let i = 0; i <  this.completeLines.length; i++) {
+        for (let i = 0; i < this.completeLines.length; i++) {
             this.lines[i] = this.completeLines[i];
         }
         if (!this.bDialogEnd) {
@@ -184,10 +183,10 @@ class DialogPanel extends Panel {
     }
 
     switchButtons(pSpeedToNext) {
-        switch(this.stateList) {
+        switch (this.stateList) {
             case "introduction":
                 Introduction.switchButtons(pSpeedToNext);
-                break;                    
+                break;
             case "lessonTutorial":
                 LessonTutorial.switchButtons(pSpeedToNext);
                 break;
@@ -204,9 +203,6 @@ class DialogPanel extends Panel {
 
         if (this.label != "") {
             this.wordsArr = LANG[this.label].split(' ');
-
-            // log("WORD ARR : ");
-            // log(this.wordsArr);
 
             if (this.wordsArr.length == 1 && this.wordsArr[0] != "" && this.bFirstUC) this.wordsArr[0] = firstUC(this.wordsArr[0]);
 

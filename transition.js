@@ -126,7 +126,6 @@ class Transition {
         if (this.type == "l") { //? LessonBtn show
 
             if (this.bStartOpen) {
-                log("start open ! ");
 
                 this.circle.speedCount += dt;
                 if (this.circle.speedCount >= this.circle.speed) {
@@ -173,8 +172,6 @@ class Transition {
                 }
 
             } else {
-
-                log("fermeture");
 
                 //? Fermeture 
                 this.circle.speedCount += dt;

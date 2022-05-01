@@ -8,29 +8,46 @@ class LoadScreen {
 
     static list = [];
 
+    static connectionOK = false;
+
     constructor() {
     }
 
     static init() {
         canvas.style.backgroundColor = "rgb(213, 210, 193)";
 
-        this.bBool = false;
-        this.loadTimer = new Timer(2, LoadScreen.stopLoading.bind(this));
+        this.bTimerOK = false;
+        this.loadTimer = new Timer(2, LoadScreen.stopTimer.bind(this));
+
         this.loadingSprite = new Sprite({ w: 16, h: 16 }, centerX(16), centerY(16))
         this.loadingSprite.addAnimation("normal", { x: 48, y: 16 }, 8, [0.3, 0.1, 0.05, 0.05, 0.05, 0.05, 0.05, 0.1]);
         this.loadingSprite.changeAnimation("normal");
         LoadScreen.list.push(this.loadingSprite);
+        API_Connection_Test();
     }
 
-    static stopLoading() {
-        this.bBool = true;
+    static stopTimer() {
+        this.bTimerOK = true;
+    }
+
+    static leaveLoadScreen() {
         changeMainState(MAIN_STATE.Language);
+    }
+
+    static setConnectionStatus(pConnectionOk) {
+        if (pConnectionOk) {
+            LoadScreen.connectionOK = true
+        } else {
+            this.loadingSprite.delete = true;
+            changeMainState(MAIN_STATE.Error);
+        }
     }
 
     static update(dt) {
 
-        this.loadTimer.update(dt);
-
+        if (!this.bTimerOK) {
+            this.loadTimer.update(dt);
+        }
         Sprite.manageBeforeUpdating(LoadScreen.list, dt);
 
         LoadScreen.list = LoadScreen.list.filter(sp => {
@@ -41,43 +58,100 @@ class LoadScreen {
     static draw(ctx) {
 
         Sprite.manageBeforeDrawing(LoadScreen.list);
-        /*
-        * DEBUG
-        */
 
-        if (!this.bBool) {
-
-            ctx.font = "10px jpfont";
-
-            ctx.fillStyle = "rgb(255, 255, 255)";
-            ctx.fillText("あいうえお", 10, 50);
-            ctx.fillText("かきくけこ", 10, 60);
-            ctx.fillText("さしすせそ", 10, 70);
-            ctx.fillText("たちつてと", 10, 80);
-            ctx.fillText("なにぬねの", 10, 90);
-            ctx.fillText("はひふへほ", 10, 100);
-            ctx.fillText("まみむめも", 10, 110);
-            ctx.fillText("や　ゆ　よ", 10, 120);
-            ctx.fillText("らりるれろ", 10, 130);
-            ctx.fillText("わ　　　を", 10, 140);
-            ctx.fillText("ん", 10, 150);
-
-            ctx.font = "10px kyokasho";
-
-            ctx.fillText("アイウエオ", 100, 50);
-            ctx.fillText("カキクケコ", 100, 60);
-            ctx.fillText("サシスセソ", 100, 70);
-            ctx.fillText("タチツテト", 100, 80);
-            ctx.fillText("ナニヌネノ", 100, 90);
-            ctx.fillText("ハヒフヘホ", 100, 100);
-            ctx.fillText("マミムメモ", 100, 110);
-            ctx.fillText("ヤ　ユ　ヨ", 100, 120);
-            ctx.fillText("ラリルレロ", 100, 130);
-            ctx.fillText("ワ　　　ヲ", 100, 140);
-            ctx.fillText("ン", 100, 150);
+        if (LoadScreen.connectionOK && this.bTimerOK) {
+            LoadScreen.leaveLoadScreen();
         }
 
-        // --------------- END DEBUG
+        ctx.font = "10px jpfont";
+        ctx.textAlign = "left";
+
+        // ctx.fillStyle = "rgb(255, 255, 255)";
+        ctx.fillStyle = "rgb(213, 210, 193)";
+        ctx.fillText("あいうえお", 340, 190);
+        ctx.fillText("かきくけこ", 340, 200);
+        ctx.fillText("さしすせそ", 340, 210);
+        ctx.fillText("たちつてと", 340, 220);
+        ctx.fillText("なにぬねの", 340, 230);
+        ctx.fillText("はひふへほ", 340, 240);
+        ctx.fillText("まみむめも", 340, 250);
+        ctx.fillText("や　ゆ　よ", 340, 260);
+        ctx.fillText("らりるれろ", 340, 270);
+        ctx.fillText("わ　　　を", 340, 280);
+        ctx.fillText("ん", 340, 290);
+
+        ctx.font = "10px kyokasho";
+
+        ctx.fillText("アイウエオ", 390, 190);
+        ctx.fillText("カキクケコ", 390, 200);
+        ctx.fillText("サシスセソ", 390, 210);
+        ctx.fillText("タチツテト", 390, 220);
+        ctx.fillText("ナニヌネノ", 390, 230);
+        ctx.fillText("ハヒフヘホ", 390, 240);
+        ctx.fillText("マミムメモ", 390, 250);
+        ctx.fillText("ヤ　ユ　ヨ", 390, 260);
+        ctx.fillText("ラリルレロ", 390, 270);
+        ctx.fillText("ワ　　　ヲ", 390, 280);
+        ctx.fillText("ン", 390, 290);
+
+        ctx.font = "30px kyokasho";
+
+        ctx.fillText("ABCDE", 0, 250);
+        ctx.fillText("あいうえお", 0, 280);
     }
 
+}
+
+class ErrorScreen {
+
+    static STATE = Object.freeze({
+        Main: 0,
+    });
+
+    static currentState = ErrorScreen.STATE.Main;
+
+    static list = [];
+
+    constructor() {
+    }
+
+    static init() {
+        canvas.style.backgroundColor = "rgb(213, 210, 193)";
+
+        MOUSE_SPRITE.changeAnimation("error");
+
+        this.sadMoe = new Sprite({ w: 22, h: 22 }, centerX(22), 160, null, "", { x: 2, y: 2 });
+        this.sadMoe.addAnimation("normal", { x: 448, y: 272 });
+        this.sadMoe.changeAnimation("normal");
+        ErrorScreen.list.push(this.sadMoe);
+
+    }
+
+    static update(dt) {
+        Sprite.manageBeforeUpdating(ErrorScreen.list, dt);
+        ErrorScreen.list = ErrorScreen.list.filter(sp => {
+            return !sp.delete;
+        });
+    }
+
+    static changeState(pNewState) {
+        ErrorScreen.state = pNewState;
+        Panel.resetTypeState("error", pNewState);
+        Button.resetTypeState("error", pNewState);
+    }
+
+    static draw(ctx) {
+
+        Sprite.manageBeforeDrawing(ErrorScreen.list);
+
+        ctx.font = "10px jpfont";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "rgb(255, 0, 0)";
+        ctx.fillText(translationEn["connection_error1"], 225, 50);
+        ctx.fillText(translationEn["connection_error2"], 225, 70);
+
+        ctx.fillText(translationFr["connection_error1"], 225, 100);
+        ctx.fillText(translationFr["connection_error2"], 225, 120);
+
+    }
 }
