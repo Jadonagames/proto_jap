@@ -33,8 +33,8 @@ MOUSE_SPRITE.addAnimation("error", { x: 154, y: 34 });
 MOUSE_SPRITE.changeAnimation("normal");
 //TODO 
 //! Move these 
-const SERVER_URL = "http://localhost:3000/test";
-// const SERVER_URL = "https://kanaworld.herokuapp.com/test";
+// const SERVER_URL = "http://localhost:3000/test";
+const SERVER_URL = "https://kanaworld.herokuapp.com/test";
 let bAlreadyExists = false;
 let bEntryError = false;
 let bIncorrectCredentials = false;
@@ -255,7 +255,7 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
     }
 
     // if (bStatsDebug) {
-    if (1) {
+    if (0) {
         ctx.textAlign = "left";
         ctx.font = "10px jpfont";
         ctx.fillText("Drawcalls: " + Sprite.debug_drawcalls, 0, 10);

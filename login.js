@@ -43,9 +43,6 @@ class Login {
         signupBtn.setOffsets(0, 22);
         Login.list.push(signupBtn.getSprite());
 
-        let goToSplashScreenBtn = new Button({ w: 60, h: 22, v: 8 }, centerX(60), centerY(22) + 100, null, Login.goToSplashScreen, "login", Login.STATE.Main, "go", 4);
-        goToSplashScreenBtn.setFontColor("rgba(142,45,45,1)");
-        Login.list.push(goToSplashScreenBtn.getSprite());
 
         Button.resetTypeState("login", Login.STATE.Main);
         Panel.resetTypeState("login", Login.STATE.Main);
@@ -393,6 +390,9 @@ class Login {
     }
 
     static connectionSucceed() {
+        if (MOUSE_SPRITE.currentAnimation.name != "normal") {
+            MOUSE_SPRITE.changeAnimation("normal");
+        }
         Login.bConnectionSucceed = true;
         this.loadingSprite.changeAnimation("valid");
     }
@@ -500,37 +500,6 @@ class Login {
             this.hankoPanel.setMoveCB(this.hanko.changeAnimation.bind(this.hanko), "stamp");
         }
     }
-
-    // static TEST() {
-    //     this.stamp = new Sprite({ w: 28, h: 28 }, 212, 139, this.schoolpaperBG);
-    //     this.stamp.addAnimation("normal", { x: 1200, y: 340 });
-    //     this.stamp.addAnimation("none", { x: 352, y: 208 }); //? Espace vide dans la sprite sheet
-    //     this.stamp.changeAnimation("none");
-    //     Login.signupList.push(this.stamp);
-
-    //     this.hankoPanel = new Panel({ w: 1, h: 1 }, 300, 250, null, "login", Login.STATE.Signup, "", 0, true);
-    //     this.hankoPanel.getSprite().addAnimation("normal", { x: 38, y: 1 });
-    //     this.hankoPanel.getSprite().changeAnimation("normal");
-    //     this.hankoPanel.setOriginPos({ x: 300, y: 244 });
-    //     this.hankoPanel.setOriginDestination({ x: 300, y: 164 });
-    //     this.hankoPanel.beginMoving({ x: 300, y: 164 });
-    //     Panel.currentList.push(this.hankoPanel);
-    //     Login.signupList.push(this.hankoPanel.getSprite());
-
-    //     this.hanko = new Sprite({ w: 35, h: 35 }, 0, 0, this.hankoPanel);
-    //     this.hanko.addAnimation("normal", { x: 1200, y: 304 });
-    //     this.hanko.addAnimation("stamp", { x: 1200, y: 304 }, 4, 0.2, false);
-    //     this.hanko.setAnimationCB("stamp", { cb: Login.hankoLeaving.bind(this), arg: "" });
-    //     this.hanko.setAnimationFrameCB("stamp", [{
-    //         nb: 2,
-    //         callback: Login.screenShake,
-    //     }]);
-    //     this.hanko.changeAnimation("normal");
-    //     this.hanko.setAlpha(0);
-    //     Login.signupList.push(this.hanko);
-
-    //     this.hankoPanel.setMoveCB(this.hanko.changeAnimation.bind(this.hanko), "stamp");
-    // }
 
     static screenShake() {
         setScreenShake(true, 2, 0, false);

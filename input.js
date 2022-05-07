@@ -629,9 +629,10 @@ function keyUp(k) {
         // displaySaving();
     }
 
-    if (k.key == "$") {
+    if (k.key == "$" && !Input.bKeyboardActive) {
 
         // const saveData = JSON.stringify(SaveManager.JADONA);
+        // const saveData = JSON.stringify(SaveManager.FULL);
 
         // const id = USER.id
         // const name = USER.name;
@@ -655,7 +656,7 @@ function keyUp(k) {
         // }).then((res) => {
         //     USER.saveData = "";
         //     USER.saveData = SaveManager.SAVE_DATA;
-        // }).catch((e) => {})
+        // }).catch((e) => { })
     }
 
     if (k.code == "KeyE") {

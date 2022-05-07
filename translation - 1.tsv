@@ -4,23 +4,23 @@ french_lang	Français	Français	Français
 japanese_lang	日本語	日本語	日本語
 ph_word	placeholder	placeholder	placeholder
 ph_text	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.	Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-ph_text_0	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.	Je vais faire mon tuto avec un système de dialogue comme ça. J'aurai mon petit personnage de professeur sur le côté.
-ph_text_1	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.	Avec affichage de quelques informations visuelles / animations au milieu de l'écran.
-ph_text_2	Puis fade out du panel de dialogue...	Puis fade out du panel de dialogue...	Puis fade out du panel de dialogue...
+ph_text_0			
+ph_text_1			
+ph_text_2			
 connection_error1	Oops! The connection to the server failed.	Oups ! La connexion au serveur a échouée.	Oups ! La connexion au serveur a échouée.
 connection_error2	Try to refresh the page or retry later...	Essayez de rafraîchir la page ou réessayez plus tard...	Essayez de rafraîchir la page ou réessayez plus tard...
 entry_error	An error occurred with name or password.	Erreur avec le nom ou le mot de passe.	Erreur avec le nom ou le mot de passe.
 			
-intro_text_0	Bienvenue dans KanaWorld. Avant de commencer je vais vous présenter quelques points importants à prendre en compte pour votre apprentissage des kana.	Bienvenue dans KanaWorld. Avant de commencer je vais vous présenter quelques points importants à prendre en compte pour votre apprentissage des kana.	
-intro_text_1	La langue japonaise est composée de trois systèmes d'écriture : Hiragana, Katakana et Kanji. Ces derniers tirent leur origine du système d'écriture Chinois.	La langue japonaise est composée de trois systèmes d'écriture : Hiragana, Katakana et Kanji. Ces derniers tirent leur origine du système d'écriture Chinois.	
-intro_text_2	Les Hiragana sont utilisés pour écrire tous les mots, les déclinaisons de verbe, former la grammaire etc...	Les Hiragana sont utilisés pour écrire tous les mots, les déclinaisons de verbe, former la grammaire etc...	
-intro_text_3	Les Katakana sont principalement utilisés pour retranscrire des mots étrangers. Des noms et prénoms par exemple. Ils sont aussi utilisés pour les onomatopées ou encore pour l'emphase ou des effets de style.	Les Katakana sont principalement utilisés pour retranscrire des mots étrangers. Des noms et prénoms par exemple. Ils sont aussi utilisés pour les onomatopées ou encore pour l'emphase ou des effets de style.	
-intro_text_4	Pour plus d'efficacité dans votre apprentissage, si vous voulez le faire sérieusement, je vous recommande vivement de vous entraîner à écrire les caractères.	Pour plus d'efficacité dans votre apprentissage, si vous voulez le faire sérieusement, je vous recommande vivement de vous entraîner à écrire les caractères.	
-intro_text_5	Pour ce faire l'ORDRE ET le NOMBRE de traits sont importants. N'hésitez pas à vous référer à l'animation disponible.	Pour ce faire l'ORDRE ET le NOMBRE de traits sont importants. N'hésitez pas à vous référer à l'animation disponible.	
-intro_text_6	Les sons sont les mêmes pour les deux syllabaires. On retrouve 46 caractères dans chaque syllabaire. Soit 92 caractères au total.	Les sons sont les mêmes pour les deux syllabaires. On retrouve 46 caractères dans chaque syllabaire. Soit 92 caractères au total.	
-intro_text_7	Attention ce jeu n'est pas un cours de japonais en soi, il ne vous apprendra pas de vocabulaire ou de kanji.	Attention ce jeu n'est pas un cours de japonais en soi, il ne vous apprendra pas de vocabulaire ou de kanji.	
-intro_text_8	Il est destiné aux curieux ou peut être aux futurs apprenants du japonais. Apprendre ce syllabaire est la première étape obligatoire dans cette grande aventure qu'est l'apprentissage du japonais. 	Il est destiné aux curieux ou peut être aux futurs apprenants du japonais. Apprendre ce syllabaire est la première étape obligatoire dans cette grande aventure qu'est l'apprentissage du japonais. 	
-intro_text_9	Bonne chance à vous.	Bonne chance à vous.	
+intro_text_0	Welcome to KanaWorld. Before you start I'll talk to you about some important points for your learning of Kana.	Bienvenue dans KanaWorld. Avant de commencer je vais vous présenter quelques points importants à prendre en compte pour votre apprentissage des kana.	
+intro_text_1	The Japanese language is made up of three writing systems : Hiragana, Katakana and Kanji. The last one takes its origin from Chinese writing system.	La langue japonaise est composée de trois systèmes d'écriture : Hiragana, Katakana et Kanji. Ces derniers tirent leur origine du système d'écriture Chinois.	
+intro_text_2	Hiragana are used for writing all the words, verbs' conjugation, grammar etc...	Les Hiragana sont utilisés pour écrire tous les mots, les déclinaisons de verbe, former la grammaire etc...	
+intro_text_3	Katakana are mainly used for writing foreign words. People names for example. They are also used for onomatopoeia, emphasis or styling effects.	Les Katakana sont principalement utilisés pour retranscrire des mots étrangers. Des noms et prénoms par exemple. Ils sont aussi utilisés pour les onomatopées ou encore pour l'emphase ou des effets de style.	
+intro_text_4	For more efficiency in your learning, if you want to do it seriously, I recommand to practice writing characters.	Pour plus d'efficacité dans votre apprentissage, si vous voulez le faire sérieusement, je vous recommande vivement de vous entraîner à écrire les caractères.	
+intro_text_5	For that, the ORDER and the NUMBER of strokes are importants. Refer to the corresponding animation.	Pour ce faire l'ORDRE ET le NOMBRE de traits sont importants. N'hésitez pas à vous référer à l'animation disponible.	
+intro_text_6	Sounds are the same for the two syllabaries. There are 46 characters in each one. 92 in total.	Les sons sont les mêmes pour les deux syllabaires. On retrouve 46 caractères dans chaque syllabaire. Soit 92 caractères au total.	
+intro_text_7	Be careful this game is not a complete Japanese langage course. You will not learn some vocabularies or Kanjis but the equivalent of alphabet.	Attention ce jeu n'est pas un cours de japonais en soi, il ne vous apprendra pas de vocabulaire ou de kanji.	
+intro_text_8	It's for curious people or futur Japanese langage learners. Learning this syllabary is the first step in this great Japanese langage learning adventure.	Il est destiné aux curieux ou peut être aux futurs apprenants du japonais. Apprendre ce syllabaire est la première étape obligatoire dans cette grande aventure qu'est l'apprentissage du japonais. 	
+intro_text_9	Gook luck.	Bonne chance à vous.	
 			
 intro_hiragana	ひらがな	ひらがな	ひらがな
 intro_katakana	カタカナ	カタカナ	カタカナ
@@ -50,22 +50,22 @@ username_instruction	Alphabet & numbers only. \n \n 6 characters min.	Alphabet &
 password_instruction	Be careful, the password is non-recoverable. Keep it in mind	Attention mot de passe non récupérable par la suite. Retenez-le bien	Attention mot de passe non récupérable par la suite. Retenez-le bien
 incorrect_message	Incorrect name or password	Nom ou mot de passe incorrect	Nom ou mot de passe incorrect
 			
-lesson_text_0	Bienvenue dans la partie leçon.	Bienvenue dans la partie leçon.	-
-lesson_text_1	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	-
-lesson_text_2	Dans chacune des leçons vous aurez 5 caractères à apprendre, vous avez une animation pour l'écriture et vous pouvez jouer un son.	Dans chacune des leçons vous aurez 5 caractères à apprendre, vous avez une animation pour l'écriture et vous pouvez jouer un son.	-
-lesson_text_3	La partie Informations peut parfois contenir quelques infos importantes à ne pas négliger.	La partie Informations peut parfois contenir quelques infos importantes à ne pas négliger.	-
-lesson_text_4	Pour chaque leçon vous avez trois possibilités.	Pour chaque leçon vous avez trois possibilités.	-
-lesson_text_5	La partie Entraînement est un mode infini sans contrainte de temps, pour vous entraîner autant que vous le voulez.	La partie Entraînement est un mode infini sans contrainte de temps, pour vous entraîner autant que vous le voulez.	-
-lesson_text_6	Le Test Leçon pour réaliser un test sur la leçon en cours, comme il n'y a que 5 caractères, chacun d'entre eux passera 3 fois, donc 15 questions en tout.	Le Test Leçon pour réaliser un test sur la leçon en cours, comme il n'y a que 5 caractères, chacun d'entre eux passera 3 fois, donc 15 questions en tout.	-
-lesson_text_7	"Test complet" est un test comprenant l'ensemble des caractères des leçons précédentes mélangés à ceux de la leçon actuelle. Afin de réviser en même temps les précédents.	"Test complet" est un test comprenant l'ensemble des caractères des leçons précédentes mélangés à ceux de la leçon actuelle. Afin de réviser en même temps les précédents.	-
-lesson_text_8	Le test complet de la leçon 15 comprend plus de 71 questions !	Le test complet de la leçon 15 comprend plus de 71 questions !	-
-lesson_text_9	Pour chaque test vous avez le choix entre un kana -> 4 choix de lecture. Ou la lecture -> 4 choix de kana.	Pour chaque test vous avez le choix entre un kana -> 4 choix de lecture. Ou la lecture -> 4 choix de kana.	-
-lesson_text_10	Il y a donc 4 tests au final par leçon (sauf la leçon 1 qui n'a pas de Test Complet pour des raisons logiques)	Il y a donc 4 tests au final par leçon (sauf la leçon 1 qui n'a pas de Test Complet pour des raisons logiques)	-
-lesson_text_11	Selon votre résultat aux tests vous obtiendrez un trophée : or (score parfait), argent ou bronze.	Selon votre résultat aux tests vous obtiendrez un trophée : or (score parfait), argent ou bronze.	-
-lesson_text_12	Pour passer à la leçon suivante vous devez réussir chaque test -> avoir au moins un trophée bronze (la moyenne).	Pour passer à la leçon suivante vous devez réussir chaque test -> avoir au moins un trophée bronze (la moyenne).	-
-lesson_text_13	Vous aurez un timer en jeu, vous pourrez toujours continuer à essayer de trouver le bon caractère même s'il arrive à zéro. Cependant ce sera comptabilisé comme une erreur.	Vous aurez un timer en jeu, vous pourrez toujours continuer à essayer de trouver le bon caractère même s'il arrive à zéro. Cependant ce sera comptabilisé comme une erreur.	
-lesson_text_14	Je serai sans pitié.	Je serai sans pitié.	-
-lesson_text_15	Bonne chance ^^	Bonne chance ^^	
+lesson_text_0	Welcome to the lesson part.	Bienvenue dans la partie leçon.	-
+lesson_text_1	The lesson part is composed by 15 lessons for each syllabary Hiragana/Katakana.	La partie Leçon est composée de 15 leçons pour chaque syllabaire Hiragana/Katakana	-
+lesson_text_2	In each lesson you'll have 5 characters to learn, you have an animation for the writing steps and hear the pronunciation.	Dans chacune des leçons vous aurez 5 caractères à apprendre, vous avez une animation pour l'écriture et vous pouvez jouer un son.	-
+lesson_text_3	The "Informations" part contains some important informations, do not neglect it.	La partie Informations peut parfois contenir quelques infos importantes à ne pas négliger.	-
+lesson_text_4	For each lesson you have three possibilities.	Pour chaque leçon vous avez trois possibilités.	-
+lesson_text_5	The Training part is an infinite mode without time limit for practicing.	La partie Entraînement est un mode infini sans contrainte de temps, pour vous entraîner autant que vous le voulez.	-
+lesson_text_6	The Lesson Test is a test on the current lesson. There is 5 characters for each lesson, every characters will appear 3 times, so 15 questions in total.	Le Test Leçon pour réaliser un test sur la leçon en cours, comme il n'y a que 5 caractères, chacun d'entre eux passera 3 fois, donc 15 questions en tout.	-
+lesson_text_7	"Full test" is a test with the characters of all previous lessons mixed with the current one. So you can review the previous ones too.	"Test complet" est un test comprenant l'ensemble des caractères des leçons précédentes mélangés à ceux de la leçon actuelle. Afin de réviser en même temps les précédents.	-
+lesson_text_8	The last "full test" of the last lesson contains over 71 questions!	Le test complet de la leçon 15 comprend plus de 71 questions !	-
+lesson_text_9	For each tests you will have the choice between one kana -> 4 choices of alphabet. Or one alphabet character -> 4 choices of kana.	Pour chaque test vous avez le choix entre un kana -> 4 choix de lecture. Ou la lecture -> 4 choix de kana.	-
+lesson_text_10	There are 4 tests per lessons (Except the first one which doesn't have a Full Test)	Il y a donc 4 tests au final par leçon (sauf la leçon 1 qui n'a pas de Test Complet pour des raisons logiques)	-
+lesson_text_11	Depends on your result you will earn a trophy : gold (perfect score), silver or bronze.	Selon votre résultat aux tests vous obtiendrez un trophée : or (score parfait), argent ou bronze.	-
+lesson_text_12	To go to the next lesson you have to succed in each tests -> at least a bronze trophy (average score). 	Pour passer à la leçon suivante vous devez réussir chaque test -> avoir au moins un trophée bronze (la moyenne).	-
+lesson_text_13	You have a timer in the game. Even if it comes to zero you can search for the right character but it will still be considered like an error.	Vous aurez un timer en jeu, vous pourrez toujours continuer à essayer de trouver le bon caractère même s'il arrive à zéro. Cependant ce sera comptabilisé comme une erreur.	
+lesson_text_14	I will be merciless.	Je serai sans pitié.	-
+lesson_text_15	Good luck ^^	Bonne chance ^^	
 lesson_text_16			
 credits_content	KanaWorld: a solo-developed game \n \n Made by: JaDonaGames \n \n \n Language: just Vanilla Javascript on HTML5 Canvas \n \n Softwares: \n Art: Aseprite \n Music & Sounds: FLStudio, Audacity, Bfxr \n \n Special Thanks: \n Moe \n LostInCode \n Lysenti \n Dipsy \n R-Slane	KanaWorld : un jeu développé seul \n \n Fait par : JaDonaGames \n \n \n Langage : Javascript Vanilla / Canvas HTML5 \n \n Logiciels : \n Art : Aseprite \n Musique & Sons : FLStudio, Audacity, Bfxr \n \n Remerciements : \n Moe \n LostInCode \n Lysenti \n Dipsy \n R-Slane	
 			
@@ -197,9 +197,9 @@ Katakana	Katakana	Katakana	カタカナ
 a_Hiragana	あ Hiragana	あ Hiragana	あ Hiragana
 a_Katakana	ア Katakana	ア Katakana	ア Katakana
 Kanji	Kanji	Kanji	漢字
-text1	Here is where it all begins, let's go !	C'est ici que tout commence, c'est parti !	a
-text2	Here we go again, same quantity but different characters !	Allez, c'est reparti pour une fournée, même quantité mais caractères différents !	a
-text3	That's another story... maybe next time !	Là c'est une autre paire de manche... Ce sera pour la prochaine fois !	a
+text1			
+text2			
+text3			
 hira	あいうえお	あいうえお	あいうえお
 kata	アイウエオ	アイウエオ	アイウエオ
 kan	漢字無理	漢字無理	漢字無理
@@ -433,21 +433,21 @@ roma_pu	pu	pu	pu
 roma_pe	pe	pe	pe
 roma_po	po	po	po
 			
-hira_i_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_o_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_ki_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_ko_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_sa_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_so_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_na_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_fu_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_mu_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_yu_writing	Attention, de petites différences selon la police / style d'écriture	Attention, de petites différences selon la police / style d'écriture	
-hira_ra_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-hira_ri_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-kata_ta_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-kata_ne_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
-kata_mu_writing	Be careful, small differences depending on the font / write style	Attention, de petites différences selon la police / style d'écriture	
+hira_i_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_o_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_ki_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_ko_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_sa_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_so_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_na_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_fu_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_mu_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_yu_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_ra_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+hira_ri_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+kata_ta_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+kata_ne_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
+kata_mu_writing	Be careful, small differences depending on the font / writing style.	Attention, de petites différences selon la police / style d'écriture.	
 			
 hira_a_description			
 hira_i_description			
@@ -461,12 +461,12 @@ hira_ke_description
 hira_ko_description			
 hira_sa_description			
 hira_shi_description			
-hira_su_description	Dans certains contextes le son [u] peut ne pas être prononcé.	Dans certains contextes le son [u] peut ne pas être prononcé.	
+hira_su_description	Depends on context, the sound [u] is not pronounced.	Dans certains contextes le son [u] peut ne pas être prononcé.	
 hira_se_description			
 hira_so_description			
 hira_ta_description			
-hira_chi_description	Prononcé [t'chi].	Prononcé [t'chi].	
-hira_tsu_description	Il existe une version plus petite つ <=> っ où le tsu n'est pas prononcé et sert à doubler la consonne suivante et ainsi former d'autres mots : \n \n さき saki - さっき sakki \n \n (=/= さつき satsuki).	Il existe une version plus petite つ <=> っ où le tsu n'est pas prononcé et sert à doubler la consonne suivante et ainsi former d'autres mots : \n \n さき saki - さっき sakki \n \n (=/= さつき satsuki).	
+hira_chi_description	Pronounced [t'chi].	Prononcé [t'chi].	
+hira_tsu_description	There is a smaller version つ <=> っ where the tsu is not pronounced and used for double the next consonant and form other words: \n \n さき saki - さっき sakki \n \n (=/= さつき satsuki).	Il existe une version plus petite つ <=> っ où le tsu n'est pas prononcé et sert à doubler la consonne suivante et ainsi former d'autres mots : \n \n さき saki - さっき sakki \n \n (=/= さつき satsuki).	
 hira_te_description			
 hira_to_description			
 hira_na_description			
@@ -474,129 +474,129 @@ hira_ni_description
 hira_nu_description			
 hira_ne_description			
 hira_no_description			
-hira_ha_description	Le "h" est aspiré. \n Peut se prononcer de deux façons différentes selon le contexte dans la phrase : [ha] ou [wa]	Le "h" est aspiré. \n Peut se prononcer de deux façons différentes selon le contexte dans la phrase : [ha] ou [wa]	
-hira_hi_description	Le "h" est aspiré.	Le "h" est aspiré.	
-hira_fu_description	Dans le cas de ce caractère la prononciation du "h" est proche d'un [f].	Dans le cas de ce caractère la prononciation du "h" est proche d'un [f].	
-hira_he_description	Le "h" est aspiré. \n Peut se prononcer de deux façons différentes selon le contexte dans la phrase : [he] ou [e] sans le "h".	Le "h" est aspiré. \n Peut se prononcer de deux façons différentes selon le contexte dans la phrase : [he] ou [e]  sans le "h".	
-hira_ho_description	Le "h" est aspiré.	Le "h" est aspiré.	
+hira_ha_description	The "h" is pronounced. \n It can be pronounced [ha] or [wa] depends on context in the sentence.	Le "h" est prononcé, expiré. \n Peut se prononcer de deux façons différentes selon le contexte dans la phrase : [ha] ou [wa]	
+hira_hi_description	The "h" is pronounced.	Le "h" est expiré.	
+hira_fu_description	In this case the pronunciation of "h" is close to a [f].	Dans le cas de ce caractère la prononciation du "h" est proche d'un [f].	
+hira_he_description	The "h" is pronounced. \n But can be pronounced [e] without "h" depends on context.	Le "h" est expiré. \n Peut se prononcer de deux façons différentes selon le contexte dans la phrase : [he] ou [e]  sans le "h".	
+hira_ho_description	The "h" is pronounced.	Le "h" est expiré.	
 hira_ma_description			
 hira_mi_description			
 hira_mu_description			
 hira_me_description			
-hira_mo_description	Attention à l'ordre des traits, on écrit d'abord la forme し puis les traits horizontaux.	Attention à l'ordre des traits, on écrit d'abord la forme し puis les traits horizontaux.	
-hira_ya_description	La version petite や <=> ゃ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n きゃ kya (=/= きや kiya) \n \n しゃ sha (=/= しや shiya).	La version petite や <=> ゃ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n きゃ kya (=/= きや kiya) \n \n しゃ sha (=/= しや shiya).	
-hira_yu_description	La version petite ゆ <=> ゅ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n ちゅ chu (=/= ちゆ chiyu) \n \n にゅ nyu (=/= にゆ niyu).	La version petite ゆ <=> ゅ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n ちゅ chu (=/= ちゆ chiyu) \n \n にゅ nyu (=/= にゆ niyu).	
-hira_yo_description	La version petite よ <=> ょ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n ひょ hyo (=/= ひよ hiyo) \n \n みょ myo (=/= みよ miyo).	La version petite よ <=> ょ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n ひょ hyo (=/= ひよ hiyo) \n \n みょ myo (=/= みよ miyo).	
+hira_mo_description	Be careful with the stroke order you have to write the form し before the horizontal strokes.	Attention à l'ordre des traits, on écrit d'abord la forme し puis les traits horizontaux.	
+hira_ya_description	The small version や <=> ゃ combined with characters ending with the sound [i] ki, shi, chi, ni etc. forms new syllables. \n \n きゃ kya (=/= きや kiya) \n \n しゃ sha (=/= しや shiya).	La version petite や <=> ゃ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permet de former de nouvelles syllabes. \n \n きゃ kya (=/= きや kiya) \n \n しゃ sha (=/= しや shiya).	The small version combined with characters ending with the sound [i] forms new syllables
+hira_yu_description	The small version ゆ <=> ゅ combined with characters ending with the sound [i] ki, shi, chi, ni etc. forms new syllables. \n \n ちゅ chu (=/= ちゆ chiyu) \n \n にゅ nyu (=/= にゆ niyu).	La version petite ゆ <=> ゅ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permet de former de nouvelles syllabes. \n \n ちゅ chu (=/= ちゆ chiyu) \n \n にゅ nyu (=/= にゆ niyu).	
+hira_yo_description	The small version よ <=> ょ combined with characters ending with the sound [i] ki, shi, chi, ni etc. forms new syllables. \n \n ひょ hyo (=/= ひよ hiyo) \n \n みょ myo (=/= みよ miyo).	La version petite よ <=> ょ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permet de former de nouvelles syllabes. \n \n ひょ hyo (=/= ひよ hiyo) \n \n みょ myo (=/= みよ miyo).	
 hira_ra_description			
-hira_ri_description	Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n りゃ rya りゅ ryu りょ ryo \n \n (=/= りや riya りゆ riyu りよ riyo).	Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n りゃ rya りゅ ryu りょ ryo \n \n (=/= りや riya りゆ riyu りよ riyo).	
+hira_ri_description	Can be combined with the small ゃゅょ to form new syllables. \n \n りゃ rya りゅ ryu りょ ryo \n \n (=/= りや riya りゆ riyu りよ riyo).	Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n りゃ rya りゅ ryu りょ ryo \n \n (=/= りや riya りゆ riyu りよ riyo).	
 hira_ru_description			
 hira_re_description			
 hira_ro_description			
 hira_wa_description			
-hira_wo_description	Attention ce caractère a une utilisation spécifique dans la langue et se prononce [o] et non [wo].	Attention ce caractère a une utilisation spécifique dans la langue et se prononce [o] et non [wo].	
-hira_n_description	Ce caractère particulier est la seule consonne seule en japonais. \n Il ne peut pas apparaître en début de mot, peut se prononce comme un [n], un [m] ou [ng] selon la consonne. \n Écoutez bien l'audio pour savoir comment il se prononce "à vide".	Ce caractère particulier est la seule consonne seule en japonais. \n Il ne peut pas apparaître en début de mot, peut se prononce comme un [n], un [m] ou [ng] selon la consonne. \n Écoutez bien l'audio pour savoir comment il se prononce "à vide".	
+hira_wo_description	Be careful this character has a specific use and is pronounced [o] not [wo].	Attention ce caractère a une utilisation spécifique dans la langue et se prononce [o] et non [wo].	
+hira_n_description	This specific character is not a syllable and is the only consonant. \n It can't appear at the beginning of a word, can be pronounced like [n], [m] or [ng] depends on the next sound. \n Listen to the audio carefully to know how to pronounce it alone.	Ce caractère particulier est la seule consonne en japonais. \n Il ne peut pas apparaître en début de mot, peut se prononce comme un [n], un [m] ou [ng] selon la consonne suivante. \n Écoutez bien l'audio pour savoir comment il se prononce "à vide".	
 			
 			
-hira_ga_description	L'ajout des deux traits " permet de rendre la consonne voisée : ka か <=> が ga. De même dans les leçons suivantes.	L'ajout des deux traits " permet de rendre la consonne voisée : ka か <=> が ga. De même dans les leçons suivantes.	
-hira_gi_description	L'ajout des deux traits " permet de rendre la consonne voisée : ki き <=> ぎ gi. De même dans les leçons suivantes. \n \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n ぎゃ gya ぎゅ gyu ぎょ gyo \n \n (=/= ぎや giya ぎゆ giyu ぎよ giyo).	L'ajout des deux traits " permet de rendre la consonne voisée : ki き <=> ぎ gi. De même dans les leçons suivantes. \n \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n ぎゃ gya ぎゅ gyu ぎょ gyo \n \n (=/= ぎや giya ぎゆ giyu ぎよ giyo).	
-hira_gu_description	L'ajout des deux traits " permet de rendre la consonne voisée : ku く <=> ぐ gu. De même dans les leçons suivantes.	L'ajout des deux traits " permet de rendre la consonne voisée : ku く <=> ぐ gu. De même dans les leçons suivantes.	
-hira_ge_description	L'ajout des deux traits " permet de rendre la consonne voisée : ke け <=> げ ge. De même dans les leçons suivantes.	L'ajout des deux traits " permet de rendre la consonne voisée : ke け <=> げ ge. De même dans les leçons suivantes.	
-hira_go_description	L'ajout des deux traits " permet de rendre la consonne voisée : ko こ <=> ご go. De même dans les leçons suivantes.	L'ajout des deux traits " permet de rendre la consonne voisée : ko こ <=> ご go. De même dans les leçons suivantes.	
-hira_za_description			
-hira_ji_description	Se prononce [d'ji]. \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n じゃ ja じゅ ju じょ jo \n \n (=/= じや jiya じゆ jiyu じよ jiyo).	Se prononce [d'ji]. \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n じゃ ja じゅ ju じょ jo \n \n (=/= じや jiya じゆ jiyu じよ jiyo).	
+hira_ga_description	The addition of the two little strokes " makes the consonant voiced: ka か <=> が ga. It's the same for the next lessons.	L'ajout des deux traits " permet de rendre la consonne voisée : ka か <=> が ga. De même dans les leçons suivantes.	The addition of the two strokes " makes the consonant voiced
+hira_gi_description	The addition of the two little strokes " makes the consonant voiced: ki き <=> ぎ gi. It's the same for the next lessons. \n \n Can be combined with the small ゃゅょ to form new syllables. \n \n ぎゃ gya ぎゅ gyu ぎょ gyo \n \n (=/= ぎや giya ぎゆ giyu ぎよ giyo).	L'ajout des deux traits " permet de rendre la consonne voisée : ki き <=> ぎ gi. De même dans les leçons suivantes. \n \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n ぎゃ gya ぎゅ gyu ぎょ gyo \n \n (=/= ぎや giya ぎゆ giyu ぎよ giyo).	
+hira_gu_description	The addition of the two little strokes " makes the consonant voiced: ku く <=> ぐ gu. It's the same for the next lessons.	L'ajout des deux traits " permet de rendre la consonne voisée : ku く <=> ぐ gu. De même dans les leçons suivantes.	
+hira_ge_description	The addition of the two little strokes " makes the consonant voiced: ke け <=> げ ge. It's the same for the next lessons.	L'ajout des deux traits " permet de rendre la consonne voisée : ke け <=> げ ge. De même dans les leçons suivantes.	
+hira_go_description	The addition of the two little strokes " makes the consonant voiced: ko こ <=> ご go. It's the same for the next lessons.	L'ajout des deux traits " permet de rendre la consonne voisée : ko こ <=> ご go. De même dans les leçons suivantes.	
+hira_za_description			Can be combined with the small ゃゅょ to form new syllables.
+hira_ji_description	Pronounced [d'ji]. \n Can be combined with the small ゃゅょ to form new syllables. \n \n じゃ ja じゅ ju じょ jo \n \n (=/= じや jiya じゆ jiyu じよ jiyo).	Se prononce [d'ji]. \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n じゃ ja じゅ ju じょ jo \n \n (=/= じや jiya じゆ jiyu じよ jiyo).	
 hira_zu_description			
 hira_ze_description			
 hira_zo_description			
 hira_da_description			
-hira_di_description	Ce caractère est très rare.	Ce caractère est très rare.	
-hira_du_description	Ce caractère est rare mais on peut le trouver dans certains mots courants.	Ce caractère est rare mais on peut le trouver dans certains mots courants.	
+hira_di_description	This character is very uncommun. The sound [ji] is transcribed with the character じ	Ce caractère est très rare. Le son [ji] est plutôt retranscrit avec le caractère じ	
+hira_du_description	This character is not commun but it can appear in some commun words.	Ce caractère est rare mais on peut le trouver dans certains mots courants.	
 hira_de_description			
 hira_do_description			
 hira_ba_description			
-hira_bi_description	Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n びゃ bya びゅ byu びょ byo \n \n (=/= びや biya びゆ biyu びよ biyo).	Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n びゃ bya びゅ byu びょ byo \n \n (=/= びや biya びゆ biyu びよ biyo).	
+hira_bi_description	Can be combined with the small ゃゅょ to form new syllables. \n \n びゃ bya びゅ byu びょ byo \n \n (=/= びや biya びゆ biyu びよ biyo).	Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n びゃ bya びゅ byu びょ byo \n \n (=/= びや biya びゆ biyu びよ biyo).	
 hira_bu_description			
 hira_be_description			
 hira_bo_description			
-hira_pa_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n は ha => ぱ pa	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n は ha => ぱ pa	
-hira_pi_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ひ hi => ぴ pi \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n ぴゃ pya ぴゅ pyu ぴょ pyo \n \n (=/= ぴや piya ぴゆ piyu ぴよ piyo).	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ひ hi => ぴ pi \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n ぴゃ pya ぴゅ pyu ぴょ pyo \n \n (=/= ぴや piya ぴゆ piyu ぴよ piyo).	
-hira_pu_description	L'ajout du petit rond permet de transformer le son [f] en [p]. \n \n ふ fu => ぷ pu	L'ajout du petit rond permet de transformer le son [f] en [p]. \n \n ふ fu => ぷ pu	
-hira_pe_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n へ he => ぺ pe	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n へ he => ぺ pe	
-hira_po_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ほ ho => ぽ po	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ほ ho => ぽ po	
-			
+hira_pa_description	The addition of the small circle turns the sound [h] into [p]. \n \n は ha => ぱ pa	L'ajout du petit cercle permet de transformer le son [h] en [p]. \n \n は ha => ぱ pa	
+hira_pi_description	The addition of the small circle turns the sound [h] into [p]. \n \n ひ hi => ぴ pi \n Can be combined with the small ゃゅょ to form new syllables. \n \n ぴゃ pya ぴゅ pyu ぴょ pyo \n \n (=/= ぴや piya ぴゆ piyu ぴよ piyo).	L'ajout du petit cercle permet de transformer le son [h] en [p]. \n \n ひ hi => ぴ pi \n Peut également se combiner avec les petits ゃゅょ pour former d'autres syllabes. \n \n ぴゃ pya ぴゅ pyu ぴょ pyo \n \n (=/= ぴや piya ぴゆ piyu ぴよ piyo).	
+hira_pu_description	The addition of the small circle turns the sound [h] into [p]. \n \n ふ fu => ぷ pu	L'ajout du petit cercle permet de transformer le son [f] en [p]. \n \n ふ fu => ぷ pu	
+hira_pe_description	The addition of the small circle turns the sound [h] into [p]. \n \n へ he => ぺ pe	L'ajout du petit cercle permet de transformer le son [h] en [p]. \n \n へ he => ぺ pe	
+hira_po_description	The addition of the small circle turns the sound [h] into [p]. \n \n ほ ho => ぽ po	L'ajout du petit cercle permet de transformer le son [h] en [p]. \n \n ほ ho => ぽ po	
+---------------------------	---------------------------------------------------------------------------------	------------------------------------------------------------------------------------------------	-------------------------------------------------------------------------------------------------------
 			
 kata_a_description			
 kata_i_description			
-kata_u_description	Combinaisons spéciales (uniquement pour retranscrire des mots étrangers) : \n \n ウィ wi ウェ we ウォ wo \n \n ヴァ va ヴィ vi \n \n ヴェ ve ヴォ vo	Combinaisons spéciales (uniquement pour retranscrire des mots étrangers) : \n \n ウィ wi ウェ we ウォ wo \n \n ヴァ va ヴィ vi \n \n ヴェ ve ヴォ vo	
+kata_u_description	Special combinations (only to write foreign words): \n \n ウィ wi ウェ we ウォ wo \n \n ヴァ va ヴィ vi \n \n ヴェ ve ヴォ vo	Combinaisons spéciales (uniquement pour retranscrire des mots étrangers) : \n \n ウィ wi ウェ we ウォ wo \n \n ヴァ va ヴィ vi \n \n ヴェ ve ヴォ vo	Can be combined with the small ゃゅょ to form new syllables.
 kata_e_description			
 kata_o_description			
-kata_ka_description	Le katakana カ est plus anguleux et a un trait en moins que sa version hiragana : \n カ <=> か	Le katakana カ est plus anguleux et a un trait en moins que sa version hiragana : \n \n カ <=> か	
+kata_ka_description	The katakana カ is more angular than the hiragana version and has one stroke less: \n カ <=> か	Le katakana カ est plus anguleux et a un trait en moins que sa version hiragana : \n \n カ <=> か	
 kata_ki_description			
 kata_ku_description			
 kata_ke_description			
 kata_ko_description			
 kata_sa_description			
-kata_shi_description	Attention à l'écriture de ce caractère il ressemble au "tsu" katakana (leçon 4) mais le sens des traits n'est pas le même : \n shi シ <=> ツ tsu \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : シェ she	Attention à l'écriture de ce caractère il ressemble au "tsu" katakana (leçon 4) mais le sens des traits n'est pas le même : \n shi シ <=> ツ tsu \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : シェ she	
+kata_shi_description	Be careful with this character, it looks like katakana's "tsu" (lesson 4) but the direction of the strokes is not the same: \n shi シ <=> ツ tsu \n \n Special combinations (only to write foreign words): シェ she	Attention à l'écriture de ce caractère il ressemble au "tsu" katakana (leçon 4) mais le sens des traits n'est pas le même : \n shi シ <=> ツ tsu \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : シェ she	
 kata_su_description			
 kata_se_description			
-kata_so_description	Attention à l'écriture de ce caractère il ressemble au "n" katakana (leçon 10) mais le sens des traits n'est pas le même : \n so ソ <=> ン n	Attention à l'écriture de ce caractère il ressemble au "n" katakana (leçon 10) mais le sens des traits n'est pas le même : \n so ソ <=> ン n	
+kata_so_description	Be careful with this character, it looks like katakana's "n" (lesson 10) but the direction of the strokes is not the same: \n so ソ <=> ン n	Attention à l'écriture de ce caractère il ressemble au "n" katakana (leçon 10) mais le sens des traits n'est pas le même : \n so ソ <=> ン n	Be careful with this character, it looks like katakana's "n" (lesson 10) but the direction of the strokes is not the same:
 kata_ta_description			
-kata_chi_description	Prononcé [t'chi] \n Il est important de respecter la courbe effectuée par le dernier trait. \n chi チ <=> 千 (Kanji signifiant "mille") \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : チェ che	Prononcé [t'chi] \n Il est important de respecter la courbe effectuée par le dernier trait. \n chi チ <=> 千 (Kanji signifiant "mille") \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : チェ che	
-kata_tsu_description	Attention à l'écriture de ce caractère il ressemble au "shi" katakana (leçon 3) mais le sens des traits n'est pas le même : \n tsu ツ <=> シ shi \n \n Il existe une version plus petite ツ <=> ッ où le tsu n'est pas prononcé et sert à doubler la consonne suivante et ainsi former d'autres mots : \n \n サキ saki - サッキ sakki \n (=/= サツキ satsuki).	Attention à l'écriture de ce caractère il ressemble au "shi" katakana (leçon 3) mais le sens des traits n'est pas le même : \n tsu ツ <=> シ shi \n \n Il existe une version plus petite ツ <=> ッ où le tsu n'est pas prononcé et sert à doubler la consonne suivante et ainsi former d'autres mots : \n \n サキ saki - サッキ sakki \n (=/= サツキ satsuki).	
-kata_te_description	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ティ ti	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ティ ti	
-kata_to_description	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : トゥ tu	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : トゥ tu	
+kata_chi_description	Pronounced [t'chi] \n It's important to respect the curbe made by the last stroke. \n chi チ <=> 千 (Kanji meaning "thousand") \n \n Special combinations (only to write foreign words): チェ che	Prononcé [t'chi] \n Il est important de respecter la courbe effectuée par le dernier trait. \n chi チ <=> 千 (Kanji signifiant "mille") \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : チェ che	
+kata_tsu_description	Be careful with this character, it looks like katakana's "shi" (lesson 3) but the direction of the strokes is not the same: \n tsu ツ <=> シ shi \n \n There is a smaller version ツ <=> ッ where the tsu is not pronounced and used for double the next consonant and form other words: \n \n サキ saki - サッキ sakki \n (=/= サツキ satsuki).	Attention à l'écriture de ce caractère il ressemble au "shi" katakana (leçon 3) mais le sens des traits n'est pas le même : \n tsu ツ <=> シ shi \n \n Il existe une version plus petite ツ <=> ッ où le tsu n'est pas prononcé et sert à doubler la consonne suivante et ainsi former d'autres mots : \n \n サキ saki - サッキ sakki \n (=/= サツキ satsuki).	
+kata_te_description	Special combinations (only to write foreign words): ティ ti	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ティ ti	
+kata_to_description	Special combinations (only to write foreign words): トゥ tu	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : トゥ tu	
 kata_na_description			
 kata_ni_description			
 kata_nu_description			
 kata_ne_description			
 kata_no_description			
-kata_ha_description	Le "h" est aspiré.	Le "h" est aspiré.	
-kata_hi_description	Le "h" est aspiré.	Le "h" est aspiré.	
-kata_fu_description	Dans le cas de ce caractère la prononciation du "h" est proche d'un [f]. \n \n Combinaisons spéciales (uniquement pour retranscrire des mots étrangers) : \n ファ fa フィ fi フェ fe フォ fo	Dans le cas de ce caractère la prononciation du "h" est proche d'un [f]. \n \n Combinaisons spéciales (uniquement pour retranscrire des mots étrangers) : \n ファ fa フィ fi フェ fe フォ fo	
-kata_he_description	Le "h" est aspiré. \n \n Il est identique à son homologue hiragana.	Le "h" est aspiré. \n \n Il est identique à son homologue hiragana.	
-kata_ho_description	Le "h" est aspiré.	Le "h" est aspiré.	
+kata_ha_description	The "h" is pronounced.	Le "h" est expiré.	
+kata_hi_description	The "h" is pronounced.	Le "h" est expiré.	
+kata_fu_description	In this case the pronunciation of "h" is close to a [f]. \n \n Special combinations (only to write foreign words): \n ファ fa フィ fi フェ fe フォ fo	Dans le cas de ce caractère la prononciation du "h" est proche d'un [f]. \n \n Combinaisons spéciales (uniquement pour retranscrire des mots étrangers) : \n ファ fa フィ fi フェ fe フォ fo	
+kata_he_description	The "h" is pronounced. \n \n It's the same character as hiragana's "he".	Le "h" est expiré. \n \n Il est identique à son homologue hiragana.	
+kata_ho_description	The "h" is pronounced.	Le "h" est expiré.	
 kata_ma_description			
 kata_mi_description			
-kata_mu_description	Attention, malgré son visuel sur certaines polices, ce caractère s'écrit bien en 2 traits.	Attention, malgré son visuel sur certaines polices, ce caractère s'écrit bien en 2 traits.	
+kata_mu_description	Be careful despite its visual depends on the font, this character has only two strokes.	Attention, malgré son visuel sur certaines polices, ce caractère s'écrit bien en 2 traits.	
 kata_me_description			
 kata_mo_description			
-kata_ya_description	La version petite ヤ <=> ャ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n キャ kya (=/= キヤ kiya) \n \n シャ sha (=/= シヤ shiya).	La version petite ヤ <=> ャ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n キャ kya (=/= キヤ kiya) \n \n シャ sha (=/= シヤ shiya).	
-kata_yu_description	La version petite ユ <=> ュ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n チュ chu (=/= チユ chiyu) \n \n ニュ nyu (=/= ニユ niyu).	La version petite ユ <=> ュ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n チュ chu (=/= チユ chiyu) \n \n ニュ nyu (=/= ニユ niyu).	
-kata_yo_description	La version petite ヨ <=> ョ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n ヒョ hyo (=/= ヒヨ hiyo) \n \n ミョ myo (=/= ミヨ miyo).	La version petite ヨ <=> ョ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permettent de former de nouvelles syllabes. \n \n ヒョ hyo (=/= ヒヨ hiyo) \n \n ミョ myo (=/= ミヨ miyo).	
+kata_ya_description	The small version ヤ <=> ャ combined with characters ending with the sound [i] ki, shi, chi, ni etc. forms new syllables. \n \n キャ kya (=/= キヤ kiya) \n \n シャ sha (=/= シヤ shiya).	La version petite ヤ <=> ャ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permet de former de nouvelles syllabes. \n \n キャ kya (=/= キヤ kiya) \n \n シャ sha (=/= シヤ shiya).	
+kata_yu_description	The small version ユ <=> ュ combined with characters ending with the sound [i] ki, shi, chi, ni etc. forms new syllables. \n \n チュ chu (=/= チユ chiyu) \n \n ニュ nyu (=/= ニユ niyu).	La version petite ユ <=> ュ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permet de former de nouvelles syllabes. \n \n チュ chu (=/= チユ chiyu) \n \n ニュ nyu (=/= ニユ niyu).	
+kata_yo_description	The small version ヨ <=> ョ combined with characters ending with the sound [i] ki, shi, chi, ni etc. forms new syllables. \n \n ヒョ hyo (=/= ヒヨ hiyo) \n \n ミョ myo (=/= ミヨ miyo).	La version petite ヨ <=> ョ associée aux caractères se terminant par le son [i] ki, shi, chi, ni etc. permet de former de nouvelles syllabes. \n \n ヒョ hyo (=/= ヒヨ hiyo) \n \n ミョ myo (=/= ミヨ miyo).	Special combinations (only to write foreign words):
 kata_ra_description			
-kata_ri_description	Attention au trait gauche qui est bien droit, comparé à sa version hiragana リ <=> り \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n リャ rya リュ ryu リョ ryo \n \n (=/= リヤ riya リユ riyu リヨ riyo).	Attention au trait gauche qui est bien droit, comparé à sa version hiragana リ <=> り \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n リャ rya リュ ryu リョ ryo \n \n (=/= リヤ riya リユ riyu リヨ riyo).	
+kata_ri_description	Be careful with the left stroke, it's straight compared with the hiragana's version リ <=> り \n \n Can be combined with the small ャュョ to form new syllables. \n \n リャ rya リュ ryu リョ ryo \n \n (=/= リヤ riya リユ riyu リヨ riyo).	Attention au trait gauche qui est bien droit, comparé à sa version hiragana リ <=> り \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n リャ rya リュ ryu リョ ryo \n \n (=/= リヤ riya リユ riyu リヨ riyo).	Be careful with the left stroke, it's strait compared with its hiragana's version
 kata_ru_description			
 kata_re_description			
 kata_ro_description			
-kata_wa_description			
-kata_wo_description	Attention ce caractère a une utilisation spécifique dans la langue et se prononce [o] et non [wo].	Attention ce caractère a une utilisation spécifique dans la langue et se prononce [o] et non [wo].	
-kata_n_description	Attention à l'écriture de ce caractère il ressemble au "so" katakana (leçon 3) mais le sens des traits n'est pas le même : \n n ン <=> ソ so	Attention à l'écriture de ce caractère il ressemble au "so" katakana (leçon 3) mais le sens des traits n'est pas le même : \n n ン <=> ソ so	
+kata_wa_description			Special combinations (only to write foreign words)
+kata_wo_description	Be careful this character has a specific use and is pronounced [o] not [wo].	Attention ce caractère a une utilisation spécifique dans la langue et se prononce [o] et non [wo].	
+kata_n_description	Be careful with this character, it looks like katakana's "so" (lesson 3) but the direction of the strokes is not the same: \n n ン <=> ソ so	Attention à l'écriture de ce caractère il ressemble au "so" katakana (leçon 3) mais le sens des traits n'est pas le même : \n n ン <=> ソ so	Be careful with this character, it looks like katakana's "so" (lesson 3) but the direction of the strokes is not the same:
 			
 			
-kata_ga_description	L'ajout des deux traits " permet de rendre la consonne voisée : ka カ <=> ガ ga. De même dans les leçons suivantes.	L'ajout des deux traits " permet de rendre la consonne voisée : ka カ <=> ガ ga. De même dans les leçons suivantes.	
-kata_gi_description	L'ajout des deux traits " permet de rendre la consonne voisée : ki キ <=> ギ gi. De même dans les leçons suivantes. \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ギャ gya ギュ gyu ギョ gyo \n \n (=/= ギヤ giya ギユ giyu ギヨ giyo).	L'ajout des deux traits " permet de rendre la consonne voisée : ki キ <=> ギ gi. De même dans les leçons suivantes. \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ギャ gya ギュ gyu ギョ gyo \n \n (=/= ギヤ giya ギユ giyu ギヨ giyo).	
-kata_gu_description	L'ajout des deux traits " permet de rendre la consonne voisée : ku ク <=> グ gu. De même dans les leçons suivantes.	L'ajout des deux traits " permet de rendre la consonne voisée : ku ク <=> グ gu. De même dans les leçons suivantes.	
-kata_ge_description	L'ajout des deux traits " permet de rendre la consonne voisée : ke ケ <=> ゲ ge. De même dans les leçons suivantes.	L'ajout des deux traits " permet de rendre la consonne voisée : ke ケ <=> ゲ ge. De même dans les leçons suivantes.	
-kata_go_description	L'ajout des deux traits " permet de rendre la consonne voisée : ko コ <=> ゴ go. De même dans les leçons suivantes.	L'ajout des deux traits " permet de rendre la consonne voisée : ko コ <=> ゴ go. De même dans les leçons suivantes.	
+kata_ga_description	The addition of the two little strokes " makes the consonant voiced: ka カ <=> ガ ga. It's the same for the next lessons.	L'ajout des deux traits " permet de rendre la consonne voisée : ka カ <=> ガ ga. De même dans les leçons suivantes.	The addition of the two little strokes " makes the consonant voiced: ka か <=> が ga. It's the same for the next lessons.
+kata_gi_description	The addition of the two little strokes " makes the consonant voiced: ki キ <=> ギ gi. It's the same for the next lessons. \n \n Can be combined with the small ャュョ to form new syllables. \n \n ギャ gya ギュ gyu ギョ gyo \n \n (=/= ギヤ giya ギユ giyu ギヨ giyo).	L'ajout des deux traits " permet de rendre la consonne voisée : ki キ <=> ギ gi. De même dans les leçons suivantes. \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ギャ gya ギュ gyu ギョ gyo \n \n (=/= ギヤ giya ギユ giyu ギヨ giyo).	
+kata_gu_description	The addition of the two little strokes " makes the consonant voiced: ku ク <=> グ gu. It's the same for the next lessons.	L'ajout des deux traits " permet de rendre la consonne voisée : ku ク <=> グ gu. De même dans les leçons suivantes.	
+kata_ge_description	The addition of the two little strokes " makes the consonant voiced: ke ケ <=> ゲ ge. It's the same for the next lessons.	L'ajout des deux traits " permet de rendre la consonne voisée : ke ケ <=> ゲ ge. De même dans les leçons suivantes.	
+kata_go_description	The addition of the two little strokes " makes the consonant voiced: ko コ <=> ゴ go. It's the same for the next lessons.	L'ajout des deux traits " permet de rendre la consonne voisée : ko コ <=> ゴ go. De même dans les leçons suivantes.	
 kata_za_description			
-kata_ji_description	Se prononce [d'ji]. \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ジェ je. \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n ジャ ja ジュ ju ジョ jo \n \n (=/= ジヤ jiya ジユ jiyu ジヨ jiyo).	Se prononce [d'ji]. \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ジェ je. \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n ジャ ja ジュ ju ジョ jo \n \n (=/= ジヤ jiya ジユ jiyu ジヨ jiyo).	
+kata_ji_description	Pronounced [d'ji]. \n \n Special combinations (only to write foreign words): ジェ je. \n \n Can be combined with the small ャュョ to form new syllables. \n ジャ ja ジュ ju ジョ jo \n \n (=/= ジヤ jiya ジユ jiyu ジヨ jiyo).	Se prononce [d'ji]. \n \n Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ジェ je. \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n ジャ ja ジュ ju ジョ jo \n \n (=/= ジヤ jiya ジユ jiyu ジヨ jiyo).	Can be combined with the small ャュョ to form new syllables.
 kata_zu_description			
 kata_ze_description			
-kata_zo_description			
+kata_zo_description			The small version や <=> ゃ combined with characters ending with the sound [i] ki, shi, chi, ni etc. forms new syllables.
 kata_da_description			
-kata_di_description	Ce caractère est très rare.	Ce caractère est très rare.	
-kata_du_description	Ce caractère est très rare.	Ce caractère est très rare.	
-kata_de_description	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ディ di	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ディ di	
-kata_do_description	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ドゥ du	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ドゥ du	
+kata_di_description	This character is very uncommun.	Ce caractère est très rare.	This character is very uncommun. The sound [ji] is transcribed with the character じ
+kata_du_description	This character is very uncommun.	Ce caractère est très rare.	This character is not commun but it can appear in some commun words.
+kata_de_description	Special combinations (only to write foreign words): ディ di	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ディ di	
+kata_do_description	Special combinations (only to write foreign words): ドゥ du	Combinaison spéciale (uniquement pour retranscrire des mots étrangers) : ドゥ du	
 kata_ba_description			
-kata_bi_description	Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ビャ bya ビュ byu ビョ byo \n \n (=/= ビヤ biya ビユ biyu ビヨ biyo).	Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ビャ bya ビュ byu ビョ byo \n \n (=/= ビヤ biya ビユ biyu ビヨ biyo).	
+kata_bi_description	Can be combined with the small ャュョ to form new syllables. \n \n ビャ bya ビュ byu ビョ byo \n \n (=/= ビヤ biya ビユ biyu ビヨ biyo).	Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ビャ bya ビュ byu ビョ byo \n \n (=/= ビヤ biya ビユ biyu ビヨ biyo).	
 kata_bu_description			
 kata_be_description			
 kata_bo_description			
-kata_pa_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ハ ha => パ pa	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ハ ha => パ pa	
-kata_pi_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ヒ hi => ピ pi \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ピャ pya ピュ pyu ピョ pyo \n \n (=/= ピヤ piya ピユ piyu ピヨ piyo).	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ヒ hi => ピ pi \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ピャ pya ピュ pyu ピョ pyo \n \n (=/= ピヤ piya ピユ piyu ピヨ piyo).	
-kata_pu_description	L'ajout du petit rond permet de transformer le son [f] en [p]. \n \n フ fu => プ pu	L'ajout du petit rond permet de transformer le son [f] en [p]. \n \n フ fu => プ pu	
-kata_pe_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n へ he => ぺ pe	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n へ he => ぺ pe	
-kata_po_description	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ホ ho => ポ po	L'ajout du petit rond permet de transformer le son [h] en [p]. \n \n ホ ho => ポ po	
+kata_pa_description	The addition of the small circle turns the sound [h] into [p]. \n \n ハ ha => パ pa	L'ajout du petit cercle permet de transformer le son [h] en [p]. \n \n ハ ha => パ pa	
+kata_pi_description	The addition of the small circle turns the sound [h] into [p]. \n \n ヒ hi => ピ pi \n \n Can be combined with the small ャュョ to form new syllables. \n \n ピャ pya ピュ pyu ピョ pyo \n \n (=/= ピヤ piya ピユ piyu ピヨ piyo).	L'ajout du petit cercle permet de transformer le son [h] en [p]. \n \n ヒ hi => ピ pi \n \n Peut également se combiner avec les petits ャュョ pour former d'autres syllabes. \n \n ピャ pya ピュ pyu ピョ pyo \n \n (=/= ピヤ piya ピユ piyu ピヨ piyo).	
+kata_pu_description	The addition of the small circle turns the sound [h] into [p]. \n \n フ fu => プ pu	L'ajout du petit cercle permet de transformer le son [f] en [p]. \n \n フ fu => プ pu	
+kata_pe_description	The addition of the small circle turns the sound [h] into [p]. \n \n へ he => ぺ pe	L'ajout du petit cercle permet de transformer le son [h] en [p]. \n \n へ he => ぺ pe	
+kata_po_description	The addition of the small circle turns the sound [h] into [p]. \n \n ホ ho => ポ po	L'ajout du petit cercle permet de transformer le son [h] en [p]. \n \n ホ ho => ポ po	
 			
 alpha_a	a	a	a
 alpha_b	b	b	b

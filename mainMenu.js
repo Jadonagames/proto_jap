@@ -133,11 +133,6 @@ class MainMenu {
         MainMenu.mainList.push(userPanelRight);
 
 
-
-
-
-
-
         let creditsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 360, null, {
             cb: FadeEffect.fade.bind(FadeEffect),
             arg: {
@@ -406,80 +401,7 @@ class MainMenu {
         this.saveDeletedPanel = null;
         this.deleteSaveAnimation = null;
 
-        // let signupBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 200, null, MainMenu.API_Signup, "mainmenu", MainMenu.STATE.Main, "signup", 4);
-        // signupBtn.setFontColor("rgba(142,45,45,1)");
-        // MainMenu.mainList.push(signupBtn.getSprite());
-
-        // let loginBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 230, null, MainMenu.API_Login, "mainmenu", MainMenu.STATE.Main, "login", 4);
-
-        let loginBtn = new Button({ w: 48, h: 32 }, 400, 250, null, MainMenu.API_Login, "mainmenu", MainMenu.STATE.Main, "", 0, true);
-        loginBtn.setAnimations({ x: 880, y: 32 });
-        // loginBtn.setFontColor("rgba(142,45,45,1)");
-        MainMenu.mainList.push(loginBtn.getSprite());
-
-        // let delBtn = new Button({ w: 60, h: 22, v: 8 }, 380, 260, null, MainMenu.API_Delete, "mainmenu", MainMenu.STATE.Main, "delete_user", 4);
-        // delBtn.setFontColor("rgba(142,45,45,1)");
-        // MainMenu.mainList.push(delBtn.getSprite());
     }
-
-    static API_Login() {
-        const name = "UserFromKanaWorld";
-        const password = "azerty";
-
-        const loginData = JSON.stringify({
-            name,
-            password
-        });
-
-        fetch(`${SERVER_URL}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: 'cors',
-            body: loginData
-        }).then((response) => {
-            return response.json()
-        }).then((res) => {
-            USER.id = res.userId
-            USER.name = res.userName;
-            USER.saveData = res.saveData;
-            SaveManager.load(USER.saveData)
-        }).catch((e) => { })
-    }
-
-    static API_Signup() {
-
-        //? Création
-        const name = "UserFromKanaWorld";
-        const password = "azerty";
-        const saveData = JSON.stringify(SaveManager.BLANK_SAVE_DATA);
-
-        const signupData = JSON.stringify({
-            name,
-            password,
-            saveData
-        });
-
-        fetch(`${SERVER_URL}/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: 'cors',
-            body: signupData
-        }).then((response) => {
-            return response.json()
-        }).then((res) => {
-            if (res.error === "already") {
-                bAlreadyExists = true;
-                alreadyTimeOut = setTimeout(MainMenu.stopAlreadyExistsMessage, 2000);
-            }
-
-        }).catch((e) => { })
-
-    }
-
 
     static muteAction() {
         this.muteBtn.callback = MainMenu.unMuteAction.bind(this);
