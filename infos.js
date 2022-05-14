@@ -4,15 +4,26 @@ class Infos {
     static hiraganaList = [];
     static katakanaList = [];
 
+    static hiraSpecialList = [];
+    static kataSpecialList = [];
+
     static bInit = false;
 
     static STATE = Object.freeze({
         Main: 0,
         Hiragana: 1,
-        Katakana: 2
+        Katakana: 2,
+        HiraSpecial: 3,
+        KataSpecial: 4
+    })
+
+    static SUB_STATE = Object.freeze({
+        Normal: 1,
+        Special: 2
     })
 
     static state = Infos.STATE.Main;
+    static subState = Infos.SUB_STATE.Normal;
 
     constructor() {
 
@@ -86,6 +97,53 @@ class Infos {
             "kata_ba", "kata_bi", "kata_bu", "kata_be", "kata_bo",
             "kata_pa", "kata_pi", "kata_pu", "kata_pe", "kata_po" //152
         ];
+
+        let kanaSpecArray = [
+            "hira_kya", "hira_kyu", "hira_kyo",
+            "hira_sha", "hira_shu", "hira_sho",
+            "hira_cha", "hira_chu", "hira_cho",
+            "hira_nya", "hira_nyu", "hira_nyo",
+            "hira_hya", "hira_hyu", "hira_hyo",
+            "hira_mya", "hira_myu", "hira_myo",
+            "hira_rya", "hira_ryu", "hira_ryo",
+            "hira_gya", "hira_gyu", "hira_gyo",
+            "hira_ja", "hira_ju", "hira_jo",
+            "hira_bya", "hira_byu", "hira_byo",
+            "hira_pya", "hira_pyu", "hira_pyo",
+            "kata_kya", "kata_kyu", "kata_kyo",
+            "kata_sha", "kata_shu", "kata_sho",
+            "kata_cha", "kata_chu", "kata_cho",
+            "kata_nya", "kata_nyu", "kata_nyo",
+            "kata_hya", "kata_hyu", "kata_hyo",
+            "kata_mya", "kata_myu", "kata_myo",
+            "kata_rya", "kata_ryu", "kata_ryo",
+            "kata_gya", "kata_gyu", "kata_gyo",
+            "kata_ja", "kata_ju", "kata_jo",
+            "kata_bya", "kata_byu", "kata_byo",
+            "kata_pya", "kata_pyu", "kata_pyo"
+        ]
+
+
+        let kanaSpecArray2 = [
+            "kata_wi",
+            "kata_we",
+            "kata_wwo",
+            "kata_va",
+            "kata_vi",
+            "kata_ve",
+            "kata_vo",
+            "kata_che",
+            "kata_she",
+            "kata_je",
+            "kata_ti",
+            "kata_di",
+            "kata_tu",
+            "kata_du",
+            "kata_fa",
+            "kata_fi",
+            "kata_fe",
+            "kata_fo"
+        ]
 
         let frameX = 20;
         let kanaWidth = 34;
@@ -201,13 +259,117 @@ class Infos {
             }
         }
 
+        let hiraSwitchBoardBtn = new Button({ w: 29, h: 27 }, 210, 230, null, { cb: Infos.changeState, arg: Infos.STATE.HiraSpecial }, "infos", Infos.STATE.Hiragana, "", 0, true);
+        hiraSwitchBoardBtn.setAnimations({ x: 832, y: 144 });
+        Infos.hiraganaList.push(hiraSwitchBoardBtn.getSprite());
+
         let hiraganaBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Hiragana, "", 0, true);
         hiraganaBackBtn.setAnimations({ x: 86, y: 56 });
         Infos.hiraganaList.push(hiraganaBackBtn.getSprite());
 
+        let hiraSpecSwitchBoardBtn = new Button({ w: 29, h: 27 }, 210, 230, null, { cb: Infos.changeState, arg: Infos.STATE.Hiragana }, "infos", Infos.STATE.HiraSpecial, "", 0, true);
+        hiraSpecSwitchBoardBtn.setAnimations({ x: 832, y: 144 });
+        Infos.hiraSpecialList.push(hiraSpecSwitchBoardBtn.getSprite());
+
+        let hiraSpecBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.HiraSpecial, "", 0, true);
+        hiraSpecBackBtn.setAnimations({ x: 86, y: 56 });
+        Infos.hiraSpecialList.push(hiraSpecBackBtn.getSprite());
+
+
+
+
+        let kataSwitchBoardBtn = new Button({ w: 29, h: 27 }, 210, 230, null, { cb: Infos.changeState, arg: Infos.STATE.KataSpecial }, "infos", Infos.STATE.Katakana, "", 0, true);
+        kataSwitchBoardBtn.setAnimations({ x: 832, y: 144 });
+        Infos.katakanaList.push(kataSwitchBoardBtn.getSprite());
+        Infos.kataSpecialList.push(kataSwitchBoardBtn.getSprite());
+
         let katakanaBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Katakana, "", 0, true);
         katakanaBackBtn.setAnimations({ x: 86, y: 56 });
         Infos.katakanaList.push(katakanaBackBtn.getSprite());
+        Infos.kataSpecialList.push(katakanaBackBtn.getSprite());
+
+        let kataSpecSwitchBoardBtn = new Button({ w: 29, h: 27 }, 210, 230, null, { cb: Infos.changeState, arg: Infos.STATE.Katakana }, "infos", Infos.STATE.KataSpecial, "", 0, true);
+        kataSpecSwitchBoardBtn.setAnimations({ x: 832, y: 144 });
+        Infos.kataSpecialList.push(kataSpecSwitchBoardBtn.getSprite());
+
+        let kataSpecBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.KataSpecial, "", 0, true);
+        kataSpecBackBtn.setAnimations({ x: 86, y: 56 });
+        Infos.kataSpecialList.push(kataSpecBackBtn.getSprite());
+
+
+
+        // ---------------- SPECIAL ------------------
+
+        let hiraSpecGreenPanel = new Panel({ w: 430, h: 200, v: 6 }, centerX(430), 10, null, "infos", Infos.STATE.HiraSpecial, "", 7);
+        Infos.hiraSpecialList.push(hiraSpecGreenPanel.getSprite());
+        // let hiraSpecGreenPanel2 = new Panel({ w: 200, h: 140, v: 6 }, 235, 15, null, "infos", Infos.STATE.HiraSpecial, "", 7);
+        // Infos.hiraSpecialList.push(hiraSpecGreenPanel2.getSprite());
+        // let kataSpecGreenPanel = new Panel({ w: 200, h: 265, v: 6 }, 5, 15, null, "infos", Infos.STATE.KataSpecial, "", 7);
+        let kataSpecGreenPanel = new Panel({ w: 430, h: 200, v: 6 }, centerX(430), 10, null, "infos", Infos.STATE.KataSpecial, "", 7);
+        Infos.kataSpecialList.push(kataSpecGreenPanel.getSprite());
+        // let kataSpecGreenPanel2 = new Panel({ w: 200, h: 140, v: 6 }, 235, 15, null, "infos", Infos.STATE.KataSpecial, "", 7);
+        // Infos.kataSpecialList.push(kataSpecGreenPanel2.getSprite());
+
+
+        offX = 6;
+        offY = 7;
+        columnsCount = 0;
+        state = Infos.STATE.HiraSpecial;
+        kanaList = "hiragana";
+        let parent = hiraSpecGreenPanel
+        for (let i = 0; i < 66; i++) { // 0-32 Hira 33-65?
+
+            if (i == 33) {
+                columnsCount = 0;
+                offX = 6;
+                offY = 7;
+                state = Infos.STATE.KataSpecial;
+                parent = null;
+                parent = kataSpecGreenPanel;
+            }
+
+            let kanaPanel = new Panel({ w: 139, h: 17 }, offX, offY, parent, "infos", state, kanaSpecArray[i], 0, true);
+            kanaPanel.getSprite().addAnimation("normal", { x: 934, y: 10 });
+            kanaPanel.getSprite().changeAnimation("normal");
+            kanaPanel.setHoverable(true);
+            kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
+            kanaPanel.setOffsets(5, 10);
+            kanaPanel.setFont("kyokasho");
+            kanaPanel.setFontSize(10);
+            kanaPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)", "rgba(18,72,39,1)", "rgba(0,0,0,1)");
+            state == Infos.STATE.HiraSpecial ? Infos.hiraSpecialList.push(kanaPanel.getSprite()) : Infos.kataSpecialList.push(kanaPanel.getSprite())
+            // Infos.hiraSpecialList.push(kanaPanel.getSprite());
+
+            let soundBtn = new Button({ w: 16, h: 15 }, offX + 116, offY, parent, { cb: Sound.playCallback, arg: "kana_a" }, "infos", state, "", 0, true);
+            soundBtn.setAnimations({ x: 112, y: 112 });
+            state == Infos.STATE.HiraSpecial ? Infos.hiraSpecialList.push(soundBtn.getSprite()) : Infos.kataSpecialList.push(soundBtn.getSprite())
+            // Infos.hiraSpecialList.push(soundBtn.getSprite());
+
+            columnsCount++;
+            offX += 139;
+
+            if (columnsCount == 3) {
+                columnsCount = 0;
+                offX = 6;
+                offY += 17;
+            }
+
+        }
+
+
+        // let kanaPanel = new Panel({ w: 120, h: 18 }, 5, 5, hiraSpecGreenPanel, "infos", Infos.STATE.HiraSpecial, "hira_kya", 0, true);
+        // kanaPanel.getSprite().addAnimation("normal", { x: 934, y: 10 });
+        // kanaPanel.getSprite().changeAnimation("normal");
+        // kanaPanel.setHoverable(true);
+        // kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
+        // kanaPanel.setOffsets(0, 13);
+        // kanaPanel.setFont("kyokasho");
+        // kanaPanel.setFontSize(10);
+        // kanaPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)", "rgba(18,72,39,1)", "rgba(0,0,0,1)");
+        // // kanaPanel.setTextOverflow(true);
+        // // state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite()); 
+        // Infos.hiraSpecialList.push(kanaPanel.getSprite());
+
     }
 
     static changeState(pNewState) {
@@ -216,11 +378,31 @@ class Infos {
         Button.resetTypeState("infos", pNewState);
     }
 
+    static switchBoard() {
+        // if (Infos.state == Infos.STATE.Hiragana) {
+        //     log("switch hira");
+        // } else if (Infos.state == Infos.STATE.Katakana) {
+        //     log("switch kata");
+        // }
+        // if (Infos.subState == Infos.SUB_STATE.Normal) {
+        //     Infos.subState = Infos.SUB_STATE.Special;
+        // } else if (Infos.subState == Infos.SUB_STATE.Special) {
+        //     Infos.subState = Infos.SUB_STATE.Normal;
+        // }
+    }
+
     static update(dt) {
 
         Sprite.manageBeforeUpdating(Infos.list, dt);
+        // if (Infos.subState == Infos.SUB_STATE.Normal) {
         Sprite.manageBeforeUpdating(Infos.hiraganaList, dt);
         Sprite.manageBeforeUpdating(Infos.katakanaList, dt);
+        Sprite.manageBeforeUpdating(Infos.hiraSpecialList, dt);
+        Sprite.manageBeforeUpdating(Infos.kataSpecialList, dt);
+        // } else if (Infos.subState == Infos.SUB_STATE.Special) {
+        // Sprite.manageBeforeUpdating(Infos.hiraSpecialList, dt);
+        // Sprite.manageBeforeUpdating(Infos.kataSpecialList, dt);
+        // }
 
         Sprite.kanaList.forEach(sp => {
             if (sp.active) {
@@ -254,10 +436,26 @@ class Infos {
                 Sprite.manageBeforeDrawing(Infos.list);
                 break;
             case Infos.STATE.Hiragana:
+                // if (Infos.subState == Infos.SUB_STATE.Normal) {
+                //     Sprite.manageBeforeDrawing(Infos.hiraganaList);
+                // } else if (Infos.subState == Infos.SUB_STATE.Special) {
+                //     Sprite.manageBeforeDrawing(Infos.hiraSpecialList);
+                // }
                 Sprite.manageBeforeDrawing(Infos.hiraganaList);
                 break;
             case Infos.STATE.Katakana:
+                // if (Infos.subState == Infos.SUB_STATE.Normal) {
+                //     Sprite.manageBeforeDrawing(Infos.katakanaList);
+                // } else if (Infos.subState == Infos.SUB_STATE.Special) {
+                //     Sprite.manageBeforeDrawing(Infos.kataSpecialList);
+                // }
                 Sprite.manageBeforeDrawing(Infos.katakanaList);
+                break;
+            case Infos.STATE.HiraSpecial:
+                Sprite.manageBeforeDrawing(Infos.hiraSpecialList);
+                break;
+            case Infos.STATE.KataSpecial:
+                Sprite.manageBeforeDrawing(Infos.kataSpecialList);
                 break;
         }
 

@@ -62,12 +62,12 @@ let USER = {
  * DEBUG
  */
 let log = console.log.bind(console);
-let titleSpeed = 2; // 0.2 - 2
+let titleSpeed = 0.2; // 0.2 - 2
 
 let bStatsDebug = false;
 let debugDt = 0;
 let debug_STOP = false;
-let shortcut_tomainmenu = 0; //! ------ ------------------------------------
+let shortcut_tomainmenu = 1; //! ------ ------------------------------------
 let boolTest = false;
 let imageData = null;
 let imageDatasArr = [];

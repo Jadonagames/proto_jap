@@ -48,12 +48,6 @@ class Login {
         Panel.resetTypeState("login", Login.STATE.Main);
 
         //! ---------------- LOGIN ----------------
-        /*
-        If all ok : 
-        display popup 
-        go to splashScreen
-        */
-
         this.loginBackBtn = new Button({ w: 30, h: 22 }, 30, 30, null, { cb: Login.changeState, arg: Login.STATE.Main }, "login", Login.STATE.Login, "", 0, true);
         this.loginBackBtn.setAnimations({ x: 86, y: 56 });
         Login.loginList.push(this.loginBackBtn.getSprite());
@@ -123,17 +117,10 @@ class Login {
 
 
         //! ---------------- SIGNUP ----------------
-        /*        
-        If all ok :
-        display popup
-        go to splashScreen
-        */
-
         this.signupBackBtn = new Button({ w: 30, h: 22 }, 30, 30, null, { cb: Login.changeState.bind(this), arg: Login.STATE.Main }, "login", Login.STATE.Signup, "", 0, true);
         this.signupBackBtn.setAnimations({ x: 86, y: 56 });
         Login.signupList.push(this.signupBackBtn.getSprite());
 
-        // 267 175
         this.schoolpaperBG = new Panel({ w: 268, h: 175 }, centerX(268), 50, null, "login", Login.STATE.Signup, "", 0, true);
         this.schoolpaperBG.getSprite().addAnimation("normal", { x: 920, y: 268 });
         this.schoolpaperBG.getSprite().changeAnimation("normal")
@@ -149,7 +136,7 @@ class Login {
         nameLabel.setAlignText(0);
         Login.signupList.push(nameLabel.getSprite());
 
-        this.nameEntry = new EntryField({ w: 128, h: 28, v: 11 }, 98, 28, this.schoolpaperBG, null, "login", Login.STATE.Signup, "aaaaaa", 1);
+        this.nameEntry = new EntryField({ w: 128, h: 28, v: 11 }, 98, 28, this.schoolpaperBG, null, "login", Login.STATE.Signup, "", 1);
         this.nameEntry.setFontColor("rgba(200,200,200,0)", "rgba(0,0,0,0)", "rgba(100,100,100,0)", "rgba(0,0,0,1)");
         this.nameEntry.setOffsets(15, 18);
         this.nameEntry.setAlpha(0);
@@ -171,7 +158,7 @@ class Login {
         passLabel.setAlignText(0);
         Login.signupList.push(passLabel.getSprite());
 
-        this.passEntry = new EntryField({ w: 128, h: 28, v: 11 }, 98, 67, this.schoolpaperBG, null, "login", Login.STATE.Signup, "aaaaa", 1);
+        this.passEntry = new EntryField({ w: 128, h: 28, v: 11 }, 98, 67, this.schoolpaperBG, null, "login", Login.STATE.Signup, "", 1);
         this.passEntry.setFontColor("rgba(200,200,200,0)", "rgba(0,0,0,0)", "rgba(100,100,100,0)", "rgba(0,0,0,1)");
         this.passEntry.setOffsets(15, 18);
         this.passEntry.setAlpha(0);
@@ -187,7 +174,7 @@ class Login {
         passLabel2.setAlignText(0);
         Login.signupList.push(passLabel2.getSprite());
 
-        this.passEntry2 = new EntryField({ w: 128, h: 28, v: 11 }, 98, 106, this.schoolpaperBG, null, "login", Login.STATE.Signup, "aaaaa", 1);
+        this.passEntry2 = new EntryField({ w: 128, h: 28, v: 11 }, 98, 106, this.schoolpaperBG, null, "login", Login.STATE.Signup, "", 1);
         this.passEntry2.setFontColor("rgba(200,200,200,0)", "rgba(0,0,0,0)", "rgba(100,100,100,0)", "rgba(0,0,0,1)");
         this.passEntry2.setOffsets(15, 18);
         this.passEntry2.setAlpha(0);
