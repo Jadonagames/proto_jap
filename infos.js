@@ -221,6 +221,25 @@ class Infos {
                     romaLabel = KANA[kanaArray[i]].roma;
                 }
 
+
+
+
+
+
+
+                //TODO
+                //! --------------------------------------------------------------------
+                //! di et du apparaissent dans le tableau des katakana !!!!!!!!!!!
+                //! --------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
                 tooltipPanel = new Panel({ w: 8, h: 8, v: 9 }, centerX(100, 98, 1), 170, null, "infos", state, "roma_" + romaLabel, [-1, { y_t: 777 }]);//748 835
                 tooltipPanel.setFontSize(30);
                 tooltipPanel.setFont("kyokasho");
@@ -328,7 +347,7 @@ class Infos {
                 parent = kataSpecGreenPanel;
             }
 
-            let kanaPanel = new Panel({ w: 139, h: 17 }, offX, offY, parent, "infos", state, kanaSpecArray[i], 0, true);
+            let kanaPanel = new Panel({ w: 139, h: 15 }, offX, offY, parent, "infos", state, kanaSpecArray[i], 0, true);
             kanaPanel.getSprite().addAnimation("normal", { x: 934, y: 10 });
             kanaPanel.getSprite().changeAnimation("normal");
             kanaPanel.setHoverable(true);
@@ -340,7 +359,9 @@ class Infos {
             state == Infos.STATE.HiraSpecial ? Infos.hiraSpecialList.push(kanaPanel.getSprite()) : Infos.kataSpecialList.push(kanaPanel.getSprite())
             // Infos.hiraSpecialList.push(kanaPanel.getSprite());
 
-            let soundBtn = new Button({ w: 16, h: 15 }, offX + 116, offY, parent, { cb: Sound.playCallback, arg: "kana_a" }, "infos", state, "", 0, true);
+            // log("kana_" + kanaSpecArray[i].slice(5));
+
+            let soundBtn = new Button({ w: 16, h: 15 }, offX + 116, offY, parent, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray[i].slice(5) }, "infos", state, "", 0, true);
             soundBtn.setAnimations({ x: 112, y: 112 });
             state == Infos.STATE.HiraSpecial ? Infos.hiraSpecialList.push(soundBtn.getSprite()) : Infos.kataSpecialList.push(soundBtn.getSprite())
             // Infos.hiraSpecialList.push(soundBtn.getSprite());
@@ -471,3 +492,72 @@ class Infos {
         }
     }
 }
+
+// きや、きゃ、
+// きゆ、きゅ、
+// きよ、きょ、
+// しや、しゃ、
+// しゆ、しゅ、
+// しよ、しょ、
+// ちや、ちゃ、
+// ちゆ、ちゅ、
+// ちよ、ちょ、
+// にや、にゃ、
+// にゆ、にゅ、
+// によ、にょ、
+// ひや、ひゃ、
+// ひゆ、ひゅ、
+// ひよ、ひょ、
+// みや、みゃ、
+// みゆ、みゅ、
+// みよ、みょ、
+// りや、りゃ、
+// りゆ、りゅ、
+// りよ、りょ、
+// ぎや、ぎゃ、
+// ぎゆ、ぎゅ、
+// ぎよ、ぎょ、
+// じや、じゃ、
+// じゆ、じゅ、
+// じよ、じょ、
+// びや、びゃ、
+// びゆ、びゅ、
+// びよ、びょ、
+// ぴや、ぴゃ、
+// ぴゆ、ぴゅ、
+// ぴよ、ぴょ、
+
+
+// kana_kya
+// kana_kyu
+// kana_kyo
+// kana_sha
+// kana_shu
+// kana_sho
+// kana_cha
+// kana_chu
+// kana_cho
+// kana_nya
+// kana_nyu
+// kana_nyo
+// kana_hya
+// kana_hyu
+// kana_hyo
+// kana_mya
+// kana_myu
+// kana_myo
+// kana_rya
+// kana_ryu
+// kana_ryo
+// kana_gya
+// kana_gyu
+// kana_gyo
+// kana_ja
+// kana_ju
+// kana_jo
+// kana_bya
+// kana_byu
+// kana_byo
+// kana_pya
+// kana_pyu
+// kana_pyo

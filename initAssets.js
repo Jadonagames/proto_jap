@@ -1016,6 +1016,40 @@ function LoadAssets() {
     Sound.list["kana_pe"] = new Sound("./sounds/kana/pe.mp3");
     Sound.list["kana_po"] = new Sound("./sounds/kana/po.mp3");
 
+    Sound.list["kana_kya"] = new Sound("./sounds/kana/kana_kya.mp3");
+    Sound.list["kana_kyu"] = new Sound("./sounds/kana/kana_kyu.mp3");
+    Sound.list["kana_kyo"] = new Sound("./sounds/kana/kana_kyo.mp3");
+    Sound.list["kana_sha"] = new Sound("./sounds/kana/kana_sha.mp3");
+    Sound.list["kana_shu"] = new Sound("./sounds/kana/kana_shu.mp3");
+    Sound.list["kana_sho"] = new Sound("./sounds/kana/kana_sho.mp3");
+    Sound.list["kana_cha"] = new Sound("./sounds/kana/kana_cha.mp3");
+    Sound.list["kana_chu"] = new Sound("./sounds/kana/kana_chu.mp3");
+    Sound.list["kana_cho"] = new Sound("./sounds/kana/kana_cho.mp3");
+    Sound.list["kana_nya"] = new Sound("./sounds/kana/kana_nya.mp3");
+    Sound.list["kana_nyu"] = new Sound("./sounds/kana/kana_nyu.mp3");
+    Sound.list["kana_nyo"] = new Sound("./sounds/kana/kana_nyo.mp3");
+    Sound.list["kana_hya"] = new Sound("./sounds/kana/kana_hya.mp3");
+    Sound.list["kana_hyu"] = new Sound("./sounds/kana/kana_hyu.mp3");
+    Sound.list["kana_hyo"] = new Sound("./sounds/kana/kana_hyo.mp3");
+    Sound.list["kana_mya"] = new Sound("./sounds/kana/kana_mya.mp3");
+    Sound.list["kana_myu"] = new Sound("./sounds/kana/kana_myu.mp3");
+    Sound.list["kana_myo"] = new Sound("./sounds/kana/kana_myo.mp3");
+    Sound.list["kana_rya"] = new Sound("./sounds/kana/kana_rya.mp3");
+    Sound.list["kana_ryu"] = new Sound("./sounds/kana/kana_ryu.mp3");
+    Sound.list["kana_ryo"] = new Sound("./sounds/kana/kana_ryo.mp3");
+    Sound.list["kana_gya"] = new Sound("./sounds/kana/kana_gya.mp3");
+    Sound.list["kana_gyu"] = new Sound("./sounds/kana/kana_gyu.mp3");
+    Sound.list["kana_gyo"] = new Sound("./sounds/kana/kana_gyo.mp3");
+    Sound.list["kana_ja"] = new Sound("./sounds/kana/kana_ja.mp3");
+    Sound.list["kana_ju"] = new Sound("./sounds/kana/kana_ju.mp3");
+    Sound.list["kana_jo"] = new Sound("./sounds/kana/kana_jo.mp3");
+    Sound.list["kana_bya"] = new Sound("./sounds/kana/kana_bya.mp3");
+    Sound.list["kana_byu"] = new Sound("./sounds/kana/kana_byu.mp3");
+    Sound.list["kana_byo"] = new Sound("./sounds/kana/kana_byo.mp3");
+    Sound.list["kana_pya"] = new Sound("./sounds/kana/kana_pya.mp3");
+    Sound.list["kana_pyu"] = new Sound("./sounds/kana/kana_pyu.mp3");
+    Sound.list["kana_pyo"] = new Sound("./sounds/kana/kana_pyo.mp3");
+
     Sound.list["music"] = new Sound("./sounds/music/Galastarz.mp3", "m", true);
 
     readTSVFile("./translation - 1.tsv");
