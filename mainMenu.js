@@ -143,7 +143,7 @@ class MainMenu {
                 direction: "out", maxTimer: 0.01
             }
         }, "mainmenu", MainMenu.STATE.Main, "Credits", 4);
-        creditsBtn.setFontColor("rgba(142,45,45,1)");
+        creditsBtn.setFontColor(RED_BTN_SDW_COLOR);
         creditsBtn.setDestination({ x: centerX(110), y: 265 });
         creditsBtn.setCanMove(true);
         creditsBtn.setMovingSpeed(0.8);
@@ -162,7 +162,7 @@ class MainMenu {
             }
             , "mainmenu", MainMenu.STATE.Main, "Settings", 4);
 
-        optionsBtn.setFontColor("rgba(142,45,45,1)");
+        optionsBtn.setFontColor(RED_BTN_SDW_COLOR);
         optionsBtn.setDestination({ x: centerX(110), y: 237 });
         optionsBtn.setCanMove(true);
         optionsBtn.setMovingSpeed(0.75);
@@ -172,7 +172,7 @@ class MainMenu {
         infosBtn.setDestination({ x: centerX(110), y: 209 });
         infosBtn.setCanMove(true);
         infosBtn.setMovingSpeed(0.70);
-        infosBtn.setFontColor("rgba(142,45,45,1)");
+        infosBtn.setFontColor(RED_BTN_SDW_COLOR);
         MainMenu.mainList.push(infosBtn.getSprite());
 
 
@@ -193,11 +193,11 @@ class MainMenu {
         freeModeBtn.setDestination({ x: centerX(110), y: 181 });
         freeModeBtn.setCanMove(true);
         freeModeBtn.setMovingSpeed(0.65);
-        freeModeBtn.setFontColor("rgba(142,45,45,1)");
+        freeModeBtn.setFontColor(RED_BTN_SDW_COLOR);
         MainMenu.mainList.push(freeModeBtn.getSprite());
 
         let lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 320, null, { cb: FadeEffect.fade.bind(FadeEffect), arg: { callback: { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, direction: "out", maxTimer: 0.01 } }, "mainmenu", MainMenu.STATE.Main, "Lessons", 4);
-        lessonsBtn.setFontColor("rgba(142,45,45,1)");
+        lessonsBtn.setFontColor(RED_BTN_SDW_COLOR);
         lessonsBtn.setDestination({ x: centerX(110), y: 153 });
         lessonsBtn.setCanMove(true);
         lessonsBtn.setMovingSpeed(0.6);
@@ -270,15 +270,15 @@ class MainMenu {
 
         let optionsTitlePanel = new Panel({ w: 70, h: 30, v: 6 }, centerX(70), 40, null, "mainmenu", MainMenu.STATE.Options, "Settings", 7);
         optionsTitlePanel.setOffsets(5, 18);
-        optionsTitlePanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
+        optionsTitlePanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR);
         MainMenu.optionsList.push(optionsTitlePanel.getSprite());
 
         let musicPanel = new Panel({ w: 40, h: 20, v: 1 }, centerX(40, 72), 78, null, "mainmenu", MainMenu.STATE.Options, "BGM", 2);
-        musicPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
+        musicPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR);
         MainMenu.optionsList.push(musicPanel.getSprite());
 
         let sfxPanel = new Panel({ w: 40, h: 20, v: 1 }, centerX(40, 72), 108, null, "mainmenu", MainMenu.STATE.Options, "SFX", 2);
-        sfxPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
+        sfxPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR);
         MainMenu.optionsList.push(sfxPanel.getSprite());
 
         this.musicSpeaker = new Sprite({ w: 16, h: 14 }, musicPanel.x + 35, musicPanel.y + 3, null);
@@ -348,12 +348,12 @@ class MainMenu {
         MainMenu.optionsList.push(sfxUpBtn.getSprite());
 
         let watchIntroBtn = new Button({ w: 100, h: 25, v: 6 }, centerX(100), 140, null, MainMenu.watchIntroductionAgain, "mainmenu", MainMenu.STATE.Options, "watch_intro", 41);
-        watchIntroBtn.setFontColor("rgba(142,45,45,1)");
+        watchIntroBtn.setFontColor(RED_BTN_SDW_COLOR);
         watchIntroBtn.setOffsets(0, 15);
         MainMenu.optionsList.push(watchIntroBtn.getSprite());
 
         let deleteSaveBtn = new Button({ w: 100, h: 25, v: 6 }, centerX(100), 175, null, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: true } }, "mainmenu", MainMenu.STATE.Options, "delete_save", 41);
-        deleteSaveBtn.setFontColor("rgba(142,45,45,1)");
+        deleteSaveBtn.setFontColor(RED_BTN_SDW_COLOR);
         deleteSaveBtn.setOffsets(0, 15);
         MainMenu.optionsList.push(deleteSaveBtn.getSprite());
 
@@ -507,19 +507,19 @@ class MainMenu {
             Panel.currentList.push(this.deleteSavePanel);
 
             this.deleteSaveWarningPanel = new Panel({ w: 238, h: 50, v: 1 }, 0, 35, this.deleteSavePanel, "mainmenu", MainMenu.STATE.Options, "delete_save_warning", 2);
-            this.deleteSaveWarningPanel.setFontColor("rgba(200,200,200,1)", "rgba(255,0,0,1)");
+            this.deleteSaveWarningPanel.setFontColor("rgba(200,200,200,1)", RED_COLOR);
             this.deleteSaveWarningPanel.setAlpha(0);
             MainMenu.optionsList.push(this.deleteSaveWarningPanel.getSprite());
 
             this.deleteSaveYesBtn = new Button({ w: 50, h: 22, v: 6 }, centerXElement(this.deleteSavePanel, 50, 50), 70, this.deleteSavePanel, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: false, delete: true } }, "mainmenu", MainMenu.STATE.Options, "yes", 41);
-            this.deleteSaveYesBtn.setFontColor("rgba(142,45,45,1)");
+            this.deleteSaveYesBtn.setFontColor(RED_BTN_SDW_COLOR);
             this.deleteSaveYesBtn.setAlpha(0);
             Button.list.push(this.deleteSaveYesBtn);
             Button.currentList.push(this.deleteSaveYesBtn);
             MainMenu.optionsList.push(this.deleteSaveYesBtn.getSprite());
 
             this.deleteSaveNoBtn = new Button({ w: 50, h: 22, v: 6 }, centerXElement(this.deleteSavePanel, 50, 50, 1), 70, this.deleteSavePanel, { cb: MainMenu.displayDeleteSavePanel.bind(this), arg: { bool: false, delete: false } }, "mainmenu", MainMenu.STATE.Options, "no", 41);
-            this.deleteSaveNoBtn.setFontColor("rgba(142,45,45,1)");
+            this.deleteSaveNoBtn.setFontColor(RED_BTN_SDW_COLOR);
             this.deleteSaveNoBtn.setAlpha(0);
             Button.list.push(this.deleteSaveNoBtn);
             Button.currentList.push(this.deleteSaveNoBtn);
@@ -696,56 +696,18 @@ class MainMenu {
          * DEBUG
          */
         if (bStatsDebug) {
-            ctx.fillStyle = "rgb(255,255,255)";
+            ctx.fillStyle = WHITE_COLOR;
             ctx.font = "16px pgfont";
             ctx.fillText("ButtonList : " + Button.list.length, 0, 120);
             ctx.fillText("ButtonCurrent : " + Button.currentList.length, 0, 130);
             ctx.fillText("MainMenuList : " + MainMenu.mainList.length, 0, 140);
             ctx.fillText("BGSPRITE List : " + MainMenu.randomKanaSpriteList.length, 0, 300);
-
-            // ctx.font = "kyokasho";
-
-            // ctx.fillText("あいうえお", 120, 50);
-            // ctx.fillText("かきくけこ", 120, 55);
-            // ctx.fillText("さしすせそ", 120, 60);
-            // ctx.fillText("たちつてと", 120, 65);
-            // ctx.fillText("なにぬねの", 120, 70);
-            // ctx.fillText("はひふへほ", 120, 75);
-            // ctx.fillText("まみむめも", 120, 80);
-            // ctx.fillText("や　ゆ　よ", 120, 85);
-            // ctx.fillText("らりるれろ", 120, 90);
-            // ctx.fillText("わ　　　を", 120, 95);
-            // ctx.fillText("ん", 120, 100);
-
-            // ctx.fillText("アイウエオ", 160, 50);
-            // ctx.fillText("カキクケコ", 160, 55);
-            // ctx.fillText("サシスセソ", 160, 60);
-            // ctx.fillText("タチツテト", 160, 65);
-            // ctx.fillText("ナニヌネノ", 160, 70);
-            // ctx.fillText("ハヒフヘホ", 160, 75);
-            // ctx.fillText("マミムメモ", 160, 80);
-            // ctx.fillText("ヤ　ユ　ヨ", 160, 85);
-            // ctx.fillText("ラリルレロ", 160, 90);
-            // ctx.fillText("ワ　　　ヲ", 160, 95);
-            // ctx.fillText("ン", 160, 100);
         }
         //------------- END DEBUG
 
-        ctx.fillStyle = "rgb(255,255,255)";
+        ctx.fillStyle = WHITE_COLOR;
         ctx.font = "10px jpfont";
-        // ctx.shadowColor = "rgb(0,0,0)";
-        // ctx.shadowOffsetX = 0;
-        // ctx.shadowOffsetY = 2;
-        // ctx.shadowBlur = 0;
         ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
-
-        if (bAlreadyExists) {
-            ctx.fillStyle = "rgb(255,0,0)";
-            ctx.fillText("ALREADY EXISTS !", 10, CANVAS_HEIGHT - 20);
-        }
-        ctx.fillStyle = "rgb(255,255,255)";
-
-        // ctx.fillText("V", CANVAS_WIDTH - 65, CANVAS_HEIGHT - 13);
 
         if (FadeEffect.bActive) {
             FadeEffect.draw(ctx);

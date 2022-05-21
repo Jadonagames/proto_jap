@@ -755,7 +755,7 @@ function setScreenShake(pBool, pX = 5, pY = 5, pRed = true) {
     SCREEN_SHAKE_Y = pY;
     SCREEN_SHAKE_RED = pRed;
     if (!pBool) {
-        canvas.style.backgroundColor = canvasOriginBgColor;
+        canvas.style.backgroundColor = CANVAS_ORIGIN_COLOR;
     }
 }
 

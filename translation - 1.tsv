@@ -97,6 +97,7 @@ nb_2	2	2	2
 symbol_+	plus	plus	plus
 symbol_-	-	-	-
 Content	Content	Contenu	内容
+special_combinations	Katakana special combinations for foreign words	Combinaisons spéciales katakana pour mots étrangers	Combinaisons spéciales katakana pour mots étrangers
 			
 hira_aiueo	あ　い　う　え　お	あ　い　う　え　お	あ　い　う　え　お
 hira_kakikukeko	か　き　く　け　こ	か　き　く　け　こ	か　き　く　け　こ
@@ -714,9 +715,9 @@ kata_che	チェ che	チェ che	チェ che
 kata_she	シェ she	シェ she	シェ she
 kata_je	ジェ je	ジェ je	ジェ je
 kata_ti	ティ ti	ティ ti	ティ ti
-kata_di	ディ di	ディ di	ディ di
+kata_de_i	ディ di	ディ di	ディ di
 kata_tu	トゥ tu	トゥ tu	トゥ tu
-kata_du	ドゥ du	ドゥ du	ドゥ du
+kata_de_u	ドゥ du	ドゥ du	ドゥ du
 kata_fa	ファ fa	ファ fa	ファ fa
 kata_fi	フィ fi	フィ fi	フィ fi
 kata_fe	フェ fe	フェ fe	フェ fe

@@ -724,7 +724,7 @@ class SaveManager {
         LessonBtn.list.forEach(b => {
             if (b.mode == 0) {
                 b.changeMode(1);
-                b.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                b.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
             }
         });
 

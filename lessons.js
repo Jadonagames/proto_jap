@@ -56,7 +56,7 @@ class Lessons {
         this.hiraganaBtn.getSprite().addAnimation("hover", { x: 764, y: 444 });
         this.hiraganaBtn.getSprite().addAnimation("down", { x: 764, y: 444 });
         this.hiraganaBtn.getSprite().changeAnimation("normal");
-        this.hiraganaBtn.setFontColor("rgb(20,102,53)", "rgb(255,255,255", "rgb(20,102,53)", "rgb(255,255,255");
+        this.hiraganaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, WHITE_COLOR, GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
         this.hiraganaBtn.setOffsets(0, 16);
         Lessons.mainList.push(this.hiraganaBtn.getSprite());
 
@@ -65,7 +65,7 @@ class Lessons {
         this.katakanaBtn.getSprite().addAnimation("hover", { x: 878, y: 470 });
         this.katakanaBtn.getSprite().addAnimation("down", { x: 878, y: 470 });
         this.katakanaBtn.getSprite().changeAnimation("normal");
-        this.katakanaBtn.setFontColor("rgb(20,102,53)", "rgb(181,205,190", "rgb(20,102,53)", "rgb(255,255,255");
+        this.katakanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, "rgb(181,205,190)", GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
         this.katakanaBtn.setOffsets(0, 16);
         Lessons.mainList.push(this.katakanaBtn.getSprite());
 
@@ -73,7 +73,7 @@ class Lessons {
         this.kataNewSprite = null;
 
         let watchPrologue = new Button({ w: 100, h: 30, v: 6 }, 345, 50, null, Lessons.watchPrologueAgain, "lessons", Lessons.STATE.Main, "watch_prologue", 41);
-        watchPrologue.setFontColor("rgba(142,45,45,1)");
+        watchPrologue.setFontColor(RED_BTN_SDW_COLOR);
         watchPrologue.setOffsets(0, 17);
         Lessons.mainList.push(watchPrologue.getSprite());
 
@@ -125,16 +125,16 @@ class Lessons {
 
             if (bNoSave) {
                 lessonBtn.setMode(1, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Hiragana, i] }, offYColor);
-                lessonBtn.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                lessonBtn.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
                 lessonBtn.changeSpriteAnimation("normal");
             } else {
                 lessonBtn.setMode(0, null, offYColor);
                 if (!SaveManager.SAVE_DATA["lessons"]["h" + i]["buttonAnimation"]) {
                     lessonBtn.state = LessonBtn.STATE.Inactive;
                     lessonBtn.changeSpriteAnimation("open");
-                    lessonBtn.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                    lessonBtn.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
                 } else {
-                    lessonBtn.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+                    lessonBtn.setFontColor("rgba(176,150,124,1)", BLACK_COLOR, "rgba(213,210,190,1)", "rgba(162,138,114,1)");
                     lessonBtn.changeSpriteAnimation("normal");
 
 
@@ -142,14 +142,9 @@ class Lessons {
                         bDisplayNew = true;
                         displayNew.kana = "h";
                         displayNew.number = i
-                        // this.displayNewLogo("h", i);
                     }
                 }
             }
-            // lessonBtn.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
-            // lessonBtn.changeSpriteAnimation("normal");
-
-            // Lessons.hiraganaList.push(lessonBtn.getSprite());
 
             this.starTrophyList["h" + i] = new Sprite({ w: 10, h: 8 }, 61, 1, lessonBtn);
             this.starTrophyList["h" + i].getSprite().addAnimation("normal", { x: 94, y: 112 });
@@ -229,16 +224,16 @@ class Lessons {
 
             if (bNoSave) {
                 lessonBtn.setMode(1, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Katakana, i] }, offYColor);
-                lessonBtn.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                lessonBtn.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
                 lessonBtn.changeSpriteAnimation("normal");
             } else {
                 lessonBtn.setMode(0, null, offYColor);
                 if (!SaveManager.SAVE_DATA["lessons"]["k" + i]["buttonAnimation"]) {
                     lessonBtn.state = LessonBtn.STATE.Inactive;
                     lessonBtn.changeSpriteAnimation("open");
-                    lessonBtn.setFontColor("rgba(176,150,124,0)", "rgba(0,0,0,0)", "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                    lessonBtn.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
                 } else {
-                    lessonBtn.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+                    lessonBtn.setFontColor("rgba(176,150,124,1)", BLACK_COLOR, "rgba(213,210,190,1)", "rgba(162,138,114,1)");
                     lessonBtn.changeSpriteAnimation("normal");
 
                     if (SaveManager.SAVE_DATA["lessons"]["h" + i]["newAnimation"] && !SaveManager.SAVE_DATA["lessons"]["k" + i]["newFinish"]) {
@@ -647,7 +642,7 @@ class Lessons {
             this.trainingBtn.getSprite().addAnimation("down", { x: 762, y: 408 });
             this.trainingBtn.getSprite().changeAnimation("normal");
             this.trainingBtn.setOffsets(0, 18);
-            this.trainingBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
+            this.trainingBtn.setFontColor(TEST_BTN_SDW_COLOR, BLACK_COLOR, TEST_BTN_SDW_COLOR, TEST_BTN_HVR_COLOR);
             Lessons.lessonList.push(this.trainingBtn.getSprite());
 
             this.lessonTestBtn = new Button({ w: 60, h: 31 }, centerX(60, 10, 1), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Lesson_test", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Lesson_test", 0, true);
@@ -657,7 +652,7 @@ class Lessons {
             this.lessonTestBtn.getSprite().changeAnimation("normal");
             this.lessonTestBtn.setOffsets(0, 18);
 
-            this.lessonTestBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
+            this.lessonTestBtn.setFontColor(TEST_BTN_SDW_COLOR, BLACK_COLOR, TEST_BTN_SDW_COLOR, TEST_BTN_HVR_COLOR);
             Lessons.lessonList.push(this.lessonTestBtn.getSprite());
 
             let trophyLevel1 = 0;
@@ -687,7 +682,7 @@ class Lessons {
             Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
 
             this.lessonTestTrophyPanel = new Panel({ w: 36, h: 13, v: 1 }, this.lessonTestBtn.x + 64, this.lessonTestBtn.y + 3, null, "lessons", Lessons.STATE.Lesson, [], 2);
-            this.lessonTestTrophyPanel.setFontColor("rgba(0,0,0,1)", "rgba(255,255,255,1)");
+            this.lessonTestTrophyPanel.setFontColor(BLACK_COLOR, WHITE_COLOR);
             this.lessonTestTrophyPanel.setNumberBool(true);
             this.lessonTestTrophyPanel.setTextOverflow(true);
 
@@ -717,7 +712,7 @@ class Lessons {
                 this.fullTestBtn.getSprite().addAnimation("down", { x: 762, y: 408 });
                 this.fullTestBtn.getSprite().changeAnimation("normal");
                 this.fullTestBtn.setOffsets(0, 18);
-                this.fullTestBtn.setFontColor("rgba(228,223,192,1)", "rbga(0,0,0,1)", "rgba(228,223,192,1)", "rgba(172,50,50,1)");
+                this.fullTestBtn.setFontColor(TEST_BTN_SDW_COLOR, BLACK_COLOR, TEST_BTN_SDW_COLOR, TEST_BTN_HVR_COLOR);
                 Lessons.lessonList.push(this.fullTestBtn.getSprite());
             }
 
@@ -745,7 +740,7 @@ class Lessons {
 
 
                 this.fullTestTrophyPanel = new Panel({ w: 36, h: 13, v: 1 }, this.fullTestBtn.x + 64, this.fullTestBtn.y + 3, null, "lessons", Lessons.STATE.Lesson, [], 2);
-                this.fullTestTrophyPanel.setFontColor("rgba(0,0,0,1)", "rgba(255,255,255,1)");
+                this.fullTestTrophyPanel.setFontColor(BLACK_COLOR, WHITE_COLOR);
                 this.fullTestTrophyPanel.setNumberBool(true);
                 this.fullTestTrophyPanel.setTextOverflow(true);
 
@@ -863,7 +858,7 @@ class Lessons {
                 "lessons", Lessons.STATE.Lesson, btnLabel, 41);
             // let lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), 320, null, { cb: FadeEffect.fade.bind(FadeEffect), arg: { callback: { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, direction: "out", maxTimer: 0.01 } }, "mainmenu", MainMenu.STATE.Main, "Lessons", 4);
 
-            this.kanaToRomaBtn.setFontColor("rgba(142,45,45,1)");
+            this.kanaToRomaBtn.setFontColor(RED_BTN_SDW_COLOR);
             this.kanaToRomaBtn.setAlpha(0);
             // Button.list.push(this.kanaToRomaBtn);
             Button.currentList.push(this.kanaToRomaBtn);
@@ -882,7 +877,7 @@ class Lessons {
                     }
                 },
                 "lessons", Lessons.STATE.Lesson, btn2Label, 41);
-            this.romaTokanaBtn.setFontColor("rgba(142,45,45,1)");
+            this.romaTokanaBtn.setFontColor(RED_BTN_SDW_COLOR);
             this.romaTokanaBtn.setAlpha(0);
             // Button.list.push(this.romaTokanaBtn);
             Button.currentList.push(this.romaTokanaBtn);
@@ -1051,25 +1046,25 @@ class Lessons {
                 this.hiraganaBtn.getSprite().resetAnimations("normal", { x: 764, y: 444 });
                 this.hiraganaBtn.getSprite().resetAnimations("hover", { x: 764, y: 444 });
                 this.hiraganaBtn.getSprite().resetAnimations("down", { x: 764, y: 444 });
-                this.hiraganaBtn.setFontColor("rgb(20,102,53)", "rgb(255,255,255", "rgb(20,102,53)", "rgb(255,255,255");
+                this.hiraganaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, WHITE_COLOR, GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
 
                 this.katakanaBtn.getSprite().resetAnimations("normal", { x: 992, y: 470 });
                 this.katakanaBtn.getSprite().resetAnimations("hover", { x: 878, y: 470 });
                 this.katakanaBtn.getSprite().resetAnimations("down", { x: 878, y: 470 });
-                this.katakanaBtn.setFontColor("rgb(20,102,53)", "rgb(181,205,190", "rgb(20,102,53)", "rgb(255,255,255");
+                this.katakanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, "rgb(181,205,190)", GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
 
                 break;
             case Lessons.STATE.Katakana:
                 this.hiraganaBtn.getSprite().resetAnimations("normal", { x: 992, y: 444 });
                 this.hiraganaBtn.getSprite().resetAnimations("hover", { x: 878, y: 444 });
                 this.hiraganaBtn.getSprite().resetAnimations("down", { x: 878, y: 444 });
-                this.hiraganaBtn.setFontColor("rgb(20,102,53)", "rgb(181,205,190", "rgb(20,102,53)", "rgb(255,255,255");
+                this.hiraganaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, "rgb(181,205,190)", GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
 
                 // No reaction
                 this.katakanaBtn.getSprite().resetAnimations("normal", { x: 764, y: 470 });
                 this.katakanaBtn.getSprite().resetAnimations("hover", { x: 764, y: 470 });
                 this.katakanaBtn.getSprite().resetAnimations("down", { x: 764, y: 470 });
-                this.katakanaBtn.setFontColor("rgb(20,102,53)", "rgb(255,255,255", "rgb(20,102,53)", "rgb(255,255,255");
+                this.katakanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, WHITE_COLOR, GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
 
                 if (SaveManager.SAVE_DATA["prologue"] != 12) {
                     SaveManager.save([{ type: "prologue", value: 12 }]);
@@ -1130,7 +1125,7 @@ class Lessons {
             case "lessonTest":
                 if (this.lessonTestTrophy.currentAnimation.origin.x < 452 + (36 * multiplicator)) {
                     this.lessonTestTrophy.resetAnimations("normal", { x: 452 + (36 * multiplicator), y: this.lessonTestTrophy.currentAnimation.origin.y });
-                    this.lessonTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
+                    this.lessonTestTrophyPanel.setFontColor(BLACK_COLOR_0, WHITE_COLOR_0);
                     if (!Lessons.lessonList.includes(this.lessonTestTrophy.getSprite())) {
                         Lessons.lessonList.push(this.lessonTestTrophy.getSprite());
                     }
@@ -1139,7 +1134,7 @@ class Lessons {
             case "fullTest":
                 if (this.fullTestTrophy.currentAnimation.origin.x < 452 + (36 * multiplicator)) {
                     this.fullTestTrophy.resetAnimations("normal", { x: 452 + (36 * multiplicator), y: this.fullTestTrophy.currentAnimation.origin.y });
-                    this.fullTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
+                    this.fullTestTrophyPanel.setFontColor(BLACK_COLOR_0, WHITE_COLOR_0);
                     if (!Lessons.lessonList.includes(this.fullTestTrophy.getSprite())) {
                         Lessons.lessonList.push(this.fullTestTrophy.getSprite());
                     }
@@ -1154,10 +1149,10 @@ class Lessons {
         if (bEnd) {
             if (pType == "lessonTest") {
                 this.lessonTestTrophyPanel.setLabel("2/2");
-                this.lessonTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
+                this.lessonTestTrophyPanel.setFontColor(BLACK_COLOR_0, WHITE_COLOR_0);
             } else if (pType == "fullTest") {
                 this.fullTestTrophyPanel.setLabel("2/2");
-                this.fullTestTrophyPanel.setFontColor("rgba(0,0,0,0)", "rgba(255,255,255,0)");
+                this.fullTestTrophyPanel.setFontColor(BLACK_COLOR_0, WHITE_COLOR_0);
             }
         } else {
 
@@ -1519,9 +1514,9 @@ class Lessons {
 
         ctx.font = "20px jpfont";
         ctx.textAlign = "center";
-        ctx.shadowColor = "rgb(20,102,53)";
+        ctx.shadowColor = GREEN_BOARD_SDW_COLOR2;
         ctx.shadowOffsetY = 4;
-        ctx.fillStyle = "rgb(255,255,255)";
+        ctx.fillStyle = WHITE_COLOR;
 
         if (Lessons.state == Lessons.STATE.Hiragana) {
             ctx.fillText("Hiragana", centerX(), 80);
@@ -1535,19 +1530,6 @@ class Lessons {
             }
         }
         ctx.shadowOffsetY = 0;
-
-
-        // ----------
-        // ctx.font = "10px jpfont";
-        // ctx.fillStyle = "rgb(0,0,0)";
-
-
-        // ctx.fillText("CanvasY : " + this.canvasY, 50, 250);
-
-        // ctx.fillText("CanvasY : " + this.canvasY, 45, 500);
-
-        // ctx.font = "20px jpfont";
-        // ---------
 
         ctx.textAlign = "left";
 

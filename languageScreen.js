@@ -12,15 +12,15 @@ class LanguageScreen {
     }
 
     static init() {
-        canvas.style.backgroundColor = "rgb(213, 210, 193)";
+        canvas.style.backgroundColor = CANVAS_ORIGIN_COLOR;
 
         let frBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80), centerY(40, 30), null, { cb: LanguageScreen.changeLanguage, arg: "fr" }, "LanguageScreen", LanguageScreen.STATE.Main, "french_lang", 41);
-        frBtn.setFontColor("rgba(142,45,45,1)");
+        frBtn.setFontColor(RED_BTN_SDW_COLOR);
         frBtn.setOffsets(0, 22);
         LanguageScreen.list.push(frBtn.getSprite());
 
         let enBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80), centerY(50, 30, 1), null, { cb: LanguageScreen.changeLanguage, arg: "en" }, "LanguageScreen", LanguageScreen.STATE.Main, "english_lang", 41);
-        enBtn.setFontColor("rgba(142,45,45,1)");
+        enBtn.setFontColor(RED_BTN_SDW_COLOR);
         enBtn.setOffsets(0, 22);
         LanguageScreen.list.push(enBtn.getSprite());
 

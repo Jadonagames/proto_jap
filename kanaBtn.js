@@ -16,13 +16,13 @@ class KanaBtn extends Button {
     drawLabel(ctx) {
 
         if (this.state == Button.STATE.Hover) {
-            ctx.fillStyle = "rgb(255,255,255)";
+            ctx.fillStyle = WHITE_COLOR;
             ctx.shadowColor = "rgba(23,88,49,1)";
         } else if (this.state == Button.STATE.Inactive) {
             ctx.fillStyle = "rgb(0,0,0,0.5)";
             ctx.shadowColor = "rgba(23,88,49,0.5)";
         } else {
-            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fillStyle = BLACK_COLOR;
             ctx.shadowColor = "rgba(23,88,49,1)";
         }
 
@@ -48,7 +48,7 @@ class KanaBtn extends Button {
         }
 
         ctx.shadowOffsetY = 0;
-        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.fillStyle = BLACK_COLOR;
         ctx.textAlign = "left";
     }
 }

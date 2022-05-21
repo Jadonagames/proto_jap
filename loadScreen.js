@@ -14,7 +14,7 @@ class LoadScreen {
     }
 
     static init() {
-        canvas.style.backgroundColor = "rgb(213, 210, 193)";
+        canvas.style.backgroundColor = CANVAS_ORIGIN_COLOR;
 
         this.bTimerOK = false;
         this.loadTimer = new Timer(2, LoadScreen.stopTimer.bind(this));
@@ -66,8 +66,7 @@ class LoadScreen {
         ctx.font = "10px jpfont";
         ctx.textAlign = "left";
 
-        // ctx.fillStyle = "rgb(255, 255, 255)";
-        ctx.fillStyle = "rgb(213, 210, 193)";
+        ctx.fillStyle = CANVAS_ORIGIN_COLOR;
         ctx.fillText("あいうえお", 340, 190);
         ctx.fillText("かきくけこ", 340, 200);
         ctx.fillText("さしすせそ", 340, 210);
@@ -116,7 +115,7 @@ class ErrorScreen {
     }
 
     static init() {
-        canvas.style.backgroundColor = "rgb(213, 210, 193)";
+        canvas.style.backgroundColor = CANVAS_ORIGIN_COLOR;
 
         MOUSE_SPRITE.changeAnimation("error");
 
@@ -146,7 +145,7 @@ class ErrorScreen {
 
         ctx.font = "10px jpfont";
         ctx.textAlign = "center";
-        ctx.fillStyle = "rgb(255, 0, 0)";
+        ctx.fillStyle = RED_COLOR;
         ctx.fillText(translationEn["connection_error1"], 225, 50);
         ctx.fillText(translationEn["connection_error2"], 225, 70);
 

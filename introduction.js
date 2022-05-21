@@ -27,7 +27,7 @@ class Introduction {
 
         this.dialogPanel = new DialogPanel({ w: 220, h: 90, v: 6 }, centerX(220), CANVAS_HEIGHT + 90, null, "introduction", Introduction.STATE.Main, ["intro_text_", 10, true], 7);
         this.dialogPanel.setOffsets(12, 18);
-        this.dialogPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
+        this.dialogPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR);
         this.dialogPanel.setAlignText(this.dialogPanel.ALIGN_TEXT.Left);
         this.dialogPanel.beginMoving({ x: centerX(220), y: CANVAS_HEIGHT - 90 }, 1, true, 0, 0.08);
         this.dialogPanel.setScriptCallback(Introduction.nextStep.bind(Introduction));
@@ -368,7 +368,7 @@ class Introduction {
         if (this.bDisclaimer) {
             ctx.font = "30px kyokasho";
             ctx.textAlign = "center";
-            ctx.fillStyle = "rgba(255,0,0,1)";
+            ctx.fillStyle = RED_COLOR;
             ctx.fillText("DISCLAIMER", 230, 130);
         }
 

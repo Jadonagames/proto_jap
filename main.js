@@ -13,7 +13,48 @@ const SCALE_X = 2;
 const SCALE_Y = 2;
 const CANVAS_WIDTH = canvas.width / SCALE_X;
 const CANVAS_HEIGHT = canvas.height / SCALE_Y;
-let canvasOriginBgColor = "rgb(213, 210, 193)";
+const BLACK_COLOR = "rgba(0,0,0,1)";
+const BLACK_COLOR_0 = "rgba(0,0,0,0)";
+const WHITE_COLOR = "rgba(255,255,255,1)";
+const WHITE_COLOR_0 = "rgba(255,255,255,0)";
+const RED_COLOR = "rgba(255,0,0,1)";
+const RED_COLOR_0 = "rgba(255,0,0,0)";
+
+const RED_BTN_SDW_COLOR = "rgba(142,45,45,1)";
+const GREEN_BOARD_SDW_COLOR = "rgba(18,72,39,1)"; //? DialogPanel / Infos.KanaPanel // All other green panels
+const GREEN_BOARD_SDW_COLOR2 = "rgba(20,102,53,1)"; //? Lessons Hiragana/Katakana titles
+
+const TEST_BTN_SDW_COLOR = "rgba(228,223,192,1)";
+const TEST_BTN_HVR_COLOR = "rgba(172,50,50,1)";
+
+/*
+"rgba(217,213,188,0)"       // choose type title panel shadow
+
+"rgba(150,150,150,0)"       // endGameMark shadow
+"rgba(150,150,150,1)"       // --
+"rgba(215,30,30,0)"         // endGameMark
+
+"rgba(162,162,162,1)"       // keyboard instructions panel shadow
+"rgba(172,50,50,1)"         // virtual keyboard message shadow && fulltestBtn hover
+"rgba(23,88,49,1)"          // kanaBtn shadow
+
+"rgba(176,150,124,1)" + 0  // LessonBtn shadow
+"rgba(213,210,190,1)" + 0  // LessonBtn Hover shadow
+"rgba(162,138,114,1)" + 0  // LessonBtn Hover
+
+"rgb(181,205,190)" // shadow (quand "inactif") (switch buttons)
+
+"rgba(228,223,192,1)"       // FullTestBtn shadow & hover shadow
+
+"rgba(200,200,200,0)"       // EntryField shadow
+"rgba(100,100,100,0)"       // EntryField hover shadow
+"rgba(192,192,192,0)"       // login/signup title shadow
+"rgba(217, 160, 102, 1)")   // user panel shadow
+
+*/
+
+
+const CANVAS_ORIGIN_COLOR = "rgba(213,210,193,1)";
 let MUSIC_VOLUME = 0.5;
 let SFX_VOLUME = 0.5;
 let TRANSITION = false;
@@ -255,7 +296,7 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
     }
 
     // if (bStatsDebug) {
-    if (0) {
+    if (1) {
         ctx.textAlign = "left";
         ctx.font = "10px jpfont";
         ctx.fillText("Drawcalls: " + Sprite.debug_drawcalls, 0, 10);
@@ -376,14 +417,14 @@ function toMainMenu() {
 
     if (!SaveManager.SAVE_DATA["intro"] && !MainMenu.bInit) {
         changeMainState(MAIN_STATE.Introduction);
-        canvas.style.backgroundColor = canvasOriginBgColor;
+        canvas.style.backgroundColor = CANVAS_ORIGIN_COLOR;
         return;
     }
 
     if (!MainMenu.bInit) {
         MainMenu.init();
     }
-    canvas.style.backgroundColor = canvasOriginBgColor;
+    canvas.style.backgroundColor = CANVAS_ORIGIN_COLOR;
 
     mainState = MAIN_STATE.Menu;
 

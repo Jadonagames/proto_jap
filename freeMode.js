@@ -31,8 +31,8 @@ class FreeMode {
 
         let hiraganaBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80, 80), centerY(40), null,
             { cb: FreeMode.displayChooseTypePanel.bind(this), arg: { bool: true, type: "Hiragana", testType: "freemode", lessonNumber: 0 } }
-        , "freemode", FreeMode.STATE.Main, "Hiragana", 41);
-        hiraganaBtn.setFontColor("rgba(142,45,45,1)");
+            , "freemode", FreeMode.STATE.Main, "Hiragana", 41);
+        hiraganaBtn.setFontColor(RED_BTN_SDW_COLOR);
         hiraganaBtn.setOffsets(0, 22);
         FreeMode.list.push(hiraganaBtn.getSprite());
 
@@ -41,7 +41,7 @@ class FreeMode {
         let trophyLevel2 = 0;
         trophyLevel1 = SaveManager.SAVE_DATA["freemode"]["game1"]["hiraganaGeneral"];
         trophyLevel2 = SaveManager.SAVE_DATA["freemode"]["game1"]["katakanaGeneral"];
-        
+
 
         let multiplicator = 0;
         switch (trophyLevel1) {
@@ -58,17 +58,17 @@ class FreeMode {
                 multiplicator = 0;
         }
 
-        this.hiraganaTrophy = new Sprite({ w: 36, h: 36 }, hiraganaBtn.x - 46, hiraganaBtn.y+2);
+        this.hiraganaTrophy = new Sprite({ w: 36, h: 36 }, hiraganaBtn.x - 46, hiraganaBtn.y + 2);
         this.hiraganaTrophy.getSprite().addAnimation("normal", { x: 452 + (36 * multiplicator), y: 826 });
         this.hiraganaTrophy.getSprite().changeAnimation("normal");
         FreeMode.list.push(this.hiraganaTrophy.getSprite());
 
 
 
-        let katakanaBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80, 80, 1), centerY(40), null, 
+        let katakanaBtn = new Button({ w: 80, h: 40, v: 6 }, centerX(80, 80, 1), centerY(40), null,
             { cb: FreeMode.displayChooseTypePanel.bind(this), arg: { bool: true, type: "Katakana", testType: "freemode", lessonNumber: 0 } }
-        , "freemode", FreeMode.STATE.Main, "Katakana", 41);
-        katakanaBtn.setFontColor("rgba(142,45,45,1)");
+            , "freemode", FreeMode.STATE.Main, "Katakana", 41);
+        katakanaBtn.setFontColor(RED_BTN_SDW_COLOR);
         katakanaBtn.setOffsets(0, 22);
         FreeMode.list.push(katakanaBtn.getSprite());
 
@@ -88,7 +88,7 @@ class FreeMode {
                 multiplicator = 0;
         }
 
-        this.katakanaTrophy = new Sprite({ w: 36, h: 36 }, katakanaBtn.x + 90, katakanaBtn.y+2);
+        this.katakanaTrophy = new Sprite({ w: 36, h: 36 }, katakanaBtn.x + 90, katakanaBtn.y + 2);
         this.katakanaTrophy.getSprite().addAnimation("normal", { x: 452 + (36 * multiplicator), y: 826 });
         this.katakanaTrophy.getSprite().changeAnimation("normal");
         FreeMode.list.push(this.katakanaTrophy.getSprite());
@@ -168,17 +168,17 @@ class FreeMode {
         }
     }
 
-    static displayChooseTypePanel(pParams) { 
+    static displayChooseTypePanel(pParams) {
 
-    /*//? pParams :
-        { 
-            bool: true, open | close
-            range: kanaList[kanaList.length - 1], 
-            type: kana[0], "hiragana" | "katakana"
-            testType: "Training", 
-            lessonNumber: lessonNumber 
-        }
-    */
+        /*//? pParams :
+            { 
+                bool: true, open | close
+                range: kanaList[kanaList.length - 1], 
+                type: kana[0], "hiragana" | "katakana"
+                testType: "Training", 
+                lessonNumber: lessonNumber 
+            }
+        */
 
         this.bChooseType = pParams.bool;
 
@@ -241,13 +241,13 @@ class FreeMode {
                 },
                 "freemode", FreeMode.STATE.Main, btnLabel, 41);
 
-            this.kanaToRomaBtn.setFontColor("rgba(142,45,45,1)");
+            this.kanaToRomaBtn.setFontColor(RED_BTN_SDW_COLOR);
             this.kanaToRomaBtn.setAlpha(0);
             Button.currentList.push(this.kanaToRomaBtn);
             FreeMode.list.push(this.kanaToRomaBtn.getSprite());
 
             this.romaTokanaBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.chooseTypePanel, 80), 110, this.chooseTypePanel,
-                { 
+                {
                     cb: Transition.init.bind(Transition),
                     arg: {
                         callback: { cb: startBtnCB, arg: { range: "po", answerType: "r", choiceType: answerType, testType: "freemode", lessonNumber: 0 } },
@@ -256,9 +256,9 @@ class FreeMode {
                         stopEffect: false,
                         height: false
                     }
-                }, 
+                },
                 "freemode", FreeMode.STATE.Main, btn2Label, 41);
-            this.romaTokanaBtn.setFontColor("rgba(142,45,45,1)");
+            this.romaTokanaBtn.setFontColor(RED_BTN_SDW_COLOR);
             this.romaTokanaBtn.setAlpha(0);
             Button.currentList.push(this.romaTokanaBtn);
             FreeMode.list.push(this.romaTokanaBtn.getSprite());
@@ -283,7 +283,7 @@ class FreeMode {
             this.romaTokanaTrophy.getSprite().addAnimation("normal", { x: 30 + trophyLevel2, y: 112 });
             this.romaTokanaTrophy.getSprite().changeAnimation("normal");
             FreeMode.list.push(this.romaTokanaTrophy.getSprite());
-        
+
 
 
 
@@ -317,7 +317,7 @@ class FreeMode {
 
             this.kanaToRomaTrophy.getSprite().delete = true;
             this.romaTokanaTrophy.getSprite().delete = true;
-            
+
 
             this.chooseTypePanel = null;
             this.chooseTypeTitle = null;
@@ -339,7 +339,7 @@ class FreeMode {
 
 
 
-    static backToFreeMode () {
+    static backToFreeMode() {
         mainState = MAIN_STATE.FreeMode;
         FreeMode.changeState(FreeMode.STATE.Main);
     }

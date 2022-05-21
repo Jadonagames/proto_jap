@@ -38,7 +38,7 @@ class Input {
         this.keyboardInstructionPanel = new Panel({ w: 150, h: 20 }, 50, 5, this.keyboardPanel, "", null, "keyboard_instruction", 0, true);
         this.keyboardInstructionPanel.getSprite().addAnimation("normal", { x: 352, y: 208 }); //? Espace vide dans la sprite sheet
         this.keyboardInstructionPanel.getSprite().changeAnimation("normal");
-        this.keyboardInstructionPanel.setFontColor("rgba(162,162,162,1)", "rgba(255,0,0,1)");
+        this.keyboardInstructionPanel.setFontColor("rgba(162,162,162,1)", RED_COLOR);
         this.keyboardInstructionPanel.setAlpha(0);
         this.keyboardInstructionPanel.setAlignText(0);
         Input.keyboardSpriteList.push(this.keyboardInstructionPanel.getSprite());
@@ -51,7 +51,7 @@ class Input {
         this.virtualKeyboardMessage = new Panel({ w: 91, h: 18 }, originX, originY, null, "", null, "virtual_keyboard", 0, true);
         this.virtualKeyboardMessage.getSprite().addAnimation("normal", { x: 862, y: 72 });
         this.virtualKeyboardMessage.getSprite().changeAnimation("normal");
-        this.virtualKeyboardMessage.setFontColor("rgba(172,50,50,1)");
+        this.virtualKeyboardMessage.setFontColor(TEST_BTN_HVR_COLOR);
         this.virtualKeyboardMessage.setAlignText(1);
         this.virtualKeyboardMessage.setTextOverflow(true);
         this.virtualKeyboardMessage.setOffsets(5, 10);
@@ -117,7 +117,7 @@ class Input {
 
             let alphabetBtn = new KeyboardBtn({ w: 23, h: 22 }, x, y, this.keyboardPanel, { cb: Input.handleKeyboardClick, arg: i }, "", null, "alpha_" + Input.LC_alphabet[i], 0, true);
             alphabetBtn.setAnimations({ x: 862, y: 92 });
-            alphabetBtn.setFontColor("rgba(142,45,45,1)");
+            alphabetBtn.setFontColor(RED_BTN_SDW_COLOR);
             alphabetBtn.setOffsets(-1, 13);
             alphabetBtn.setTextCase("all");
             Input.keyboardSpriteList.push(alphabetBtn.getSprite());
@@ -143,7 +143,7 @@ class Input {
 
             let numBtn = new KeyboardBtn({ w: 23, h: 22 }, x, y, this.keyboardPanel, { cb: Input.handleKeyboardClick, arg: "num_" + i }, "", null, "num_" + i, 0, true);
             numBtn.setAnimations({ x: 862, y: 92 });
-            numBtn.setFontColor("rgba(142,45,45,1)");
+            numBtn.setFontColor(RED_BTN_SDW_COLOR);
             numBtn.setOffsets(-1, 13);
             Input.keyboardSpriteList.push(numBtn.getSprite());
             Input.keyboardList.push(numBtn);

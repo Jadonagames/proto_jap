@@ -27,11 +27,11 @@ class LessonTutorial {
         LessonTutorial.bInit = true;
 
         this.lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), centerY(22), null, { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, "lessonTutorial", LessonTutorial.STATE.Main, "Lessons", 4);
-        this.lessonsBtn.setFontColor("rgba(142,45,45,1)");
+        this.lessonsBtn.setFontColor(RED_BTN_SDW_COLOR);
 
         this.dialogPanel = new DialogPanel({ w: 220, h: 70, v: 6 }, centerX(220), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, ["lesson_text_", 16, true], 7);
         this.dialogPanel.setOffsets(12, 18);
-        this.dialogPanel.setFontColor("rgba(18,72,39,1)", "rgba(255,255,255,1)");
+        this.dialogPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR);
         this.dialogPanel.setAlignText(this.dialogPanel.ALIGN_TEXT.Left);
         this.dialogPanel.beginMoving({ x: centerX(220), y: CANVAS_HEIGHT - 75 }, 1, true, 0, 0.08);
         this.dialogPanel.setScriptCallback(LessonTutorial.nextStep.bind(LessonTutorial));

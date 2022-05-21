@@ -126,7 +126,7 @@ class LessonBtn extends Button {
         save.push({ type: "buttonAnimation", params: kana + lessonNumber });
         save.push({ type: "newAnimation", params: kana + lessonNumber });
         SaveManager.save(save);
-        this.setFontColor("rgba(176,150,124,1)", "rgba(0,0,0,1)", "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+        this.setFontColor("rgba(176,150,124,1)", BLACK_COLOR, "rgba(213,210,190,1)", "rgba(162,138,114,1)");
         this.getSprite().changeAnimation("normal");
         this.state = LessonBtn.STATE.Normal;
 
@@ -164,7 +164,7 @@ class LessonBtn extends Button {
         }
 
         ctx.shadowOffsetY = 0;
-        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.fillStyle = BLACK_COLOR;
         ctx.textAlign = "left";
 
     }

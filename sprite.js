@@ -613,14 +613,14 @@ class Sprite {
                 ctx.putImageData(this.imageDataCurrent.imageData, this.x * SCALE_X, this.y * SCALE_Y);
                 ctx.font = "10px jpfont";
                 ctx.textAlign = "center";
-                ctx.fillStyle = "rgb(255, 0, 0)";
+                ctx.fillStyle = RED_COLOR;
 
                 if (this.kanaToDelete) {
                     ctx.fillText(this.strokeNumber, this.x + this.width + 10, this.y + CANVAS_HEIGHT + 18);
                 } else {
                     ctx.fillText(this.strokeNumber, this.x + this.width + 10, this.y + 18);
                 }
-                ctx.fillStyle = "rgb(0, 0, 0)";
+                ctx.fillStyle = BLACK_COLOR;
             }
         }
     }

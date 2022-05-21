@@ -1,5 +1,5 @@
 class EntryField {
-    
+
     static list = [];
     static currentList = [];
     static STATE = Object.freeze({
@@ -59,7 +59,7 @@ class EntryField {
                 b: new Sprite({ w: pSize.b.w, h: pSize.b.h }, 0 + pSize.corner.w, 0 + this.internHeight, this, this.type, { x: this.internWidth - pSize.corner.w, y: 1 }),
                 l: new Sprite({ w: pSize.l.w, h: pSize.l.h }, 0, 0 + pSize.corner.h, this, this.type, { x: 1, y: this.internHeight - pSize.corner.h }),
                 c: new Sprite({ w: pSize.c.w, h: pSize.c.h }, 0 + pSize.corner.w, 0 + pSize.corner.h, this, this.type, { x: this.internWidth - pSize.corner.w, y: this.internHeight - pSize.corner.h }),
-                cursor: new Sprite({ w: 1, h: 14}, 13, 6, this, this.type),
+                cursor: new Sprite({ w: 1, h: 14 }, 13, 6, this, this.type),
                 class: 9,
                 parent: this,
                 delete: false
@@ -398,7 +398,7 @@ class EntryField {
             arg: pParam
         }
     }
-    
+
     setFocusCB(pCallback, pParam) {
         this.focusCB = {
             cb: pCallback,
@@ -536,7 +536,7 @@ class EntryField {
         }
 
         ctx.shadowOffsetY = 0;
-        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.fillStyle = BLACK_COLOR;
         ctx.textAlign = "left";
     }
 }

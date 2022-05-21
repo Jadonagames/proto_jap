@@ -164,7 +164,7 @@ class DropdownPanel extends Panel {
         }
 
         ctx.shadowOffsetY = 0;
-        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.fillStyle = BLACK_COLOR;
         ctx.textAlign = "left";
     }
 

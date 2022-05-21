@@ -1050,6 +1050,25 @@ function LoadAssets() {
     Sound.list["kana_pyu"] = new Sound("./sounds/kana/kana_pyu.mp3");
     Sound.list["kana_pyo"] = new Sound("./sounds/kana/kana_pyo.mp3");
 
+    Sound.list["kana_wi"] = new Sound("./sounds/kana/kana_wi.mp3");
+    Sound.list["kana_we"] = new Sound("./sounds/kana/kana_we.mp3");
+    Sound.list["kana_wwo"] = new Sound("./sounds/kana/kana_wwo.mp3");
+    Sound.list["kana_va"] = new Sound("./sounds/kana/kana_va.mp3");
+    Sound.list["kana_vi"] = new Sound("./sounds/kana/kana_vi.mp3");
+    Sound.list["kana_ve"] = new Sound("./sounds/kana/kana_ve.mp3");
+    Sound.list["kana_vo"] = new Sound("./sounds/kana/kana_vo.mp3");
+    Sound.list["kana_che"] = new Sound("./sounds/kana/kana_che.mp3");
+    Sound.list["kana_she"] = new Sound("./sounds/kana/kana_she.mp3");
+    Sound.list["kana_je"] = new Sound("./sounds/kana/kana_je.mp3");
+    Sound.list["kana_ti"] = new Sound("./sounds/kana/kana_ti.mp3");
+    Sound.list["kana_de_i"] = new Sound("./sounds/kana/kana_de_i.mp3");
+    Sound.list["kana_tu"] = new Sound("./sounds/kana/kana_tu.mp3");
+    Sound.list["kana_de_u"] = new Sound("./sounds/kana/kana_de_u.mp3");
+    Sound.list["kana_fa"] = new Sound("./sounds/kana/kana_fa.mp3");
+    Sound.list["kana_fi"] = new Sound("./sounds/kana/kana_fi.mp3");
+    Sound.list["kana_fe"] = new Sound("./sounds/kana/kana_fe.mp3");
+    Sound.list["kana_fo"] = new Sound("./sounds/kana/kana_fo.mp3");
+
     Sound.list["music"] = new Sound("./sounds/music/Galastarz.mp3", "m", true);
 
     readTSVFile("./translation - 1.tsv");
@@ -1079,7 +1098,8 @@ function createTranslationArrays(pFile) {
         translationFr[row[i][0]] = row[i][2];
         translationJp[row[i][0]] = row[i][3];
     }
-    LANG = translationEn;
+    // LANG = translationEn;
+    LANG = translationFr;
     console.log("translation loaded !!!");
     ASSETS_COUNTER++;
     if (ASSETS_COUNTER == 2) {

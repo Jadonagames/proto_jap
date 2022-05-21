@@ -137,7 +137,7 @@ class Game1 {
         this.kanaPanel.setFont("kyokasho");
         this.kanaPanel.setFontSize(40);
         this.kanaPanel.setOffsets(3, 50);
-        this.kanaPanel.setFontColor("rgba(255,255,255,0)", "rgb(255,255,255)");
+        this.kanaPanel.setFontColor(WHITE_COLOR_0, WHITE_COLOR_0);
         this.kanaPanel.setTextOverflow(true);
         Game1.mainList.push(this.kanaPanel.getSprite());
 
@@ -633,14 +633,14 @@ class Game1 {
             }
 
             this.restartBtn = new Button({ w: 80, h: 20, v: 6 }, centerXElement(this.endGamePanel, 80), 120, this.endGamePanel, { cb: Game1.displayEndGamePanel.bind(this), arg: { bool: false, restart: true } }, "game1", Game1.STATE.Game, "Restart", 41);
-            this.restartBtn.setFontColor("rgba(142,45,45,1)");
+            this.restartBtn.setFontColor(RED_BTN_SDW_COLOR);
             this.restartBtn.setAlpha(0);
             Button.currentList.push(this.restartBtn);
             Game1.mainList.push(this.restartBtn.getSprite());
 
             //? Si freemode (backToLesson => back to freemode)
             this.backToLessonBtn = new Button({ w: 50, h: 20, v: 6 }, centerXElement(this.endGamePanel, 50), 150, this.endGamePanel, { cb: Game1.displayEndGamePanel.bind(this), arg: { bool: false, restart: false } }, "game1", Game1.STATE.Game, "Back", 41);
-            this.backToLessonBtn.setFontColor("rgba(142,45,45,1)");
+            this.backToLessonBtn.setFontColor(RED_BTN_SDW_COLOR);
             this.backToLessonBtn.setAlpha(0);
             Button.currentList.push(this.backToLessonBtn);
             Game1.mainList.push(this.backToLessonBtn.getSprite());
@@ -954,7 +954,7 @@ class Game1 {
         // --------------------------------
 
         if (this.bStartTransition) {
-            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fillStyle = BLACK_COLOR;
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
             Sprite.manageBeforeDrawing(Game1.transitionList);
         } else {
@@ -970,7 +970,7 @@ class Game1 {
             });
 
 
-            ctx.fillStyle = "rgb(255,255,255)";
+            ctx.fillStyle = WHITE_COLOR;
             ctx.font = "10px jpfont";
             ctx.textAlign = "center";
 
@@ -992,7 +992,7 @@ class Game1 {
             }
 
             if (bStatsDebug) {
-                ctx.fillStyle = "rgb(255,255,255)";
+                ctx.fillStyle = WHITE_COLOR;
                 ctx.font = "32px pgfont";
                 ctx.fillText("TOTAL : " + TOTAL_NUMBER, 100, 120);
                 ctx.fillText("Mark : " + (TOTAL_NUMBER - this.misses), 100, 150);
