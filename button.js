@@ -32,8 +32,6 @@ class Button {
 
         this.id = pId;
 
-        this.alpha = 1;
-
         this.startPos = { x: pX, y: pY };
         this.destination = { x: 0, y: 0 };
         this.direction = 1;
@@ -75,10 +73,15 @@ class Button {
         this.state = Button.STATE.Normal;
         this.font = "jpfont";
         this.fontSize = 10;
-        this.fontMainColor = "rgba(0,0,0," + this.alpha + ")";
-        this.fontBackgroundColor = "rgba(100,100,100," + this.alpha + ")";
-        this.hoverFontMainColor = "rgba(255,255,255" + this.alpha + ")";
-        this.hoverBackgroundColor = "rgba(100,100,100," + this.alpha + ")"; // boutons rouge :  142 45 45
+        this.fontMainColor = BLACK_COLOR;
+        this.fontBackgroundColor = GREY_100_COLOR;
+        this.hoverFontMainColor = WHITE_COLOR;
+        this.hoverBackgroundColor = GREY_100_COLOR;
+        if (this.parent) {
+            this.setAlpha(this.parent.alpha);
+        } else {
+            this.setAlpha(1);
+        }
 
         this.typeState = pTypeState;
 
@@ -109,6 +112,8 @@ class Button {
         this.hoverOffset = null;
 
         this.bInactiveAnimation = false;
+
+        this.sound = "click";
 
         Button.list.push(this);
     }
@@ -293,6 +298,10 @@ class Button {
         }
     }
 
+    setSound(pSound) {
+        this.sound = pSound;
+    }
+
     getSprite() {
         return this.sp;
     }
@@ -431,7 +440,7 @@ class Button {
         this.fontSize = pSize;
     }
 
-    setFontColor(pBack = "rgba(100,100,100," + this.alpha + ")", pMain = "rgb(0,0,0," + this.alpha + ")", pHoverBack = "rgba(100,100,100," + this.alpha + ")", pHoverMain = "rgba(255,255,255," + this.alpha + ")") {
+    setFontColor(pBack = "rgba(100,100,100," + this.alpha + ")", pMain = "rgba(0,0,0," + this.alpha + ")", pHoverBack = GREY_100_COLOR, pHoverMain = WHITE_COLOR) {
         this.fontMainColor = pMain;
         this.fontBackgroundColor = pBack;
         this.hoverBackgroundColor = pHoverBack;

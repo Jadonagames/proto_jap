@@ -137,7 +137,7 @@ class Game1 {
         this.kanaPanel.setFont("kyokasho");
         this.kanaPanel.setFontSize(40);
         this.kanaPanel.setOffsets(3, 50);
-        this.kanaPanel.setFontColor(WHITE_COLOR_0, WHITE_COLOR_0);
+        this.kanaPanel.setFontColor(WHITE_COLOR_0, WHITE_COLOR);
         this.kanaPanel.setTextOverflow(true);
         Game1.mainList.push(this.kanaPanel.getSprite());
 
@@ -193,6 +193,7 @@ class Game1 {
 
         this.backBtn = new Button({ w: 30, h: 22 }, 10, CANVAS_HEIGHT - 30, null, { cb: resetGame, arg: resetGameArg }, "game1", Game1.STATE.Game, "", 0, true);
         this.backBtn.setAnimations({ x: 86, y: 56 });
+        this.backBtn.setSound("back");
         Game1.mainList.push(this.backBtn.getSprite());
 
 
@@ -556,8 +557,9 @@ class Game1 {
             this.endGameMark.setTextOverflow(true);
             this.endGameMark.setLabel(((TOTAL_NUMBER * MAX_TURN) - this.misses) + "/" + (TOTAL_NUMBER * MAX_TURN) + "");
             if (gotTrophyLevel == 0) {
-                this.endGameMark.setFontColor("rgba(150,150,150,0)", "rgba(215,30,30,0)");
+                this.endGameMark.setFontColor(GREY_150_COLOR, ENDGAMEMARK_COLOR);
             }
+            this.endGameMark.setAlpha(0);
             Panel.list.push(this.endGameMark);
             Panel.currentList.push(this.endGameMark);
             Game1.mainList.push(this.endGameMark.getSprite());
@@ -977,9 +979,9 @@ class Game1 {
             if (!this.bEndGame && Game1.lessonTestType != "Training") {
                 // ctx.fillText("Turns : " + TURN_NUMBER, centerX(), 10);
                 // ctx.fillText("Kana : " + KANA_NUMBER, centerX(), 30);
-                ctx.fillStyle = "rgb(150,150,150)";
+                ctx.fillStyle = GREY_150_COLOR;
                 ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, this.kanaPanel.width, 3);
-                ctx.fillStyle = "rgb(29,122,66)";
+                ctx.fillStyle = "rgba(29,122,66,1)";
                 ctx.fillRect(this.kanaPanel.x, this.kanaPanel.y + this.kanaPanel.height + 5, (KANA_NUMBER / (TOTAL_NUMBER * MAX_TURN)) * this.kanaPanel.width, 3);
             }
 
@@ -1010,7 +1012,7 @@ class Game1 {
             let rndOffsetX = rnd(1, pArg.offX);
             let rndOffsetY = rnd(1, pArg.offY);
             let p = new Particles(pArg.x + rndOffsetX, pArg.y + rndOffsetY, pArg.dirX, pArg.dirY, 0, { w: size, h: size }, rnd(1, 3));
-            p.setColor("rgba(150, 150, 150, 1)");
+            p.setColor(GREY_150_COLOR);
         }
     }
 

@@ -38,7 +38,7 @@ class Input {
         this.keyboardInstructionPanel = new Panel({ w: 150, h: 20 }, 50, 5, this.keyboardPanel, "", null, "keyboard_instruction", 0, true);
         this.keyboardInstructionPanel.getSprite().addAnimation("normal", { x: 352, y: 208 }); //? Espace vide dans la sprite sheet
         this.keyboardInstructionPanel.getSprite().changeAnimation("normal");
-        this.keyboardInstructionPanel.setFontColor("rgba(162,162,162,1)", RED_COLOR);
+        this.keyboardInstructionPanel.setFontColor(GREY_162_COLOR, RED_COLOR);
         this.keyboardInstructionPanel.setAlpha(0);
         this.keyboardInstructionPanel.setAlignText(0);
         Input.keyboardSpriteList.push(this.keyboardInstructionPanel.getSprite());
@@ -619,6 +619,24 @@ function keyUp(k) {
      * DEBUG
      */
     if (k.code == "KeyQ") { // => A
+
+        // if (TESTNUM == 1) {
+        //     bTestEnd = false;
+        //     CANVAS_TEST_WIDTH = (9*2)+(11*2);
+        //     CANVAS_TEST_HEIGHT = (9*2)+(11*2);
+        //     TESTNUM = 2;
+        //     myData = null;
+        //     bDataOk = false;
+        // } else {
+        //     bTestEnd = false;
+        //     CANVAS_TEST_WIDTH = (9*2)+(11*6);
+        //     CANVAS_TEST_HEIGHT = (9*2)+(11*3);
+        //     TESTNUM = 1;
+        //     myData = null;
+        //     bDataOk = false;
+        // }
+
+
         if (mainState == MAIN_STATE.Login) {
             // Login.TEST();
             // Login.schoolPaperStartLeaving();
@@ -823,6 +841,17 @@ canvas.addEventListener("mousemove", e => {
                                         MOUSE_SPRITE.changeAnimation("hover");
                                     }
                                 } else {
+                                    for (let i = 0; i < 5; i++) {
+                                        if (!Sound.list["hover"][i].bPlaying) {
+                                            log('i:' + i);
+                                            if (window.chrome) Sound.list["hover"][i].sound.load();
+                                            Sound.list["hover"][i].play();
+                                            i = 5;
+                                        }
+
+                                    }
+                                    // log("HOVER !");
+                                    // Sound.list[b.sound].play();
                                     b.setState(Button.STATE.Hover);
                                     b.changeSpriteAnimation("hover");
                                     MOUSE_SPRITE.changeAnimation("hover");
@@ -1071,7 +1100,6 @@ canvas.addEventListener("mousedown", e => {
 
                         if (b instanceof KeyboardBtn) {
                             bClickedOnKeyboard = true;
-                            log(b.label);
                         }
                         if (b instanceof LessonBtn && b.mode == 1 && b.getSprite().currentAnimation.name == "clicked") {
                             return false;
@@ -1207,7 +1235,7 @@ canvas.onclick = e => {
 
             Button.currentList.every(b => {
                 if (b.getState() != Button.STATE.Inactive && b.getState() != LessonBtn.STATE.Close && !b.bMoving) {
-                    if (b.getState() == Button.STATE.Hover) {
+                    if (b.getState() == Button.STATE.Hover) {                        
 
                         if ((b.getSprite().class == 9 && b.getSprite().tl.currentAnimation.name != "down")
                             || (b.getSprite().class != 9 && b.getSprite().currentAnimation.name != "down")
@@ -1230,6 +1258,10 @@ canvas.onclick = e => {
                         if (b.bTextOffsetChanged) b.resetOffsets();
                         if (b instanceof LessonBtn && b.mode == 1 && b.getSprite().currentAnimation.name != "down") {
                             return false;
+                        }
+
+                        if (b.sound != "") {
+                            Sound.list[b.sound].play();
                         }
 
                         b.setState(Button.STATE.Normal);

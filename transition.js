@@ -53,7 +53,7 @@ class Transition {
 
     static drawCircleTransition(ctx) {
         if (!this.bHeight) {
-            ctx.fillStyle = 'rgba(0,0,0,0)';
+            ctx.fillStyle = BLACK_COLOR_0;
             ctx.fillRect(0, 0, 450, 300);
 
             ctx.beginPath();
@@ -78,7 +78,7 @@ class Transition {
             ctx.fillStyle = "black";   // DE CE RECTANGLE JE NE VEUX GARDER QUE La forme DU DESSUS, LE RESTE EST TRANSPARENT
             ctx.fillRect(0, 0, 450, 300);
         } else {
-            ctx.fillStyle = 'rgba(0,0,0,0)';
+            ctx.fillStyle = BLACK_COLOR_0;
             ctx.fillRect(0, CANVAS_HEIGHT, 450, 300);
 
             ctx.beginPath();

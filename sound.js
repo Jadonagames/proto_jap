@@ -4,17 +4,45 @@ class Sound {
     static current = null;
     static bFadingOut = false;
     static bMute = false;
+    static bPlayingKana = false;
+    static currentPlayingKana = "";
 
-    constructor(pPath, pType = "s", pLoop = false) {
-        this.sound = document.createElement("audio");
-        this.sound.src = pPath;
-        this.sound.style.display = "none";
+    static id = 0;
+
+    constructor(pPath, pType = "s", pLoop = false, bKana = false) {
+        // this.sound = document.createElement("audio");
+        // this.sound.src = pPath;
+        // this.sound.style.display = "none";
+        this.id = Sound.id;
+        Sound.id++;
+
+        this.sound = new Audio(pPath)
+        this.sndList = [];
+        this.sndIndex = 0;
+        this.sound.load();
+
+        this.sound.addEventListener("ended", () => {
+            log("ENDED : " + this.id);
+            this.bPlaying = false;
+            this.currentTime = 0;
+        });
+
         this.sound.setAttribute("preload", "auto");
         this.sound.setAttribute("controls", "none");
+        this.sound.onplay = function() {
+            // console.log("OK: " + pPath);
+        }
+        this.sound.onloadeddata = function() {
+            // console.log("loadedData: " + pPath);
+        }
 
         this.sound.loop = pLoop;
+        this.name = "";
 
         this.type = pType;
+        this.bKana = bKana;
+        this.bAlreadyPlayed = false;
+        this.bPlaying = false;
 
         this.timer = new Timer(0.3, this.updateVolume.bind(this));
 
@@ -24,27 +52,87 @@ class Sound {
     }
 
     play() {
-        if (!this.sound.ended) {
+        if (this.bPlaying && this.sound.ended) {
+            this.bPlaying = false;
+        } else {
+            
+        }
+
+        if (this.bPlaying) {
             this.reset();
             if (this.type == "m") {
                 this.playSound(MUSIC_VOLUME);
             } else if (this.type == "s") {
-                this.playSound(SFX_VOLUME);
+                if (!this.bKana) {
+                    this.playSound(SFX_VOLUME);
+                } else if (this.bKana) {
+                    if (!Sound.bPlayingKana) {
+                        Sound.bPlayingKana = true;
+                        Sound.currentPlayingKana = this.name;
+                        this.playSound(SFX_VOLUME)
+                        Button.currentList.forEach(b => {
+                            if (b instanceof SoundBtn) {
+                                if (b.callback.arg == this.name) {
+                                    b.setState(Button.STATE.Inactive);
+                                    b.getSprite().changeAnimation("playing");
+                                } else {
+                                    b.setState(Button.STATE.Inactive);
+                                    b.getSprite().changeAnimation("inactive");
+                                }
+                            }
+                        });
+                    }
+                }
             }
         } else {
             if (this.type == "m") {
                 this.playSound(MUSIC_VOLUME);
             } else if (this.type == "s") {
-                this.playSound(SFX_VOLUME);
+                if (!this.bKana) {
+                    this.playSound(SFX_VOLUME);
+                } else if (this.bKana) {
+                    if (!Sound.bPlayingKana) {
+                        Sound.bPlayingKana = true;
+                        Sound.currentPlayingKana = this.name;
+                        this.playSound(SFX_VOLUME)
+                        Button.currentList.forEach(b => {
+                            if (b instanceof SoundBtn) {
+                                if (b.callback.arg == this.name) {
+                                    b.setState(Button.STATE.Inactive);
+                                    b.getSprite().changeAnimation("playing");
+                                } else {
+                                    b.setState(Button.STATE.Inactive);
+                                    b.getSprite().changeAnimation("inactive");
+                                }
+                            }
+                        });
+                    }
+                }
             }
         }
+    }
+    
+    reset() {
+        log("reset")
+        this.sound.pause();
+        this.sound.currentTime = 0;
+        this.bPlaying = false;
     }
 
     playSound(pVolume) {
         if (!Sound.bMute) {
+            this.bPlaying = true;
             this.sound.volume = pVolume;
-            this.sound.play();
+            this.sound.play(); //! AudioElement.play(). Différent de la méthode play() du dessus. 
         }
+    }
+
+    setKanaType(pBool) {
+        this.bKana = pBool;
+    }
+
+    setName(pName) {
+        this.name = pName;
     }
 
     static playCallback(pName) {
@@ -118,11 +206,6 @@ class Sound {
         } else if (Sound.current != null && !Sound.bMute) {
             Sound.current.sound.volume = MUSIC_VOLUME;
         }
-    }
-
-    reset() {
-        this.sound.pause();
-        this.sound.currentTime = 0;
     }
 
     update(dt) {

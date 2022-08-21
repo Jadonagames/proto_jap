@@ -19,7 +19,7 @@ class KanaBtn extends Button {
             ctx.fillStyle = WHITE_COLOR;
             ctx.shadowColor = "rgba(23,88,49,1)";
         } else if (this.state == Button.STATE.Inactive) {
-            ctx.fillStyle = "rgb(0,0,0,0.5)";
+            ctx.fillStyle = "rgba(0,0,0,0.5)";
             ctx.shadowColor = "rgba(23,88,49,0.5)";
         } else {
             ctx.fillStyle = BLACK_COLOR;

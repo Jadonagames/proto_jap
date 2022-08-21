@@ -9,10 +9,11 @@ let checkAssetsInterval = setInterval(checkAssetsLoading, 1000 / 60);
 let interval;
 // let lastUpdate = Date.now();
 let lastUpdate = 0;
-const SCALE_X = 2;
-const SCALE_Y = 2;
-const CANVAS_WIDTH = canvas.width / SCALE_X;
-const CANVAS_HEIGHT = canvas.height / SCALE_Y;
+let SCALE_X = 2;
+let SCALE_Y = 2;
+let CANVAS_WIDTH = canvas.width / SCALE_X;
+let CANVAS_HEIGHT = canvas.height / SCALE_Y;
+
 const BLACK_COLOR = "rgba(0,0,0,1)";
 const BLACK_COLOR_0 = "rgba(0,0,0,0)";
 const WHITE_COLOR = "rgba(255,255,255,1)";
@@ -20,37 +21,39 @@ const WHITE_COLOR_0 = "rgba(255,255,255,0)";
 const RED_COLOR = "rgba(255,0,0,1)";
 const RED_COLOR_0 = "rgba(255,0,0,0)";
 
+const GREY_100_COLOR = "rgba(100,100,100,1)";
+const GREY_150_COLOR = "rgba(150,150,150,1)"; //? endGameMark shadow???
+const GREY_150_COLOR_0 = "rgba(150,150,150,0)";
+const GREY_162_COLOR = "rgba(162,162,162,1)"; //? keyboard instructions panel shadow
+const GREY_192_COLOR_0 = "rgba(192,192,192,0)"; //? login/signup title shadow
+const GREY_200_COLOR = "rgba(200,200,200,1)";
+
 const RED_BTN_SDW_COLOR = "rgba(142,45,45,1)";
+const RED_SCREENSHAKE_COLOR = "rgba(255,50,50,1)";
 const GREEN_BOARD_SDW_COLOR = "rgba(18,72,39,1)"; //? DialogPanel / Infos.KanaPanel // All other green panels
 const GREEN_BOARD_SDW_COLOR2 = "rgba(20,102,53,1)"; //? Lessons Hiragana/Katakana titles
 
 const TEST_BTN_SDW_COLOR = "rgba(228,223,192,1)";
 const TEST_BTN_HVR_COLOR = "rgba(172,50,50,1)";
 
+const LESSON_BTN_SDW_COLOR = "rgba(176,150,124,1)";
+const LESSON_BTN_SDW_COLOR_0 = "rgba(176,150,124,0)";
+const LESSON_BTN_HVR_SDW_COLOR = "rgba(213,210,190,1)";
+const LESSON_BTN_HVR_SDW_COLOR_0 = "rgba(213,210,190,0)";
+const LESSON_BTN_HOVER_COLOR = "rgba(162,138,114,1)";
+const LESSON_BTN_HOVER_COLOR_0 = "rgba(162,138,114,0)";
+
+const ENTRYFIELD_SDW_COLOR_0 = "rgba(200,200,200,0)";
+const ENTRYFIELD_HVR_SDW_COLOR_0 = "rgba(100,100,100,0)";
+
+const CHOOSETYPE_SDW_COLOR = "rgba(217,213,188,1)";
+const CHOOSETYPE_SDW_COLOR_0 = "rgba(217,213,188,0)"; //? choose type title panel shadow
+const ENDGAMEMARK_COLOR = "rgba(215,30,30,1)";
+const INACTIVE_SDW_COLOR = "rgba(181,205,190,1)"; //? shadow (quand "inactif") (switch buttons)
+
 /*
-"rgba(217,213,188,0)"       // choose type title panel shadow
-
-"rgba(150,150,150,0)"       // endGameMark shadow
-"rgba(150,150,150,1)"       // --
-"rgba(215,30,30,0)"         // endGameMark
-
-"rgba(162,162,162,1)"       // keyboard instructions panel shadow
-"rgba(172,50,50,1)"         // virtual keyboard message shadow && fulltestBtn hover
 "rgba(23,88,49,1)"          // kanaBtn shadow
-
-"rgba(176,150,124,1)" + 0  // LessonBtn shadow
-"rgba(213,210,190,1)" + 0  // LessonBtn Hover shadow
-"rgba(162,138,114,1)" + 0  // LessonBtn Hover
-
-"rgb(181,205,190)" // shadow (quand "inactif") (switch buttons)
-
-"rgba(228,223,192,1)"       // FullTestBtn shadow & hover shadow
-
-"rgba(200,200,200,0)"       // EntryField shadow
-"rgba(100,100,100,0)"       // EntryField hover shadow
-"rgba(192,192,192,0)"       // login/signup title shadow
-"rgba(217, 160, 102, 1)")   // user panel shadow
-
+"rgba(217,160,102,1)")   // user panel shadow
 */
 
 
@@ -89,13 +92,25 @@ let USER = {
 //! --------------
 
 //!TEST--------
-// let canvasTest = document.getElementById("canvasTest");
-// let canvasTestCtx = canvasTest.getContext("2d");
-// canvasTest.style.top = centerY(60) * SCALE_X + "px";
-// canvasTest.style.left = centerX(90) * SCALE_Y + "px";
+// let canvasTEST = document.getElementById("canvasTEST");
+// let ctxTEST = canvasTEST.getContext("2d");
+// let imgTEST = null;
+// let imgTEST2 = null;
+// ctxTEST.imageSmoothingEnabled = false;
+// let myData = null;
+// let bDataOk = false;
+// let bTestEnd = false;
+// let TESTNUM = 1;
 
-// canvasTest.style.display = "none";
-// console.table(canvasTest);
+// let CANVAS_TEST_WIDTH
+// let CANVAS_TEST_HEIGHT
+// if (TESTNUM == 1) {
+//     CANVAS_TEST_WIDTH = (9*2)+(11*6);
+//     CANVAS_TEST_HEIGHT = (9*2)+(11*3);
+// } else {
+//     CANVAS_TEST_WIDTH = (9*2)+(11*2);
+//     CANVAS_TEST_HEIGHT = (9*2)+(11*2);
+// }
 //!------------
 
 
@@ -137,7 +152,9 @@ const MAIN_STATE = Object.freeze({
 
 let mainState = 0;
 if (shortcut_tomainmenu) {
+    API_Login("aaaaaa","aaaaaa");
     mainState = MAIN_STATE.Menu;
+    USER.name = "aaaaaa";
 } else {
     // mainState = MAIN_STATE.Language;
     mainState = MAIN_STATE.Load;
@@ -163,7 +180,7 @@ function init() {
     ctx.imageSmoothingEnabled = false;
     ctx.msImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
-    ctx.mozImageSmoothingEnabled = false;
+    // ctx.mozImageSmoothingEnabled = false;
     if (shortcut_tomainmenu) {
         MainMenu.init();
         toMainMenu()
@@ -238,6 +255,19 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
     if (SAVING) SAVING_SPRITE.update(dt);
 
     MOUSE_SPRITE.update(dt);
+    if (Sound.bPlayingKana) {
+        if (Sound.list[Sound.currentPlayingKana].sound.ended) {
+            Sound.bPlayingKana = false;
+            Sound.currentPlayingKana = "";
+            Button.currentList.forEach(b => {
+                if (b instanceof SoundBtn) {
+                    b.setState(Button.STATE.Normal);
+                    b.getSprite().changeAnimation("normal");
+                }
+            });
+        }
+    }
+
     Sprite.debug_drawcalls = 0;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -292,7 +322,7 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
 
 
     if (SCREEN_SHAKE && SCREEN_SHAKE_RED) {
-        canvas.style.backgroundColor = "rgb(255,50,50)"
+        canvas.style.backgroundColor = RED_SCREENSHAKE_COLOR;
     }
 
     // if (bStatsDebug) {
@@ -310,8 +340,119 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
         ctx.drawImage(SS, MOUSE_SPRITE.ox, MOUSE_SPRITE.currentAnimation.origin.y, MOUSE_SPRITE.width, MOUSE_SPRITE.height, Math.floor(MOUSE_SPRITE.x), Math.floor(MOUSE_SPRITE.y), MOUSE_SPRITE.width * MOUSE_SPRITE.scaleX, MOUSE_SPRITE.height * MOUSE_SPRITE.scaleY);
     }
 
+    // ctx.drawImage(myData, 0, 0,100,100,0,0,100,100);
+    // if (myData != null && bDataOk) {
+    //     if (TESTNUM == 1) {
+    //         ctx.drawImage(imgTEST, 330, 200);
+    //     } else {
+    //         ctx.drawImage(imgTEST2, 330, 150);
+    //     }
+    // }
+
 
     ctx.restore();
+
+    //! TEST ------------------------
+    // if (!bTestEnd) {
+
+    //     canvasTEST.width = CANVAS_TEST_WIDTH;
+    //     canvasTEST.height = CANVAS_TEST_HEIGHT;
+    //     if (TESTNUM == 1) {
+
+    //         ctxTEST.clearRect(0, 0, canvasTEST.width, canvasTEST.height);
+    //         ctxTEST.save();
+    //         ctxTEST.scale(1, 1);
+    //         // ctxTEST.drawImage(SS, 0, 0, 37, 34, 0, 0, 37, 34);
+    //         let originX = 0;
+    //         let originY = 0;
+    //         ctxTEST.drawImage(SS, 380, 748, 9, 9, originX, 0, 9,9);
+    //         ctxTEST.drawImage(SS, 389, 748, 11, 9, originX+9+(11*0), 0, 11,9);
+    //         ctxTEST.drawImage(SS, 389, 748, 11, 9, originX+9+(11*1), 0, 11,9);
+    //         ctxTEST.drawImage(SS, 427, 748, 11, 9, originX+9+(11*2), 0, 11,9);
+    //         ctxTEST.drawImage(SS, 438, 748, 11, 9, originX+9+(11*3), 0, 11,9);
+    //         ctxTEST.drawImage(SS, 389, 748, 11, 9, originX+9+(11*4), 0, 11,9);
+    //         ctxTEST.drawImage(SS, 389, 748, 11, 9, originX+9+(11*5), 0, 11,9);
+    //         ctxTEST.drawImage(SS, 400, 748, 9, 9, originX+9+(11*6), 0, 9,9);
+    
+    //         ctxTEST.drawImage(SS, 380, 757, 9, 11, originX, originY+9, 9,11);
+    //         ctxTEST.drawImage(SS, 380, 757, 9, 11, originX, originY+9+(11*1), 9,11);
+    //         ctxTEST.drawImage(SS, 380, 757, 9, 11, originX, originY+9+(11*2), 9,11);
+    
+    //         ctxTEST.drawImage(SS, 400, 757, 9, 11, originX+9+(11*6), originY+9, 9,11);
+    //         ctxTEST.drawImage(SS, 400, 757, 9, 11, originX+9+(11*6), originY+9+(11*1), 9,11);
+    //         ctxTEST.drawImage(SS, 400, 757, 9, 11, originX+9+(11*6), originY+9+(11*2), 9,11);
+    
+    //         ctxTEST.drawImage(SS, 380, 768, 9, 9, originX, originY+9+(11*3), 9,9);
+            
+    //         ctxTEST.drawImage(SS, 389, 768, 11, 9, originX+9+(11*0), originY+9+(11*3), 11,9);
+    //         ctxTEST.drawImage(SS, 389, 768, 11, 9, originX+9+(11*1), originY+9+(11*3), 11,9);
+    //         ctxTEST.drawImage(SS, 427, 757, 11, 9, originX+9+(11*2), originY+9+(11*3), 11,9);
+    //         ctxTEST.drawImage(SS, 438, 757, 11, 9, originX+9+(11*3), originY+9+(11*3), 11,9);
+    //         ctxTEST.drawImage(SS, 389, 768, 11, 9, originX+9+(11*4), originY+9+(11*3), 11,9);
+    //         ctxTEST.drawImage(SS, 389, 768, 11, 9, originX+9+(11*5), originY+9+(11*3), 11,9);
+    //         ctxTEST.drawImage(SS, 400, 768, 9, 9, originX+9+(11*6), originY+9+(11*3), 9,9);
+    
+    //         ctxTEST.drawImage(SS, 389, 756, 1, 1, 9, 9, 11*6, 11*3);
+    
+    //         if (myData == null) {
+    //             myData = canvasTEST.toDataURL("image/png").replace("image/png");
+    //             imgTEST = null;
+    //             imgTEST = new Image();
+    //             imgTEST.onload = function() {
+    //                 bDataOk = true;
+    //             }
+    //             imgTEST.src = myData;
+    //         }
+    //         ctxTEST.restore();
+    //         bTestEnd = true;
+    //     } else {
+    //         ctxTEST.clearRect(0, 0, canvasTEST.width, canvasTEST.height);
+    //         ctxTEST.save();
+    //         ctxTEST.scale(1, 1);
+    //         let originX = 0;
+    //         let originY = 0;
+
+    //         //? HAUT
+    //         ctxTEST.drawImage(SS, 380, 748, 9, 9, originX, 0, 9,9);
+    //         ctxTEST.drawImage(SS, 389, 748, 11, 9, originX+9+(11*0), 0, 11,9);
+    //         ctxTEST.drawImage(SS, 389, 748, 11, 9, originX+9+(11*1), 0, 11,9);
+    //         ctxTEST.drawImage(SS, 400, 748, 9, 9, originX+9+(11*2), 0, 9,9);
+    
+    //         //? GAUCHE
+    //         ctxTEST.drawImage(SS, 380, 757, 9, 11, originX, originY+9, 9,11);
+    //         ctxTEST.drawImage(SS, 380, 757, 9, 11, originX, originY+9+(11*1), 9,11);
+    //         ctxTEST.drawImage(SS, 380, 768, 9, 9, originX, originY+9+(11*2), 9,9);
+    
+    //         //? DROITE
+    //         ctxTEST.drawImage(SS, 400, 757, 9, 11, originX+9+(11*2), originY+9, 9,11);
+    //         ctxTEST.drawImage(SS, 400, 757, 9, 11, originX+9+(11*2), originY+9+(11*1), 9,11);
+    
+    //         //? BAS
+    //         ctxTEST.drawImage(SS, 389, 768, 11, 9, originX+9+(11*0), originY+9+(11*2), 11,9);
+    //         ctxTEST.drawImage(SS, 389, 768, 11, 9, originX+9+(11*1), originY+9+(11*2), 11,9);
+
+    //         ctxTEST.drawImage(SS, 400, 768, 9, 9, originX+9+(11*2), originY+9+(11*2), 9,9);
+    
+    //         //? CENTRE
+    //         ctxTEST.drawImage(SS, 389, 756, 1, 1, 9, 9, 11*2, 11*2);
+    
+    //         if (myData == null) {
+    //             myData = canvasTEST.toDataURL("image/png").replace("image/png");
+    //             imgTEST2 = null;
+    //             imgTEST2 = new Image();
+    //             imgTEST2.onload = function() {
+    //                 bDataOk = true;
+    //             }
+    //             imgTEST2.src = myData;
+    //         }
+    //         ctxTEST.restore();
+    //         bTestEnd = true;
+    //     }
+
+        
+    // }
+    //! TEST ------------------------
+
 }
 
 function startBtnCB(pParam) {

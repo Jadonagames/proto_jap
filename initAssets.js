@@ -926,148 +926,73 @@ function LoadAssets() {
         }
     };
 
+    const ALL_KANA_SND_LIST = [
+        "kana_a","kana_i","kana_u","kana_e","kana_o",
+        "kana_ka","kana_ki","kana_ku","kana_ke","kana_ko",
+        "kana_sa","kana_shi","kana_su","kana_se","kana_so",
+        "kana_ta","kana_chi","kana_tsu","kana_te","kana_to",
+        "kana_na","kana_ni","kana_nu","kana_ne","kana_no",
+        "kana_ha","kana_hi","kana_fu","kana_he","kana_ho",
+        "kana_ma","kana_mi","kana_mu","kana_me","kana_mo",
+        "kana_ya","kana_yu","kana_yo",
+        "kana_ra","kana_ri","kana_ru","kana_re","kana_ro",
+        "kana_wa","kana_wo","kana_n",
+        "kana_ga","kana_gi","kana_gu","kana_ge","kana_go",
+        "kana_za","kana_ji","kana_zu","kana_ze","kana_zo",
+        "kana_da","kana_di","kana_du","kana_de","kana_do",
+        "kana_ba","kana_bi","kana_bu","kana_be","kana_bo",
+        "kana_pa","kana_pi","kana_pu","kana_pe","kana_po",
+        "kana_kya","kana_kyu","kana_kyo",
+        "kana_sha","kana_shu","kana_sho",
+        "kana_cha","kana_chu","kana_cho",
+        "kana_nya","kana_nyu","kana_nyo",
+        "kana_hya","kana_hyu","kana_hyo",
+        "kana_mya","kana_myu","kana_myo",
+        "kana_rya","kana_ryu","kana_ryo",
+        "kana_gya","kana_gyu","kana_gyo",
+        "kana_ja","kana_ju","kana_jo",
+        "kana_bya","kana_byu","kana_byo",
+        "kana_pya","kana_pyu","kana_pyo",
+        "kana_wi","kana_we","kana_wwo",
+        "kana_va","kana_vi","kana_ve","kana_vo",
+        "kana_che","kana_she","kana_je",
+        "kana_ti","kana_de_i","kana_tu","kana_de_u",
+        "kana_fa","kana_fi","kana_fe","kana_fo"
+    ]
     // Music and Sounds
     Sound.list["jadona"] = new Sound("./sounds/jadona.mp3");
+    // Sound.list["back"] = new Sound("./sounds/back.mp3");
+    // Sound.list["click"] = new Sound("./sounds/click2.mp3");
+    // Sound.list["hover"] = new Sound("./sounds/hover.mp3");
+    Sound.list["back"] = new Sound("./sounds/back.ogg");
+    Sound.list["click"] = new Sound("./sounds/click2_.ogg");
+    // Sound.list["hover"] = new Sound("./sounds/_hover.ogg");
+    Sound.list["hover"] = [];
 
-    Sound.list["kana_a"] = new Sound("./sounds/kana/a.mp3");
-    Sound.list["kana_i"] = new Sound("./sounds/kana/i.mp3");
-    Sound.list["kana_u"] = new Sound("./sounds/kana/u.mp3");
-    Sound.list["kana_e"] = new Sound("./sounds/kana/e.mp3");
-    Sound.list["kana_o"] = new Sound("./sounds/kana/o.mp3");
 
-    Sound.list["kana_ka"] = new Sound("./sounds/kana/ka.mp3");
-    Sound.list["kana_ki"] = new Sound("./sounds/kana/ki.mp3");
-    Sound.list["kana_ku"] = new Sound("./sounds/kana/ku.mp3");
-    Sound.list["kana_ke"] = new Sound("./sounds/kana/ke.mp3");
-    Sound.list["kana_ko"] = new Sound("./sounds/kana/ko.mp3");
 
-    Sound.list["kana_sa"] = new Sound("./sounds/kana/sa.mp3");
-    Sound.list["kana_shi"] = new Sound("./sounds/kana/shi.mp3");
-    Sound.list["kana_su"] = new Sound("./sounds/kana/su.mp3");
-    Sound.list["kana_se"] = new Sound("./sounds/kana/se.mp3");
-    Sound.list["kana_so"] = new Sound("./sounds/kana/so.mp3");
 
-    Sound.list["kana_ta"] = new Sound("./sounds/kana/ta.mp3");
-    Sound.list["kana_chi"] = new Sound("./sounds/kana/chi.mp3");
-    Sound.list["kana_tsu"] = new Sound("./sounds/kana/tsu.mp3");
-    Sound.list["kana_te"] = new Sound("./sounds/kana/te.mp3");
-    Sound.list["kana_to"] = new Sound("./sounds/kana/to.mp3");
 
-    Sound.list["kana_na"] = new Sound("./sounds/kana/na.mp3");
-    Sound.list["kana_ni"] = new Sound("./sounds/kana/ni.mp3");
-    Sound.list["kana_nu"] = new Sound("./sounds/kana/nu.mp3");
-    Sound.list["kana_ne"] = new Sound("./sounds/kana/ne.mp3");
-    Sound.list["kana_no"] = new Sound("./sounds/kana/no.mp3");
+    //!-----------------------
+    // Sound.list["hover1"]
+    //!-----------------------
 
-    Sound.list["kana_ha"] = new Sound("./sounds/kana/ha.mp3");
-    Sound.list["kana_hi"] = new Sound("./sounds/kana/hi.mp3");
-    Sound.list["kana_fu"] = new Sound("./sounds/kana/fu.mp3");
-    Sound.list["kana_he"] = new Sound("./sounds/kana/he.mp3");
-    Sound.list["kana_ho"] = new Sound("./sounds/kana/ho.mp3");
 
-    Sound.list["kana_ma"] = new Sound("./sounds/kana/ma.mp3");
-    Sound.list["kana_mi"] = new Sound("./sounds/kana/mi.mp3");
-    Sound.list["kana_mu"] = new Sound("./sounds/kana/mu.mp3");
-    Sound.list["kana_me"] = new Sound("./sounds/kana/me.mp3");
-    Sound.list["kana_mo"] = new Sound("./sounds/kana/mo.mp3");
 
-    Sound.list["kana_ya"] = new Sound("./sounds/kana/ya.mp3");
-    Sound.list["kana_yu"] = new Sound("./sounds/kana/yu.mp3");
-    Sound.list["kana_yo"] = new Sound("./sounds/kana/yo.mp3");
 
-    Sound.list["kana_ra"] = new Sound("./sounds/kana/ra.mp3");
-    Sound.list["kana_ri"] = new Sound("./sounds/kana/ri.mp3");
-    Sound.list["kana_ru"] = new Sound("./sounds/kana/ru.mp3");
-    Sound.list["kana_re"] = new Sound("./sounds/kana/re.mp3");
-    Sound.list["kana_ro"] = new Sound("./sounds/kana/ro.mp3");
+    
 
-    Sound.list["kana_wa"] = new Sound("./sounds/kana/wa.mp3");
-    Sound.list["kana_wo"] = new Sound("./sounds/kana/wo.mp3");
+    for (let i = 0; i < 5; i++) {
+        // Sound.list["hover"][i] = new Sound("./sounds/_hover.ogg");
+        Sound.list["hover"][i] = new Sound("./sounds/_hover.ogg");
+        
+    }
+    // Sound.list["hover"] = document.getElementById("audiotest");
 
-    Sound.list["kana_n"] = new Sound("./sounds/kana/n.mp3");
-
-    Sound.list["kana_ga"] = new Sound("./sounds/kana/ga.mp3");
-    Sound.list["kana_gi"] = new Sound("./sounds/kana/gi.mp3");
-    Sound.list["kana_gu"] = new Sound("./sounds/kana/gu.mp3");
-    Sound.list["kana_ge"] = new Sound("./sounds/kana/ge.mp3");
-    Sound.list["kana_go"] = new Sound("./sounds/kana/go.mp3");
-
-    Sound.list["kana_za"] = new Sound("./sounds/kana/za.mp3");
-    Sound.list["kana_ji"] = new Sound("./sounds/kana/ji.mp3");
-    Sound.list["kana_zu"] = new Sound("./sounds/kana/zu.mp3");
-    Sound.list["kana_ze"] = new Sound("./sounds/kana/ze.mp3");
-    Sound.list["kana_zo"] = new Sound("./sounds/kana/zo.mp3");
-
-    Sound.list["kana_da"] = new Sound("./sounds/kana/da.mp3");
-    Sound.list["kana_di"] = new Sound("./sounds/kana/ji.mp3"); //! -----
-    Sound.list["kana_du"] = new Sound("./sounds/kana/zu.mp3"); //! -----
-    Sound.list["kana_de"] = new Sound("./sounds/kana/de.mp3");
-    Sound.list["kana_do"] = new Sound("./sounds/kana/do.mp3");
-
-    Sound.list["kana_ba"] = new Sound("./sounds/kana/ba.mp3");
-    Sound.list["kana_bi"] = new Sound("./sounds/kana/bi.mp3");
-    Sound.list["kana_bu"] = new Sound("./sounds/kana/bu.mp3");
-    Sound.list["kana_be"] = new Sound("./sounds/kana/be.mp3");
-    Sound.list["kana_bo"] = new Sound("./sounds/kana/bo.mp3");
-
-    Sound.list["kana_pa"] = new Sound("./sounds/kana/pa.mp3");
-    Sound.list["kana_pi"] = new Sound("./sounds/kana/pi.mp3");
-    Sound.list["kana_pu"] = new Sound("./sounds/kana/pu.mp3");
-    Sound.list["kana_pe"] = new Sound("./sounds/kana/pe.mp3");
-    Sound.list["kana_po"] = new Sound("./sounds/kana/po.mp3");
-
-    Sound.list["kana_kya"] = new Sound("./sounds/kana/kana_kya.mp3");
-    Sound.list["kana_kyu"] = new Sound("./sounds/kana/kana_kyu.mp3");
-    Sound.list["kana_kyo"] = new Sound("./sounds/kana/kana_kyo.mp3");
-    Sound.list["kana_sha"] = new Sound("./sounds/kana/kana_sha.mp3");
-    Sound.list["kana_shu"] = new Sound("./sounds/kana/kana_shu.mp3");
-    Sound.list["kana_sho"] = new Sound("./sounds/kana/kana_sho.mp3");
-    Sound.list["kana_cha"] = new Sound("./sounds/kana/kana_cha.mp3");
-    Sound.list["kana_chu"] = new Sound("./sounds/kana/kana_chu.mp3");
-    Sound.list["kana_cho"] = new Sound("./sounds/kana/kana_cho.mp3");
-    Sound.list["kana_nya"] = new Sound("./sounds/kana/kana_nya.mp3");
-    Sound.list["kana_nyu"] = new Sound("./sounds/kana/kana_nyu.mp3");
-    Sound.list["kana_nyo"] = new Sound("./sounds/kana/kana_nyo.mp3");
-    Sound.list["kana_hya"] = new Sound("./sounds/kana/kana_hya.mp3");
-    Sound.list["kana_hyu"] = new Sound("./sounds/kana/kana_hyu.mp3");
-    Sound.list["kana_hyo"] = new Sound("./sounds/kana/kana_hyo.mp3");
-    Sound.list["kana_mya"] = new Sound("./sounds/kana/kana_mya.mp3");
-    Sound.list["kana_myu"] = new Sound("./sounds/kana/kana_myu.mp3");
-    Sound.list["kana_myo"] = new Sound("./sounds/kana/kana_myo.mp3");
-    Sound.list["kana_rya"] = new Sound("./sounds/kana/kana_rya.mp3");
-    Sound.list["kana_ryu"] = new Sound("./sounds/kana/kana_ryu.mp3");
-    Sound.list["kana_ryo"] = new Sound("./sounds/kana/kana_ryo.mp3");
-    Sound.list["kana_gya"] = new Sound("./sounds/kana/kana_gya.mp3");
-    Sound.list["kana_gyu"] = new Sound("./sounds/kana/kana_gyu.mp3");
-    Sound.list["kana_gyo"] = new Sound("./sounds/kana/kana_gyo.mp3");
-    Sound.list["kana_ja"] = new Sound("./sounds/kana/kana_ja.mp3");
-    Sound.list["kana_ju"] = new Sound("./sounds/kana/kana_ju.mp3");
-    Sound.list["kana_jo"] = new Sound("./sounds/kana/kana_jo.mp3");
-    Sound.list["kana_bya"] = new Sound("./sounds/kana/kana_bya.mp3");
-    Sound.list["kana_byu"] = new Sound("./sounds/kana/kana_byu.mp3");
-    Sound.list["kana_byo"] = new Sound("./sounds/kana/kana_byo.mp3");
-    Sound.list["kana_pya"] = new Sound("./sounds/kana/kana_pya.mp3");
-    Sound.list["kana_pyu"] = new Sound("./sounds/kana/kana_pyu.mp3");
-    Sound.list["kana_pyo"] = new Sound("./sounds/kana/kana_pyo.mp3");
-
-    Sound.list["kana_wi"] = new Sound("./sounds/kana/kana_wi.mp3");
-    Sound.list["kana_we"] = new Sound("./sounds/kana/kana_we.mp3");
-    Sound.list["kana_wwo"] = new Sound("./sounds/kana/kana_wwo.mp3");
-    Sound.list["kana_va"] = new Sound("./sounds/kana/kana_va.mp3");
-    Sound.list["kana_vi"] = new Sound("./sounds/kana/kana_vi.mp3");
-    Sound.list["kana_ve"] = new Sound("./sounds/kana/kana_ve.mp3");
-    Sound.list["kana_vo"] = new Sound("./sounds/kana/kana_vo.mp3");
-    Sound.list["kana_che"] = new Sound("./sounds/kana/kana_che.mp3");
-    Sound.list["kana_she"] = new Sound("./sounds/kana/kana_she.mp3");
-    Sound.list["kana_je"] = new Sound("./sounds/kana/kana_je.mp3");
-    Sound.list["kana_ti"] = new Sound("./sounds/kana/kana_ti.mp3");
-    Sound.list["kana_de_i"] = new Sound("./sounds/kana/kana_de_i.mp3");
-    Sound.list["kana_tu"] = new Sound("./sounds/kana/kana_tu.mp3");
-    Sound.list["kana_de_u"] = new Sound("./sounds/kana/kana_de_u.mp3");
-    Sound.list["kana_fa"] = new Sound("./sounds/kana/kana_fa.mp3");
-    Sound.list["kana_fi"] = new Sound("./sounds/kana/kana_fi.mp3");
-    Sound.list["kana_fe"] = new Sound("./sounds/kana/kana_fe.mp3");
-    Sound.list["kana_fo"] = new Sound("./sounds/kana/kana_fo.mp3");
+    for (let i = 0; i < ALL_KANA_SND_LIST.length; i++) {
+        Sound.list[ALL_KANA_SND_LIST[i]] = new Sound(`./sounds/kana/${ALL_KANA_SND_LIST[i]}.mp3`, "s", false, true);
+        Sound.list[ALL_KANA_SND_LIST[i]].setName(ALL_KANA_SND_LIST[i]);
+    }
 
     Sound.list["music"] = new Sound("./sounds/music/Galastarz.mp3", "m", true);
 
@@ -1100,7 +1025,6 @@ function createTranslationArrays(pFile) {
     }
     // LANG = translationEn;
     LANG = translationFr;
-    console.log("translation loaded !!!");
     ASSETS_COUNTER++;
     if (ASSETS_COUNTER == 2) {
         ASSETS_READY = true;

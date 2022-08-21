@@ -85,6 +85,33 @@ function centerYElement(pElement, pHeight = 0, pDistance = 0, pDirection = 0) {
         }
     }
 }
+function toggleCanvasSize() {
+    if (SCALE_X == 1) {
+        SCALE_X = 2;
+        SCALE_Y = 2;
+        canvas.width = 900;
+        canvas.height = 600;
+    } else if (SCALE_X == 2) {
+        SCALE_X = 3;
+        SCALE_Y = 3;
+        canvas.width = 1350;
+        canvas.height = 900;
+        
+    } else {
+        SCALE_X = 1;
+        SCALE_Y = 1;
+        canvas.width = 450;
+        canvas.height = 300;
+        //! text shadow offset = 1 ! (instead of 2)
+    }
+    CANVAS_WIDTH = canvas.width / SCALE_X;
+    CANVAS_HEIGHT = canvas.height / SCALE_Y;
+    ctx.imageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    // ctx.mozImageSmoothingEnabled = false;
+}
+
 // First letter UpperCase
 function firstUC(pString) {
     return pString[0].toUpperCase() + pString.slice(1);
@@ -807,7 +834,7 @@ function API_Login(pName, pPassword) {
     }).then((response) => {
         return response.json()
     }).then((res) => {
-        log(res);
+        // log(res);
 
         if (res.error) {
             let timeout = setTimeout(Login.displayErrorMessage, 1000, 0);
@@ -817,8 +844,9 @@ function API_Login(pName, pPassword) {
             USER.saveData = res.saveData;
             USER.token = res.token;
             SaveManager.load(USER.saveData)
-
-            let timeout = setTimeout(Login.connectionSucceed.bind(Login), 2000, false);
+            if (!shortcut_tomainmenu) {
+                let timeout = setTimeout(Login.connectionSucceed.bind(Login), 2000, false);
+            }
         }
     }).catch((e) => { })
 }
@@ -869,7 +897,7 @@ function API_Signup(pName, pPassword) {
         }).then((response) => {
             return response.json()
         }).then((res) => {
-            log(res);
+            // log(res);
             if (res.error === "already") {
                 let timeout = setTimeout(Login.displayErrorMessage, 1000, 1);
             } else if (res.error === "Ko") {
@@ -898,3 +926,4 @@ function stopErrorMessage() {
     bIncorrectCredentials = false;
     bEntryError = false;
 }
+// ウィ、ウェ、ウォ、ヴァ、ヴィ、ヴェ、ヴォ、チェ、シェ、ジェ、ティ、ディ、トゥ、ドゥ、ファ、フィ、フェ、フォ

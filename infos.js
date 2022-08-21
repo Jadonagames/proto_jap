@@ -54,6 +54,7 @@ class Infos {
 
         let backBtn = new Button({ w: 30, h: 22 }, centerX(30), centerY(22, 80, 1), null, toMainMenu, "infos", Infos.STATE.Main, "", 0, true);
         backBtn.setAnimations({ x: 86, y: 56 });
+        backBtn.setSound("back");
         Infos.list.push(backBtn.getSprite());
 
 
@@ -233,8 +234,10 @@ class Infos {
                 kanaPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR, GREEN_BOARD_SDW_COLOR, BLACK_COLOR);
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite());
 
-                let soundBtn = new Button({ w: 16, h: 15 }, frame.x + 17, frame.y + 4, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
+                let soundBtn = new SoundBtn({ w: 16, h: 15 }, frame.x + 17, frame.y + 4, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
                 soundBtn.setAnimations({ x: 112, y: 112 });
+                soundBtn.getSprite().addAnimation("inactive", { x: 160, y: 112 });
+                soundBtn.getSprite().addAnimation("playing", { x: 176, y: 112 }, 3, 0.2);
 
                 state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(soundBtn.getSprite()) : Infos.katakanaList.push(soundBtn.getSprite());
 
@@ -291,6 +294,7 @@ class Infos {
 
         let hiraganaBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Hiragana, "", 0, true);
         hiraganaBackBtn.setAnimations({ x: 86, y: 56 });
+        hiraganaBackBtn.setSound("back");
         Infos.hiraganaList.push(hiraganaBackBtn.getSprite());
 
         let hiraSpecSwitchBoardBtn = new Button({ w: 29, h: 27 }, 210, 230, null, { cb: Infos.changeState, arg: Infos.STATE.Hiragana }, "infos", Infos.STATE.HiraSpecial, "", 0, true);
@@ -299,6 +303,7 @@ class Infos {
 
         let hiraSpecBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.HiraSpecial, "", 0, true);
         hiraSpecBackBtn.setAnimations({ x: 86, y: 56 });
+        hiraSpecBackBtn.setSound("back");
         Infos.hiraSpecialList.push(hiraSpecBackBtn.getSprite());
 
 
@@ -308,6 +313,7 @@ class Infos {
 
         let katakanaBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.Katakana, "", 0, true);
         katakanaBackBtn.setAnimations({ x: 86, y: 56 });
+        katakanaBackBtn.setSound("back");
         Infos.katakanaList.push(katakanaBackBtn.getSprite());
 
         let kataSpecSwitchBoardBtn = new Button({ w: 29, h: 27 }, 210, 230, null, { cb: Infos.changeState, arg: Infos.STATE.KataSpecial2 }, "infos", Infos.STATE.KataSpecial, "", 0, true);
@@ -316,6 +322,7 @@ class Infos {
 
         let kataSpecBackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.KataSpecial, "", 0, true);
         kataSpecBackBtn.setAnimations({ x: 86, y: 56 });
+        kataSpecBackBtn.setSound("back");
         Infos.kataSpecialList.push(kataSpecBackBtn.getSprite());
 
         let kataSpec2SwitchBoardBtn = new Button({ w: 29, h: 27 }, 210, 230, null, { cb: Infos.changeState, arg: Infos.STATE.Katakana }, "infos", Infos.STATE.KataSpecial2, "", 0, true);
@@ -324,6 +331,7 @@ class Infos {
 
         let kataSpec2BackBtn = new Button({ w: 30, h: 22 }, centerX(30), CANVAS_HEIGHT - 30, null, { cb: Infos.changeState, arg: Infos.STATE.Main }, "infos", Infos.STATE.KataSpecial2, "", 0, true);
         kataSpec2BackBtn.setAnimations({ x: 86, y: 56 });
+        kataSpec2BackBtn.setSound("back");
         Infos.kataSpecial2List.push(kataSpec2BackBtn.getSprite());
 
 
@@ -371,8 +379,10 @@ class Infos {
 
             // log("kana_" + kanaSpecArray[i].slice(5));
 
-            let soundBtn = new Button({ w: 16, h: 15 }, offX + 116, offY, parent, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray[i].slice(5) }, "infos", state, "", 0, true);
+            let soundBtn = new SoundBtn({ w: 16, h: 15 }, offX + 116, offY, parent, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray[i].slice(5) }, "infos", state, "", 0, true);
             soundBtn.setAnimations({ x: 112, y: 112 });
+            soundBtn.getSprite().addAnimation("inactive", { x: 160, y: 112 });
+            soundBtn.getSprite().addAnimation("playing", { x: 176, y: 112 }, 3, 0.2);
             state == Infos.STATE.HiraSpecial ? Infos.hiraSpecialList.push(soundBtn.getSprite()) : Infos.kataSpecialList.push(soundBtn.getSprite())
             // Infos.hiraSpecialList.push(soundBtn.getSprite());
 
@@ -413,8 +423,10 @@ class Infos {
             kanaPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR, GREEN_BOARD_SDW_COLOR, BLACK_COLOR);
             Infos.kataSpecial2List.push(kanaPanel.getSprite());
 
-            let soundBtn = new Button({ w: 16, h: 15 }, offX + 50, offY, kataSpec2GreenPanel, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray2[i].slice(5) }, "infos", Infos.STATE.KataSpecial2, "", 0, true);
+            let soundBtn = new SoundBtn({ w: 16, h: 15 }, offX + 50, offY, kataSpec2GreenPanel, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray2[i].slice(5) }, "infos", Infos.STATE.KataSpecial2, "", 0, true);
             soundBtn.setAnimations({ x: 112, y: 112 });
+            soundBtn.getSprite().addAnimation("inactive", { x: 160, y: 112 });
+            soundBtn.getSprite().addAnimation("playing", { x: 176, y: 112 }, 3, 0.2);
             Infos.kataSpecial2List.push(soundBtn.getSprite());
 
             columnsCount++;
@@ -431,9 +443,11 @@ class Infos {
     }
 
     static changeState(pNewState) {
-        Infos.state = pNewState;
-        Panel.resetTypeState("infos", pNewState);
-        Button.resetTypeState("infos", pNewState);
+        if (!Sound.bPlayingKana) {
+            Infos.state = pNewState;
+            Panel.resetTypeState("infos", pNewState);
+            Button.resetTypeState("infos", pNewState);
+        }
     }
 
     static update(dt) {

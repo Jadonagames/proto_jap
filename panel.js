@@ -173,14 +173,17 @@ class Panel {
         this.state = Panel.STATE.Normal;
         this.font = "jpfont";
         this.fontSize = 10;
-        this.fontMainColor = "rgba(0,0,0," + this.alpha + ")";
-        this.fontBackgroundColor = "rgba(150,150,150," + this.alpha + ")";
-        this.hoverFontMainColor = "rgba(255,255,255" + this.alpha + ")";
-        this.hoverBackgroundColor = "rgba(100,100,100," + this.alpha + ")";
+        this.fontMainColor = BLACK_COLOR;
+        this.fontBackgroundColor = GREY_150_COLOR;
+        this.hoverFontMainColor = WHITE_COLOR;
+        this.hoverBackgroundColor = GREY_100_COLOR;
+        if (this.parent) {
+            this.setAlpha(this.parent.alpha);
+        } else {
+            this.setAlpha(1);
+        }
 
         this.typeState = pTypeState;
-
-
 
         this.textOverflow = false;
         this.wordsArr = [];
@@ -532,7 +535,7 @@ class Panel {
         this.fontSize = pSize;
     }
 
-    setFontColor(pBack = "rgba(100,100,100," + this.alpha + ")", pMain = "rgba(0,0,0," + this.alpha + ")", pHoverBack = "rgba(100,100,100," + this.alpha + ")", pHoverMain = "rgba(255,255,255," + this.alpha + ")") {
+    setFontColor(pBack = "rgba(100,100,100," + this.alpha + ")", pMain = "rgba(0,0,0," + this.alpha + ")", pHoverBack = GREY_100_COLOR, pHoverMain = WHITE_COLOR) {
         this.fontMainColor = pMain;
         this.fontBackgroundColor = pBack;
         this.hoverBackgroundColor = pHoverBack;
@@ -920,7 +923,7 @@ class Panel {
         if (this.fontSize == 32) { // pgfont *2
             ctx.shadowOffsetY = 4;
         } else { // normal
-            ctx.shadowOffsetY = 2;
+            ctx.shadowOffsetY = 2; 
         }
 
         ctx.fillStyle = this.fontMainColor;

@@ -30,10 +30,8 @@ class MainMenu {
 
     static init() {
 
-        // let debug_point = new Sprite({ w: 4, h: 4 }, 0, 273);
-        // debug_point.addAnimation("normal", { x: 0, y: 0 });
-        // debug_point.changeAnimation("normal");
-        // MainMenu.mainList.push(debug_point);
+        let sizeBtn = new Button({ w: 22, h: 22, v: 8 }, CANVAS_WIDTH - 60, 20, null, toggleCanvasSize, "mainmenu", MainMenu.STATE.Main, "", 4);
+        MainMenu.mainList.push(sizeBtn.getSprite());
 
         // this.hira = "|あ|い|う|え|お|か|き|く|け|こ|さ|し|す|せ|そ|た|ち|つ|て|と|な|に|ぬ|ね|の|は|ひ|ふ|へ|ほ|ま|み|む|め|も|や|ゆ|よ|ら|り|る|れ|ろ|わ|を|ん|";
         // this.hira2 = "|が|ぎ|ぐ|げ|ご|ざ|じ|ず|ぜ|ぞ|だ|ぢ|づ|で|ど|ば|び|ぶ|べ|ぼ|ぱ|ぴ|ぷ|ぺ|ぽ|";
@@ -73,7 +71,7 @@ class MainMenu {
 
         let subtitlePanel = new Panel({ w: 129, h: 36, v: 1 }, centerX(129) + 3, 109, null, "mainmenu", MainMenu.STATE.Main, "main_subtitle", 2);
         subtitlePanel.setAlpha(0);
-        subtitlePanel.setFontColor("rgba(176, 150, 124,1)");
+        subtitlePanel.setFontColor(LESSON_BTN_SDW_COLOR);
         MainMenu.mainList.push(subtitlePanel.getSprite());
 
         let hiraAImg = new Sprite({ w: 50, h: 50 }, centerX(50, 110), 0, null, "tm");      //? 0 -> originY
@@ -112,7 +110,7 @@ class MainMenu {
         userPanel.setAlignText(0);
         userPanel.setOffsets(0, 11);
         userPanel.setLabel(USER.name);
-        userPanel.setFontColor("rgba(217, 160, 102, 1)")
+        userPanel.setFontColor("rgba(217,160,102,1)")
         userPanel.getSprite().addAnimation("normal", { x: 11, y: 77 });
         userPanel.getSprite().changeAnimation("normal");
         userPanel.getSprite().setScale(panelLength, 1);
@@ -282,8 +280,8 @@ class MainMenu {
         MainMenu.optionsList.push(sfxPanel.getSprite());
 
         this.musicSpeaker = new Sprite({ w: 16, h: 14 }, musicPanel.x + 35, musicPanel.y + 3, null);
-        this.musicSpeaker.addAnimation("normal", { x: 203, y: 104 });
-        this.musicSpeaker.addAnimation("mute", { x: 219, y: 104 });
+        this.musicSpeaker.addAnimation("normal", { x: 203, y: 96 });
+        this.musicSpeaker.addAnimation("mute", { x: 219, y: 96 });
         if (MUSIC_VOLUME === 0) {
             this.musicSpeaker.changeAnimation("mute");
         } else {
@@ -292,8 +290,8 @@ class MainMenu {
         MainMenu.optionsList.push(this.musicSpeaker.getSprite());
 
         this.sfxSpeaker = new Sprite({ w: 16, h: 14 }, sfxPanel.x + 35, sfxPanel.y + 3, null);
-        this.sfxSpeaker.addAnimation("normal", { x: 203, y: 104 });
-        this.sfxSpeaker.addAnimation("mute", { x: 219, y: 104 });
+        this.sfxSpeaker.addAnimation("normal", { x: 203, y: 96 });
+        this.sfxSpeaker.addAnimation("mute", { x: 219, y: 96 });
         if (SFX_VOLUME === 0) {
             this.sfxSpeaker.changeAnimation("mute");
         } else {
@@ -359,6 +357,7 @@ class MainMenu {
 
         let optionsBackBtn = new Button({ w: 30, h: 22 }, centerX(30), 210, null, MainMenu.fromOptionsToMainMenu.bind(this), "mainmenu", MainMenu.STATE.Options, "", 0, true);
         optionsBackBtn.setAnimations({ x: 86, y: 56 });
+        optionsBackBtn.setSound("back");
         MainMenu.optionsList.push(optionsBackBtn.getSprite());
 
 
@@ -373,7 +372,7 @@ class MainMenu {
 
         let creditsTitle = new Panel({ w: 80, h: 17, v: 4 }, centerXElement(creditsMainPanel, 80), 14, creditsMainPanel, "mainmenu", MainMenu.STATE.Credits, "Credits", 5);
         creditsTitle.setOffsets(0, 12);
-        creditsTitle.setFontColor("rgba(217, 213, 188, 0)");
+        // creditsTitle.setFontColor(CHOOSETYPE_SDW_COLOR_0);
         MainMenu.creditsList.push(creditsTitle.getSprite());
 
         let contentPanel = new Panel({ w: 200, h: 60, v: 1 }, centerXElement(creditsMainPanel, 200), 30, creditsMainPanel, "mainmenu", MainMenu.STATE.Credits, "credits_content", 2);
@@ -386,6 +385,7 @@ class MainMenu {
 
         let creditsBackBtn = new Button({ w: 30, h: 22 }, centerXElement(creditsMainPanel, 30, 70), creditsMainPanel.totalHeight - 40, creditsMainPanel, toMainMenu, "mainmenu", MainMenu.STATE.Credits, "", 0, true);
         creditsBackBtn.setAnimations({ x: 86, y: 56 });
+        creditsBackBtn.setSound("back");
         MainMenu.creditsList.push(creditsBackBtn.getSprite());
 
 
@@ -507,7 +507,7 @@ class MainMenu {
             Panel.currentList.push(this.deleteSavePanel);
 
             this.deleteSaveWarningPanel = new Panel({ w: 238, h: 50, v: 1 }, 0, 35, this.deleteSavePanel, "mainmenu", MainMenu.STATE.Options, "delete_save_warning", 2);
-            this.deleteSaveWarningPanel.setFontColor("rgba(200,200,200,1)", RED_COLOR);
+            this.deleteSaveWarningPanel.setFontColor(GREY_200_COLOR, RED_COLOR);
             this.deleteSaveWarningPanel.setAlpha(0);
             MainMenu.optionsList.push(this.deleteSaveWarningPanel.getSprite());
 
@@ -733,7 +733,7 @@ class MainMenu {
             let rndOffsetX = rnd(1, 10);
             let rndOffsetY = rnd(1, 5);
             let p = new Particles(pX + rndOffsetX, pY + rndOffsetY, 1, -1, 0, { w: size, h: size }, rnd(1, 3));
-            p.setColor("rgba(150, 150, 150, 1)");
+            p.setColor(GREY_150_COLOR);
         }
     }
 }

@@ -96,6 +96,7 @@ class FreeMode {
 
         let backBtn = new Button({ w: 30, h: 22 }, centerX(30), centerY(22, 80, 1), null, toMainMenu, "freemode", FreeMode.STATE.Main, "", 0, true);
         backBtn.setAnimations({ x: 86, y: 56 });
+        backBtn.setSound("back");
         FreeMode.list.push(backBtn.getSprite());
 
 
@@ -207,8 +208,9 @@ class FreeMode {
 
             this.chooseTypeTitle = new Panel({ w: 80, h: 17, v: 4 }, centerXElement(this.chooseTypePanel, 80), 14, this.chooseTypePanel, "freemode", FreeMode.STATE.Main, pParams.type, 5);
             this.chooseTypeTitle.setOffsets(0, 12);
-            this.chooseTypeTitle.setFontColor("rgba(217, 213, 188, 0)");
-            this.chooseTypeTitle.setAlpha(0);
+            // this.chooseTypeTitle.setFontColor(CHOOSETYPE_SDW_COLOR_0);
+            this.chooseTypeTitle.setFontColor(CHOOSETYPE_SDW_COLOR);
+            // this.chooseTypeTitle.setAlpha(0);
             Panel.currentList.push(this.chooseTypeTitle);
             FreeMode.list.push(this.chooseTypeTitle.getSprite());
 
@@ -242,7 +244,7 @@ class FreeMode {
                 "freemode", FreeMode.STATE.Main, btnLabel, 41);
 
             this.kanaToRomaBtn.setFontColor(RED_BTN_SDW_COLOR);
-            this.kanaToRomaBtn.setAlpha(0);
+            // this.kanaToRomaBtn.setAlpha(0);
             Button.currentList.push(this.kanaToRomaBtn);
             FreeMode.list.push(this.kanaToRomaBtn.getSprite());
 
@@ -259,7 +261,7 @@ class FreeMode {
                 },
                 "freemode", FreeMode.STATE.Main, btn2Label, 41);
             this.romaTokanaBtn.setFontColor(RED_BTN_SDW_COLOR);
-            this.romaTokanaBtn.setAlpha(0);
+            // this.romaTokanaBtn.setAlpha(0);
             Button.currentList.push(this.romaTokanaBtn);
             FreeMode.list.push(this.romaTokanaBtn.getSprite());
 
@@ -291,6 +293,7 @@ class FreeMode {
             this.backFromCTPBtn = new Button({ w: 30, h: 22 }, centerXElement(this.chooseTypePanel, 30), 160, this.chooseTypePanel, { cb: FreeMode.displayChooseTypePanel.bind(this), arg: { bool: false } }, "freemode", FreeMode.STATE.Main, "", 0, true);
             this.backFromCTPBtn.setAnimations({ x: 86, y: 56 });
             this.backFromCTPBtn.setAlpha(0);
+            this.backFromCTPBtn.setSound("back");
             Button.currentList.push(this.backFromCTPBtn);
             FreeMode.list.push(this.backFromCTPBtn.getSprite());
 

@@ -50,6 +50,7 @@ class Login {
         //! ---------------- LOGIN ----------------
         this.loginBackBtn = new Button({ w: 30, h: 22 }, 30, 30, null, { cb: Login.changeState, arg: Login.STATE.Main }, "login", Login.STATE.Login, "", 0, true);
         this.loginBackBtn.setAnimations({ x: 86, y: 56 });
+        this.loginBackBtn.setSound("back");
         Login.loginList.push(this.loginBackBtn.getSprite());
 
 
@@ -70,7 +71,7 @@ class Login {
         Login.loginList.push(loginNameLabel.getSprite());
 
         this.loginNameEntry = new EntryField({ w: 128, h: 28, v: 11 }, 98, 28, this.loginSchoolpaperBG, null, "login", Login.STATE.Login, "", 1);
-        this.loginNameEntry.setFontColor("rgba(200,200,200,0)", BLACK_COLOR_0, "rgba(100,100,100,0)", BLACK_COLOR);
+        this.loginNameEntry.setFontColor(ENTRYFIELD_SDW_COLOR_0, BLACK_COLOR_0, ENTRYFIELD_HVR_SDW_COLOR_0, BLACK_COLOR);
         this.loginNameEntry.setOffsets(15, 18);
         this.loginNameEntry.setAlpha(0);
         this.loginNameEntry.setState(EntryField.STATE.Inactive);
@@ -85,7 +86,7 @@ class Login {
         Login.loginList.push(loginPassLabel.getSprite());
 
         this.loginPassEntry = new EntryField({ w: 128, h: 28, v: 11 }, 98, 67, this.loginSchoolpaperBG, null, "login", Login.STATE.Login, "", 1);
-        this.loginPassEntry.setFontColor("rgba(200,200,200,0)", BLACK_COLOR_0, "rgba(100,100,100,0)", BLACK_COLOR);
+        this.loginPassEntry.setFontColor(ENTRYFIELD_SDW_COLOR_0, BLACK_COLOR_0, ENTRYFIELD_HVR_SDW_COLOR_0, BLACK_COLOR);
         this.loginPassEntry.setOffsets(15, 18);
         this.loginPassEntry.setAlpha(0);
         this.loginPassEntry.setPassword();
@@ -103,7 +104,7 @@ class Login {
         this.loginTitlePanel.setOffsets(0, 10);
         this.loginTitlePanel.setTextOverflow(true);
         this.loginTitlePanel.setTextCase("all");
-        this.loginTitlePanel.setFontColor("rgba(192,192,192,0)", RED_COLOR_0);
+        this.loginTitlePanel.setFontColor(GREY_192_COLOR_0, RED_COLOR_0);
         this.loginTitlePanel.beginMoving({ x: centerX(62), y: 32 }, 0.6, true, 0, 0.05);
         Login.loginList.push(this.loginTitlePanel.getSprite());
 
@@ -119,6 +120,7 @@ class Login {
         //! ---------------- SIGNUP ----------------
         this.signupBackBtn = new Button({ w: 30, h: 22 }, 30, 30, null, { cb: Login.changeState.bind(this), arg: Login.STATE.Main }, "login", Login.STATE.Signup, "", 0, true);
         this.signupBackBtn.setAnimations({ x: 86, y: 56 });
+        this.signupBackBtn.setSound("back");
         Login.signupList.push(this.signupBackBtn.getSprite());
 
         this.schoolpaperBG = new Panel({ w: 268, h: 175 }, centerX(268), 50, null, "login", Login.STATE.Signup, "", 0, true);
@@ -137,7 +139,7 @@ class Login {
         Login.signupList.push(nameLabel.getSprite());
 
         this.nameEntry = new EntryField({ w: 128, h: 28, v: 11 }, 98, 28, this.schoolpaperBG, null, "login", Login.STATE.Signup, "", 1);
-        this.nameEntry.setFontColor("rgba(200,200,200,0)", BLACK_COLOR_0, "rgba(100,100,100,0)", BLACK_COLOR);
+        this.nameEntry.setFontColor(ENTRYFIELD_SDW_COLOR_0, BLACK_COLOR_0, ENTRYFIELD_HVR_SDW_COLOR_0, BLACK_COLOR);
         this.nameEntry.setOffsets(15, 18);
         this.nameEntry.setAlpha(0);
         this.nameEntry.setState(EntryField.STATE.Inactive);
@@ -159,7 +161,7 @@ class Login {
         Login.signupList.push(passLabel.getSprite());
 
         this.passEntry = new EntryField({ w: 128, h: 28, v: 11 }, 98, 67, this.schoolpaperBG, null, "login", Login.STATE.Signup, "", 1);
-        this.passEntry.setFontColor("rgba(200,200,200,0)", BLACK_COLOR_0, "rgba(100,100,100,0)", BLACK_COLOR);
+        this.passEntry.setFontColor(ENTRYFIELD_SDW_COLOR_0, BLACK_COLOR_0, ENTRYFIELD_HVR_SDW_COLOR_0, BLACK_COLOR);
         this.passEntry.setOffsets(15, 18);
         this.passEntry.setAlpha(0);
         this.passEntry.setPassword();
@@ -175,7 +177,7 @@ class Login {
         Login.signupList.push(passLabel2.getSprite());
 
         this.passEntry2 = new EntryField({ w: 128, h: 28, v: 11 }, 98, 106, this.schoolpaperBG, null, "login", Login.STATE.Signup, "", 1);
-        this.passEntry2.setFontColor("rgba(200,200,200,0)", BLACK_COLOR_0, "rgba(100,100,100,0)", BLACK_COLOR);
+        this.passEntry2.setFontColor(ENTRYFIELD_SDW_COLOR_0, BLACK_COLOR_0, ENTRYFIELD_HVR_SDW_COLOR_0, BLACK_COLOR);
         this.passEntry2.setOffsets(15, 18);
         this.passEntry2.setAlpha(0);
         this.passEntry2.setPassword();
@@ -219,7 +221,7 @@ class Login {
         this.titlePanel.setOffsets(0, 10);
         this.titlePanel.setTextOverflow(true);
         this.titlePanel.setTextCase("all");
-        this.titlePanel.setFontColor("rgba(192,192,192,0)", RED_COLOR_0);
+        this.titlePanel.setFontColor(GREY_192_COLOR_0, RED_COLOR_0);
         this.titlePanel.beginMoving({ x: centerX(62), y: 32 }, 0.6, true, 0, 0.05);
         Login.signupList.push(this.titlePanel.getSprite());
 

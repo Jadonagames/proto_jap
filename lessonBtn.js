@@ -126,7 +126,7 @@ class LessonBtn extends Button {
         save.push({ type: "buttonAnimation", params: kana + lessonNumber });
         save.push({ type: "newAnimation", params: kana + lessonNumber });
         SaveManager.save(save);
-        this.setFontColor("rgba(176,150,124,1)", BLACK_COLOR, "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+        this.setFontColor(LESSON_BTN_SDW_COLOR, BLACK_COLOR, LESSON_BTN_HVR_SDW_COLOR, LESSON_BTN_HOVER_COLOR);
         this.getSprite().changeAnimation("normal");
         this.state = LessonBtn.STATE.Normal;
 
@@ -139,8 +139,8 @@ class LessonBtn extends Button {
 
     drawLabel(ctx) {
 
-        // "Normal" main: rgba(0,0,0,1)      | bg: rgba(176,150,124,1) 
-        // "Hover"  main: rgba(162,138,114,1) | bg: rgba(213,210,190,1)
+        // "Normal" main: BLACK_COLOR      | bg: LESSON_BTN_SDW_COLOR 
+        // "Hover"  main: LESSON_BTN_HOVER_COLOR | bg: LESSON_BTN_HVR_SDW_COLOR
         // "Down"  idem hover
 
         if (this.state == LessonBtn.STATE.Hover) {
@@ -173,5 +173,13 @@ class LessonBtn extends Button {
 class KeyboardBtn extends Button {
     constructor(pSize, pX, pY, pParent, pCallback, pType = "normal", pTypeState = null, pLabel = "", pId = 0, pStaticSize = false) {
         super(pSize, pX, pY, pParent, pCallback, pType, pTypeState, pLabel, pId, pStaticSize);
+    }
+}
+
+class SoundBtn extends Button {
+    constructor(pSize, pX, pY, pParent, pCallback, pType = "normal", pTypeState = null, pLabel = "", pId = 0, pStaticSize = false) {
+        super(pSize, pX, pY, pParent, pCallback, pType, pTypeState, pLabel, pId, pStaticSize);
+
+        this.sound = "";
     }
 }

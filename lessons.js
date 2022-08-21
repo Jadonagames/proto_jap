@@ -65,7 +65,7 @@ class Lessons {
         this.katakanaBtn.getSprite().addAnimation("hover", { x: 878, y: 470 });
         this.katakanaBtn.getSprite().addAnimation("down", { x: 878, y: 470 });
         this.katakanaBtn.getSprite().changeAnimation("normal");
-        this.katakanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, "rgb(181,205,190)", GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
+        this.katakanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, INACTIVE_SDW_COLOR, GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
         this.katakanaBtn.setOffsets(0, 16);
         Lessons.mainList.push(this.katakanaBtn.getSprite());
 
@@ -79,6 +79,7 @@ class Lessons {
 
         let backBtn = new Button({ w: 30, h: 22 }, 20, 20, null, Lessons.quitLessonsMenu, "lessons", Lessons.STATE.Main, "", 0, true);
         backBtn.setAnimations({ x: 86, y: 56 });
+        backBtn.setSound("back");
         Lessons.mainList.push(backBtn.getSprite());
 
         // let introBtn = new Button({ w: 50, h: 20, v: 5 }, 380, 20, null, { cb: SaveManager.save, arg: [{ type: "prologue", value: 1 }] }, "lessons", Lessons.STATE.Main, "Infos", 1);
@@ -125,16 +126,16 @@ class Lessons {
 
             if (bNoSave) {
                 lessonBtn.setMode(1, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Hiragana, i] }, offYColor);
-                lessonBtn.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                lessonBtn.setFontColor(LESSON_BTN_SDW_COLOR_0, BLACK_COLOR_0, LESSON_BTN_HVR_SDW_COLOR_0, LESSON_BTN_HOVER_COLOR_0);
                 lessonBtn.changeSpriteAnimation("normal");
             } else {
                 lessonBtn.setMode(0, null, offYColor);
                 if (!SaveManager.SAVE_DATA["lessons"]["h" + i]["buttonAnimation"]) {
                     lessonBtn.state = LessonBtn.STATE.Inactive;
                     lessonBtn.changeSpriteAnimation("open");
-                    lessonBtn.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                    lessonBtn.setFontColor(LESSON_BTN_SDW_COLOR_0, BLACK_COLOR_0, LESSON_BTN_HVR_SDW_COLOR_0, LESSON_BTN_HOVER_COLOR_0);
                 } else {
-                    lessonBtn.setFontColor("rgba(176,150,124,1)", BLACK_COLOR, "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+                    lessonBtn.setFontColor(LESSON_BTN_SDW_COLOR, BLACK_COLOR, LESSON_BTN_HVR_SDW_COLOR, LESSON_BTN_HOVER_COLOR);
                     lessonBtn.changeSpriteAnimation("normal");
 
 
@@ -224,16 +225,16 @@ class Lessons {
 
             if (bNoSave) {
                 lessonBtn.setMode(1, { cb: Lessons.transition.bind(this), arg: ["-", Lessons.STATE.Katakana, i] }, offYColor);
-                lessonBtn.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                lessonBtn.setFontColor(LESSON_BTN_SDW_COLOR_0, BLACK_COLOR_0, LESSON_BTN_HVR_SDW_COLOR_0, LESSON_BTN_HOVER_COLOR_0);
                 lessonBtn.changeSpriteAnimation("normal");
             } else {
                 lessonBtn.setMode(0, null, offYColor);
                 if (!SaveManager.SAVE_DATA["lessons"]["k" + i]["buttonAnimation"]) {
                     lessonBtn.state = LessonBtn.STATE.Inactive;
                     lessonBtn.changeSpriteAnimation("open");
-                    lessonBtn.setFontColor("rgba(176,150,124,0)", BLACK_COLOR_0, "rgba(213,210,190,0)", "rgba(162,138,114,0)");
+                    lessonBtn.setFontColor(LESSON_BTN_SDW_COLOR_0, BLACK_COLOR_0, LESSON_BTN_HVR_SDW_COLOR_0, LESSON_BTN_HOVER_COLOR_0);
                 } else {
-                    lessonBtn.setFontColor("rgba(176,150,124,1)", BLACK_COLOR, "rgba(213,210,190,1)", "rgba(162,138,114,1)");
+                    lessonBtn.setFontColor(LESSON_BTN_SDW_COLOR, BLACK_COLOR, LESSON_BTN_HVR_SDW_COLOR, LESSON_BTN_HOVER_COLOR);
                     lessonBtn.changeSpriteAnimation("normal");
 
                     if (SaveManager.SAVE_DATA["lessons"]["h" + i]["newAnimation"] && !SaveManager.SAVE_DATA["lessons"]["k" + i]["newFinish"]) {
@@ -634,6 +635,7 @@ class Lessons {
 
             this.lessonBackBtn = new Button({ w: 30, h: 22 }, 23, CANVAS_HEIGHT + 254, null, { cb: Lessons.transition.bind(this), arg: ["+", Lessons.previousState] }, "lessons", Lessons.STATE.Lesson, "", 0, true);
             this.lessonBackBtn.setAnimations({ x: 86, y: 56 });
+            this.lessonBackBtn.setSound("back");
             Lessons.lessonList.push(this.lessonBackBtn.getSprite());
 
             this.trainingBtn = new Button({ w: 60, h: 31 }, centerX(60, 80), CANVAS_HEIGHT + 253, null, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: true, range: kanaList[kanaList.length - 1], type: kana[0], testType: "Training", lessonNumber: lessonNumber } }, "lessons", Lessons.STATE.Lesson, "Training", 0, true);
@@ -824,8 +826,9 @@ class Lessons {
 
             this.chooseTypeTitle = new Panel({ w: 80, h: 17, v: 4 }, centerXElement(this.chooseTypePanel, 80), 14, this.chooseTypePanel, "lessons", Lessons.STATE.Lesson, pParams.testType, 5);
             this.chooseTypeTitle.setOffsets(0, 12);
-            this.chooseTypeTitle.setFontColor("rgba(217, 213, 188, 0)");
-            this.chooseTypeTitle.setAlpha(0);
+            // this.chooseTypeTitle.setFontColor(CHOOSETYPE_SDW_COLOR_0);
+            this.chooseTypeTitle.setFontColor(CHOOSETYPE_SDW_COLOR);
+            // this.chooseTypeTitle.setAlpha(0);
             Panel.list.push(this.chooseTypeTitle);
             Panel.currentList.push(this.chooseTypeTitle);
             Lessons.lessonList.push(this.chooseTypeTitle.getSprite());
@@ -910,6 +913,7 @@ class Lessons {
             this.backFromCTPBtn = new Button({ w: 30, h: 22 }, centerXElement(this.chooseTypePanel, 30), 160, this.chooseTypePanel, { cb: Lessons.displayChooseTypePanel.bind(this), arg: { bool: false, testType: pParams.testType } }, "lessons", Lessons.STATE.Lesson, "", 0, true);
             this.backFromCTPBtn.setAnimations({ x: 86, y: 56 });
             this.backFromCTPBtn.setAlpha(0);
+            this.backFromCTPBtn.setSound("back");
             // Button.list.push(this.backFromCTPBtn);
             Button.currentList.push(this.backFromCTPBtn);
             Lessons.lessonList.push(this.backFromCTPBtn.getSprite());
@@ -1051,14 +1055,14 @@ class Lessons {
                 this.katakanaBtn.getSprite().resetAnimations("normal", { x: 992, y: 470 });
                 this.katakanaBtn.getSprite().resetAnimations("hover", { x: 878, y: 470 });
                 this.katakanaBtn.getSprite().resetAnimations("down", { x: 878, y: 470 });
-                this.katakanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, "rgb(181,205,190)", GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
+                this.katakanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, INACTIVE_SDW_COLOR, GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
 
                 break;
             case Lessons.STATE.Katakana:
                 this.hiraganaBtn.getSprite().resetAnimations("normal", { x: 992, y: 444 });
                 this.hiraganaBtn.getSprite().resetAnimations("hover", { x: 878, y: 444 });
                 this.hiraganaBtn.getSprite().resetAnimations("down", { x: 878, y: 444 });
-                this.hiraganaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, "rgb(181,205,190)", GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
+                this.hiraganaBtn.setFontColor(GREEN_BOARD_SDW_COLOR2, INACTIVE_SDW_COLOR, GREEN_BOARD_SDW_COLOR2, WHITE_COLOR);
 
                 // No reaction
                 this.katakanaBtn.getSprite().resetAnimations("normal", { x: 764, y: 470 });
