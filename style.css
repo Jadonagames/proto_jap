@@ -27,6 +27,10 @@
     margin: 0;
 }
 
+#canvas_container {
+    display: flex;
+}
+
 #canvas {
     /* image-rendering: pixelated; */
     /* -webkit-font-smoothing: auto; */
@@ -35,4 +39,9 @@
     /* -webkit-font-smoothing: none; */
     /* text-rendering: auto; */
     cursor: none;
+    /* max-width: 1350 !important;
+    max-height: 900 !important; */
+    margin: 0 auto;
+    /* flex-direction: column; */
+    align-self: center;
 }

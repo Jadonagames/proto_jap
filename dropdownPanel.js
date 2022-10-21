@@ -169,3 +169,207 @@ class DropdownPanel extends Panel {
     }
 
 }
+
+class ToastPanel extends Panel {
+
+    constructor(pSize, pX, pY, pParent, pType = "normal", pTypeState = null, pLabel = "", pId = 0, pStaticSize = false) {
+        super(pSize, pX, pY, pParent, pType, pTypeState, pLabel, pId, pStaticSize);
+
+        this.bFadingOut = false;
+        this.displayTimer = new Timer(2, this.startFading.bind(this));
+        this.fadeTimer = new Timer(1, this.delete.bind(this));
+    }
+
+    setPanelSprites(pId, pSize = 4) {
+
+        let x_l = 0;
+        let y_t = 0;
+        let hoverable = false;
+
+        switch (pId) {
+            case 0: //? Red Toast
+                x_l = 0;
+                y_t = 48;
+                break;
+            case 1: //? Green Toast
+                x_l = 3;
+                y_t = 48;
+                break;
+            case 11: //? Panel original + ombre 1px & petites améliorations
+                x_l = 0;
+                y_t = 68;
+                break;
+            case 12: //? Panel original + grosse ombre 2px & petites améliorations
+                x_l = 13;
+                y_t = 57;
+                break;
+            case 2: //? Panel transparent (v: 1)
+                x_l = 44;
+                y_t = 1;
+                break;
+            case 21: //? Panel sombre (v: 1)
+                x_l = 44;
+                y_t = 5;
+                break;
+            case 3: //? Panel kana (one lesson screen)
+                x_l = 456;
+                y_t = 748;
+                hoverable = true;
+                break;
+            case 4: //? Panel background (one lesson screen)
+                x_l = 456;
+                y_t = 769;
+                break;
+            case 5: //? Panel title of panel tile id=1 "chooseType" (v: 16)
+                x_l = 574;
+                y_t = 748;
+                break;
+            case 6: //? Dialog panel, intro
+                x_l = 583;
+                y_t = 748;
+                break;
+            case 7: //? Panel chalkboard (v: 6)
+                x_l = 112;
+                y_t = 144;
+                break;
+            case 8: //? Keyboard Panel
+                x_l = 928;
+                y_t = 160;
+                break;
+            default: //? Panel original
+                x_l = 0;
+                y_t = 57;
+        }
+
+        let x_c = x_l + pSize;
+        let x_r = x_c + 1;
+        let y_c = y_t + pSize;
+        let y_b = y_c + 1;
+
+        this.sp.tl.addAnimation("normal", { x: x_l, y: y_t });
+        this.sp.tl.changeAnimation("normal");
+        this.sp.tr.addAnimation("normal", { x: x_r, y: y_t });
+        this.sp.tr.changeAnimation("normal");
+        this.sp.bl.addAnimation("normal", { x: x_l, y: y_b });
+        this.sp.bl.changeAnimation("normal");
+        this.sp.br.addAnimation("normal", { x: x_r, y: y_b });
+        this.sp.br.changeAnimation("normal");
+        this.sp.t.addAnimation("normal", { x: x_c, y: y_t });
+        this.sp.t.changeAnimation("normal");
+        this.sp.b.addAnimation("normal", { x: x_c, y: y_b });
+        this.sp.b.changeAnimation("normal");
+        this.sp.r.addAnimation("normal", { x: x_r, y: y_c });
+        this.sp.r.changeAnimation("normal");
+        this.sp.l.addAnimation("normal", { x: x_l, y: y_c });
+        this.sp.l.changeAnimation("normal");
+        this.sp.c.addAnimation("normal", { x: x_c, y: y_c });
+        this.sp.c.changeAnimation("normal");
+    }
+    handleTempWordArr() {}
+
+    startFading() {
+        this.displayTimer.reset();
+        this.fade(0.08, -1);
+        this.bFadingOut = true;
+
+    }
+
+    delete() {
+        this.removeFromList();
+        this.removeFromCurrentList();
+        this.sp.delete = true;
+        // this = null;
+    }
+
+    update(dt) {
+        if (this.bFading) {
+            this.fading(dt);
+        }
+
+        if (this.bMoving) {
+            if (this.speedCount <= this.movingSpeed) {
+
+                // this.x = easeOutSin(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+                // this.y = easeOutSin(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                if (this.arriveDir) {
+                    this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+                    this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                } else {
+                    this.x = this.tweeningArrive(this.speedCount, this.startPos.x, this.destination.x - this.startPos.x, this.movingSpeed);
+                    this.y = this.tweeningArrive(this.speedCount, this.startPos.y, this.destination.y - this.startPos.y, this.movingSpeed);
+                }
+
+                this.speedCount += dt;
+
+            } else {
+                this.x = this.destination.x;
+                this.y = this.destination.y;
+                this.bMoving = false;
+                this.speedCount = 0;
+
+                if (this.leaveDir) {
+                    this.removeFromList();
+                    this.removeFromCurrentList();
+                    this.getSprite().delete = true;
+                }
+                if (this.moveCB != null) {
+                    if (Array.isArray(this.moveCB)) {
+                        this.moveCB.forEach(cb => {
+                            if (cb.arg !== null) {
+                                cb.cb(cb.arg);
+                            } else {
+                                cb.cb();
+                            }
+                        })
+                    } else {
+                        if (this.moveCB.arg !== null) {
+                            this.moveCB.cb(this.moveCB.arg);
+                        } else {
+                            this.moveCB.cb();
+                        }
+                    }
+                }
+            }
+
+        } else {
+            if (!this.bFadingOut) {
+                this.displayTimer.update(dt);
+            } else {
+                this.fadeTimer.update(dt);
+            }
+        }
+
+    }
+
+    drawLabel(ctx) {
+
+        ctx.font = this.fontSize + "px " + this.font;
+        if (this.fontSize == 32) { // pgfont *2
+            ctx.shadowOffsetY = 4;
+        } else { // normal
+            ctx.shadowOffsetY = currentScale;
+        }
+
+        ctx.fillStyle = this.fontMainColor;
+        ctx.shadowColor = this.fontBackgroundColor;
+
+        if (this.hoverable) {
+            if (this.state == Panel.STATE.Hover) {
+                ctx.fillStyle = this.hoverFontMainColor;
+                ctx.shadowColor = this.hoverBackgroundColor;
+            }
+        }
+
+        switch (this.alignText) {
+            case this.ALIGN_TEXT.Center:
+                ctx.textAlign = "center";
+                ctx.fillText(this.label, this.x + (this.width * 0.5), this.y + this.textOffsetY);
+                break;
+        }
+
+        ctx.shadowOffsetY = 0;
+        ctx.fillStyle = BLACK_COLOR;
+        ctx.textAlign = "left";
+    }
+
+}

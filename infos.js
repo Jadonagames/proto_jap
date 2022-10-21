@@ -206,40 +206,18 @@ class Infos {
 
             if (i != 36 && i != 38 && i != 46 && i != 47 && i != 48 && i != 112 && i != 114 && i != 122 && i != 123 && i != 124) {
 
-                // let frame = new Sprite({ w: 30, h: 18 }, frameX + offX, 30 + offY, null, "infos");
-                // frame.addAnimation("normal", { x: 0, y: 126 });
-                // frame.changeAnimation("normal");
-
-
-                // let frame = new Sprite({ w: 35, h: 23 }, frameX + offX, 25 + offY, null, "infos");
-                // frame.addAnimation("normal", { x: 352, y: 160 });
-                // frame.changeAnimation("normal");
-
-                // state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(frame) : Infos.katakanaList.push(frame);
-
                 let frame = {
                     x: frameX + offX,
                     y: 25 + offY
                 }
 
-                // let kanaPanel = new Panel({ w: 33, h: 22 }, frame.x + 1, frame.y + 1, null, "infos", state, kanaArray[i], 0, true);
-                let kanaPanel = new Panel({ w: 33, h: 22 }, frame.x + 1, frame.y + 1, null, "infos", state, kanaArray[i], 0, true);
-                kanaPanel.getSprite().addAnimation("normal", { x: 353, y: 161 });
-                kanaPanel.getSprite().changeAnimation("normal");
-                kanaPanel.setHoverable(true);
-                kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
-                kanaPanel.setOffsets(0, 16);
-                kanaPanel.setFont("kyokasho");
-                kanaPanel.setFontSize(15);
-                kanaPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR, GREEN_BOARD_SDW_COLOR, BLACK_COLOR);
-                state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaPanel.getSprite()) : Infos.katakanaList.push(kanaPanel.getSprite());
-
-                let soundBtn = new SoundBtn({ w: 16, h: 15 }, frame.x + 17, frame.y + 4, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, "", 0, true);
-                soundBtn.setAnimations({ x: 112, y: 112 });
-                soundBtn.getSprite().addAnimation("inactive", { x: 160, y: 112 });
-                soundBtn.getSprite().addAnimation("playing", { x: 176, y: 112 }, 3, 0.2);
-
-                state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(soundBtn.getSprite()) : Infos.katakanaList.push(soundBtn.getSprite());
+                let kanaBtn = new SoundBtn({ w: 33, h: 21}, frame.x+1, frame.y +1, null, { cb: Sound.playCallback, arg: "kana_" + KANA[kanaArray[i]].roma }, "infos", state, kanaArray[i], 0, true);
+                kanaBtn.setAnimations({x: 1536, y: 251});
+                kanaBtn.setFont("kyokasho");
+                kanaBtn.setOffsets(0, 16);
+                kanaBtn.setFontSize(15);
+                kanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR, GREEN_BOARD_SDW_COLOR, BLACK_COLOR);
+                state == Infos.STATE.Hiragana ? Infos.hiraganaList.push(kanaBtn.getSprite()) : Infos.katakanaList.push(kanaBtn.getSprite());
 
                 let tooltipPanel;
                 let romaLabel = "";
@@ -254,15 +232,6 @@ class Infos {
                 tooltipPanel = new Panel({ w: 105, h: 105 }, centerX(100, 98, 1), 170, null, "infos", state, "roma_" + romaLabel, 0, true);
                 tooltipPanel.getSprite().addAnimation("normal", { x: 1536, y: 384 });
                 tooltipPanel.getSprite().changeAnimation("normal");
-
-                // tooltipPanel = new Panel({ w: 8, h: 8, v: 9 }, centerX(100, 98, 1), 170, null, "infos", state, "roma_" + romaLabel, [-1, { y_t: 777 }]);//748 835
-                // tooltipPanel.changePanelSprite("t", 3, { x: 427, y: 777 });
-                // tooltipPanel.changePanelSprite("t", 4, { x: 438, y: 777 });
-                // tooltipPanel.changePanelSprite("b", 3, { x: 427, y: 786 });
-                // tooltipPanel.changePanelSprite("b", 4, { x: 438, y: 786 });
-
-                // let kanaAnimPanel = new Panel({ w: 70, h: 45, v: 10 }, centerXElement(tooltipPanel, 70), 46, tooltipPanel, "infos", state, "", 3);
-
                 tooltipPanel.setFontSize(30);
                 tooltipPanel.setFont("kyokasho");
                 tooltipPanel.setOffsets(5, 35);
@@ -270,13 +239,13 @@ class Infos {
                 let kana = new Sprite({ w: kanaWidth, h: 34 }, tooltipPanel.x + kanaOffX, tooltipPanel.y + 50, null, "kana");     // w: 38   x + 32
 
                 for (let j = 0; j < KANA[kanaArray[i]].frames.length; j++) {
-                    kana.setImageDataOrigin(KANA[kanaArray[i]].imageData[j], KANA[kanaArray[i]].frames[j]);
+                    kana.setImageDataOrigin(kanaArray[i], j, KANA[kanaArray[i]].frames[j]);
+                    // kana.setImageDataOrigin(KANA[kanaArray[i]].imageData[j], KANA[kanaArray[i]].imageData2[j], KANA[kanaArray[i]].frames[j]);
                 }
 
-                kanaPanel.setTooltip(tooltipPanel);
-                // kanaPanel.setTooltip(kanaAnimPanel);
-                kanaPanel.setTooltip(kana);
-                kanaPanel.setHoverCB(displayTooltip, { list: "infos." + kanaList, tooltip: kanaPanel.getTooltip() });
+                kanaBtn.setTooltip(tooltipPanel);
+                kanaBtn.setTooltip(kana);
+                kanaBtn.setHoverCB(displayTooltip, { list: "infos." + kanaList, tooltip: kanaBtn.getTooltip() });
             }
             columnsCount++;
             if (columnsCount == 5) {
@@ -337,18 +306,12 @@ class Infos {
 
         // ---------------- SPECIAL ------------------
 
-        let hiraSpecGreenPanel = new Panel({ w: 430, h: 200, v: 6 }, centerX(430), 10, null, "infos", Infos.STATE.HiraSpecial, "", 7);
+        let hiraSpecGreenPanel = new Panel({ w: 407, h: 199, v: 6 }, centerX(408), 10, null, "infos", Infos.STATE.HiraSpecial, "", 7);
         Infos.hiraSpecialList.push(hiraSpecGreenPanel.getSprite());
-        // let hiraSpecGreenPanel2 = new Panel({ w: 200, h: 140, v: 6 }, 235, 15, null, "infos", Infos.STATE.HiraSpecial, "", 7);
-        // Infos.hiraSpecialList.push(hiraSpecGreenPanel2.getSprite());
-        // let kataSpecGreenPanel = new Panel({ w: 200, h: 265, v: 6 }, 5, 15, null, "infos", Infos.STATE.KataSpecial, "", 7);
-        let kataSpecGreenPanel = new Panel({ w: 430, h: 200, v: 6 }, centerX(430), 10, null, "infos", Infos.STATE.KataSpecial, "", 7);
+        let kataSpecGreenPanel = new Panel({ w: 407, h: 199, v: 6 }, centerX(408), 10, null, "infos", Infos.STATE.KataSpecial, "", 7);
         Infos.kataSpecialList.push(kataSpecGreenPanel.getSprite());
-        // let kataSpecGreenPanel2 = new Panel({ w: 200, h: 140, v: 6 }, 235, 15, null, "infos", Infos.STATE.KataSpecial, "", 7);
-        // Infos.kataSpecialList.push(kataSpecGreenPanel2.getSprite());
 
-
-        offX = 6;
+        offX = 7;
         offY = 7;
         columnsCount = 0;
         state = Infos.STATE.HiraSpecial;
@@ -358,40 +321,29 @@ class Infos {
 
             if (i == 33) {
                 columnsCount = 0;
-                offX = 6;
+                offX = 7;
                 offY = 7;
                 state = Infos.STATE.KataSpecial;
                 parent = null;
                 parent = kataSpecGreenPanel;
             }
 
-            let kanaPanel = new Panel({ w: 139, h: 15 }, offX, offY, parent, "infos", state, kanaSpecArray[i], 0, true);
-            kanaPanel.getSprite().addAnimation("normal", { x: 934, y: 10 });
-            kanaPanel.getSprite().changeAnimation("normal");
-            kanaPanel.setHoverable(true);
-            kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
-            kanaPanel.setOffsets(5, 10);
-            kanaPanel.setFont("kyokasho");
-            kanaPanel.setFontSize(10);
-            kanaPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR, GREEN_BOARD_SDW_COLOR, BLACK_COLOR);
-            state == Infos.STATE.HiraSpecial ? Infos.hiraSpecialList.push(kanaPanel.getSprite()) : Infos.kataSpecialList.push(kanaPanel.getSprite())
-            // Infos.hiraSpecialList.push(kanaPanel.getSprite());
+            let kanaBtn = new Button({ w: 115, h: 15}, offX, offY, parent, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray[i].slice(5) }, "infos", state, kanaSpecArray[i], 0, true);
+            kanaBtn.setAnimations({ x: 934, y: 10});
+            kanaBtn.setOffsets(0, 10);
+            kanaBtn.setAlignText(kanaBtn.ALIGN_TEXT.Left);
+            kanaBtn.setFont("kyokasho");
+            kanaBtn.setFontSize(10);
+            kanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR, BLACK_COLOR_0, BLACK_COLOR);
 
-            // log("kana_" + kanaSpecArray[i].slice(5));
-
-            let soundBtn = new SoundBtn({ w: 16, h: 15 }, offX + 116, offY, parent, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray[i].slice(5) }, "infos", state, "", 0, true);
-            soundBtn.setAnimations({ x: 112, y: 112 });
-            soundBtn.getSprite().addAnimation("inactive", { x: 160, y: 112 });
-            soundBtn.getSprite().addAnimation("playing", { x: 176, y: 112 }, 3, 0.2);
-            state == Infos.STATE.HiraSpecial ? Infos.hiraSpecialList.push(soundBtn.getSprite()) : Infos.kataSpecialList.push(soundBtn.getSprite())
-            // Infos.hiraSpecialList.push(soundBtn.getSprite());
+            state == Infos.STATE.HiraSpecial ? Infos.hiraSpecialList.push(kanaBtn.getSprite()) : Infos.kataSpecialList.push(kanaBtn.getSprite())
 
             columnsCount++;
             offX += 139;
 
             if (columnsCount == 3) {
                 columnsCount = 0;
-                offX = 6;
+                offX = 7;
                 offY += 17;
             }
 
@@ -412,22 +364,14 @@ class Infos {
         kanaList = "hiragana";
         for (let i = 0; i < kanaSpecArray2.length; i++) {
 
-            let kanaPanel = new Panel({ w: 66, h: 15 }, offX, offY, kataSpec2GreenPanel, "infos", Infos.STATE.KataSpecial2, kanaSpecArray2[i], 0, true);
-            kanaPanel.getSprite().addAnimation("normal", { x: 934, y: 10 });
-            kanaPanel.getSprite().changeAnimation("normal");
-            kanaPanel.setHoverable(true);
-            kanaPanel.setAlignText(kanaPanel.ALIGN_TEXT.Left);
-            kanaPanel.setOffsets(5, 10);
-            kanaPanel.setFont("kyokasho");
-            kanaPanel.setFontSize(10);
-            kanaPanel.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR, GREEN_BOARD_SDW_COLOR, BLACK_COLOR);
-            Infos.kataSpecial2List.push(kanaPanel.getSprite());
-
-            let soundBtn = new SoundBtn({ w: 16, h: 15 }, offX + 50, offY, kataSpec2GreenPanel, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray2[i].slice(5) }, "infos", Infos.STATE.KataSpecial2, "", 0, true);
-            soundBtn.setAnimations({ x: 112, y: 112 });
-            soundBtn.getSprite().addAnimation("inactive", { x: 160, y: 112 });
-            soundBtn.getSprite().addAnimation("playing", { x: 176, y: 112 }, 3, 0.2);
-            Infos.kataSpecial2List.push(soundBtn.getSprite());
+            let kanaBtn = new Button({ w: 50, h: 15}, offX, offY, kataSpec2GreenPanel, { cb: Sound.playCallback, arg: "kana_" + kanaSpecArray2[i].slice(5) }, "infos", Infos.STATE.KataSpecial2, kanaSpecArray2[i], 0, true);
+            kanaBtn.setAnimations({ x: 1279, y: 10 });
+            kanaBtn.setAlignText(kanaBtn.ALIGN_TEXT.Left);
+            kanaBtn.setOffsets(5, 10);
+            kanaBtn.setFont("kyokasho");
+            kanaBtn.setFontSize(10);
+            kanaBtn.setFontColor(GREEN_BOARD_SDW_COLOR, WHITE_COLOR, BLACK_COLOR_0, BLACK_COLOR);
+            Infos.kataSpecial2List.push(kanaBtn.getSprite());
 
             columnsCount++;
             offX += 72;
@@ -463,7 +407,7 @@ class Infos {
             if (sp.active) {
                 sp.updateKana(dt);
             }
-        })
+        });
 
         Infos.list = Infos.list.filter(sp => {
             return !sp.delete;
@@ -477,6 +421,9 @@ class Infos {
             return !sp.delete;
         });
 
+        Panel.currentList.forEach(p => {
+            p.update(dt)
+        });
 
         if (FadeEffect.bActive) {
             FadeEffect.update(dt);
@@ -514,8 +461,8 @@ class Infos {
         //------------- END DEBUG
 
 
-        if (FadeEffect.bActive) {
-            FadeEffect.draw(ctx);
-        }
+        // if (FadeEffect.bActive) {
+        //     FadeEffect.draw(ctx);
+        // }
     }
 }

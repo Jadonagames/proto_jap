@@ -31,6 +31,7 @@ class Button {
         }
 
         this.id = pId;
+        this.idType = -1;
 
         this.startPos = { x: pX, y: pY };
         this.destination = { x: 0, y: 0 };
@@ -116,6 +117,10 @@ class Button {
         this.sound = "click";
 
         Button.list.push(this);
+    }
+
+    setIdType(pId) {
+        this.idType = pId;
     }
 
     setIdTest(pId) {
@@ -268,7 +273,7 @@ class Button {
 
     static resetTypeState(pType, pTypeState, pTypeState2 = -1) {
         Button.currentList = Button.list.filter(b => {
-            return (b.type == pType && b.typeState == pTypeState) || b.type == pType && b.typeState == pTypeState2;
+            return (b.type == pType && b.typeState == pTypeState) || (b.type == pType && b.typeState == pTypeState2) || b.type == "all";
         });
     }
 
@@ -282,6 +287,17 @@ class Button {
         this.sp.getSprite().addAnimation("down", { x: pCoord.x + (this.width * 2), y: pCoord.y });
         if (this.bInactiveAnimation) {
             this.sp.getSprite().addAnimation("inactive", { x: pCoord.x + (this.width * 3), y: pCoord.y });
+        }
+
+        this.sp.getSprite().changeAnimation("normal");
+    }
+
+    setAnimatedBtnAnimations(pCoord, pNbFrames, pSpeed) {
+        this.sp.getSprite().addAnimation("normal", { x: pCoord.x, y: pCoord.y }, pNbFrames, pSpeed);
+        this.sp.getSprite().addAnimation("hover", { x: pCoord.x, y: pCoord.y + this.height }, pNbFrames, pSpeed);
+        this.sp.getSprite().addAnimation("down", { x: pCoord.x, y: pCoord.y + (this.height * 2) }, pNbFrames, pSpeed);
+        if (this.bInactiveAnimation) {
+            // this.sp.getSprite().addAnimation("inactive", { x: pCoord.x + (this.width * 3), y: pCoord.y }, pNbFrames);
         }
 
         this.sp.getSprite().changeAnimation("normal");
@@ -573,7 +589,8 @@ class Button {
         }
 
         ctx.font = this.fontSize + "px " + this.font;
-        ctx.shadowOffsetY = 2;
+        // ctx.shadowOffsetY = 2;
+        ctx.shadowOffsetY = currentScale;
 
         switch (this.alignText) {
             case this.ALIGN_TEXT.Left:

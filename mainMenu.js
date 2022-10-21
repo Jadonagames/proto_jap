@@ -30,8 +30,17 @@ class MainMenu {
 
     static init() {
 
-        let sizeBtn = new Button({ w: 22, h: 22, v: 8 }, CANVAS_WIDTH - 60, 20, null, toggleCanvasSize, "mainmenu", MainMenu.STATE.Main, "", 4);
-        MainMenu.mainList.push(sizeBtn.getSprite());
+        Sound.list["maintheme"].audioPlay();
+
+        // let sizeBtn = new Button({ w: 22, h: 22, v: 8 }, CANVAS_WIDTH - 60, 10, null, {cb: toggleCanvasSize, arg: true}, "mainmenu", MainMenu.STATE.Main, "", 4);
+        // MainMenu.mainList.push(sizeBtn.getSprite());
+
+        // let sizeBtn2 = new Button({ w: 22, h: 22, v: 8 }, CANVAS_WIDTH - 60, 35, null, {cb: toggleCanvasSize, arg: false}, "mainmenu", MainMenu.STATE.Main, "", 4);
+        // MainMenu.mainList.push(sizeBtn2.getSprite());
+
+        // let fullscreenBtn = new Button({ w: 23, h: 22 }, CANVAS_WIDTH - 60, 60, null, toggleFullScreen, "mainmenu", MainMenu.STATE.Main, "", 0, true);
+        // fullscreenBtn.setAnimations({x: 1344, y: 32});
+        // MainMenu.mainList.push(fullscreenBtn.getSprite());
 
         // this.hira = "|あ|い|う|え|お|か|き|く|け|こ|さ|し|す|せ|そ|た|ち|つ|て|と|な|に|ぬ|ね|の|は|ひ|ふ|へ|ほ|ま|み|む|め|も|や|ゆ|よ|ら|り|る|れ|ろ|わ|を|ん|";
         // this.hira2 = "|が|ぎ|ぐ|げ|ご|ざ|じ|ず|ぜ|ぞ|だ|ぢ|づ|で|ど|ば|び|ぶ|べ|ぼ|ぱ|ぴ|ぷ|ぺ|ぽ|";
@@ -200,6 +209,16 @@ class MainMenu {
         lessonsBtn.setCanMove(true);
         lessonsBtn.setMovingSpeed(0.6);
         MainMenu.mainList.push(lessonsBtn.getSprite());
+
+
+        // let testtoastPanel = new ToastPanel({ w: 450, h: 20, v: 1 }, 0, CANVAS_HEIGHT, null, "mainmenu", MainMenu.STATE.Main, "toast", 0);
+        // testtoastPanel.setTextOverflow(true);
+        // testtoastPanel.setFontColor(BLACK_COLOR_0, WHITE_COLOR);
+        // testtoastPanel.setDestination({ x: 0, y: CANVAS_HEIGHT - 20 });
+        // testtoastPanel.setCanMove(true);
+        // testtoastPanel.setMovingSpeed(0.2);
+        // MainMenu.mainList.push(testtoastPanel.getSprite());
+
 
         let leftLessonsSprite = new Sprite({ w: 20, h: 20 }, 112, 0, lessonsBtn);
         leftLessonsSprite.addAnimation("normal", { x: 704, y: 832 }, 9, [0.3, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.4]);
@@ -486,6 +505,9 @@ class MainMenu {
         if (pParam.bool) {
             Button.currentList.forEach(b => {
                 b.setState(Button.STATE.Inactive);
+                if (b.bInactiveAnimation) {
+                    b.getSprite().changeAnimation("inactive");
+                }
             });
             Panel.currentList.forEach(p => {
                 p.setState(Panel.STATE.Inactive);
@@ -579,6 +601,9 @@ class MainMenu {
 
             Button.currentList.forEach(b => {
                 b.setState(Button.STATE.Normal);
+                if (b.bInactiveAnimation) {
+                    b.getSprite().changeAnimation("normal");
+                }
             });
             Panel.currentList.forEach(p => {
                 p.setState(Panel.STATE.Normal);
@@ -622,11 +647,11 @@ class MainMenu {
             }
         });
 
-        Button.currentList.forEach(b => {
-            if (b.bMoving) {
-                b.update(dt);
-            }
-        });
+        // Button.currentList.forEach(b => {
+        //     if (b.bMoving) {
+        //         b.update(dt);
+        //     }
+        // });
 
         Panel.currentList.forEach(p => {
             p.update(dt)
@@ -695,27 +720,24 @@ class MainMenu {
         /**
          * DEBUG
          */
-        if (bStatsDebug) {
-            ctx.fillStyle = WHITE_COLOR;
-            ctx.font = "16px pgfont";
-            ctx.fillText("ButtonList : " + Button.list.length, 0, 120);
-            ctx.fillText("ButtonCurrent : " + Button.currentList.length, 0, 130);
-            ctx.fillText("MainMenuList : " + MainMenu.mainList.length, 0, 140);
-            ctx.fillText("BGSPRITE List : " + MainMenu.randomKanaSpriteList.length, 0, 300);
-        }
+        // if (bStatsDebug) {
+        //     ctx.fillStyle = WHITE_COLOR;
+        //     ctx.font = "16px pgfont";
+        //     // ctx.fillText("ButtonList : " + Button.list.length, 0, 120);
+        //     // ctx.fillText("ButtonCurrent : " + Button.currentList.length, 0, 130);
+        //     // ctx.fillText("MainMenuList : " + MainMenu.mainList.length, 0, 140);
+        //     // ctx.fillText("BGSPRITE List : " + MainMenu.randomKanaSpriteList.length, 0, 300);
+        //     ctx.fillText("PanelList : " + Panel.list.length, 0, 120);
+        //     ctx.fillText("PanelCurrent : " + Panel.currentList.length, 0, 130);
+        //     ctx.fillText("MAIN_SPRITE : " + MAIN_SPRITE_LIST.length, 0, 140);
+        //     // ctx.fillText("MainMenuList : " + MainMenu.mainList.length, 0, 140);
+        //     // ctx.fillText("BGSPRITE List : " + MainMenu.randomKanaSpriteList.length, 0, 300);
+        // }
         //------------- END DEBUG
 
         ctx.fillStyle = WHITE_COLOR;
         ctx.font = "10px jpfont";
         ctx.fillText("Version: 0.1", CANVAS_WIDTH - 66, CANVAS_HEIGHT - 4);
-
-        if (FadeEffect.bActive) {
-            FadeEffect.draw(ctx);
-        }
-
-        if (Transition.bActive) {
-            Transition.draw(ctx);
-        }
     }
 
     static particles(pX, pY) {

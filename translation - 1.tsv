@@ -198,6 +198,15 @@ Katakana	Katakana	Katakana	カタカナ
 a_Hiragana	あ Hiragana	あ Hiragana	あ Hiragana
 a_Katakana	ア Katakana	ア Katakana	ア Katakana
 Kanji	Kanji	Kanji	漢字
+			
+SCALE_1	450x300	450x300	450x300
+SCALE_2	900x600	900x600	900x600
+SCALE_3	1350x900	1350x900	1350x900
+SCALE_4	1800x1200	1800x1200	1800x1200
+SCALE_5	2250x1500	2250x1500	2250x1500
+SCALE_6	2700x1800	2700x1800	2700x1800
+SCALE_7	3150x2100	3150x2100	3150x2100
+			
 text1			
 text2			
 text3			
@@ -722,3 +731,12 @@ kata_fa	ファ fa	ファ fa	ファ fa
 kata_fi	フィ fi	フィ fi	フィ fi
 kata_fe	フェ fe	フェ fe	フェ fe
 kata_fo	フォ fo	フォ fo	フォ fo
+			
+Cut	Cut	Couper	
+Copy	Copy	Copier	
+Paste	Paste	Coller	
+Properties	Properties	Propriétés	
+Delete	Delete	Supprimer	
+Rename	Rename	Renommer	
+Open	Open	Ouvrir	
+NewTxt	New text	Nouveau texte	

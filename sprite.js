@@ -82,20 +82,87 @@ class Sprite {
         if (this.type == "kana") {
             Sprite.kanaList.push(this);
             this.active = false;
-            this.imageData = [];
-            this.imageDataOrigin = [];
 
+            this.imageData = [];
+            for (let i = 0; i < 8; i++) {
+                if (i == 0) {
+                    this.imageData.push({});
+                } else {
+                    this.imageData.push({
+                        origin: [],
+                        current: null,
+                        currentIndex: 0
+                    });
+                }
+            }
+
+
+            
+            this.imageDataOrigin = [];
             this.imageDataCurrent = null;
             this.currentImageDataIndex = 0;
+            
+            this.imageDataOrigin2 = [];
+            this.imageDataCurrent2 = null;
+            this.currentImageDataIndex2 = 0;
+
             this.step = 1;
             this.color = 0;
-
             this.stepTimer = new Timer(0, this.updateStep.bind(this));
-
             this.strokeNumber = 1;
             this.kanaToDelete = false;
         }
     }
+
+    setImageDataOrigin(pKanaCode, pFrameIndex, pMaxStep) {
+        for (let i = 1; i <= 7; i++) {
+            this.imageData[i].origin.push({
+                imageData: KANA[pKanaCode].imageData[i][pFrameIndex],
+                maxStep: pMaxStep
+            });
+
+            if (this.imageData[i].current == null) {
+                this.imageData[i].current = {};
+                this.imageData[i].current.imageData = ctx.createImageData(this.imageData[i].origin[0].imageData);
+                for (let j = 0; j < this.imageData[i].origin[0].imageData.data.length; j++) {
+                    this.imageData[i].current.imageData.data[j] = this.imageData[i].origin[0].imageData.data[j];
+                }
+                this.imageData[i].current.maxStep = this.imageData[i].origin[0].maxStep;
+            } 
+        }
+    }
+
+
+    // setImageDataOrigin(pImageData, pImageData2, pMaxStep) {
+
+        // log("setimage")
+
+        // this.imageDataOrigin.push({
+        //     imageData: pImageData,
+        //     maxStep: pMaxStep
+        // })
+        // if (this.imageDataCurrent == null) {
+        //     this.imageDataCurrent = {};
+        //     this.imageDataCurrent.imageData = ctx.createImageData(this.imageDataOrigin[0].imageData);
+        //     for (let i = 0; i < this.imageDataOrigin[0].imageData.data.length; i++) {
+        //         this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[0].imageData.data[i];
+        //     }
+        //     this.imageDataCurrent.maxStep = this.imageDataOrigin[0].maxStep;
+        // }
+
+        // this.imageDataOrigin2.push({
+        //     imageData: pImageData2,
+        //     maxStep: pMaxStep
+        // })
+        // if (this.imageDataCurrent2 == null) {
+        //     this.imageDataCurrent2 = {};
+        //     this.imageDataCurrent2.imageData = ctx.createImageData(this.imageDataOrigin2[0].imageData);
+        //     for (let i = 0; i < this.imageDataOrigin2[0].imageData.data.length; i++) {
+        //         this.imageDataCurrent2.imageData.data[i] = this.imageDataOrigin2[0].imageData.data[i];
+        //     }
+        //     this.imageDataCurrent2.maxStep = this.imageDataOrigin2[0].maxStep;
+        // }
+    // }
 
     setIdTest(pId) {
         this.id_test = pId;
@@ -281,6 +348,9 @@ class Sprite {
             } else {
                 this.timer.setMax(this.currentAnimation.speed);
             }
+            // if (this.id_test == 2) {
+            //     log(this);
+            // }
             this.timer.update(dt);
             if (this.bBlinking) {
                 this.blinkTimer.update(dt);
@@ -458,31 +528,12 @@ class Sprite {
         // this.blinkTimer.
     }
 
-    blinking() {
-
-    }
-
     setAlpha(pNewValue) {
         this.alpha = pNewValue;
     }
 
     updateAlpha(pNewValue) {
         this.alpha += pNewValue;
-    }
-
-    setImageDataOrigin(pImageData, pMaxStep) {
-        this.imageDataOrigin.push({
-            imageData: pImageData,
-            maxStep: pMaxStep
-        })
-        if (this.imageDataCurrent == null) {
-            this.imageDataCurrent = {};
-            this.imageDataCurrent.imageData = ctx.createImageData(this.imageDataOrigin[0].imageData);
-            for (let i = 0; i < this.imageDataOrigin[0].imageData.data.length; i++) {
-                this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[0].imageData.data[i];
-            }
-            this.imageDataCurrent.maxStep = this.imageDataOrigin[0].maxStep;
-        }
     }
 
     updateKana(dt) {
@@ -492,28 +543,74 @@ class Sprite {
 
     updateStep() {
         this.step++;
-        if (this.step > this.imageDataCurrent.maxStep) {
+        
+        if (this.step > this.imageData[currentScale].current.maxStep) {
             this.step = 1;
             this.strokeNumber++;
-            this.currentImageDataIndex++;
-            if (this.currentImageDataIndex < this.imageDataOrigin.length) {
-                for (let i = 0; i < this.imageDataOrigin[this.currentImageDataIndex].imageData.data.length; i++) {
-                    this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[this.currentImageDataIndex].imageData.data[i];
+            this.imageData[currentScale].currentIndex++;
+            if (this.imageData[currentScale].currentIndex < this.imageData[currentScale].origin.length) {
+                for (let i = 0; i < this.imageData[currentScale].origin[this.imageData[currentScale].currentIndex].imageData.data.length; i++) {
+                    this.imageData[currentScale].current.imageData.data[i] = this.imageData[currentScale].origin[this.imageData[currentScale].currentIndex].imageData.data[i];
                 }
-                this.imageDataCurrent.maxStep = this.imageDataOrigin[this.currentImageDataIndex].maxStep;
+                this.imageData[currentScale].current.maxStep = this.imageData[currentScale].origin[this.imageData[currentScale].currentIndex].maxStep;
             } else {
                 this.resetKana();
             }
         }
+        
+        // this.step++;
+        // if (SCALE_X == 2) {
+        //     if (this.step > this.imageDataCurrent.maxStep) {
+        //         this.step = 1;
+        //         this.strokeNumber++;
+        //         this.currentImageDataIndex++;
+        //         if (this.currentImageDataIndex < this.imageDataOrigin.length) {
+        //             for (let i = 0; i < this.imageDataOrigin[this.currentImageDataIndex].imageData.data.length; i++) {
+        //                 this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[this.currentImageDataIndex].imageData.data[i];
+        //             }
+        //             this.imageDataCurrent.maxStep = this.imageDataOrigin[this.currentImageDataIndex].maxStep;
+        //         } else {
+        //             this.resetKana();
+        //         }
+        //     }
+        // } else {
+        //     if (this.step > this.imageDataCurrent2.maxStep) {
+        //         this.step = 1;
+        //         this.strokeNumber++;
+        //         this.currentImageDataIndex2++;
+        //         if (this.currentImageDataIndex2 < this.imageDataOrigin2.length) {
+        //             for (let i = 0; i < this.imageDataOrigin2[this.currentImageDataIndex2].imageData.data.length; i++) {
+        //                 this.imageDataCurrent2.imageData.data[i] = this.imageDataOrigin2[this.currentImageDataIndex2].imageData.data[i];
+        //             }
+        //             this.imageDataCurrent2.maxStep = this.imageDataOrigin2[this.currentImageDataIndex2].maxStep;
+        //         } else {
+        //             this.resetKana();
+        //         }
+        //     }
+        // }
     }
 
-    resetKana() {
+    resetKana(pNb = 1) {
         this.strokeNumber = 1;
-        this.currentImageDataIndex = 0;
-        for (let i = 0; i < this.imageDataOrigin[0].imageData.data.length; i++) {
-            this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[0].imageData.data[i];
+        this.imageData[currentScale].currentIndex = 0;
+        for (let j = 0; j < this.imageData[currentScale].origin[0].imageData.data.length; j++) {
+            this.imageData[currentScale].current.imageData.data[j] = this.imageData[currentScale].origin[0].imageData.data[j];
         }
-        this.imageDataCurrent.maxStep = this.imageDataOrigin[0].maxStep;
+        this.imageData[currentScale].current.maxStep = this.imageData[currentScale].origin[0].maxStep;
+
+        // this.strokeNumber = 1;
+        // this.currentImageDataIndex = 0;
+        // for (let i = 0; i < this.imageDataOrigin[0].imageData.data.length; i++) {
+        //     this.imageDataCurrent.imageData.data[i] = this.imageDataOrigin[0].imageData.data[i];
+        // }
+        // this.imageDataCurrent.maxStep = this.imageDataOrigin[0].maxStep;
+
+        // this.strokeNumber = 1;
+        // this.currentImageDataIndex2 = 0;
+        // for (let i = 0; i < this.imageDataOrigin2[0].imageData.data.length; i++) {
+        //     this.imageDataCurrent2.imageData.data[i] = this.imageDataOrigin2[0].imageData.data[i];
+        // }
+        // this.imageDataCurrent2.maxStep = this.imageDataOrigin2[0].maxStep;
     }
 
     static manageBeforeUpdating(pList, dt) {
@@ -589,18 +686,20 @@ class Sprite {
                 //           (SS, ox, oy,                             frameWidth, frameHeight, x,      y,      scaleX,                    scaleY)
             } else {
                 // TODO trouver un moyen pour le faire qu'une fois par frame ! MAIS AVANT le putImageData !
-                for (let i = 0; i < this.imageDataCurrent.imageData.data.length; i += 4) {
-                    if (this.step == this.imageDataCurrent.maxStep) {
-                        if (this.imageDataCurrent.imageData.data[i] == 255) {
-                            this.imageDataCurrent.imageData.data[i] = 69;
-                            this.imageDataCurrent.imageData.data[i + 1] = 40;
-                            this.imageDataCurrent.imageData.data[i + 2] = 60;
+
+
+                for (let i = 0; i < this.imageData[currentScale].current.imageData.data.length; i += 4) {
+                    if (this.step == this.imageData[currentScale].current.maxStep) {
+                        if (this.imageData[currentScale].current.imageData.data[i] == 255) {
+                            this.imageData[currentScale].current.imageData.data[i] = 69;
+                            this.imageData[currentScale].current.imageData.data[i + 1] = 40;
+                            this.imageData[currentScale].current.imageData.data[i + 2] = 60;
                         }
                     } else {
-                        if (this.imageDataCurrent.imageData.data[i] == (this.color + this.step)) {
-                            this.imageDataCurrent.imageData.data[i] = 255;
-                            this.imageDataCurrent.imageData.data[i + 1] = 0;
-                            this.imageDataCurrent.imageData.data[i + 2] = 0;
+                        if (this.imageData[currentScale].current.imageData.data[i] == (this.color + this.step)) {
+                            this.imageData[currentScale].current.imageData.data[i] = 255;
+                            this.imageData[currentScale].current.imageData.data[i + 1] = 0;
+                            this.imageData[currentScale].current.imageData.data[i + 2] = 0;
                         }
                     }
                 }
@@ -610,7 +709,58 @@ class Sprite {
                 if (this.x + this.width < 0) this.x += CANVAS_WIDTH;
                 if (this.y + this.height < 0) this.y += CANVAS_HEIGHT;
 
-                ctx.putImageData(this.imageDataCurrent.imageData, this.x * SCALE_X, this.y * SCALE_Y);
+                ctx.putImageData(this.imageData[currentScale].current.imageData, this.x * SCALE_X, this.y * SCALE_Y);
+
+
+                // if (SCALE_X == 2) {
+                //     for (let i = 0; i < this.imageDataCurrent.imageData.data.length; i += 4) {
+                //         if (this.step == this.imageDataCurrent.maxStep) {
+                //             if (this.imageDataCurrent.imageData.data[i] == 255) {
+                //                 this.imageDataCurrent.imageData.data[i] = 69;
+                //                 this.imageDataCurrent.imageData.data[i + 1] = 40;
+                //                 this.imageDataCurrent.imageData.data[i + 2] = 60;
+                //             }
+                //         } else {
+                //             if (this.imageDataCurrent.imageData.data[i] == (this.color + this.step)) {
+                //                 this.imageDataCurrent.imageData.data[i] = 255;
+                //                 this.imageDataCurrent.imageData.data[i + 1] = 0;
+                //                 this.imageDataCurrent.imageData.data[i + 2] = 0;
+                //             }
+                //         }
+                //     }
+    
+                //     if (this.x > CANVAS_WIDTH) this.x -= CANVAS_WIDTH;
+                //     if (this.y > CANVAS_HEIGHT) this.y -= CANVAS_HEIGHT;
+                //     if (this.x + this.width < 0) this.x += CANVAS_WIDTH;
+                //     if (this.y + this.height < 0) this.y += CANVAS_HEIGHT;
+    
+                //     ctx.putImageData(this.imageDataCurrent.imageData, this.x * SCALE_X, this.y * SCALE_Y);
+
+                // } else {
+                //     for (let i = 0; i < this.imageDataCurrent2.imageData.data.length; i += 4) {
+                //         if (this.step == this.imageDataCurrent2.maxStep) {
+                //             if (this.imageDataCurrent2.imageData.data[i] == 255) {
+                //                 this.imageDataCurrent2.imageData.data[i] = 69;
+                //                 this.imageDataCurrent2.imageData.data[i + 1] = 40;
+                //                 this.imageDataCurrent2.imageData.data[i + 2] = 60;
+                //             }
+                //         } else {
+                //             if (this.imageDataCurrent2.imageData.data[i] == (this.color + this.step)) {
+                //                 this.imageDataCurrent2.imageData.data[i] = 255;
+                //                 this.imageDataCurrent2.imageData.data[i + 1] = 0;
+                //                 this.imageDataCurrent2.imageData.data[i + 2] = 0;
+                //             }
+                //         }
+                //     }
+    
+                //     if (this.x > CANVAS_WIDTH) this.x -= CANVAS_WIDTH;
+                //     if (this.y > CANVAS_HEIGHT) this.y -= CANVAS_HEIGHT;
+                //     if (this.x + this.width < 0) this.x += CANVAS_WIDTH;
+                //     if (this.y + this.height < 0) this.y += CANVAS_HEIGHT;
+    
+                //     ctx.putImageData(this.imageDataCurrent2.imageData, this.x * SCALE_X, this.y * SCALE_Y);
+                // }
+
                 ctx.font = "10px jpfont";
                 ctx.textAlign = "center";
                 ctx.fillStyle = RED_COLOR;

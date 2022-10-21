@@ -397,9 +397,9 @@ class FreeMode {
                 break;
         }
 
-        if (FadeEffect.bActive) {
-            FadeEffect.draw(ctx);
-        }
+        // if (FadeEffect.bActive) {
+        //     FadeEffect.draw(ctx);
+        // }
 
         if (Transition.bActive) {
             Transition.draw(ctx);

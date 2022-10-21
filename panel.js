@@ -453,8 +453,8 @@ class Panel {
     }
 
     static resetTypeState(pType, pTypeState) {
-        Panel.currentList = Panel.list.filter(b => {
-            return b.type == pType && b.typeState == pTypeState;
+        Panel.currentList = Panel.list.filter(p => {
+            return p.type == pType && p.typeState == pTypeState || p.type == "all";
         });
     }
 
@@ -923,7 +923,13 @@ class Panel {
         if (this.fontSize == 32) { // pgfont *2
             ctx.shadowOffsetY = 4;
         } else { // normal
-            ctx.shadowOffsetY = 2; 
+            ctx.shadowOffsetY = currentScale;
+
+            // if (SCALE_X == 3 || SCALE_X == 4) {
+            //     ctx.shadowOffsetY = 3;
+            // } else {
+            //     ctx.shadowOffsetY = 2;
+            // }
         }
 
         ctx.fillStyle = this.fontMainColor;

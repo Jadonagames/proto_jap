@@ -26,8 +26,7 @@ class LessonTutorial {
 
         LessonTutorial.bInit = true;
 
-        this.lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), centerY(22), null, { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, "lessonTutorial", LessonTutorial.STATE.Main, "Lessons", 4);
-        this.lessonsBtn.setFontColor(RED_BTN_SDW_COLOR);
+        this.lessonBtn = null;
 
         this.dialogPanel = new DialogPanel({ w: 220, h: 70, v: 6 }, centerX(220), CANVAS_HEIGHT + 50, null, "lessonTutorial", LessonTutorial.STATE.Main, ["lesson_text_", 16, true], 7);
         this.dialogPanel.setOffsets(12, 18);
@@ -254,6 +253,9 @@ class LessonTutorial {
         if (SaveManager.SAVE_DATA["prologue"] == 0) { //? Pour savoir si c'est la première fois qu'on fait le lessonTutorial ou pas
             SaveManager.save([{ type: "prologue", value: 1 }]);
         }
+        this.lessonsBtn = new Button({ w: 110, h: 22, v: 8 }, centerX(110), centerY(22), null, { cb: changeMainState, arg: { state: MAIN_STATE.Lessons, from: "mainmenu" } }, "lessonTutorial", LessonTutorial.STATE.Main, "Lessons", 4);
+        this.lessonsBtn.setFontColor(RED_BTN_SDW_COLOR);
+        Button.currentList.push(this.lessonsBtn);
         LessonTutorial.mainList.push(this.lessonsBtn.getSprite());
     }
 
@@ -299,8 +301,8 @@ class LessonTutorial {
          */
         //------------- END DEBUG
 
-        if (FadeEffect.bActive) {
-            FadeEffect.draw(ctx);
-        }
+        // if (FadeEffect.bActive) {
+        //     FadeEffect.draw(ctx);
+        // }
     }
 }

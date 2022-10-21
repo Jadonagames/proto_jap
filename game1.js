@@ -42,8 +42,6 @@ class Game1 {
 
     static init(pType) {
 
-        console.log("Game1 init()");
-
         // Game1.mainList = [];
 
         Game1.bGameInitialized = true;
@@ -309,13 +307,13 @@ class Game1 {
                 }
                 Game1.bAlreadyMissed = true;
                 this.setMiss();
-                setScreenShake(true, 0, 0);
-                this.timerMissedSprite = new Sprite({ w: 19, h: 22 }, centerX(19), this.kanaPanel.y - 30);
-                this.timerMissedSprite.addAnimation("normal", { x: 656, y: 944 }, 4, 0.2, false);
-                this.timerMissedSprite.changeAnimation("normal");
-                Game1.mainList.push(this.timerMissedSprite);
-
+                
             }
+            setScreenShake(true, 0, 0);
+            this.timerMissedSprite = new Sprite({ w: 19, h: 22 }, centerX(19), this.kanaPanel.y - 30);
+            this.timerMissedSprite.addAnimation("normal", { x: 656, y: 944 }, 4, 0.2, false);
+            this.timerMissedSprite.changeAnimation("normal");
+            Game1.mainList.push(this.timerMissedSprite);
         }
     }
 
@@ -875,6 +873,7 @@ class Game1 {
 
     static setMiss(pArg = 1) {
         if (pArg == 1) {
+            Sound.list["batsu"].audioPlay();
             this.misses++;
             this.missPanel.setLabel(this.misses);
             if (this.misses == 1) {

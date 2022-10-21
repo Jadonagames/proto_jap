@@ -571,6 +571,7 @@ class Login {
 
         switch (Login.currentState) {
             case Login.STATE.Main:
+                // log("main")
                 Sprite.manageBeforeUpdating(Login.list, dt);
                 Login.list = Login.list.filter(sp => {
                     return !sp.delete;
@@ -643,6 +644,7 @@ class Login {
             case Login.STATE.Login:
 
                 if (!Login.bConnectionSucceed) {
+                    // log("! connection succeed")
                     if (Login.loginNameEntry.label.length >= 6 && Login.loginPassEntry.label.length >= 6 &&
                         Login.loginNameEntry.label.length <= 20 && Login.loginPassEntry.label.length <= 20) {
                         if (Login.loginSubmitBtn.getState() == Button.STATE.Inactive && !Login.bLoading) {
@@ -763,9 +765,9 @@ class Login {
         ctx.textAlign = "left";
         ctx.fillStyle = BLACK_COLOR;
 
-        if (FadeEffect.bActive) {
-            FadeEffect.draw(ctx);
-        }
+        // if (FadeEffect.bActive) {
+        //     FadeEffect.draw(ctx);
+        // }
     }
 
 }

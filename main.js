@@ -3,16 +3,71 @@ let canvas = document.getElementById("canvas");
 canvas.style.fontKerning = "none";
 canvas.style.textRendering = "optimizeSpeed";
 canvas.style.letterSpacing = 0;
-let ctx0 = canvas.getContext("2d");
+let ctx0 = canvas.getContext("2d", {willReadFrequently: true});
 const ctx = canvas.getContext("2d");
 let checkAssetsInterval = setInterval(checkAssetsLoading, 1000 / 60);
 let interval;
 // let lastUpdate = Date.now();
 let lastUpdate = 0;
-let SCALE_X = 2;
-let SCALE_Y = 2;
+
+const SCALE = Object.freeze({
+    STATE_1: 1, //? 450x300
+    STATE_2: 2, //? 900x600
+    STATE_3: 3, //? 1350x900
+    STATE_4: 4, //? 1800x1200
+    STATE_5: 5, //? 2250x1500
+    STATE_6: 6, //? 2700x1800
+    STATE_7: 7  //? 3150x2100
+});
+const scaleList = [{}];
+let offWidth = 450;
+let offHeight = 300;
+let offSpeed = 0;
+let offCanvasY = 0;
+for (let i = 1; i <= 7; i++) {
+    scaleList[i] = ({
+        speed: 25 + offSpeed,
+        canvasY: -300 + offCanvasY,
+        width: offWidth,
+        height: offHeight
+    });
+    offSpeed += 25;
+    offCanvasY -= 300;
+    offWidth += 450;
+    offHeight += 300;
+}
+
+let currentScale = SCALE.STATE_2; //! AZE
+
+let windowWidth = window.innerWidth;
+
+if (windowWidth < 900) {
+    currentScale = SCALE.STATE_1;
+} else if (windowWidth < 1350) {
+    currentScale = SCALE.STATE_2;
+} else if (windowWidth <= 1920) {
+    currentScale = SCALE.STATE_3;
+} else if (windowWidth < 2250) {
+    currentScale = SCALE.STATE_4;
+} else if (windowWidth < 2700) {
+    currentScale = SCALE.STATE_5;
+} else if (windowWidth < 3150) {
+    currentScale = SCALE.STATE_6;
+} else {
+    currentScale = SCALE.STATE_7;
+}
+
+let SCALE_X = currentScale;
+let SCALE_Y = currentScale;
+
+canvas.width = scaleList[currentScale].width;
+canvas.height = scaleList[currentScale].height;
+
 let CANVAS_WIDTH = canvas.width / SCALE_X;
 let CANVAS_HEIGHT = canvas.height / SCALE_Y;
+let FULLSCREEN = false;
+// let CANVAS_SIZE
+// canvas.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
 
 const BLACK_COLOR = "rgba(0,0,0,1)";
 const BLACK_COLOR_0 = "rgba(0,0,0,0)";
@@ -68,6 +123,44 @@ let SCREEN_SHAKE_RED = true;
 let screenShakeTimer = new Timer(0.1, { cb: setScreenShake, arg: false });
 let SAVING = false;
 let SAVING_SPRITE = null;
+
+//? SETTINGS ---------------
+let SETTINGS = false;
+let MAIN_SPRITE_LIST = [];
+let BG;
+let SETTINGS_PANEL;
+let SETTINGS_BTN;
+let RESOLUTION_BTN;
+
+let MUSIC_SPEAKER;
+let SFX_SPEAKER;
+let MUSIC_SPRITE;
+let SFX_SPRITE;
+let MUSIC_DOWN_BTN;
+let MUSIC_UP_BTN;
+let SFX_DOWN_BTN;
+let SFX_UP_BTN;
+
+let CLOSE_SETTINGS_BTN;
+let FULLSCREEN_BTN;
+let SETTINGS_PANEL_DATA = {
+    x: 110,
+    y: 0,
+    w: 231,
+    h: 56
+}
+
+let RESOLUTION_SETTINGS = false;
+let RESOLUTION_PANEL;
+let RESOLUTION_ANIM;
+let RESOLUTION_PANEL_DATA = {
+    x: 146,
+    y: 84,
+    w: 161,
+    h: 121
+}
+//? ---------------------------
+
 let MOUSE_SPRITE = new Sprite({ w: 8, h: 9 }, centerX(8), centerY(8));
 MOUSE_SPRITE.addAnimation("normal", { x: 114, y: 34 });
 MOUSE_SPRITE.addAnimation("hover", { x: 124, y: 34 });
@@ -114,13 +207,20 @@ let USER = {
 //!------------
 
 
+
+//TODO
+
+//! Gestion taille écran au démarrage
+// toast(window.innerWidth);
+
+
 /**
  * DEBUG
  */
 let log = console.log.bind(console);
 let titleSpeed = 0.2; // 0.2 - 2
 
-let bStatsDebug = false;
+let bStatsDebug = 1;
 let debugDt = 0;
 let debug_STOP = false;
 let shortcut_tomainmenu = 1; //! ------ ------------------------------------
@@ -154,7 +254,7 @@ let mainState = 0;
 if (shortcut_tomainmenu) {
     API_Login("aaaaaa","aaaaaa");
     mainState = MAIN_STATE.Menu;
-    USER.name = "aaaaaa";
+    USER.name = "username";
 } else {
     // mainState = MAIN_STATE.Language;
     mainState = MAIN_STATE.Load;
@@ -181,6 +281,20 @@ function init() {
     ctx.msImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
     // ctx.mozImageSmoothingEnabled = false;
+
+    // ARROWS = new Sprite({w: 450, h: 300}, 0, 0, null);
+    // ARROWS.addAnimation("normal", {x: 1152, y: 944});
+    // ARROWS.changeAnimation("normal");
+    // MAIN_SPRITE_LIST.push(ARROWS.getSprite());
+
+    SETTINGS_BTN = new Button({ w: 26, h: 26 }, CANVAS_WIDTH - 26, 0, null, {cb: openSettings, arg: "SETTINGS"}, "all", "",   "", 0, true);
+    SETTINGS_BTN.setInactiveAnimation();
+    SETTINGS_BTN.setAnimations({ x: 1344, y: 80});
+    SETTINGS_BTN.getSprite().setIdTest("S");
+    SETTINGS_BTN.setIdTest("S");
+    //? Button added to currentList in toMainMenu()
+    MAIN_SPRITE_LIST.push(SETTINGS_BTN.getSprite()); 
+
     if (shortcut_tomainmenu) {
         MainMenu.init();
         toMainMenu()
@@ -194,6 +308,240 @@ function init() {
     //! interval = setInterval(run, 1000 / 60);
 
     requestAnimationFrame(run);
+}
+
+function openSettings() {
+
+    let offsetY = 0;
+    if (mainState == MAIN_STATE.Lessons && Lessons.state == Lessons.STATE.Lesson) {
+        offsetY = CANVAS_HEIGHT;
+    }
+
+    SETTINGS = true;
+    SETTINGS_BTN.setState(Button.STATE.Inactive);
+    SETTINGS_BTN.getSprite().changeAnimation("inactive");
+    Button.currentList.forEach(b => {
+        if (b.type != "all") {
+            b.setState(Button.STATE.Inactive);
+        }
+    });
+
+    BG = new Sprite({ w: 1, h: 1 }, 0, 0 + offsetY, null, "normal", { x: CANVAS_WIDTH, y: CANVAS_HEIGHT });
+    BG.addAnimation("normal", { x: 38, y: 3 });
+    BG.changeAnimation("normal");
+    BG.setIdTest("BG");
+    BG.setAlpha(0);
+    BG.fade(0.01);
+    MAIN_SPRITE_LIST.push(BG);
+
+    SETTINGS_PANEL = new Panel({ w: 231, h: 56 }, centerX(230), -56 + offsetY, null, "all", 0, "", 0, true);
+    SETTINGS_PANEL.setIdTest("SETTINGS PANEL");
+    SETTINGS_PANEL.getSprite().addAnimation("normal", {x: 1696, y: 128});
+    SETTINGS_PANEL.getSprite().changeAnimation("normal");
+    SETTINGS_PANEL.setDestination({ x: centerX(230), y: 0 + offsetY});
+    SETTINGS_PANEL.setCanMove(true);
+    SETTINGS_PANEL.setMovingSpeed(0.2);
+    SETTINGS_PANEL.setMoving(true);
+    Panel.currentList.push(SETTINGS_PANEL);
+    MAIN_SPRITE_LIST.push(SETTINGS_PANEL.getSprite());
+
+    RESOLUTION_BTN = new Button({ w: 32, h: 30 }, 11, 8, SETTINGS_PANEL, {cb: openResolutionPanel, arg: ""}, "all", "", "", 0, true);
+    RESOLUTION_BTN.setIdTest("reso");
+    RESOLUTION_BTN.setAnimatedBtnAnimations({ x: 1472, y: 0}, 7, [0.2, 0.1, 0.15, 0.2, 0.1, 0.15, 0.4]);
+    RESOLUTION_BTN.getSprite().setIdTest("reso");
+    Button.currentList.push(RESOLUTION_BTN);
+    MAIN_SPRITE_LIST.push(RESOLUTION_BTN.getSprite());
+
+    MUSIC_SPEAKER = new Sprite({ w: 16, h: 14 }, 67, 5, SETTINGS_PANEL);
+    MUSIC_SPEAKER.setIdTest("bgm speaker");
+    MUSIC_SPEAKER.addAnimation("normal", { x: 203, y: 96 });
+    MUSIC_SPEAKER.addAnimation("mute", { x: 219, y: 96 });
+    if (MUSIC_VOLUME === 0) {
+        MUSIC_SPEAKER.changeAnimation("mute");
+    } else {
+        MUSIC_SPEAKER.changeAnimation("normal");
+    }
+    MAIN_SPRITE_LIST.push(MUSIC_SPEAKER.getSprite());
+
+    SFX_SPEAKER = new Sprite({ w: 16, h: 14 }, 67, 25, SETTINGS_PANEL);
+    SFX_SPEAKER.setIdTest("sfx speaker");
+    SFX_SPEAKER.addAnimation("normal", { x: 203, y: 96 });
+    SFX_SPEAKER.addAnimation("mute", { x: 219, y: 96 });
+    if (SFX_VOLUME === 0) {
+        SFX_SPEAKER.changeAnimation("mute");
+    } else {
+        SFX_SPEAKER.changeAnimation("normal");
+    }
+    MAIN_SPRITE_LIST.push(SFX_SPEAKER.getSprite());
+
+    MUSIC_SPRITE = new Sprite({ w: 60, h: 16 }, 108, 4, SETTINGS_PANEL);
+    MUSIC_SPRITE.setIdTest("bgm sp");
+    MUSIC_SPRITE.addAnimation("0", { x: 672, y: 768 });
+    MUSIC_SPRITE.addAnimation("1", { x: 672 + 60, y: 768 });
+    MUSIC_SPRITE.addAnimation("2", { x: 672 + 60 * 2, y: 768 });
+    MUSIC_SPRITE.addAnimation("3", { x: 672 + 60 * 3, y: 768 });
+    MUSIC_SPRITE.addAnimation("4", { x: 672 + 60 * 4, y: 768 });
+    MUSIC_SPRITE.addAnimation("5", { x: 672 + 60 * 5, y: 768 });
+    MUSIC_SPRITE.addAnimation("6", { x: 672 + 60 * 6, y: 768 });
+    MUSIC_SPRITE.addAnimation("7", { x: 672 + 60 * 7, y: 768 });
+    MUSIC_SPRITE.addAnimation("8", { x: 672 + 60 * 8, y: 768 });
+    MUSIC_SPRITE.addAnimation("9", { x: 672 + 60 * 9, y: 768 });
+    MUSIC_SPRITE.addAnimation("10", { x: 672 + 60 * 10, y: 768 });
+    MUSIC_SPRITE.changeAnimation(MUSIC_VOLUME * 10);
+    MAIN_SPRITE_LIST.push(MUSIC_SPRITE);
+
+    SFX_SPRITE = new Sprite({ w: 60, h: 16 }, 108, 24, SETTINGS_PANEL);
+    SFX_SPRITE.setIdTest("sfx sp");
+    SFX_SPRITE.addAnimation("0", { x: 672, y: 768 });
+    SFX_SPRITE.addAnimation("1", { x: 672 + 60, y: 768 });
+    SFX_SPRITE.addAnimation("2", { x: 672 + 60 * 2, y: 768 });
+    SFX_SPRITE.addAnimation("3", { x: 672 + 60 * 3, y: 768 });
+    SFX_SPRITE.addAnimation("4", { x: 672 + 60 * 4, y: 768 });
+    SFX_SPRITE.addAnimation("5", { x: 672 + 60 * 5, y: 768 });
+    SFX_SPRITE.addAnimation("6", { x: 672 + 60 * 6, y: 768 });
+    SFX_SPRITE.addAnimation("7", { x: 672 + 60 * 7, y: 768 });
+    SFX_SPRITE.addAnimation("8", { x: 672 + 60 * 8, y: 768 });
+    SFX_SPRITE.addAnimation("9", { x: 672 + 60 * 9, y: 768 });
+    SFX_SPRITE.addAnimation("10", { x: 672 + 60 * 10, y: 768 });
+    SFX_SPRITE.changeAnimation(SFX_VOLUME * 10);
+    MAIN_SPRITE_LIST.push(SFX_SPRITE);
+
+    MUSIC_DOWN_BTN = new Button({ w: 17, h: 17 }, 88, 4, SETTINGS_PANEL, Sound.decreaseMusicVolume, "all", "", "", 0, true);
+    MUSIC_DOWN_BTN.setIdTest("bgm down");
+    MUSIC_DOWN_BTN.setAnimations({ x: 0, y: 95 });
+    Button.currentList.push(MUSIC_DOWN_BTN);
+    MAIN_SPRITE_LIST.push(MUSIC_DOWN_BTN.getSprite());
+
+    MUSIC_UP_BTN = new Button({ w: 17, h: 17 }, 172, 4, SETTINGS_PANEL, Sound.increaseMusicVolume, "all", "", "", 0, true);
+    MUSIC_UP_BTN.setIdTest("bgm up");
+    MUSIC_UP_BTN.setAnimations({ x: 51, y: 95 });
+    Button.currentList.push(MUSIC_UP_BTN);
+    MAIN_SPRITE_LIST.push(MUSIC_UP_BTN.getSprite());
+
+    SFX_DOWN_BTN = new Button({ w: 17, h: 17 }, 88, 24, SETTINGS_PANEL, Sound.decreaseSfxVolume, "all", "", "", 0, true);
+    SFX_DOWN_BTN.setIdTest("sfx down");
+    SFX_DOWN_BTN.setAnimations({ x: 0, y: 95 });
+    Button.currentList.push(SFX_DOWN_BTN);
+    MAIN_SPRITE_LIST.push(SFX_DOWN_BTN.getSprite());
+
+    SFX_UP_BTN = new Button({ w: 17, h: 17 }, 172, 24, SETTINGS_PANEL, Sound.increaseSfxVolume, "all", "", "", 0, true);
+    SFX_UP_BTN.setIdTest("sfx up");
+    SFX_UP_BTN.setAnimations({ x: 51, y: 95 });
+    Button.currentList.push(SFX_UP_BTN);
+    MAIN_SPRITE_LIST.push(SFX_UP_BTN.getSprite());
+    
+    FULLSCREEN_BTN = new Button({ w: 23, h: 22 }, 198, 19, SETTINGS_PANEL, toggleFullScreen, "all", "", "", 0, true);
+    FULLSCREEN_BTN.setIdTest("fullscreen");
+    if (FULLSCREEN) {
+        FULLSCREEN_BTN.setAnimations({x: 1344, y: 54});
+    } else {
+        FULLSCREEN_BTN.setAnimations({x: 1344, y: 32});
+    }
+    Button.currentList.push(FULLSCREEN_BTN);
+    MAIN_SPRITE_LIST.push(FULLSCREEN_BTN.getSprite());
+
+    CLOSE_SETTINGS_BTN = new Button({ w: 25, h: 11}, 197, 0, SETTINGS_PANEL, {cb: closeSettings, arg: ""}, "all", "", "", 0, true);
+    CLOSE_SETTINGS_BTN.setIdTest("close");
+    CLOSE_SETTINGS_BTN.setAnimations({x: 1776, y: 96});
+    Button.currentList.push(CLOSE_SETTINGS_BTN);
+    MAIN_SPRITE_LIST.push(CLOSE_SETTINGS_BTN.getSprite());
+
+}
+
+function closeSettings() {
+    let offsetY = 0;
+    if (mainState == MAIN_STATE.Lessons && Lessons.state == Lessons.STATE.Lesson) {
+        offsetY = CANVAS_HEIGHT;
+    }
+
+    SETTINGS_PANEL.setMoveCB(SETTINGS_PANEL.delete.bind(SETTINGS_PANEL), "");
+    SETTINGS_PANEL.setStartPos({x: centerX(230), y: 0 + offsetY});
+    SETTINGS_PANEL.setDestination({x: centerX(230), y: -56 + offsetY});
+    SETTINGS_PANEL.setCanMove(true);
+    SETTINGS_PANEL.setMoving(true);
+    BG.delete = true;
+    MUSIC_SPEAKER.delete = true;
+    SFX_SPEAKER.delete = true;
+    MUSIC_SPRITE.delete = true;
+    SFX_SPRITE.delete = true;
+
+    SETTINGS_BTN.setState(Button.STATE.Normal);
+    SETTINGS_BTN.getSprite().changeAnimation("normal");
+    SETTINGS = false;
+    Button.currentList.forEach(b => {
+        b.setState(Button.STATE.Normal);
+    });
+}
+
+function openResolutionPanel() {
+
+    let offsetY = 0;
+    if (mainState == MAIN_STATE.Lessons && Lessons.state == Lessons.STATE.Lesson) {
+        offsetY = CANVAS_HEIGHT;
+    }
+
+    Button.currentList.forEach(b => {
+        if (b.type == "all") {
+            b.setState(Button.STATE.Inactive);
+        }
+    });
+
+    RESOLUTION_SETTINGS = true;
+
+    RESOLUTION_PANEL = new Sprite({w: 450, h: 300}, 0, 0 + offsetY, null, "all");
+    RESOLUTION_PANEL.addAnimation("normal", {x: 1152, y: 944});
+    RESOLUTION_PANEL.changeAnimation("normal");
+    MAIN_SPRITE_LIST.push(RESOLUTION_PANEL);
+
+    RESOLUTION_ANIM = new Sprite({ w: 63, h: 70}, 230, 106 + offsetY);
+    RESOLUTION_ANIM.addAnimation("normal", {x: 1152, y: 1244}, 6, [0.5, 0.2, 0.1, 0.5, 0.2, 0.1]);
+    RESOLUTION_ANIM.changeAnimation("normal");
+    MAIN_SPRITE_LIST.push(RESOLUTION_ANIM);
+
+    let offY = 0;
+    for (let i = 1; i <= 7; i++) {
+        CHECK = new CheckboxBtn({ w: 8, h: 9 }, 160, 100 + offY + offsetY, null, {cb: changeResolution, arg: i}, "all", "", "SCALE_" + i, 0, true);
+        CHECK.setBoxCollider(54, 9, 0, 0);
+        CHECK.setGroup(1);
+        CHECK.setAnimations({x: 1728, y: 96});
+        CHECK.setOffsets(30, 8);
+        CHECK.setFontColor("rgba(191,188,168,1)", BLACK_COLOR, "rgba(191,188,168,1)", WHITE_COLOR);
+        Button.currentList.push(CHECK);
+        MAIN_SPRITE_LIST.push(CHECK.getSprite());
+        offY += 12;
+        CheckboxBtn.checklist[CHECK.label] = CHECK;
+    }
+    CheckboxBtn.checklist["SCALE_" + currentScale].check();
+}
+
+function closeResolutionPanel() {
+    for (let i = 1; i <= 7; i++) {
+        CheckboxBtn.checklist["SCALE_" + i].delete();
+    }
+    CheckboxBtn.checklist = CheckboxBtn.checklist.filter(b => {
+        return b.group != 1;
+    });
+    RESOLUTION_PANEL.delete = true;
+    RESOLUTION_ANIM.delete = true;
+
+    RESOLUTION_SETTINGS = false;
+
+    Button.currentList.forEach(b => {
+        if (b.type == "all") {
+            if (b.id_test != "S") b.setState(Button.STATE.Normal);
+        }
+    });
+}
+
+function testToast(a) {
+    toast("Toast !", "d", 0);
+}
+
+function testSettingBtn(pArg) {
+    // log(pArg);
+    toast(window.innerWidth);
+    toast(window.navigator.userAgent)
+    log(window.navigator.userAgent)
 }
 
 function run(pTime) { //? Time est envoyé automatiquement par "requestAnimationFrame"
@@ -253,6 +601,38 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
             break;
     }
     if (SAVING) SAVING_SPRITE.update(dt);
+
+
+    //TODO
+    //! いずれ put Button/Panel currentLists update() HERE
+
+    /*
+    Simple:
+    - freeMode
+    - infos
+    - introduction
+    - lessons 意外！
+    - lessonTutorial
+    - mainMenu
+
+    Condition:
+    - game1
+    - login + (bMoving condition inside)
+
+    */
+
+    Button.currentList.forEach(b => {
+        if (b.bMoving) {
+            b.update(dt);
+        }
+    });
+
+
+
+    Sprite.manageBeforeUpdating(MAIN_SPRITE_LIST, dt);
+    MAIN_SPRITE_LIST = MAIN_SPRITE_LIST.filter(sp => {
+        return !sp.delete;
+    });
 
     MOUSE_SPRITE.update(dt);
     if (Sound.bPlayingKana) {
@@ -325,17 +705,40 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
         canvas.style.backgroundColor = RED_SCREENSHAKE_COLOR;
     }
 
+    let offset = 0;
+    if (mainState == MAIN_STATE.Lessons && Lessons.state == Lessons.STATE.Lesson) {
+        offset = CANVAS_HEIGHT;
+    }
     // if (bStatsDebug) {
     if (1) {
         ctx.textAlign = "left";
         ctx.font = "10px jpfont";
-        ctx.fillText("Drawcalls: " + Sprite.debug_drawcalls, 0, 10);
-        ctx.fillText("fps: " + Math.floor(dt * 3750), 0, 20);
+        ctx.fillText("Drawcalls: " + Sprite.debug_drawcalls, 0, 10 + offset);
+        ctx.fillText("fps: " + Math.floor((1000/dt)/1000), 0, 20 + offset);
+    }
+
+    if (bStatsDebug) {
+        ctx.fillStyle = BLACK_COLOR;
+        // ctx.font = "16px pgfont";
+
+        ctx.fillText("ButtonList : " + Button.list.length, 0, 50 + offset);
+        ctx.fillText("ButtonCurrent : " + Button.currentList.length, 0, 60 + offset);
+        // ctx.fillText("BGSPRITE List : " + MainMenu.randomKanaSpriteList.length, 0, 300);
+        ctx.fillText("PanelList : " + Panel.list.length, 0, 70 + offset);
+        ctx.fillText("PanelCurrent : " + Panel.currentList.length, 0, 80 + offset);
+        ctx.fillText("MAIN_SPRITE : " + MAIN_SPRITE_LIST.length, 0, 90 + offset);
+        // ctx.fillText("MainMenuList : " + MainMenu.mainList.length, 0, 140);
+        // ctx.fillText("BGSPRITE List : " + MainMenu.randomKanaSpriteList.length, 0, 300);
     }
 
     ctx.font = "10px jpfont";
 
     if (!Transition.bActive) {
+
+        if (!Game1.bStartTransition) {
+            Sprite.manageBeforeDrawing(MAIN_SPRITE_LIST);
+        }
+
         MOUSE_SPRITE.ox = MOUSE_SPRITE.currentAnimation.origin.x + (MOUSE_SPRITE.width * MOUSE_SPRITE.currentFrame);
         ctx.drawImage(SS, MOUSE_SPRITE.ox, MOUSE_SPRITE.currentAnimation.origin.y, MOUSE_SPRITE.width, MOUSE_SPRITE.height, Math.floor(MOUSE_SPRITE.x), Math.floor(MOUSE_SPRITE.y), MOUSE_SPRITE.width * MOUSE_SPRITE.scaleX, MOUSE_SPRITE.height * MOUSE_SPRITE.scaleY);
     }
@@ -348,6 +751,18 @@ function run(pTime) { //? Time est envoyé automatiquement par "requestAnimation
     //         ctx.drawImage(imgTEST2, 330, 150);
     //     }
     // }
+
+
+    if (FadeEffect.bActive) {
+        FadeEffect.draw(ctx);
+    }
+
+    if (Transition.bActive) {
+        Transition.draw(ctx);
+    }
+
+
+    // ctx.drawImage(SS, 0, 0, test.width, test.height, test.x, test.y, test.width, test.height);
 
 
     ctx.restore();
@@ -481,6 +896,7 @@ function startBtnCB(pParam) {
 
     Game1.load(pParam.choiceType, pParam.answerType, pParam.range, bLessonRange, pParam.testType, pParam.lessonNumber);
     MOUSE_SPRITE.y -= CANVAS_HEIGHT;
+
     if (!Game1.bGameInitialized) {
         Game1.init(pParam.testType);
     }
@@ -488,6 +904,8 @@ function startBtnCB(pParam) {
     Panel.resetTypeState("game1", Game1.STATE.Game);
     Button.resetTypeState("game1", Game1.STATE.Game);
 
+    SETTINGS_BTN.y = 0;
+    SETTINGS_BTN.setState(Button.STATE.Normal);
 }
 
 function changeMainState(pNewState) {
@@ -594,10 +1012,6 @@ function toMainMenu() {
 
 function loadImageDatas() {
 
-    ctx0.clearRect(0, 0, canvas.width, canvas.height);
-    ctx0.save();
-    ctx0.scale(SCALE_X, SCALE_Y);
-
     let kanaArray = [
         "hira_a", "hira_i", "hira_u", "hira_e", "hira_o",
         "hira_ka", "hira_ki", "hira_ku", "hira_ke", "hira_ko",
@@ -633,8 +1047,8 @@ function loadImageDatas() {
         "kata_pa", "kata_pi", "kata_pu", "kata_pe", "kata_po"
     ];
 
-
     const nbColumns = 10;
+
     let offX = 0;
     let offY = 0;
     let columnsCount = 0;
@@ -643,52 +1057,174 @@ function loadImageDatas() {
     let kanaWidth = 34;
     let startPos = 170;
 
-    for (let i = 0; i < 419; i++) {
+    for (let j = 1; j <= 7; j++) {
 
-        if (i == 104) {
-            kanaWidth = 38;
-            startPos = 544;
-            offX = 0;
-            offY = 0;
-            columnsCount = 0;
-        } else if (i == 208) {
-            kanaWidth = 34;
-            startPos = 918;
-            offX = 0;
-            offY = 0;
-            columnsCount = 0;
-        } else if (i == 316) {
-            kanaWidth = 38;
-            startPos = 1292;
-            offX = 0;
-            offY = 0;
-            columnsCount = 0;
+        offX = 0;
+        offY = 0;
+        columnsCount = 0;
+        kanaCount = 0;
+        frameCount = 0;
+        kanaWidth = 34;
+        startPos = 170;
+
+        ctx0.clearRect(0, 0, canvas.width, canvas.height);
+        ctx0.save();
+        ctx0.scale(j, j);
+    
+        for (let i = 0; i < 419; i++) {
+    
+            if (i == 104) {
+                kanaWidth = 38;
+                startPos = 544;
+                offX = 0;
+                offY = 0;
+                columnsCount = 0;
+            } else if (i == 208) {
+                kanaWidth = 34;
+                startPos = 918;
+                offX = 0;
+                offY = 0;
+                columnsCount = 0;
+            } else if (i == 316) {
+                kanaWidth = 38;
+                startPos = 1292;
+                offX = 0;
+                offY = 0;
+                columnsCount = 0;
+            }
+    
+            ctx0.drawImage(SS, 0 + offX, startPos + offY, kanaWidth, 34, 0, 0, kanaWidth, 34);
+            imageData = ctx0.getImageData(0, 0, kanaWidth * j, 34 * j);
+    
+            if (frameCount == KANA[kanaArray[kanaCount]].frames.length) { //
+                kanaCount++;
+                frameCount = 0;
+            }
+    
+            KANA[kanaArray[kanaCount]].imageData[j].push(imageData); // 1
+            frameCount++;
+    
+            offX += kanaWidth;
+            columnsCount++;
+            if (columnsCount == nbColumns) {
+                columnsCount = 0;
+                offX = 0;
+                offY += 34;
+            }
+    
         }
-
-        ctx0.drawImage(SS, 0 + offX, startPos + offY, kanaWidth, 34, 0, 0, kanaWidth, 34);
-        imageData = ctx0.getImageData(0, 0, kanaWidth * SCALE_X, 34 * SCALE_Y);
-
-        if (frameCount == KANA[kanaArray[kanaCount]].frames.length) { //
-            kanaCount++;
-            frameCount = 0;
-        }
-
-        KANA[kanaArray[kanaCount]].imageData.push(imageData); // 1
-        frameCount++;
-
-        offX += kanaWidth;
-        columnsCount++;
-        if (columnsCount == nbColumns) {
-            columnsCount = 0;
-            offX = 0;
-            offY += 34;
-        }
-
-
+    
+        ctx0.restore();
+        ctx0.clearRect(0, 0, canvas.width, canvas.height);
+    
     }
 
-    ctx0.restore();
-    ctx0.clearRect(0, 0, canvas.width, canvas.height);
+    // ctx0.clearRect(0, 0, canvas.width, canvas.height);
+    // ctx0.save();
+    // ctx0.scale(SCALE_X, SCALE_Y);
+
+    // for (let i = 0; i < 419; i++) {
+
+    //     if (i == 104) {
+    //         kanaWidth = 38;
+    //         startPos = 544;
+    //         offX = 0;
+    //         offY = 0;
+    //         columnsCount = 0;
+    //     } else if (i == 208) {
+    //         kanaWidth = 34;
+    //         startPos = 918;
+    //         offX = 0;
+    //         offY = 0;
+    //         columnsCount = 0;
+    //     } else if (i == 316) {
+    //         kanaWidth = 38;
+    //         startPos = 1292;
+    //         offX = 0;
+    //         offY = 0;
+    //         columnsCount = 0;
+    //     }
+
+    //     ctx0.drawImage(SS, 0 + offX, startPos + offY, kanaWidth, 34, 0, 0, kanaWidth, 34);
+    //     imageData = ctx0.getImageData(0, 0, kanaWidth * SCALE_X, 34 * SCALE_Y);
+
+    //     if (frameCount == KANA[kanaArray[kanaCount]].frames.length) { //
+    //         kanaCount++;
+    //         frameCount = 0;
+    //     }
+
+    //     KANA[kanaArray[kanaCount]].imageData.push(imageData); // 1
+    //     frameCount++;
+
+    //     offX += kanaWidth;
+    //     columnsCount++;
+    //     if (columnsCount == nbColumns) {
+    //         columnsCount = 0;
+    //         offX = 0;
+    //         offY += 34;
+    //     }
+
+    // }
+
+    // ctx0.restore();
+    // ctx0.clearRect(0, 0, canvas.width, canvas.height);
+
+    // offX = 0;
+    // offY = 0;
+    // columnsCount = 0;
+    // kanaCount = 0;
+    // frameCount = 0;
+    // kanaWidth = 34;
+    // startPos = 170;
+
+    // ctx0.save();
+    // ctx0.scale(SCALE_X+1, SCALE_Y+1);
+
+    // for (let i = 0; i < 419; i++) {
+
+    //     if (i == 104) {
+    //         kanaWidth = 38;
+    //         startPos = 544;
+    //         offX = 0;
+    //         offY = 0;
+    //         columnsCount = 0;
+    //     } else if (i == 208) {
+    //         kanaWidth = 34;
+    //         startPos = 918;
+    //         offX = 0;
+    //         offY = 0;
+    //         columnsCount = 0;
+    //     } else if (i == 316) {
+    //         kanaWidth = 38;
+    //         startPos = 1292;
+    //         offX = 0;
+    //         offY = 0;
+    //         columnsCount = 0;
+    //     }
+
+    //     ctx0.drawImage(SS, 0 + offX, startPos + offY, kanaWidth, 34, 0, 0, kanaWidth, 34);
+    //     imageData = ctx0.getImageData(0, 0, kanaWidth * (SCALE_X+1), 34 * (SCALE_Y+1));
+
+    //     if (frameCount == KANA[kanaArray[kanaCount]].frames.length) { //
+    //         kanaCount++;
+    //         frameCount = 0;
+    //     }
+
+    //     KANA[kanaArray[kanaCount]].imageData2.push(imageData); // 1
+    //     frameCount++;
+
+    //     offX += kanaWidth;
+    //     columnsCount++;
+    //     if (columnsCount == nbColumns) {
+    //         columnsCount = 0;
+    //         offX = 0;
+    //         offY += 34;
+    //     }
+
+    // }
+
+    // ctx0.restore();
+    // ctx0.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function displaySaving(pBool = true) {

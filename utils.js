@@ -85,31 +85,92 @@ function centerYElement(pElement, pHeight = 0, pDistance = 0, pDirection = 0) {
         }
     }
 }
-function toggleCanvasSize() {
-    if (SCALE_X == 1) {
-        SCALE_X = 2;
-        SCALE_Y = 2;
-        canvas.width = 900;
-        canvas.height = 600;
-    } else if (SCALE_X == 2) {
-        SCALE_X = 3;
-        SCALE_Y = 3;
-        canvas.width = 1350;
-        canvas.height = 900;
-        
+
+function toggleFullScreen() {
+    if (FULLSCREEN) {
+        FULLSCREEN = false;
+        FULLSCREEN_BTN.setAnimations({x: 1344, y: 32});
+        document.webkitExitFullscreen();
     } else {
-        SCALE_X = 1;
-        SCALE_Y = 1;
-        canvas.width = 450;
-        canvas.height = 300;
-        //! text shadow offset = 1 ! (instead of 2)
+        FULLSCREEN = true;
+        FULLSCREEN_BTN.setAnimations({x: 1344, y: 54});
+        let div = document.getElementById("canvas_container");
+        div.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
     }
+}
+
+function toggleCanvasSize(pUp) {
+
+    if (pUp) {
+        if (currentScale < 7) {
+            currentScale++;
+        } else {
+            currentScale = 1;
+        }
+    } else {
+        if (currentScale > 1) {
+            currentScale--;
+        } else {
+            currentScale = 7;
+        }
+    }
+
+    SCALE_X = currentScale;
+    SCALE_Y = currentScale;
+    canvas.width = scaleList[currentScale].width;
+    canvas.height = scaleList[currentScale].height;
+
     CANVAS_WIDTH = canvas.width / SCALE_X;
     CANVAS_HEIGHT = canvas.height / SCALE_Y;
     ctx.imageSmoothingEnabled = false;
     ctx.msImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
     // ctx.mozImageSmoothingEnabled = false;
+}
+
+function toast(pContent, pPosition = "d", pColorId = 0) { //? pColor = panel's id. 0: red, 1: green
+    let startPos;
+    let destPos;
+    if (pPosition == "d") { //? d => Down ; t => Top
+        startPos = CANVAS_HEIGHT;
+        destPos = CANVAS_HEIGHT -20;
+    } else {
+        startPos = -20;
+        destPos = 0;
+    }
+
+    let testtoastPanel = new ToastPanel({ w: 450, h: 20, v: 1 }, 0, startPos, null, "mainmenu", MainMenu.STATE.Main, pContent, pColorId);
+    testtoastPanel.setTextOverflow(true);
+    testtoastPanel.setFontColor(BLACK_COLOR_0, WHITE_COLOR);
+    testtoastPanel.setDestination({ x: 0, y: destPos });
+    testtoastPanel.setCanMove(true);
+    testtoastPanel.setMovingSpeed(0.2);
+    testtoastPanel.setMoving(true);
+    Panel.currentList.push(testtoastPanel);
+    MAIN_SPRITE_LIST.push(testtoastPanel.getSprite());
+}
+
+function changeResolution(pScale) {
+    currentScale = pScale;
+    
+    SCALE_X = currentScale;
+    SCALE_Y = currentScale;
+    canvas.width = scaleList[currentScale].width;
+    canvas.height = scaleList[currentScale].height;
+
+    
+    if (Lessons.canvasY < 0 ) {
+        Lessons.canvasY = scaleList[currentScale].canvasY;
+        Lessons.translationSpeed = scaleList[currentScale].speed;
+    } else {
+        Lessons.translationSpeed = -scaleList[currentScale].speed;
+    }
+
+    CANVAS_WIDTH = canvas.width / SCALE_X;
+    CANVAS_HEIGHT = canvas.height / SCALE_Y;
+    ctx.imageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
 }
 
 // First letter UpperCase
@@ -645,10 +706,14 @@ function checkIfValid(pChosen) {
         if (!MISSED_LIST.includes(RND_CHOICE.r)) {
             MISSED_LIST.push(RND_CHOICE.r);
         }
+        
         if (!Game1.bAlreadyMissed) {
             Game1.bAlreadyMissed = true;
             Game1.setMiss();
+        } else {
+            Sound.list["batsu"].audioPlay();
         }
+
         Game1.moe.changeAnimation("bad");
         Game1.batsuSprite.changeAnimation("batsu");
         Button.currentList.forEach(b => {

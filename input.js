@@ -841,20 +841,22 @@ canvas.addEventListener("mousemove", e => {
                                         MOUSE_SPRITE.changeAnimation("hover");
                                     }
                                 } else {
-                                    for (let i = 0; i < 5; i++) {
-                                        if (!Sound.list["hover"][i].bPlaying) {
-                                            log('i:' + i);
-                                            if (window.chrome) Sound.list["hover"][i].sound.load();
-                                            Sound.list["hover"][i].play();
-                                            i = 5;
+                                    Sound.list["hover_test"].audioPlay();
+                                    if (b instanceof CheckboxBtn) {
+                                        if (b.bChecked) {
+                                            // b.setState(CheckboxBtn.STATE.Hover);
+                                            // b.changeSpriteAnimation("c_hover");
+                                            // MOUSE_SPRITE.changeAnimation("hover");
+                                        } else {
+                                            b.setState(CheckboxBtn.STATE.Hover);
+                                            b.changeSpriteAnimation("hover");
+                                            MOUSE_SPRITE.changeAnimation("hover");
                                         }
-
+                                    } else {
+                                        b.setState(Button.STATE.Hover);
+                                        b.changeSpriteAnimation("hover");
+                                        MOUSE_SPRITE.changeAnimation("hover");
                                     }
-                                    // log("HOVER !");
-                                    // Sound.list[b.sound].play();
-                                    b.setState(Button.STATE.Hover);
-                                    b.changeSpriteAnimation("hover");
-                                    MOUSE_SPRITE.changeAnimation("hover");
                                 }
 
                                 if (b instanceof LessonBtn && b.mode != 1) {
@@ -868,6 +870,10 @@ canvas.addEventListener("mousemove", e => {
                                     b.resetOffsets();
                                 }
 
+                            } else {
+                                if (MOUSE_SPRITE.currentAnimation.name != "hover") {
+                                    MOUSE_SPRITE.changeAnimation("hover");
+                                }
                             }
                         }
                     } else { //? Mouse Moving and NO collision
@@ -877,6 +883,14 @@ canvas.addEventListener("mousemove", e => {
                                     if (sp instanceof Sprite) {
                                         sp.delete = true;
                                         sp.currentFrame = 0;
+
+                                        if (sp.type == "kana") {
+                                            sp.step = 1;
+                                            sp.active = false;
+                                            sp.stepTimer.reset();
+                                            sp.resetKana();
+                                        }
+
                                     } else {
                                         sp.getSprite().delete = true;
                                     }
@@ -894,8 +908,18 @@ canvas.addEventListener("mousemove", e => {
                                     b.changeSpriteAnimation("normal");
                                 }
                             } else {
-                                b.setState(Button.STATE.Normal);
-                                b.changeSpriteAnimation("normal");
+                                if (b instanceof CheckboxBtn) {
+                                    if (b.bChecked) {
+                                        b.setState(Button.STATE.Normal);
+                                        b.changeSpriteAnimation("c_normal");
+                                    } else {
+                                        b.setState(Button.STATE.Normal);
+                                        b.changeSpriteAnimation("normal");
+                                    }
+                                } else {
+                                    b.setState(Button.STATE.Normal);
+                                    b.changeSpriteAnimation("normal");
+                                }
                             }
                             MOUSE_SPRITE.changeAnimation("normal");
 
@@ -972,7 +996,7 @@ canvas.addEventListener("mousemove", e => {
             }
 
             Panel.currentList.forEach(p => {
-                if (p.getState() != Panel.STATE.Inactive && p.hoverable) {
+                if (p.getState() != Panel.STATE.Inactive && p.hoverable && !SETTINGS) {
                     if (CollisionManager.MouseCollision(mouseX, mouseY, p.x, p.y, p.getSize().w, p.getSize().h)) {
                         if ((p.getSprite().tl != undefined && p.getSprite().tl.currentAnimation.name != "down") || // not staticSize
                             (p.getSprite().tl == undefined && p.getSprite().currentAnimation.name != "down")) {    // staticSize
@@ -1050,9 +1074,10 @@ canvas.addEventListener("mousemove", e => {
         MOUSE_SPRITE.changeAnimation("normal");
     }
 
-})
+});
 
 canvas.addEventListener("wheel", e => {
+    e.preventDefault();
     Panel.currentList.forEach(p => {
         if (p.getState() != Panel.STATE.Inactive && p instanceof DropdownPanel && p.getState() == Panel.STATE.Hover) {
             if (p.list.length > 8) {
@@ -1083,12 +1108,26 @@ canvas.addEventListener("wheel", e => {
 
 });
 
+canvas.addEventListener("contextmenu", e => {
+    e.preventDefault();
+});
+
 canvas.addEventListener("mousedown", e => {
 
     if (!inTransition() && e.button == 0 && mainState != MAIN_STATE.Error) { // Left click !
 
         const mouseX = e.layerX / SCALE_X;
         const mouseY = e.layerY / SCALE_Y;
+
+        if (RESOLUTION_SETTINGS) {
+            if (!CollisionManager.MouseCollision(mouseX, mouseY, RESOLUTION_PANEL_DATA.x, RESOLUTION_PANEL_DATA.y, RESOLUTION_PANEL_DATA.w, RESOLUTION_PANEL_DATA.h)) {
+                closeResolutionPanel();
+            }
+        } else if (SETTINGS) {
+            if (!CollisionManager.MouseCollision(mouseX, mouseY, SETTINGS_PANEL_DATA.x, SETTINGS_PANEL_DATA.y, SETTINGS_PANEL_DATA.w, SETTINGS_PANEL_DATA.h)) {
+                closeSettings();
+            }
+        }
 
 
         let bClickedOnKeyboard = false;
@@ -1104,7 +1143,16 @@ canvas.addEventListener("mousedown", e => {
                         if (b instanceof LessonBtn && b.mode == 1 && b.getSprite().currentAnimation.name == "clicked") {
                             return false;
                         }
-                        b.changeSpriteAnimation("down");
+
+                        if (b instanceof CheckboxBtn) {
+                            if (b.bChecked) {
+                                // b.changeSpriteAnimation("c_down");
+                            } else {
+                                b.changeSpriteAnimation("down");
+                            }
+                        } else {
+                            b.changeSpriteAnimation("down");
+                        }
 
                         if (b instanceof LessonBtn && b.mode != 1) {
                             b.textOffsetX = b.textOffsetXDown;
@@ -1226,6 +1274,10 @@ canvas.addEventListener("mousedown", e => {
 
 canvas.onclick = e => {
 
+    if (!Sound.bInit) {
+        Sound.initAudioContext();
+    }
+
     if (!inTransition() && e.button == 0 && mainState != MAIN_STATE.Error) { // Left click !
 
         const mouseX = e.layerX / SCALE_X;
@@ -1261,11 +1313,22 @@ canvas.onclick = e => {
                         }
 
                         if (b.sound != "") {
-                            Sound.list[b.sound].play();
+                            Sound.list[b.sound].audioPlay();
                         }
 
-                        b.setState(Button.STATE.Normal);
-                        b.changeSpriteAnimation("normal");
+
+                        if (b instanceof CheckboxBtn) {
+                            if (b.bChecked) {
+                                // b.setState(Button.STATE.Normal);
+                            } else {
+                                b.setState(Button.STATE.Normal);
+                                b.changeSpriteAnimation("normal");
+                                b.check();
+                            }
+                        } else {
+                            b.setState(Button.STATE.Normal);
+                            b.changeSpriteAnimation("normal");
+                        }
                         MOUSE_SPRITE.changeAnimation("normal");
 
                         if (b.callback.cb != null && b.callback.arg != null) {
@@ -1346,9 +1409,20 @@ canvas.onclick = e => {
 
                             } else {
 
-                                b.setState(Button.STATE.Hover);
-                                b.changeSpriteAnimation("hover");
-                                MOUSE_SPRITE.changeAnimation("hover");
+                                if (b instanceof CheckboxBtn) {
+                                    if (b.bChecked) {
+                                    } else {
+                                        b.setState(Button.STATE.Hover);
+                                        b.changeSpriteAnimation("hover");
+                                        MOUSE_SPRITE.changeAnimation("hover");
+                                    }
+                                } else {
+                                    b.setState(Button.STATE.Hover);
+                                    b.changeSpriteAnimation("hover");
+                                    MOUSE_SPRITE.changeAnimation("hover");
+
+                                }
+
                             }
                             return false;
                         } else {

@@ -8,6 +8,9 @@ class Sound {
     static currentPlayingKana = "";
 
     static id = 0;
+    // static audioContext = new AudioContext();
+    static audioContext = null;
+    static bInit = false;
 
     constructor(pPath, pType = "s", pLoop = false, bKana = false) {
         // this.sound = document.createElement("audio");
@@ -17,14 +20,17 @@ class Sound {
         Sound.id++;
 
         this.sound = new Audio(pPath)
+        this.path = pPath;
         this.sndList = [];
         this.sndIndex = 0;
         this.sound.load();
 
         this.sound.addEventListener("ended", () => {
-            log("ENDED : " + this.id);
             this.bPlaying = false;
             this.currentTime = 0;
+            if (this.type == "m") {
+                this.audioPlay();
+            }
         });
 
         this.sound.setAttribute("preload", "auto");
@@ -46,9 +52,57 @@ class Sound {
 
         this.timer = new Timer(0.3, this.updateVolume.bind(this));
 
+        this.gainNode = null;
+
         // this.sound.onended = () => this.sound.remove();
         // document.body.appendChild(this.sound);
         // this.sound.remove();
+    }
+
+    static initAudioContext() {
+        Sound.bInit = true;
+        Sound.audioContext = new AudioContext();
+    }
+
+    audioPlay = async () => {
+        if (Sound.bInit) {
+            let source = Sound.audioContext.createBufferSource();
+            const audioBuffer = await fetch(this.path)
+                .then(res => res.arrayBuffer())
+                .then(ArrayBuffer => Sound.audioContext.decodeAudioData(ArrayBuffer));
+        
+            source.buffer = audioBuffer;
+    
+            this.gainNode = Sound.audioContext.createGain();
+            source.addEventListener("ended", () => {
+                if (this.type == "m") {
+                    this.audioPlay();
+                }
+            });
+    
+            //! TEST
+            if (this.type == "s") {
+                this.gainNode.gain.value = SFX_VOLUME*10;
+            } else {
+                this.gainNode.gain.value = MUSIC_VOLUME*10;
+                Sound.setCurrentMusic(this);
+            }
+            let currentGain = this.gainNode.gain.value;
+            //! ----
+    
+            source.connect(this.gainNode);
+            this.gainNode.connect(Sound.audioContext.destination)
+    
+            //! TEST
+            // this.gainNode.gain.setValueAtTime(1, Sound.audioContext.currentTime);
+            this.gainNode.gain.setValueAtTime(currentGain, Sound.audioContext.currentTime);
+            //! ----
+    
+            // source.connect(Sound.audioContext.destination);
+            source.start();
+    
+            //? Possibilité de faire gainNode.gain.value = 0; pour couper le son
+        }
     }
 
     play() {
@@ -113,7 +167,6 @@ class Sound {
     }
     
     reset() {
-        log("reset")
         this.sound.pause();
         this.sound.currentTime = 0;
         this.bPlaying = false;
@@ -135,8 +188,9 @@ class Sound {
         this.name = pName;
     }
 
+    //? Lesson Kana Sound
     static playCallback(pName) {
-        Sound.list[pName].play();
+        Sound.list[pName].audioPlay();
     }
 
 
@@ -146,13 +200,19 @@ class Sound {
             MUSIC_VOLUME *= 10;
             MUSIC_VOLUME -= 1;
             MUSIC_VOLUME /= 10;
+            if (SETTINGS) MUSIC_SPRITE.changeAnimation(MUSIC_VOLUME*10);
             MainMenu.musicSprite.changeAnimation(MUSIC_VOLUME*10);
             if (MUSIC_VOLUME == 0) {
+                if (SETTINGS) MUSIC_SPEAKER.changeAnimation("mute");
                 MainMenu.musicSpeaker.changeAnimation("mute");
             }
             SaveManager.save([{ type: "bgm", value: MUSIC_VOLUME }]);
             if (Sound.current != null) {
                 Sound.current.sound.volume = MUSIC_VOLUME;
+
+                Sound.current.gainNode.gain.value = MUSIC_VOLUME*10;
+                let currentGain = Sound.current.gainNode.gain.value;
+                Sound.current.gainNode.gain.setValueAtTime(currentGain, Sound.audioContext.currentTime);
             }
         }
     }
@@ -162,13 +222,19 @@ class Sound {
             MUSIC_VOLUME *= 10;
             MUSIC_VOLUME += 1;
             MUSIC_VOLUME /= 10;
+            if (SETTINGS) MUSIC_SPRITE.changeAnimation(MUSIC_VOLUME*10);
             MainMenu.musicSprite.changeAnimation(MUSIC_VOLUME*10);
             if (MUSIC_VOLUME*10 == 1) {
+                if (SETTINGS) MUSIC_SPEAKER.changeAnimation("normal");
                 MainMenu.musicSpeaker.changeAnimation("normal");
             }
             SaveManager.save([{ type: "bgm", value: MUSIC_VOLUME }]);
             if (Sound.current != null) {
                 Sound.current.sound.volume = MUSIC_VOLUME;
+
+                Sound.current.gainNode.gain.value = MUSIC_VOLUME*10;
+                let currentGain = Sound.current.gainNode.gain.value;
+                Sound.current.gainNode.gain.setValueAtTime(currentGain, Sound.audioContext.currentTime);
             }
         }
     }
@@ -178,8 +244,10 @@ class Sound {
             SFX_VOLUME *= 10;
             SFX_VOLUME -= 1;
             SFX_VOLUME /= 10;
+            if (SETTINGS) SFX_SPRITE.changeAnimation(SFX_VOLUME*10);
             MainMenu.sfxSprite.changeAnimation(SFX_VOLUME*10);
             if (SFX_VOLUME == 0) {
+                if (SETTINGS) SFX_SPEAKER.changeAnimation("mute");
                 MainMenu.sfxSpeaker.changeAnimation("mute");
             }
             SaveManager.save([{ type: "sfx", value: SFX_VOLUME }]);
@@ -191,8 +259,10 @@ class Sound {
             SFX_VOLUME *= 10;
             SFX_VOLUME += 1;
             SFX_VOLUME /= 10;
+            if (SETTINGS) SFX_SPRITE.changeAnimation(SFX_VOLUME*10);
             MainMenu.sfxSprite.changeAnimation(SFX_VOLUME*10);
             if (SFX_VOLUME*10 == 1) {
+                if (SETTINGS) SFX_SPEAKER.changeAnimation("normal");
                 MainMenu.sfxSpeaker.changeAnimation("normal");
             }
             SaveManager.save([{ type: "sfx", value: SFX_VOLUME }]);

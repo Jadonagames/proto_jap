@@ -377,8 +377,8 @@ class Introduction {
          */
         //------------- END DEBUG
 
-        if (FadeEffect.bActive) {
-            FadeEffect.draw(ctx);
-        }
+        // if (FadeEffect.bActive) {
+        //     FadeEffect.draw(ctx);
+        // }
     }
 }
